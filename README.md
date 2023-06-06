@@ -5,10 +5,11 @@
 2. Démarrer son serveur Apache
 3. Installer les dépendances PHP : ```composer install```
 4. Installer les dépendances front : ```à voir```
-5. Créer les fichiers ```.env.local``` et ```.env.test.local``` à la racine
-6. Copier le contenu des .env associé (```.env```)
-7. Sélectionner la base de donnée dans les 2 nouveaux .env (décommenter MySQL)
+5. Créer les fichiers ```.env.local```  à la racine
+6. Copier le contenu de .env et coller dans les 2 fichiers de l'étape 5 
+7. Décommenter MySQL et commenter Postgres dans le nouveau .env 
 8. Update le lien avec ses infos (username MySQL, password, et nom de la base de données)
+9. Créer un nouveau fichier ```.env.test.local``` et copier le contenu de ```.env.local``` dans ce nouveau fichier 
 10. Créer la base(s) de données de dev : ```composer prepare-db```
 11. Créer la base(s) de données de test : ```composer prepare-test```
 
