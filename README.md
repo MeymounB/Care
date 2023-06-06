@@ -2,11 +2,15 @@
 
 ## Installation
 1. Cloner le projet
-2. Installer les dépendances PHP : ```composer install```
-3. Installer les dépendances front : ```à voir```
-4. Créer les fichiers ```.env.local``` et ```.env.test.local``` et copier le contenu des .env associés
-5. Créer la base(s) de données de dev : ```composer prepare-db```
-6. Créer la base(s) de données de test : ```composer prepare-test```
+2. Démarrer son serveur Apache
+3. Installer les dépendances PHP : ```composer install```
+4. Installer les dépendances front : ```à voir```
+5. Créer les fichiers ```.env.local``` et ```.env.test.local``` à la racine
+6. Copier le contenu des .env associé (```.env```)
+7. Sélectionner la base de donnée dans les 2 nouveaux .env (décommenter MySQL)
+8. Update le lien avec ses infos (username MySQL, password, et nom de la base de données)
+10. Créer la base(s) de données de dev : ```composer prepare-db```
+11. Créer la base(s) de données de test : ```composer prepare-test```
 
 
 ## Commit
