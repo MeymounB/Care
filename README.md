@@ -4,8 +4,9 @@
 1. Cloner le projet
 2. Installer les dépendances PHP : ```composer install```
 3. Installer les dépendances front : ```à voir```
-4. Créer la base(s) de données de dev : ```composer prepare-db```
-5. Créer la base(s) de données de test : ```composer prepare-test```
+4. Créer les fichiers ```.env.local``` et ```.env.test.local``` et copier le contenu des .env associés
+5. Créer la base(s) de données de dev : ```composer prepare-db```
+6. Créer la base(s) de données de test : ```composer prepare-test```
 
 
 ## Commit
