@@ -1,0 +1,103 @@
+@use './functions.scss' as funcs;
+@use './mixins.scss' as mixins;
+@use './colors.scss' as colors;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    height: 100vh;
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+    background: colors.$half-green;
+    font-weight: 400;
+    font-size: funcs.rem(16);
+}
+a,
+a:visited,
+a:focus {
+    text-decoration: none;
+}
+
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+input, select, textarea {
+    border: none;
+    outline: none;
+    font-size: funcs.rem(16);
+
+    background: colors.$half-green;
+    color: colors.$dark-green;
+    padding: funcs.rem(10);
+    border-radius: funcs.rem(4);
+}
+
+select, textarea {
+    resize: none;
+    width: 100%;
+}
+option {
+    padding: funcs.rem(5);
+    margin-bottom: funcs.rem(5);
+    outline: none;
+    border-radius: funcs.rem(5);
+}
+select option:hover,
+select option:focus,
+select option:active,
+select option:checked {
+    color: colors.$half-green;
+    background: colors.$dark-green;
+}
+
+.center-space {
+    padding-left: funcs.rem(104);
+    padding-right: funcs.rem(104);
+
+    @include mixins.media(tablet-wide, max) {
+        padding-left: funcs.rem(50);
+        padding-right: funcs.rem(50);
+    }
+
+    @include mixins.media(tablet, max) {
+        padding-left: funcs.rem(15);
+        padding-right: funcs.rem(15);
+    }
+
+}
+
+.spacer {
+    width: 100%;
+    height: funcs.rem(100);
+    background: transparent;
+}
+
+.main-title {
+    font-weight: 700;
+    font-size: funcs.rem(28.43);
+}
+
+.second-title {
+    font-weight: 600;
+    font-size: 21.33px;
+}
+
+.subtitle {
+    font-weight: 400;
+    font-size: funcs.rem(12);
+}
+
+.reg-bold {
+    font-weight: 600;
+    font-size: funcs.rem(16);
+}
