@@ -20,6 +20,9 @@ class Photo
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'photos')]
+    private ?plant $plant = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +48,18 @@ class Photo
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPlant(): ?plant
+    {
+        return $this->plant;
+    }
+
+    public function setPlant(?plant $plant): static
+    {
+        $this->plant = $plant;
 
         return $this;
     }

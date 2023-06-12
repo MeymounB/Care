@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AppointmentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,20 @@ class Appointment
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
+
+    #[ORM\ManyToMany(targetEntity: Plant::class, inversedBy: 'appointments')]
+    private Collection $plant;
+
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    private ?Particular $particular = null;
+
+    #[ORM\ManyToOne(inversedBy: 'appointments')]
+    private ?botanist $botanist = null;
+
+    public function __construct()
+    {
+        $this->plant = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +106,54 @@ class Appointment
     public function setLink(?string $link): static
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, plant>
+     */
+    public function getPlant(): Collection
+    {
+        return $this->plant;
+    }
+
+    public function addPlant(plant $plant): static
+    {
+        if (!$this->plant->contains($plant)) {
+            $this->plant->add($plant);
+        }
+
+        return $this;
+    }
+
+    public function removePlant(plant $plant): static
+    {
+        $this->plant->removeElement($plant);
+
+        return $this;
+    }
+
+    public function getParticular(): ?Particular
+    {
+        return $this->particular;
+    }
+
+    public function setParticular(?Particular $particular): static
+    {
+        $this->particular = $particular;
+
+        return $this;
+    }
+
+    public function getBotanist(): ?botanist
+    {
+        return $this->botanist;
+    }
+
+    public function setBotanist(?botanist $botanist): static
+    {
+        $this->botanist = $botanist;
 
         return $this;
     }

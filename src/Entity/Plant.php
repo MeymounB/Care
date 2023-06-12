@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,25 @@ class Plant
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'plants')]
+    private Collection $post;
+
+    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class)]
+    private Collection $photos;
+
+    #[ORM\ManyToOne(inversedBy: 'plants')]
+    private ?Particular $particular = null;
+
+    #[ORM\ManyToMany(targetEntity: Appointment::class, mappedBy: 'plant')]
+    private Collection $appointments;
+
+    public function __construct()
+    {
+        $this->post = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +111,99 @@ class Plant
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, post>
+     */
+    public function getPost(): Collection
+    {
+        return $this->post;
+    }
+
+    public function addPost(post $post): static
+    {
+        if (!$this->post->contains($post)) {
+            $this->post->add($post);
+        }
+
+        return $this;
+    }
+
+    public function removePost(post $post): static
+    {
+        $this->post->removeElement($post);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Photo>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): static
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setPlant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(Photo $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getPlant() === $this) {
+                $photo->setPlant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getParticular(): ?Particular
+    {
+        return $this->particular;
+    }
+
+    public function setParticular(?Particular $particular): static
+    {
+        $this->particular = $particular;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): static
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->addPlant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): static
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            $appointment->removePlant($this);
+        }
 
         return $this;
     }

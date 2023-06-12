@@ -20,6 +20,12 @@ class Comment
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?post $post = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +51,30 @@ class Comment
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPost(): ?post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?post $post): static
+    {
+        $this->post = $post;
 
         return $this;
     }

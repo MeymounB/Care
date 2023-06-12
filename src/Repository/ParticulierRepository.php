@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Particulier;
+use App\Entity\Particular;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Particulier>
+ * @extends ServiceEntityRepository<Particular>
  *
- * @method Particulier|null find($id, $lockMode = null, $lockVersion = null)
- * @method Particulier|null findOneBy(array $criteria, array $orderBy = null)
- * @method Particulier[]    findAll()
- * @method Particulier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Particular|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Particular|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Particular[]    findAll()
+ * @method Particular[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticulierRepository extends ServiceEntityRepository
+class ParticularRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Particulier::class);
+        parent::__construct($registry, Particular::class);
     }
 
-    public function save(Particulier $entity, bool $flush = false): void
+    public function save(Particular $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ParticulierRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Particulier $entity, bool $flush = false): void
+    public function remove(Particular $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ParticulierRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Particulier[] Returns an array of Particulier objects
+//     * @return Particular[] Returns an array of Particular objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ParticulierRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Particulier
+//    public function findOneBySomeField($value): ?Particular
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
