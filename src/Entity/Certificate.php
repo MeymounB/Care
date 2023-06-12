@@ -26,6 +26,9 @@ class Certificate
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'certificates')]
+    private ?botanist $botanist = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Certificate
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getBotanist(): ?botanist
+    {
+        return $this->botanist;
+    }
+
+    public function setBotanist(?botanist $botanist): static
+    {
+        $this->botanist = $botanist;
 
         return $this;
     }
