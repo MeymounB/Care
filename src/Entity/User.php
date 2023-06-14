@@ -51,6 +51,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->setCreatedAt(new \DateTimeImmutable('now'));
+        $this->setUpdatedAt(new \DateTime('now'));
     }
 
     public function getId(): ?int
@@ -161,7 +163,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->createdAt = $createdAt;
+        // On vérifie que created at n'est pas déjà rempli (utilisateur déjà inscrit, la date ne doit plus changer)
+        if (!$this->createdAt) {
+            $this->createdAt = $createdAt;
+        }
 
         return $this;
     }
