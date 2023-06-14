@@ -169,7 +169,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        // On vérifie que created at n'est pas déjà rempli (utilisateur déjà inscrit, la date ne doit plus changer)
+        // On vérifie que createdAt n'est pas déjà rempli (utilisateur déjà inscrit, la date ne doit plus changer)
         if (!$this->createdAt) {
             $this->createdAt = $createdAt;
         }
