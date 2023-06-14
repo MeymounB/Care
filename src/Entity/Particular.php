@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ParticularRepository;
+use App\Repository\ParticulierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ParticularRepository::class)]
+#[ORM\Entity(repositoryClass: ParticulierRepository::class)]
 class Particular extends User
 {
     #[ORM\Id]
