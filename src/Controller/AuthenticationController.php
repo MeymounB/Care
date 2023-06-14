@@ -25,7 +25,6 @@ class AuthenticationController extends AbstractController
     #[Route('/', name: 'connection_page')]
     public function connectionRender(Request $request): Response
     {
-        // creates a user object and initializes some data for this example
         $user = new User();
 
         $form = $this->createFormBuilder($user)
