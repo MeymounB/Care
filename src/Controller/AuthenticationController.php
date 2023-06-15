@@ -58,9 +58,6 @@ class AuthenticationController extends AbstractController
             ->add('lastName', TextType::class)
             ->add('email', TextType::class)
             ->add('password', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
