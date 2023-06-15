@@ -165,16 +165,16 @@ form button{
 }
 
 
-/*** Connection Page */
+/*** Inscription Page */
 
 
 
-.connectionform{
+.inscriptionform{
     padding: 50px;
     text-align: center;
 }
 
-.connectionform .title{
+.inscriptionform .title{
     margin-top: 50px;
     font-size: 120%;
 }
@@ -190,6 +190,6 @@ form[name=form] button{
     margin-top: 50px;
 }
 
-.connectionform p {
+.inscriptionform p {
     margin-top: 7px;
 }
