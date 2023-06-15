@@ -7,6 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,7 @@ class AuthenticationController extends AbstractController
         $this->entityManager = $registry->getManager();
     }
 
-    #[Route('/wilfriedgenie', name: 'wilfriedgenie')]
+    #[Route('/testinsert', name: 'wilfriedgenie')]
     public function wilfriedGenie(Request $request): Response
     {
         $user = new User();
@@ -74,6 +75,7 @@ class AuthenticationController extends AbstractController
                 ],
             ])
             ->add('cellphone', TextType::class)
+            ->add('save', SubmitType::class, ['label' => 'S\'INSCRIRE'])
             ->getForm();
 
         $form->handleRequest($request);
