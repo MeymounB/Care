@@ -88,7 +88,7 @@ class AuthenticationController extends AbstractController
             return $this->redirectToRoute('home_page');
         }
 
-        return $this->render('guest_template/connectionPage.html.twig', [
+        return $this->render('guest_template/inscriptionPage.html.twig', [
             'form' => $form->createView(),
         ]);
     }
