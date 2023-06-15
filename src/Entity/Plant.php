@@ -116,14 +116,14 @@ class Plant
     }
 
     /**
-     * @return Collection<int, post>
+     * @return Collection<int, Post>
      */
     public function getPost(): Collection
     {
         return $this->post;
     }
 
-    public function addPost(post $post): static
+    public function addPost(Post $post): static
     {
         if (!$this->post->contains($post)) {
             $this->post->add($post);
@@ -132,7 +132,7 @@ class Plant
         return $this;
     }
 
-    public function removePost(post $post): static
+    public function removePost(Post $post): static
     {
         $this->post->removeElement($post);
 

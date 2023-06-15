@@ -24,7 +24,7 @@ class Comment
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?post $post = null;
+    private ?Post $post = null;
 
     public function getId(): ?int
     {
