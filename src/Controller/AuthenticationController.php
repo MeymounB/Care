@@ -22,6 +22,31 @@ class AuthenticationController extends AbstractController
         $this->entityManager = $registry->getManager();
     }
 
+    #[Route('/wilfriedgenie', name: 'wilfriedgenie')]
+    public function wilfriedGenie(Request $request): Response
+    {
+        $user = new User();
+
+        $user->setEmail('test');
+        $user->setFirstName('first');
+        $user->setCellphone('06060606');
+        $user->setPassword('pass');
+        $user->setLastName('last');
+        $user->setEmail('email');
+        $user->setRoles(['role']);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        if (!$user) {
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('guest_template/connectionPage.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
     #[Route('/', name: 'connection_page')]
     public function connectionRender(Request $request): Response
     {
