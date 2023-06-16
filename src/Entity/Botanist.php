@@ -10,11 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BotanistRepository::class)]
 class Botanist extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?bool $isVerified = null;
 
@@ -26,13 +21,10 @@ class Botanist extends User
 
     public function __construct()
     {
+        parent::__construct();
         $this->appointments = new ArrayCollection();
         $this->certificates = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->roles[] = 'ROLE_BOTANIST';
     }
 
     public function isIsVerified(): ?bool
