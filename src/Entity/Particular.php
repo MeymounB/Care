@@ -10,11 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ParticulierRepository::class)]
 class Particular extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Post::class)]
     private Collection $posts;
 
@@ -26,14 +21,10 @@ class Particular extends User
 
     public function __construct()
     {
+        parent::__construct();
         $this->posts = new ArrayCollection();
         $this->plants = new ArrayCollection();
         $this->appointments = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
