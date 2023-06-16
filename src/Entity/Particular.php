@@ -25,6 +25,7 @@ class Particular extends User
         $this->posts = new ArrayCollection();
         $this->plants = new ArrayCollection();
         $this->appointments = new ArrayCollection();
+        $this->roles[] = 'ROLE_PARTICULAR';
     }
 
     /**
