@@ -31,7 +31,7 @@ class RegistrationController extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    #[Route('/', name: 'connection_page')]
+    #[Route('/', name: 'inscription_page')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer, MessageBusInterface $bus): Response
     {
         $user = new Particular();
@@ -80,7 +80,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('connection_page');
         }
 
-        return $this->render('guest_template/inscriptionPage.html.twig', [
+        return $this->render('registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }

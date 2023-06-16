@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription{% endblock %}
+{% block stylesheet %}{% endblock %}
+{% block javascript %}{% endblock %}
+
+{% block header %}
+    {% include "/parts/header.html.twig" %}
+{% endblock %}
+
+{% block body %}
+    <main class="inscriptionform">
+        <span class="title">Inscription</span>
+        {{ form_start(form)}}
+       {# <div class="register-form">
+            {{ form_label(form.firstName)}}
+        </div> #}
+        {{ form_end(form) }}
+        <p>Vous avez déjà un compte GreenCare <a href="">cliquez ici</a></p>
+    </main>
+{% endblock %}
+
+{% block footer %}{% endblock %}
