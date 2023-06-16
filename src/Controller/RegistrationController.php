@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -62,17 +62,14 @@ class RegistrationController extends AbstractController
 
             $email = new TemplatedEmail();
             $email
-                ->from('hello@example.com')
+                ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
                 ->to($user->getEmail())
-                // ->cc('cc@example.com')
-                // ->bcc('bcc@example.com')
-                // ->replyTo('fabien@example.com')
-                // ->priority(Email::PRIORITY_HIGH)
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
-                ->html('<p>See Twig integration for better HTML integration!</p>');
-
-            //            $mailer->send($email);
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+                ->context([
+                    'username' => $user->getFirstName(),
+                ]);
 
             $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
