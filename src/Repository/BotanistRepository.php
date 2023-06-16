@@ -6,14 +6,6 @@ use App\Entity\Botanist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Botanist>
- *
- * @method Botanist|null find($id, $lockMode = null, $lockVersion = null)
- * @method Botanist|null findOneBy(array $criteria, array $orderBy = null)
- * @method Botanist[]    findAll()
- * @method Botanist[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class BotanistRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -44,10 +36,10 @@ class BotanistRepository extends ServiceEntityRepository
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
+//        return $this->createQueryBuilder('c')
+//            ->andWhere('c.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
+//            ->orderBy('c.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
@@ -56,8 +48,8 @@ class BotanistRepository extends ServiceEntityRepository
 
 //    public function findOneBySomeField($value): ?Botanist
 //    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
+//        return $this->createQueryBuilder('c')
+//            ->andWhere('c.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

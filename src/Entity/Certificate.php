@@ -27,7 +27,7 @@ class Certificate
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'certificates')]
-    private ?botanist $botanist = null;
+    private ?Botanist $botanist = null;
 
     public function getId(): ?int
     {
