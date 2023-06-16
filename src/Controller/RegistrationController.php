@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
     /**
      * @throws TransportExceptionInterface
      */
-    #[Route('/', name: 'inscription_page')]
+    #[Route('/', name: 'register_page')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer, MessageBusInterface $bus): Response
     {
         $user = new Particular();
@@ -80,7 +80,7 @@ class RegistrationController extends AbstractController
                 $email
             );
 
-            return $this->redirectToRoute('connection_page');
+            return $this->redirectToRoute('register_page');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -95,14 +95,14 @@ class RegistrationController extends AbstractController
 
         // Verify the user id exists and is not null
         if (null === $id) {
-            return $this->redirectToRoute('connection_page');
+            return $this->redirectToRoute('register_page');
         }
 
         $user = $userRepository->find($id);
 
         // Ensure the user exists in persistence
         if (null === $user) {
-            return $this->redirectToRoute('connection_page');
+            return $this->redirectToRoute('register_page');
         }
 
         // Do not get the User's Id or Email Address from the Request object
@@ -111,7 +111,7 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $e) {
             $this->addFlash('verify_email_error', $e->getReason());
 
-            return $this->redirectToRoute('connection_page');
+            return $this->redirectToRoute('register_page');
         }
 
         $user->setIsVerified(true);
@@ -120,6 +120,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Votre adresse email a été vérifiée avec succès ! Redirection en cours...');
 
-        return $this->redirectToRoute('connection_page');
+        return $this->redirectToRoute('register_page');
     }
 }
