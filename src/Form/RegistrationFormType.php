@@ -22,21 +22,31 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'J\'accepte les conditions générales d\'utilisation',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
             ])
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
-            ->add('email', TextType::class)
+            ->add('firstName', TextType::class, [
+                'label' => 'Prénom',
+                'required' => true,
+            ])
+            ->add('lastName', TextType::class, [
+                'label' => 'Nom',
+                'required' => true,
+            ])
+            ->add('email', TextType::class, [
+                'label' => 'Adresse email',
+                'required' => true,
+            ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'attr' => ['autocomplete' => 'new-password'],
                 'invalid_message' => 'The password fields must match.',
-                'first_options' => ['label' => 'Password', 'attr' => ['placeholder' => 'Password']],
-                'second_options' => ['label' => 'Repeat Password', 'attr' => ['placeholder' => 'Repeat Password']],
+                'first_options' => ['label' => 'Mot de passe', 'attr' => ['placeholder' => 'Mot de passe']],
+                'second_options' => ['label' => 'Confirmez votre mot de passe', 'attr' => ['placeholder' => 'Confirmation']],
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
@@ -51,7 +61,10 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('cellphone', TextType::class)
+            ->add('cellphone', TextType::class, [
+                'required' => true,
+                'label' => 'Numéro de téléphone',
+            ])
             ->add('save', SubmitType::class, ['label' => 'S\'INSCRIRE'])
         ;
     }
