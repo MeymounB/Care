@@ -6,15 +6,7 @@ use App\Entity\Particular;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Particular>
- *
- * @method Particular|null find($id, $lockMode = null, $lockVersion = null)
- * @method Particular|null findOneBy(array $criteria, array $orderBy = null)
- * @method Particular[]    findAll()
- * @method Particular[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class ParticulierRepository extends ServiceEntityRepository
+class ParticularRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -44,10 +36,10 @@ class ParticulierRepository extends ServiceEntityRepository
 //     */
 //    public function findByExampleField($value): array
 //    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//        return $this->createQueryBuilder('c')
+//            ->andWhere('c.exampleField = :val')
 //            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
+//            ->orderBy('c.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()
 //            ->getResult()
@@ -56,8 +48,8 @@ class ParticulierRepository extends ServiceEntityRepository
 
 //    public function findOneBySomeField($value): ?Particular
 //    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
+//        return $this->createQueryBuilder('c')
+//            ->andWhere('c.exampleField = :val')
 //            ->setParameter('val', $value)
 //            ->getQuery()
 //            ->getOneOrNullResult()

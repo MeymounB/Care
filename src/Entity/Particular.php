@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ParticulierRepository;
+use App\Repository\ParticularRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ParticulierRepository::class)]
+#[ORM\Entity(repositoryClass: ParticularRepository::class)]
 class Particular extends User
 {
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Post::class)]

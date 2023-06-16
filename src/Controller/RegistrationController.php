@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Entity\Particular;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +34,7 @@ class RegistrationController extends AbstractController
     #[Route('/', name: 'connection_page')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailerInterface $mailer, MessageBusInterface $bus): Response
     {
-        $user = new User();
+        $user = new Particular();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -61,9 +60,10 @@ class RegistrationController extends AbstractController
             );*/
             // do anything else you need here, like send an email
 
-            $email = (new Email())
+            $email = new TemplatedEmail();
+            $email
                 ->from('hello@example.com')
-                ->to('you@example.com')
+                ->to($user->getEmail())
                 // ->cc('cc@example.com')
                 // ->bcc('bcc@example.com')
                 // ->replyTo('fabien@example.com')
@@ -72,7 +72,13 @@ class RegistrationController extends AbstractController
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
 
-            $mailer->send($email);
+            //            $mailer->send($email);
+
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                $email
+            );
 
             return $this->redirectToRoute('connection_page');
         }
