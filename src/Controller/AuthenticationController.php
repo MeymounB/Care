@@ -48,8 +48,8 @@ class AuthenticationController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'connection_page')]
-    public function connectionRender(Request $request): Response
+    #[Route('/', name: 'inscription_page')]
+    public function inscriptionRender(Request $request): Response
     {
         $user = new User();
 
@@ -91,5 +91,11 @@ class AuthenticationController extends AbstractController
         return $this->render('guest_template/inscriptionPage.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/connection', name:'connection_page')]
+    public function connectionRender(Request $request): Response
+    {
+        return $this->render('guest_template/connectionPage.html.twig');
     }
 }
