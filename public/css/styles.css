@@ -119,6 +119,15 @@ a:focus{
     opacity: 0.8;
 }
 
+/*** HEADER **/
+
+header{
+    width: 100%;
+    height: 200px;
+    background-color: #04DC40;
+    color: white;
+}
+
 /*** FORM  */
 
 form{
