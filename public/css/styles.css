@@ -79,7 +79,7 @@
 }
 
 
-
+/*** GENERAL STYLE */ 
 
 p,
 span,
@@ -140,6 +140,9 @@ a:focus{
     text-decoration-color: #04DC40;
     opacity: 0.8;
 }
+
+
+
 /*** HEADER */
 
 header{
@@ -185,9 +188,14 @@ header .slogan{
     align-items: center;
 }
 
+.header_nav_element:hover{
+    background-color: #f6f5f5;
+}
+
 .header_nav_element img{
-    height: 44px;
-    width: 44px;
+    height: 38px;
+    width: 38px;
+    margin-bottom: 7px;
 }
 
 
@@ -253,6 +261,7 @@ form button{
 
 
 
+
 .inscriptionform{
     padding: 50px;
     text-align: center;
@@ -276,4 +285,30 @@ form[name=form] button{
 
 .inscriptionform p {
     margin-top: 7px;
+}
+
+/**** CONNECTION PAGE */
+/* HEADER */
+
+.btn-back{
+    display: flex;
+    margin-left: 30px;
+}
+
+.btn-back img{
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    color: white !important;
+}
+
+
+.headerlogo-wrapper{
+    display: grid;
+    place-content: center;
+    position: absolute;
+    height: 100px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
 }
