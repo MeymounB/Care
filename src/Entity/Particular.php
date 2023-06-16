@@ -19,6 +19,9 @@ class Particular extends User
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Address::class, orphanRemoval: true)]
+    private Collection $address;
+
     public function __construct()
     {
         parent::__construct();
@@ -26,6 +29,7 @@ class Particular extends User
         $this->plants = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->roles[] = 'ROLE_PARTICULAR';
+        $this->address = new ArrayCollection();
     }
 
     /**
@@ -112,6 +116,36 @@ class Particular extends User
             // set the owning side to null (unless already changed)
             if ($appointment->getParticular() === $this) {
                 $appointment->setParticular(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Address>
+     */
+    public function getAddress(): Collection
+    {
+        return $this->address;
+    }
+
+    public function addAddress(Address $address): self
+    {
+        if (!$this->address->contains($address)) {
+            $this->address->add($address);
+            $address->setParticular($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): self
+    {
+        if ($this->address->removeElement($address)) {
+            // set the owning side to null (unless already changed)
+            if ($address->getParticular() === $this) {
+                $address->setParticular(null);
             }
         }
 
