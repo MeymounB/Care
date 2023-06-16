@@ -24,6 +24,7 @@ class Botanist extends User
         parent::__construct();
         $this->appointments = new ArrayCollection();
         $this->certificates = new ArrayCollection();
+        $this->roles[] = 'ROLE_BOTANIST';
     }
 
     public function isIsVerified(): ?bool
