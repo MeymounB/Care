@@ -6,8 +6,8 @@ use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,8 +48,8 @@ class AuthenticationController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'inscription_page')]
-    public function inscriptionRender(Request $request): Response
+    /*#[Route('/', name: 'connection_page')]
+    public function connectionRender(Request $request): Response
     {
         $user = new User();
 
@@ -58,9 +58,6 @@ class AuthenticationController extends AbstractController
             ->add('lastName', TextType::class)
             ->add('email', TextType::class)
             ->add('password', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
@@ -91,11 +88,5 @@ class AuthenticationController extends AbstractController
         return $this->render('guest_template/inscriptionPage.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
-
-    #[Route('/connection', name:'connection_page')]
-    public function connectionRender(Request $request): Response
-    {
-        return $this->render('guest_template/connectionPage.html.twig');
-    }
+    }*/
 }

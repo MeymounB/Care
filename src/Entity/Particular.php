@@ -2,19 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ParticulierRepository;
+use App\Repository\ParticularRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ParticulierRepository::class)]
+#[ORM\Entity(repositoryClass: ParticularRepository::class)]
 class Particular extends User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Post::class)]
     private Collection $posts;
 
@@ -24,16 +19,17 @@ class Particular extends User
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Address::class, orphanRemoval: true)]
+    private Collection $address;
+
     public function __construct()
     {
+        parent::__construct();
         $this->posts = new ArrayCollection();
         $this->plants = new ArrayCollection();
         $this->appointments = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->roles[] = 'ROLE_PARTICULAR';
+        $this->address = new ArrayCollection();
     }
 
     /**
@@ -120,6 +116,36 @@ class Particular extends User
             // set the owning side to null (unless already changed)
             if ($appointment->getParticular() === $this) {
                 $appointment->setParticular(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Address>
+     */
+    public function getAddress(): Collection
+    {
+        return $this->address;
+    }
+
+    public function addAddress(Address $address): self
+    {
+        if (!$this->address->contains($address)) {
+            $this->address->add($address);
+            $address->setParticular($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(Address $address): self
+    {
+        if ($this->address->removeElement($address)) {
+            // set the owning side to null (unless already changed)
+            if ($address->getParticular() === $this) {
+                $address->setParticular(null);
             }
         }
 

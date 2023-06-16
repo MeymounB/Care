@@ -38,7 +38,7 @@ class Appointment
     private ?Particular $particular = null;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
-    private ?botanist $botanist = null;
+    private ?Botanist $botanist = null;
 
     public function __construct()
     {
