@@ -1,6 +1,7 @@
 @use './functions.scss' as funcs;
 @use './mixins.scss' as mixins;
 @use './colors.scss' as colors;
+@use './image.scss' as images;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap");
 
@@ -11,6 +12,7 @@
     margin: 0;
     padding: 0;
 }
+
 body {
     height: 100vh;
     line-height: 1.5;
@@ -18,11 +20,15 @@ body {
     background: colors.$half-green;
     font-weight: 400;
     font-size: funcs.rem(16);
+    scroll-behavior: smooth;
 }
+
 a,
 a:visited,
 a:focus {
     text-decoration: none;
+    color: unset;
+    cursor: pointer;
 }
 
 li {
@@ -31,7 +37,9 @@ li {
     padding: 0;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     border: none;
     outline: none;
     font-size: funcs.rem(16);
@@ -42,16 +50,19 @@ input, select, textarea {
     border-radius: funcs.rem(4);
 }
 
-select, textarea {
+select,
+textarea {
     resize: none;
     width: 100%;
 }
+
 option {
     padding: funcs.rem(5);
     margin-bottom: funcs.rem(5);
     outline: none;
     border-radius: funcs.rem(5);
 }
+
 select option:hover,
 select option:focus,
 select option:active,
