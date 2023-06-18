@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Particular;
+use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
@@ -17,6 +18,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
@@ -53,16 +56,6 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            /*$this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('from@example.com', 'GreenCare'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );*/
-            // do anything else you need here, like send an email
-
             $email = new TemplatedEmail();
             $email
                 ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
@@ -86,6 +79,36 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/login', name: 'app_login')]
+    public function index(AuthenticationUtils $authenticationUtils, UserRepository $userRepository): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('register_page');
+        }
+
+        $user = $userRepository->findOneBy(['email' => $lastUsername]);
+        if ($user && !$user->isVerified()) {
+            $error = new AuthenticationException('Votre adresse e-mail n\'a pas été vérifiée.');
+            dd($error);
+        }
+
+        return $this->render('registration/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
+    }
+
+    #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
+    public function logout(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
