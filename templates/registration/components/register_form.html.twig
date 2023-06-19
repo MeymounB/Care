@@ -1,0 +1,36 @@
+{# REGISTRATION FORM #}
+<h2 class="title">S'inscrire</h2>
+<form>
+    <div class="form-field">
+        {{ form_label(form.firstName) }}
+        {{ form_widget(form.firstName) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.lastName) }}
+        {{ form_widget(form.lastName) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.password.first) }}
+        {{ form_widget(form.password.first) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.password.second) }}
+        {{ form_widget(form.password.second) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.cellphone) }}
+        {{ form_widget(form.cellphone) }}
+    </div>
+    <div class="form-cgu form-cgu-correction">
+        {{ form_widget(form.agreeTerms) }}
+        {{ form_label(form.agreeTerms) }}
+    </div>
+    <div class="form-link">
+        <a href="{{ path('app_login') }}">Vous avez déja un compte?</a>
+    </div>
+    {{ form_row(form.save) }}
+</form>

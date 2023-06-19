@@ -1,0 +1,12 @@
+{# templates/login/index.html.twig #}
+{% extends "registration/registration_base.html.twig" %}
+
+{# ... #}
+{% block title %}Connexion{% endblock %}
+{% block header %}
+    {% include '/registration/components/header.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    {% include '/registration/components/login_form.html.twig'%}
+{% endblock %}

@@ -62,7 +62,7 @@ class RegistrationController extends AbstractController
                 ->to($user->getEmail())
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
+                ->htmlTemplate('registration/pages/confirmation_email.html.twig')
                 ->context([
                     'username' => $user->getFirstName(),
                 ]);
@@ -76,7 +76,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('register_page');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('registration/pages/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -99,7 +99,7 @@ class RegistrationController extends AbstractController
             dd($error);
         }
 
-        return $this->render('registration/login.html.twig', [
+        return $this->render('registration/pages/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);

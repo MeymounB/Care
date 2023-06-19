@@ -117,7 +117,7 @@ h6
 }
 
 .secondary-btn{
-    padding: 8px 25px;
+    padding: 12px 25px;
     background-color: black;
     color: white;
     border: none;
@@ -132,6 +132,7 @@ button:focus{
 
 a{
     color: #04DC40;
+    text-decoration: none;
 }
 
 a:hover,
@@ -140,8 +141,6 @@ a:focus{
     text-decoration-color: #04DC40;
     opacity: 0.8;
 }
-
-
 
 /*** HEADER */
 
@@ -214,62 +213,130 @@ header .slogan{
 /*** FORM  */
 
 form{
-    width: 600px;
+    width: 100%;
     margin: auto;
-}
-
-form div{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-input{
+.form-field{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    text-align: left;
+}
+
+.form-field:first-of-type{
+    margin-top: 50px;
+}
+
+
+form input{
     outline: none;
     border: none;
-    height: 30px;
+    width: 320px;
+    height: 43px;
     padding: 5px;
-    border-bottom: 2px solid black;
-    box-sizing: border-box;
     margin-bottom: 5px;
+    background-color: #F6F6F6;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 input:hover,
-input:focus,
-input:valid{
+input:focus{
     outline: none;
-    border-bottom: 4px solid #04DC40;
+    border: 3px solid #04DC40;
     background-color: #f6f5f5;
 }
 
 form label{
-    color: #04DC40;
-    margin: 10px 0 5px 5px;
+    color: #656D78;
+    margin: 7px 0 5px 5px;
+}
+
+.form-field label{
+    text-transform: uppercase;
+}
+
+
+.form-cgu{
+    display: flex;
+    align-items: center;
+    width: 320px;
+    margin-top: 7px;
+    text-align: left;
+}
+
+.form-cgu-correction{
+    position: relative;
+    left: -9px;
+}
+
+
+.form-cgu label{
+    align-items: inherit;
+    font-size: 80%;
+}
+
+input[type="checkbox"]{
+    width: 40px;
+    height: 20px;
+}
+
+.form-link{
+    display: flex;
+    align-items: center;
+    width: 320px;
+    margin-top: 15px;
+    text-align: left 
+}
+
+.form-link a{
+    font-family: 'Montserrat-Bold';
+    font-size: 80%;
 }
 
 form button{
-    margin-top: 10px;
-    padding: 8px 25px;
+    margin-top: 50px;
+    padding: 12px 25px;
     background-color: #04DC40;
     color: white;
     border: none;
     border-radius: 25px;
     box-shadow: 0px 4px 6px 0px #00000040;
+    font-family: 'Montserrat-Medium';
+    letter-spacing: 1px;
 }
 
-
+.form-horizontal{
+    display: flex;
+    flex-direction: row;
+    width: 320px;
+    margin-top: 10px;
+}
 /*** Inscription Page */
 
 
 
 
-.inscriptionform{
+.registration-content-wrapper{
+    width: 500px;
+    height: auto;
+    margin: auto;
+    margin-top: 50px;
     padding: 50px;
     text-align: center;
+    border: 1px solid #00000003;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 1px #0000001A;
 }
 
-.inscriptionform .title{
-    margin-top: 50px;
-    font-size: 120%;
+.registration-content-wrapper .title{
+    font-size: 130%;
+    font-family: 'Montserrat-Bold';
 }
 
 form[name=form]{
@@ -283,7 +350,7 @@ form[name=form] button{
     margin-top: 50px;
 }
 
-.inscriptionform p {
+.registration-content-wrapper p {
     margin-top: 7px;
 }
 
@@ -311,4 +378,8 @@ form[name=form] button{
     top: 0;
     left: 50%;
     transform: translate(-50%);
+}
+
+.headerlogo-wrapper img{
+    height: 50px;
 }
