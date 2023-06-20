@@ -92,7 +92,7 @@ class RegistrationController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('registration/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('registration/pages/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
