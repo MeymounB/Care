@@ -37,5 +37,11 @@
     </div>
     <button type="submit" class="btn btn-primary">S'inscrire</button>
 
+    {% if error %}
+        {% include 'parts/error.html.twig' with {
+            'message': error.message
+        } only %}
+    {% endif %}
+
 
 {{ form_end(form) }}
