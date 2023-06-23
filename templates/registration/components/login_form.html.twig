@@ -22,7 +22,9 @@
     <button type="submit" class="btn btn-primary">Se connecter</button>
 
     {% if error %}
-        <div>{{ error.message }}</div>
+        {% include 'parts/error.html.twig' with {
+            'message': error.message
+        } only %}
     {% endif %}
 </form>
 {#<form action="{{ path('app_logout') }}" method="post">

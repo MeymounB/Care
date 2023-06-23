@@ -28,18 +28,22 @@ class RegistrationFormType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
+                'error_bubbling' => true,
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
                 'required' => true,
+                'error_bubbling' => true,
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
+                'error_bubbling' => true,
             ])
             ->add('email', TextType::class, [
                 'label' => 'Adresse email',
                 'required' => true,
+                'error_bubbling' => true,
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -60,10 +64,12 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+                'error_bubbling' => true,
             ])
             ->add('cellphone', TextType::class, [
                 'required' => true,
                 'label' => 'Numéro de téléphone',
+                'error_bubbling' => true,
             ])
         ;
     }
