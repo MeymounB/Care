@@ -60,7 +60,7 @@ class RegistrationController extends AbstractController
                 ->to($user->getEmail())
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
-                ->htmlTemplate('registration/pages/confirmation_email.html.twig')
+                ->htmlTemplate('auth/confirmation_email.html.twig')
                 ->context([
                     'username' => $user->getFirstName(),
                 ]);
@@ -74,7 +74,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('register_page');
         }
 
-        return $this->render('registration/pages/register.html.twig', [
+        return $this->render('auth/register.html.twig', [
             'form' => $form->createView(),
             'error' => $form->getErrors()->current(),
         ]);
@@ -92,7 +92,7 @@ class RegistrationController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('registration/pages/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('auth/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
