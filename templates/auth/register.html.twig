@@ -1,5 +1,13 @@
-{# REGISTRATION FORM #}
-{{ form_start(form) }}
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block header %}
+    {% include 'parts/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
     <h2 class="title">S'inscrire</h2>
     <div class="form-half">
         <div class="form-field">
@@ -37,11 +45,12 @@
     </div>
     <button type="submit" class="btn btn-primary">S'inscrire</button>
 
-    {% if error %}
-        {% include 'parts/error.html.twig' with {
-            'message': error.message
-        } only %}
-    {% endif %}
+        {% if error %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(error.message) }}
+        {% endif %}
 
+    {{ form_end(form) }}
+{% endblock %}
 
-{{ form_end(form) }}
+{% block footer %}{% endblock %}

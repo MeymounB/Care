@@ -1,1 +1,5 @@
-<div class="form-error">{{ message }}</div>
+{#<div class="form-error">{{ message }}</div>#}
+
+{% macro form_error(message) %}
+    <div class="form-error">{{ message }}</div>
+{% endmacro %}
