@@ -1,9 +1,8 @@
 @use './functions.scss' as funcs;
 @use './mixins.scss' as mixins;
 @use './colors.scss' as colors;
-@use './image.scss' as images;
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+@import "./fonts";
 
 *,
 ::before,
@@ -14,21 +13,43 @@
 }
 
 body {
-    height: 100vh;
+    min-height: 100vh;
     line-height: 1.5;
-    font-family: 'Poppins', sans-serif;
-    background: colors.$half-green;
     font-weight: 400;
     font-size: funcs.rem(16);
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
 }
+
+p,
+span,
+div,
+a,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
 
 a,
 a:visited,
 a:focus {
+    color: #04DC40;
     text-decoration: none;
-    color: unset;
-    cursor: pointer;
+}
+
+a:hover,
+a:focus{
+    text-decoration: underline;
+    text-decoration-color: #04DC40;
+    opacity: 0.8;
 }
 
 li {
@@ -40,14 +61,16 @@ li {
 input,
 select,
 textarea {
-    border: none;
+    border: 3px solid transparent;
     outline: none;
     font-size: funcs.rem(16);
-
-    background: colors.$half-green;
-    color: colors.$dark-green;
+    background-color: #f6f5f5;
     padding: funcs.rem(10);
     border-radius: funcs.rem(4);
+
+    &:focus, &:hover {
+        border-color:  colors.$green;
+    }
 }
 
 select,
@@ -61,14 +84,6 @@ option {
     margin-bottom: funcs.rem(5);
     outline: none;
     border-radius: funcs.rem(5);
-}
-
-select option:hover,
-select option:focus,
-select option:active,
-select option:checked {
-    color: colors.$half-green;
-    background: colors.$dark-green;
 }
 
 .center-space {

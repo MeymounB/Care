@@ -1,21 +1,9 @@
-@use './utils/index' as vars;
+@use "./utils" as vars;
+@import "./utils/boilerplates";
 @import './components/index';
-
-body {
-    background-color: #000;
-}
-
-#root {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-
-    &>* {
-        width: 100%;
-    }
-}
 
 .container {
     width: 100%;
     height: 100%;
+    margin: vars.rem(20) 0;
 }

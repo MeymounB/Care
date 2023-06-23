@@ -1,12 +1,8 @@
 {# LOGIN FORM #}
 
-<h2 class="title">Se connecter</h2>
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
-
 
 <form action="{{ path('app_login') }}" method="post">
+    <h2 class="title">Se connecter</h2>
     <div class="form-field">
         <label for="username">Adresse email</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}"/>
@@ -17,15 +13,17 @@
     </div>
     {#Protection contre les attaques CSRF#}
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    <div class="form-horizontal">
-        <div class="form-link">
-            <a href="{{ path('register_page') }}">Vous n'avez pas de compte?</a>
-        </div>
-        <div class="form-link">
-            <a href="">Mot de passe oublié?</a>
-        </div>
+    <div class="form-link">
+        <a href="{{ path('register_page') }}">Vous n'avez pas de compte?</a>
     </div>
-    <button type="submit">Se connecter</button>
+    <div class="form-link">
+        <a href="">Mot de passe oublié?</a>
+    </div>
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+
+    {% if error %}
+        <div>{{ error.message }}</div>
+    {% endif %}
 </form>
 {#<form action="{{ path('app_logout') }}" method="post">
     <button type="submit">Se déconnecter</button>
