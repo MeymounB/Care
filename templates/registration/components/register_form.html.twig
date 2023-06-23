@@ -1,13 +1,15 @@
 {# REGISTRATION FORM #}
-<h2 class="title">S'inscrire</h2>
 {{ form_start(form) }}
-    <div class="form-field">
-        {{ form_label(form.firstName) }}
-        {{ form_widget(form.firstName) }}
-    </div>
-    <div class="form-field">
-        {{ form_label(form.lastName) }}
-        {{ form_widget(form.lastName) }}
+    <h2 class="title">S'inscrire</h2>
+    <div class="form-half">
+        <div class="form-field">
+            {{ form_label(form.firstName) }}
+            {{ form_widget(form.firstName) }}
+        </div>
+        <div class="form-field">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName) }}
+        </div>
     </div>
     <div class="form-field">
         {{ form_label(form.email) }}
@@ -25,13 +27,15 @@
         {{ form_label(form.cellphone) }}
         {{ form_widget(form.cellphone) }}
     </div>
-    <div class="form-cgu form-cgu-correction">
+    <div class="form-field form-cgu">
         {{ form_widget(form.agreeTerms) }}
         {{ form_label(form.agreeTerms) }}
     </div>
     <div class="form-link">
-        <a href="{{ path('app_login') }}">Vous avez déja un compte?</a>
+        <span>Vous avez déjà un compte?</span>
+        <a href="{{ path('app_login') }}">Connectez-vous</a>
     </div>
-    {{ form_row(form.save) }}
+    <button type="submit" class="btn btn-primary">S'inscrire</button>
+
 
 {{ form_end(form) }}

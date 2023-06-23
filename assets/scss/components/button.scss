@@ -1,0 +1,26 @@
+@use "../utils" as vars;
+
+.btn {
+  padding: vars.rem(12) vars.rem(25);
+  color: white;
+  border: none;
+  border-radius: vars.rem(25);
+  cursor: pointer;
+  box-shadow: 0 vars.rem(4) vars.rem(6) 0 vars.$gray;
+  @include vars.flexer(center, center);
+  gap: vars.rem(8);
+  transition: .5s;
+
+  &:hover, &:focus {
+    //opacity: 0.8;
+    filter: brightness(.8);
+  }
+
+  &-primary {
+    background-color: vars.$green;
+  }
+
+  &-secondary{
+    background-color: vars.$black;
+  }
+}

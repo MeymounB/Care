@@ -65,7 +65,6 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'label' => 'Numéro de téléphone',
             ])
-            ->add('save', SubmitType::class, ['label' => 'S\'INSCRIRE'])
         ;
     }
 
