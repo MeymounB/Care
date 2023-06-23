@@ -1,6 +1,6 @@
 {# REGISTRATION FORM #}
 <h2 class="title">S'inscrire</h2>
-<form>
+{{ form_start(form) }}
     <div class="form-field">
         {{ form_label(form.firstName) }}
         {{ form_widget(form.firstName) }}
@@ -33,4 +33,5 @@
         <a href="{{ path('app_login') }}">Vous avez déja un compte?</a>
     </div>
     {{ form_row(form.save) }}
-</form>
+
+{{ form_end(form) }}
