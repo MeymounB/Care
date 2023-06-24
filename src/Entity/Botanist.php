@@ -13,8 +13,8 @@ class Botanist extends User
     #[ORM\Column]
     private ?bool $isVerified = null;
 
-    #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Appointment::class)]
-    private Collection $appointments;
+    #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Request::class)]
+    private Collection $requests;
 
     #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Certificate::class)]
     private Collection $certificates;
@@ -22,7 +22,7 @@ class Botanist extends User
     public function __construct()
     {
         parent::__construct();
-        $this->appointments = new ArrayCollection();
+        $this->requests = new ArrayCollection();
         $this->certificates = new ArrayCollection();
         $this->roles[] = 'ROLE_BOTANIST';
     }
@@ -40,29 +40,29 @@ class Botanist extends User
     }
 
     /**
-     * @return Collection<int, Appointment>
+     * @return Collection<int, Request>
      */
-    public function getAppointments(): Collection
+    public function getRequests(): Collection
     {
-        return $this->appointments;
+        return $this->requests;
     }
 
-    public function addAppointment(Appointment $appointment): static
+    public function addRequest(Request $request): static
     {
-        if (!$this->appointments->contains($appointment)) {
-            $this->appointments->add($appointment);
-            $appointment->setBotanist($this);
+        if (!$this->requests->contains($request)) {
+            $this->requests->add($request);
+            $request->setBotanist($this);
         }
 
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): static
+    public function removeRequest(Request $request): static
     {
-        if ($this->appointments->removeElement($appointment)) {
+        if ($this->requests->removeElement($request)) {
             // set the owning side to null (unless already changed)
-            if ($appointment->getBotanist() === $this) {
-                $appointment->setBotanist(null);
+            if ($request->getBotanist() === $this) {
+                $request->setBotanist(null);
             }
         }
 
