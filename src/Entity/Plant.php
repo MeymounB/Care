@@ -31,23 +31,23 @@ class Plant
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Post::class, inversedBy: 'plants')]
-    private Collection $post;
-
     #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class)]
     private Collection $photos;
 
     #[ORM\ManyToOne(inversedBy: 'plants')]
     private ?Particular $particular = null;
 
-    #[ORM\ManyToMany(targetEntity: Appointment::class, mappedBy: 'plant')]
-    private Collection $appointments;
+    #[ORM\ManyToMany(targetEntity: Request::class, mappedBy: 'plant')]
+    private Collection $requests;
+
+    #[ORM\OneToMany(mappedBy: 'commentPlant', targetEntity: Comment::class)]
+    private Collection $comments;
 
     public function __construct()
     {
-        $this->post = new ArrayCollection();
         $this->photos = new ArrayCollection();
-        $this->appointments = new ArrayCollection();
+        $this->requests = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,30 +116,6 @@ class Plant
     }
 
     /**
-     * @return Collection<int, Post>
-     */
-    public function getPost(): Collection
-    {
-        return $this->post;
-    }
-
-    public function addPost(Post $post): static
-    {
-        if (!$this->post->contains($post)) {
-            $this->post->add($post);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): static
-    {
-        $this->post->removeElement($post);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Photo>
      */
     public function getPhotos(): Collection
@@ -182,27 +158,60 @@ class Plant
     }
 
     /**
-     * @return Collection<int, Appointment>
+     * @return Collection<int, Request>
      */
-    public function getAppointments(): Collection
+
+    public function getRequests(): Collection
     {
-        return $this->appointments;
+        return $this->requests;
     }
 
-    public function addAppointment(Appointment $appointment): static
+    public function addRequest(Request $request): static
     {
-        if (!$this->appointments->contains($appointment)) {
-            $this->appointments->add($appointment);
-            $appointment->addPlant($this);
+        if (!$this->requests->contains($request)) {
+            $this->requests->add($request);
+            $request->addPlant($this);
         }
 
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): static
+    public function removeRequest(Request $request): static
     {
-        if ($this->appointments->removeElement($appointment)) {
-            $appointment->removePlant($this);
+        if ($this->requests->removeElement($request)) {
+            if ($request->getPlant() === $this) {
+                $request->removePlant($this);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setCommentPlant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getCommentPlant() === $this) {
+                $comment->setCommentPlant(null);
+            }
         }
 
         return $this;

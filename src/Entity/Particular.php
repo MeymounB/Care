@@ -10,14 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ParticularRepository::class)]
 class Particular extends User
 {
-    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Post::class)]
-    private Collection $posts;
-
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Plant::class)]
     private Collection $plants;
 
-    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Appointment::class)]
-    private Collection $appointments;
+    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Request::class)]
+    private Collection $requests;
 
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Address::class, orphanRemoval: true)]
     private Collection $address;
@@ -25,41 +22,10 @@ class Particular extends User
     public function __construct()
     {
         parent::__construct();
-        $this->posts = new ArrayCollection();
         $this->plants = new ArrayCollection();
-        $this->appointments = new ArrayCollection();
+        $this->requests = new ArrayCollection();
         $this->roles[] = 'ROLE_PARTICULAR';
         $this->address = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection<int, Post>
-     */
-    public function getPosts(): Collection
-    {
-        return $this->posts;
-    }
-
-    public function addPost(Post $post): static
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts->add($post);
-            $post->setParticular($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): static
-    {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getParticular() === $this) {
-                $post->setParticular(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -93,29 +59,29 @@ class Particular extends User
     }
 
     /**
-     * @return Collection<int, Appointment>
+     * @return Collection<int, Request>
      */
-    public function getAppointments(): Collection
+    public function getRequests(): Collection
     {
-        return $this->appointments;
+        return $this->requests;
     }
 
-    public function addAppointment(Appointment $appointment): static
+    public function addRequest(Request $request): static
     {
-        if (!$this->appointments->contains($appointment)) {
-            $this->appointments->add($appointment);
-            $appointment->setParticular($this);
+        if (!$this->requests->contains($request)) {
+            $this->requests->add($request);
+            $request->setParticular($this);
         }
 
         return $this;
     }
 
-    public function removeAppointment(Appointment $appointment): static
+    public function removeRequest(Request $request): static
     {
-        if ($this->appointments->removeElement($appointment)) {
+        if ($this->requests->removeElement($request)) {
             // set the owning side to null (unless already changed)
-            if ($appointment->getParticular() === $this) {
-                $appointment->setParticular(null);
+            if ($request->getParticular() === $this) {
+                $request->setParticular(null);
             }
         }
 
