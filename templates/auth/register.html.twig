@@ -45,10 +45,10 @@
     </div>
     <button type="submit" class="btn btn-primary">S'inscrire</button>
 
-        {% if error %}
-            {% from "parts/error.html.twig" import form_error %}
-            {{ form_error(error.message) }}
-        {% endif %}
+    {% if error %}
+        {% from "parts/error.html.twig" import form_error %}
+        {{ form_error(error.message) }}
+    {% endif %}
 
     {{ form_end(form) }}
 {% endblock %}

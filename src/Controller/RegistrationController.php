@@ -59,7 +59,6 @@ class RegistrationController extends AbstractController
                 ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
                 ->to($user->getEmail())
                 ->subject('Time for Symfony Mailer!')
-                ->text('Sending emails is fun again!')
                 ->htmlTemplate('auth/confirmation_email.html.twig')
                 ->context([
                     'username' => $user->getFirstName(),
