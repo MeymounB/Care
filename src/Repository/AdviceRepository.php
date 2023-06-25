@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Appointment;
+use App\Entity\Advice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Appointment>
+ * @extends ServiceEntityRepository<Advice>
  *
- * @method Appointment|null find($id, $lockMode = null, $lockVersion = null)
- * @method Appointment|null findOneBy(array $criteria, array $orderBy = null)
- * @method Appointment[]    findAll()
- * @method Appointment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Advice|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Advice|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Advice[]    findAll()
+ * @method Advice[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AppointmentRepository extends ServiceEntityRepository
+class AdviceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Appointment::class);
+        parent::__construct($registry, Advice::class);
     }
 
-    public function save(Appointment $entity, bool $flush = false): void
+    public function save(Advice $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class AppointmentRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Appointment $entity, bool $flush = false): void
+    public function remove(Advice $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class AppointmentRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return Appointment[] Returns an array of Appointment objects
+    //     * @return Advice[] Returns an array of Advice objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -54,7 +54,7 @@ class AppointmentRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Appointment
+    //    public function findOneBySomeField($value): ?Advice
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')

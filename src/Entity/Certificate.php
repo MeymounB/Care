@@ -82,12 +82,12 @@ class Certificate
         return $this;
     }
 
-    public function getBotanist(): ?botanist
+    public function getBotanist(): ?Botanist
     {
         return $this->botanist;
     }
 
-    public function setBotanist(?botanist $botanist): static
+    public function setBotanist(?Botanist $botanist): static
     {
         $this->botanist = $botanist;
 
