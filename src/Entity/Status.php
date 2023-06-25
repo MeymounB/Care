@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StatusRepository::class)]
@@ -17,6 +18,9 @@ class Status
 
     #[ORM\OneToMany(mappedBy: 'status', targetEntity: Request::class)]
     private Collection $stateRequest;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $name = null;
 
     public function __construct()
     {
@@ -54,6 +58,18 @@ class Status
                 $stateRequest->setStatus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

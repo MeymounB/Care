@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AppointmentRepository;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
@@ -31,12 +30,12 @@ class Appointment extends Request
         return $this->id;
     }
 
-    public function getPlannedAt(): ?DateTimeInterface
+    public function getPlannedAt(): ?\DateTimeInterface
     {
         return $this->plannedAt;
     }
 
-    public function setPlannedAt(DateTimeInterface $plannedAt): static
+    public function setPlannedAt(\DateTimeInterface $plannedAt): static
     {
         $this->plannedAt = $plannedAt;
 

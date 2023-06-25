@@ -21,7 +21,7 @@ class Photo
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'photos')]
-    private ?plant $plant = null;
+    private ?Plant $plant = null;
 
     public function getId(): ?int
     {
@@ -52,12 +52,12 @@ class Photo
         return $this;
     }
 
-    public function getPlant(): ?plant
+    public function getPlant(): ?Plant
     {
         return $this->plant;
     }
 
-    public function setPlant(?plant $plant): static
+    public function setPlant(?Plant $plant): static
     {
         $this->plant = $plant;
 

@@ -34,10 +34,17 @@ class Plant
     #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class)]
     private Collection $photos;
 
+    // Temporaire, le temps d'ajouter le service de gestion des images
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $smallThumbnail = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $thumbnail = null;
+
     #[ORM\ManyToOne(inversedBy: 'plants')]
     private ?Particular $particular = null;
 
-    #[ORM\ManyToMany(targetEntity: Request::class, mappedBy: 'plant')]
+    #[ORM\ManyToMany(targetEntity: Request::class, mappedBy: 'plants')]
     private Collection $requests;
 
     #[ORM\OneToMany(mappedBy: 'commentPlant', targetEntity: Comment::class)]
@@ -115,6 +122,30 @@ class Plant
         return $this;
     }
 
+    public function getSmallThumbnail(): ?string
+    {
+        return $this->smallThumbnail;
+    }
+
+    public function setSmallThumbnail(?string $smallThumbnail): static
+    {
+        $this->smallThumbnail = $smallThumbnail;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?string
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?string $thumbnail): static
+    {
+        $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Photo>
      */
@@ -160,7 +191,6 @@ class Plant
     /**
      * @return Collection<int, Request>
      */
-
     public function getRequests(): Collection
     {
         return $this->requests;
@@ -179,7 +209,7 @@ class Plant
     public function removeRequest(Request $request): static
     {
         if ($this->requests->removeElement($request)) {
-            if ($request->getPlant() === $this) {
+            if ($request->getPlants() === $this) {
                 $request->removePlant($this);
             }
         }

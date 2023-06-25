@@ -1,0 +1,254 @@
+<mxfile host="65bd71144e" pages="4">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="System context diagram">
+        <mxGraphModel dx="1754" dy="851" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="320" y="230" as="sourcePoint"/>
+                        <mxPoint x="320" y="320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-7" value="Views and add plants, &lt;br&gt;take appointement" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W7oQvctl5BvWIKeloKZg-6" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2267" y="2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-3" value="Individual customer" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="305" y="140" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-8" value="Allows user to see all plants, and offering maintenance advice by commicate to specialist" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="185" y="320" width="270" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-9" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;Internet advice system &lt;br&gt;[Software system]&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="220" y="335" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-14" value="Store all of the core information about customers" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="190" y="540" width="270" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-15" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;Mainframe Advice System&amp;nbsp;&lt;br&gt;&lt;/span&gt;[Software system]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="247.5" y="555" width="172.5" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="W7oQvctl5BvWIKeloKZg-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="319.5" y="450" as="sourcePoint"/>
+                        <mxPoint x="319.5" y="540" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-2" value="Gets information, and make appointement&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="W7oQvctl5BvWIKeloKZg-16" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2756" y="1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-0" value="External e-mail system" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="510" y="320" width="260" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-1" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;E-mail system &lt;br&gt;[Software system]&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="540" y="330" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="W7oQvctl5BvWIKeloKZg-14" target="WNZMCLOV6AtxF3GWM3o7-0" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="329.5" y="460" as="sourcePoint"/>
+                        <mxPoint x="329.5" y="550" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-4" value="Send e-mail using" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="WNZMCLOV6AtxF3GWM3o7-3" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2756" y="1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WNZMCLOV6AtxF3GWM3o7-0" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="470" y="630" as="sourcePoint"/>
+                        <mxPoint x="400" y="210" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="640" y="210"/>
+                            <mxPoint x="400" y="210"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="WNZMCLOV6AtxF3GWM3o7-6" value="Send e-mail using" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="WNZMCLOV6AtxF3GWM3o7-5" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2756" y="1" relative="1" as="geometry">
+                        <mxPoint x="-63" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="gj0adfr9au8FWoipOn57-0" value="&lt;font color=&quot;#f01f1f&quot; style=&quot;font-size: 19px;&quot;&gt;TODO: A REVOIR&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+                    <mxGeometry x="260" y="10" width="320" height="50" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="fxgC1bDkClGpW7pstHRa" name="Container diagram">
+        <mxGraphModel dx="2891" dy="2170" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-1" value="Individual user" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="-380" y="-570" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-2" value="" style="rounded=0;whiteSpace=wrap;html=1;shadow=1;" parent="1" vertex="1">
+                    <mxGeometry x="-750" y="-370" width="680" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-3" value="Single-Page Application&amp;nbsp;&lt;br&gt;[Container: Javascript and React]&lt;br&gt;&lt;br&gt;Provides all of the functionnalityto the customer via is web browser" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-730" y="-340" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-4" value="Progressive Web App&lt;br&gt;[Container: Javascript and React]&lt;br&gt;&lt;br&gt;Provides all of the native functionnality of the mobile device" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-320" y="-340" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="k5MhQ3BWeguhdkkUeody-3" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-410" y="-490" as="sourcePoint"/>
+                        <mxPoint x="-620" y="-490" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-6" value="Views&amp;nbsp;appointment, and advice requests,&lt;br&gt;Manage them and view plants" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-5" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint x="-24" y="17" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-7" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="k5MhQ3BWeguhdkkUeody-4" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-310" y="-480" as="sourcePoint"/>
+                        <mxPoint x="-610" y="-330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-8" value="Views&amp;nbsp;appointment, and advice requests,&lt;br&gt;Manage them and view plants" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-7" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint x="15" y="9" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-9" value="API Application&amp;nbsp;&lt;br&gt;[Container: PHP and Symfony]&lt;br&gt;&lt;br&gt;Provides functionality via JSON/HTTPS API" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-320" y="-190" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-10" value="Database&lt;br&gt;[Container: Postgres]&lt;br&gt;&lt;br&gt;Stores user registrqtion information, plants informations...etc." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-730" y="-200" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="k5MhQ3BWeguhdkkUeody-4" target="k5MhQ3BWeguhdkkUeody-9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-230" y="-260" as="sourcePoint"/>
+                        <mxPoint x="-340" y="-140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-12" value="Makes API calls to [JSON/HTTPS]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-11" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint x="1" y="15" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-13" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" target="k5MhQ3BWeguhdkkUeody-9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-510" y="-260" as="sourcePoint"/>
+                        <mxPoint x="-510" y="-190" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-14" value="Makes API calls to [JSON/HTTPS]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-13" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-15" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.011;exitY=0.413;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="k5MhQ3BWeguhdkkUeody-9" target="k5MhQ3BWeguhdkkUeody-10" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-502" y="-220" as="sourcePoint"/>
+                        <mxPoint x="-324" y="-150" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-17" value="Read and Wrtie to [SQL/TCP]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-15" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2546" y="1" relative="1" as="geometry">
+                        <mxPoint x="-21" y="-3" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-18" value="Photo system&lt;br&gt;[Software system]&lt;br&gt;&lt;br&gt;Stores all of the photos of the application" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="80" y="-190" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-19" value="E-mail system&lt;br&gt;[Software system]&lt;br&gt;&lt;br&gt;E-mailing system from&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="-340" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-21" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="k5MhQ3BWeguhdkkUeody-18" target="k5MhQ3BWeguhdkkUeody-18" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-160" y="-210" as="sourcePoint"/>
+                        <mxPoint x="-100" y="-140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-23" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="k5MhQ3BWeguhdkkUeody-9" target="k5MhQ3BWeguhdkkUeody-18" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint y="-210" as="sourcePoint"/>
+                        <mxPoint x="13" y="-140" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-24" value="Makes API calls to&lt;br&gt;&amp;nbsp;[JSON/HTTPS]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-23" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint x="35" y="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-25" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" parent="1" source="k5MhQ3BWeguhdkkUeody-9" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-90" y="-300.5" as="sourcePoint"/>
+                        <mxPoint x="90" y="-300.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-26" value="Makes API calls to&lt;br&gt;&amp;nbsp;[JSON/HTTPS]" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-25" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint x="35" y="-1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-31" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.3333333333333333;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" parent="1" source="k5MhQ3BWeguhdkkUeody-19" target="k5MhQ3BWeguhdkkUeody-1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-110" y="-370" as="sourcePoint"/>
+                        <mxPoint x="80" y="-480.5" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="k5MhQ3BWeguhdkkUeody-32" value="Send e-mail to" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="k5MhQ3BWeguhdkkUeody-31" vertex="1" connectable="0">
+                    <mxGeometry x="-0.2824" y="-1" relative="1" as="geometry">
+                        <mxPoint x="8" y="6" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="CEgHxs2peD4lQIaOZdYM" name="Component diagram">
+        <mxGraphModel dx="2891" dy="2170" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-250" y="160" width="990" height="315" as="geometry"/>
+                </mxCell>
+                <mxCell id="ntKlGlbFJ4VIc8R9W8qe-1" value="Single-Page Application&amp;nbsp;&lt;br&gt;[Container: Javascript and React]&lt;br&gt;&lt;br&gt;Provides all of the functionnalityto the customer via is web browser" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-60" y="-10" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-1" value="Progressive Web App&lt;br&gt;[Container: Javascript and React]&lt;br&gt;&lt;br&gt;Provides all of the native functionnality of the mobile device" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="-10" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-2" value="&lt;b&gt;Sign In Controller&lt;/b&gt;&lt;br&gt;[Container: Symfony Rest Controller]&lt;br&gt;&lt;br&gt;Allows users to sign in to the plant system" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-170" y="190" width="230" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-3" value="Api Application [controller]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="-260" y="440" width="180" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-4" value="&lt;b&gt;Sign In Controller&lt;/b&gt;&lt;br&gt;[Container: Symfony Rest Controller]&lt;br&gt;&lt;br&gt;Allows users to sign in to the plant system" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="190" width="230" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-6" value="&lt;b&gt;Sign In Service&lt;/b&gt;&lt;br&gt;[Container: Symfony Rest Controller]&lt;br&gt;&lt;br&gt;Provides functionnality related to sign in, changing password. etc." style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="-170" y="340" width="230" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-7" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="-l-nB1Hh_eohgXTN-7TS-2" target="-l-nB1Hh_eohgXTN-7TS-6" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-120" y="430" as="sourcePoint"/>
+                        <mxPoint x="-70" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="-l-nB1Hh_eohgXTN-7TS-8" value="&lt;b&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;Database&lt;/b&gt;&lt;br&gt;[Container : Postres]&lt;br&gt;&lt;br&gt;Stores users informations" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="585" width="200" height="160" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="eUhD1sqIMQmLTI_OlppU" name="Code diagram">
+        <mxGraphModel dx="1754" dy="851" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

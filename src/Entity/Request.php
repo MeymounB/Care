@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
 use App\Repository\RequestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RequestRepository::class)]
 #[ORM\InheritanceType('JOINED')]
@@ -31,7 +31,7 @@ class Request
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $type = null;
+    private ?string $type = null; // types de demandes
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -39,8 +39,8 @@ class Request
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(targetEntity: Plant::class, inversedBy: 'requests')]
-    private Collection $plant;
+    #[ORM\ManyToMany(targetEntity: Plant::class, inversedBy: 'requests')]
+    private Collection $plants;
 
     #[ORM\ManyToOne(targetEntity: Particular::class, inversedBy: 'requests')]
     private ?Particular $particular = null;
@@ -53,7 +53,7 @@ class Request
 
     public function __construct()
     {
-        $this->plant = new ArrayCollection();
+        $this->plants = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,18 +134,27 @@ class Request
     }
 
     /**
-     * @return Collection<int, Plant>  
+     * @param Collection<int, Plant> $plants
      */
-
-    public function getPlant(): Collection
+    public function setPlants(Collection $plants): static
     {
-        return $this->plant;
+        $this->plants = $plants;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Plant>
+     */
+    public function getPlants(): Collection
+    {
+        return $this->plants;
     }
 
     public function addPlant(Plant $plant): static
     {
-        if (!$this->plant->contains($plant)) {
-            $this->plant->add($plant);
+        if (!$this->plants->contains($plant)) {
+            $this->plants[] = $plant;
         }
 
         return $this;
@@ -153,9 +162,7 @@ class Request
 
     public function removePlant(Plant $plant): static
     {
-        if ($this->plant->contains($plant)) {
-            $this->plant->removeElement($plant);
-        }
+        $this->plants->removeElement($plant);
 
         return $this;
     }
