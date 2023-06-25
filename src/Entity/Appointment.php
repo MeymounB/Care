@@ -3,63 +3,31 @@
 namespace App\Entity;
 
 use App\Repository\AppointmentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
-class Appointment
+class Appointment extends Request
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column]
     private ?\DateTimeInterface $plannedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?bool $isPresential = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $adress = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
-    #[ORM\ManyToMany(targetEntity: Plant::class, inversedBy: 'appointments')]
-    private Collection $plant;
-
-    #[ORM\ManyToOne(inversedBy: 'appointments')]
-    private ?Particular $particular = null;
-
-    #[ORM\ManyToOne(inversedBy: 'appointments')]
-    private ?Botanist $botanist = null;
-
-    public function __construct()
-    {
-        $this->plant = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getPlannedAt(): ?\DateTimeInterface
@@ -74,26 +42,26 @@ class Appointment
         return $this;
     }
 
-    public function getType(): ?string
+    public function isIsPresential(): ?bool
     {
-        return $this->type;
+        return $this->isPresential;
     }
 
-    public function setType(string $type): static
+    public function setIsPresential(bool $isPresential): static
     {
-        $this->type = $type;
+        $this->isPresential = $isPresential;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getAdress(): ?string
     {
-        return $this->createdAt;
+        return $this->adress;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setAdress(?string $adress): static
     {
-        $this->createdAt = $createdAt;
+        $this->adress = $adress;
 
         return $this;
     }
@@ -106,54 +74,6 @@ class Appointment
     public function setLink(?string $link): static
     {
         $this->link = $link;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, plant>
-     */
-    public function getPlant(): Collection
-    {
-        return $this->plant;
-    }
-
-    public function addPlant(plant $plant): static
-    {
-        if (!$this->plant->contains($plant)) {
-            $this->plant->add($plant);
-        }
-
-        return $this;
-    }
-
-    public function removePlant(plant $plant): static
-    {
-        $this->plant->removeElement($plant);
-
-        return $this;
-    }
-
-    public function getParticular(): ?Particular
-    {
-        return $this->particular;
-    }
-
-    public function setParticular(?Particular $particular): static
-    {
-        $this->particular = $particular;
-
-        return $this;
-    }
-
-    public function getBotanist(): ?botanist
-    {
-        return $this->botanist;
-    }
-
-    public function setBotanist(?botanist $botanist): static
-    {
-        $this->botanist = $botanist;
 
         return $this;
     }
