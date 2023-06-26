@@ -1,0 +1,5 @@
+@use "../utils" as vars;
+
+#logo {
+  height: vars.rem(50);
+}
