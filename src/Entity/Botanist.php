@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Botanist extends User
 {
     #[ORM\Column]
-    private ?bool $isVerified = null;
+    private ?bool $isAccepted = false;
 
     #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Request::class)]
     private Collection $requests;
@@ -27,14 +27,14 @@ class Botanist extends User
         $this->roles[] = 'ROLE_BOTANIST';
     }
 
-    public function isIsVerified(): ?bool
+    public function getIsAccepted(): ?bool
     {
-        return $this->isVerified;
+        return $this->isAccepted;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setIsAccepted(bool $isAccepted): static
     {
-        $this->isVerified = $isVerified;
+        $this->isAccepted = $isAccepted;
 
         return $this;
     }
