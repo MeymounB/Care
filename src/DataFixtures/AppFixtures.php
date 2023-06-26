@@ -20,6 +20,27 @@ class AppFixtures extends Fixture
     {
         $faker = Faker::create('fr_FR');
 
+        // Create 20 user
+        // $users = [];
+        for ($i = 0; $i < 20; ++$i) {
+            $user = new User();
+            $user
+                ->setEmail($faker->unique()->safeEmail)
+                ->setPassword($faker->password)
+                ->setFirstName($faker->firstName)
+                ->setLastName($faker->lastName)
+                ->setRoles(['ROLE_USER'])
+                ->setCellphone($faker->e164PhoneNumber)
+                ->setIsVerified($faker->boolean);
+            // ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime))
+            // ->setUpdatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime));
+
+            $manager->persist($user);
+            $users[] = $user;
+            // other fixtures can get this object using the UserFixtures::class constant
+            $this->addReference(User::class.'_'.$i, $user);
+        }
+
         // Create 10 botanists
         $botanists = [];
         for ($i = 0; $i < 10; ++$i) {
