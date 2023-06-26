@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Botanist;
 use App\Entity\Particular;
+use App\Form\BotanistRegistrationType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
@@ -58,7 +60,7 @@ class RegistrationController extends AbstractController
             $email
                 ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
                 ->to($user->getEmail())
-                ->subject('Time for Symfony Mailer!')
+                ->subject('Welcome to GreenCare! Verify your email')
                 ->htmlTemplate('auth/confirmation_email.html.twig')
                 ->context([
                     'username' => $user->getFirstName(),
@@ -70,7 +72,7 @@ class RegistrationController extends AbstractController
                 $email
             );
 
-            return $this->redirectToRoute('register_page');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('auth/register.html.twig', [
@@ -78,6 +80,54 @@ class RegistrationController extends AbstractController
             'error' => $form->getErrors()->current(),
         ]);
     }
+
+    /**
+     * @throws TransportExceptionInterface
+     */
+    #[Route('/botanist', name: 'register_page_doctor')]
+    public function registerBot(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $user = new Botanist();
+        $form = $this->createForm(BotanistRegistrationType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // encode the plain password
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $email = new TemplatedEmail();
+            $email
+                ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
+                ->to($user->getEmail())
+                ->subject('Welcome to GreenCare! Verify your email')
+                ->htmlTemplate('auth/confirmation_email.html.twig')
+                ->context([
+                    'username' => $user->getFirstName(),
+                ]);
+
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
+                $email
+            );
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('auth/register_botanist.html.twig', [
+            'form' => $form->createView(),
+            'error' => $form->getErrors()->current(),
+        ]);
+    }
+
 
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
