@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+{% from "parts/form_field.html.twig" import form_field %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block header %}
+    {% include 'parts/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <h2 class="title">S'inscrire</h2>
+    <div class="form-half">
+        {{ form_field(form.firstName) }}
+        <div class="form-field">
+            {{ form_label(form.lastName) }}
+            {{ form_widget(form.lastName) }}
+        </div>
+    </div>
+    <div class="form-field">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.password.first) }}
+        {{ form_widget(form.password.first) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.password.second) }}
+        {{ form_widget(form.password.second) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.cellphone) }}
+        {{ form_widget(form.cellphone) }}
+    </div>
+    <div class="form-field form-cgu">
+        {{ form_widget(form.agreeTerms) }}
+        {{ form_label(form.agreeTerms) }}
+    </div>
+    <div class="form-link">
+        <span>Vous avez déjà un compte?</span>
+        <a href="{{ path('app_login') }}">Connectez-vous</a>
+    </div>
+    <button type="submit" class="btn btn-primary">S'inscrire</button>
+
+    {% if error %}
+        {% from "parts/error.html.twig" import form_error %}
+        {{ form_error(error.message) }}
+    {% endif %}
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block footer %}{% endblock %}
