@@ -33,10 +33,10 @@ class Request
     #[ORM\Column(type: Types::TEXT)]
     private ?string $type = null; // types de demandes
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToMany(targetEntity: Plant::class, inversedBy: 'requests')]

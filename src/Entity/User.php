@@ -40,10 +40,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cellphone = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

@@ -17,7 +17,7 @@ class Photo
     #[ORM\Column(type: Types::BLOB)]
     private $photo;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'photos')]
