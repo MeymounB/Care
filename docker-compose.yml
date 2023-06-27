@@ -15,13 +15,13 @@ services:
     networks:
       - app-network
 
-  mailer:
-    image: schickling/mailcatcher
-    ports: 
-      - "1025:1025"
-      - "1080:1080"
-    networks:
-      - app-network
+  # mailer:
+  #   image: schickling/mailcatcher
+  #   ports: 
+  #     - "1025:1025"
+  #     - "1080:1080"
+  #   networks:
+  #     - app-network
 
 volumes:
   database_data:
