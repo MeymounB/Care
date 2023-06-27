@@ -176,6 +176,12 @@ class Plant
         return $this;
     }
 
+    public function getParticularName(): string
+    {
+        return $this->particular ? $this->particular->getFirstName() . ' ' . $this->particular->getLastName() : '';
+    }
+
+
     public function getParticular(): ?Particular
     {
         return $this->particular;
@@ -245,5 +251,10 @@ class Plant
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

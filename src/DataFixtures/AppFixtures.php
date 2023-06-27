@@ -9,6 +9,7 @@ use App\Entity\Comment;
 use App\Entity\Particular;
 use App\Entity\Plant;
 use App\Entity\Status;
+use App\Entity\Address;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as Faker;
@@ -26,11 +27,12 @@ class AppFixtures extends Fixture
             $botanist
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
+                // ->setPassword($this->passwordEncoder->encodePassword($particular, 'password')) 
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
                 ->setRoles(['ROLE_USER'])
-                ->setCellphone($faker->phoneNumber)
-                ->setIsVerified($faker->boolean);
+                ->setCellphone($faker->phoneNumber);
+            // ->setIsVerified(true);
 
             $manager->persist($botanist);
             $botanists[] = $botanist;
@@ -47,8 +49,7 @@ class AppFixtures extends Fixture
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
                 ->setRoles(['ROLE_USER'])
-                ->setCellphone($faker->phoneNumber)
-                ->setIsVerified($faker->boolean);
+                ->setCellphone($faker->phoneNumber);
 
             $manager->persist($particular);
             $particulars[] = $particular;
@@ -152,6 +153,18 @@ class AppFixtures extends Fixture
             $manager->persist($oneStatus);
             $status[] = $oneStatus;
         }
+
+        // Create an address for each particular
+        $address = new Address();
+        $address
+            ->setStreet($faker->streetAddress)
+            ->setZipCode($faker->postcode)
+            ->setCity($faker->city)
+            ->setCreatedAt(new \DateTimeImmutable())
+            ->setUpdatedAt(new \DateTime())
+            ->setParticular($particular);
+
+        $manager->persist($address);
 
         $manager->flush();
     }

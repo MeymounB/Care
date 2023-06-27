@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BotanistRepository::class)]
 class Botanist extends User
 {
-    #[ORM\Column]
-    private ?bool $isAccepted = false;
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Request::class)]
     private Collection $requests;
@@ -27,16 +27,22 @@ class Botanist extends User
         $this->roles[] = 'ROLE_BOTANIST';
     }
 
-    public function getIsAccepted(): ?bool
+    public function isVerified(): bool
     {
-        return $this->isAccepted;
+        return $this->isVerified;
     }
 
-    public function setIsAccepted(bool $isAccepted): static
+    public function setIsVerified(bool $isVerified): self
     {
-        $this->isAccepted = $isAccepted;
+        $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+
+    public function getRoles(): array
+    {
+        return ['Botanist'];
     }
 
     /**
@@ -97,5 +103,10 @@ class Botanist extends User
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }

@@ -38,8 +38,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/particular, roles: ROLE_PARTICULAR }
+        #- { path: ^/botanist, roles: ROLE_BOTANIST }
+        #- { path: ^/admin, roles: ROLE_ADMIN }
         - { path: '^/verify/email', roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 when@test:

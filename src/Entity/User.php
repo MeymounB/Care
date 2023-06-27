@@ -58,9 +58,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isVerified = false;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -243,15 +240,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function __toString(): string
     {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }

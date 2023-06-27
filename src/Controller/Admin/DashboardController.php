@@ -6,9 +6,10 @@ use App\Entity\Plant;
 use App\Entity\User;
 use App\Entity\Particular;
 use App\Entity\Botanist;
+use App\Entity\Advice;
+use App\Entity\Appointment;
+use App\Entity\Comment;
 use App\Entity\Address;
-use App\Entity\Request;
-
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -22,23 +23,9 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return parent::index();
-
-        // Option 1. You can make your dashboard redirect to some common page of your backend
 
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-
         return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        // return $this->render('some/path/my-dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -49,7 +36,15 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Plant', 'fa fa-home', Plant::class);
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linktoDashboard('User', 'fa fa-home', User::class);
+        yield MenuItem::linkToCrud('Plant', 'fa fa-home', Plant::class);
+        yield MenuItem::linkToCrud('Particular', 'fa fa-home', Particular::class);
+        yield MenuItem::linkToCrud('Botanist', 'fa fa-home', Botanist::class);
+        yield MenuItem::linkToCrud('appointmentRequest', 'fa fa-home', Appointment::class);
+        yield MenuItem::linkToCrud('adviceRequest', 'fa fa-home', Advice::class);
+        yield MenuItem::linkToCrud('Comment', 'fa fa-home', Comment::class);
+        yield MenuItem::linkToCrud('Address', 'fa fa-home', Address::class);
+        yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
+        // https://fontawesome.com/v6/search?o=r&m=free
     }
 }

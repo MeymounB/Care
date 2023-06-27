@@ -32,4 +32,14 @@ class Advice extends Request
 
         return $this;
     }
+
+    public function getIsPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
+
+    public function getIsPublicString(): ?string
+    {
+        return $this->isPublic ? 'Oui' : 'Non';
+    }
 }
