@@ -28,6 +28,20 @@ class Particular extends User
         $this->address = new ArrayCollection();
     }
 
+    public function getRoles(): array
+    {
+        return ['Individual'];
+    }
+
+    public function getRequestTypes(): string
+    {
+        $requestTypes = $this->requests->map(function (Request $request) {
+            return $request->getType();
+        });
+
+        return implode(', ', $requestTypes->toArray());
+    }
+
     /**
      * @return Collection<int, Plant>
      */
@@ -116,5 +130,10 @@ class Particular extends User
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }

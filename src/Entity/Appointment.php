@@ -55,6 +55,11 @@ class Appointment extends Request
         return $this;
     }
 
+    public function getIsPresential(): ?bool
+    {
+        return $this->isPresential;
+    }
+
     public function getAdress(): ?string
     {
         return $this->adress;
