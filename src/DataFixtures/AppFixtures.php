@@ -39,9 +39,9 @@ class AppFixtures extends Fixture
             $this->addReference(Botanist::class . '_' . $i, $botanist);
         }
 
-        // Create 10 particular
+        // Create 20 particular
         $particulars = [];
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 20; ++$i) {
             $particular = new Particular();
             $particular
                 ->setEmail($faker->unique()->safeEmail)
@@ -66,7 +66,8 @@ class AppFixtures extends Fixture
                 ->setSpecies($faker->name)
                 ->setPurchasedAt(new \DateTimeImmutable('now'))
                 ->setThumbnail('https://picsum.photos/200/300')
-                ->setSmallThumbnail('https://picsum.photos/100/150');
+                ->setSmallThumbnail('https://picsum.photos/100/150')
+                ->setCreatedAt(new \DateTimeImmutable('now'));
 
             // set a particular to a plant
             if ($this->hasReference(Particular::class . '_' . $i)) {
@@ -74,6 +75,7 @@ class AppFixtures extends Fixture
             }
 
             $manager->persist($plant);
+            $this->addReference(Plant::class . '_' . $i, $plant);
             $plants[] = $plant;
         }
 
@@ -100,9 +102,9 @@ class AppFixtures extends Fixture
             $manager->persist($comment);
         }
 
-        // Create 5 appointments
+        // Create 10 appointments
         $appointments = [];
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 0; $i < 10; ++$i) {
             // Appointment
             $appointment = new Appointment();
             $appointment
@@ -114,7 +116,9 @@ class AppFixtures extends Fixture
                 ->setIsPresential($faker->boolean)
                 ->setAdress($faker->address)
                 ->setLink($faker->url)
-                ->setBotanist($botanist);
+                // Reference on Botaniste
+                ->setBotanist($this->getReference(Botanist::class . '_' . ($i % 10)))
+                ->setCreatedAt(new \DateTimeImmutable('now'));
 
             if ($this->hasReference(Particular::class . '_' . $i)) {
                 $appointment->setParticular($this->getReference(Particular::class . '_' . $i));
@@ -124,9 +128,9 @@ class AppFixtures extends Fixture
             $manager->persist($appointment);
         }
 
-        // Create 5 advices
+        // Create 10 advices
         $advices = [];
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 0; $i < 10; ++$i) {
             // Advice
             $advice = new Advice();
             $advice
@@ -135,7 +139,8 @@ class AppFixtures extends Fixture
                 ->setDate(new \DateTimeImmutable('now + ' . $i . ' days'))
                 ->setType('advice')
                 ->setIsPublic($faker->boolean)
-                ->setBotanist($botanist);
+                // Reference on Botaniste
+                ->setBotanist($this->getReference(Botanist::class . '_' . ($i % 10)));
 
             if ($this->hasReference(Particular::class . '_' . $i)) {
                 $advice->setParticular($this->getReference(Particular::class . '_' . $i));
@@ -154,17 +159,18 @@ class AppFixtures extends Fixture
             $status[] = $oneStatus;
         }
 
-        // Create an address for each particular
-        $address = new Address();
-        $address
-            ->setStreet($faker->streetAddress)
-            ->setZipCode($faker->postcode)
-            ->setCity($faker->city)
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdatedAt(new \DateTime())
-            ->setParticular($particular);
+        foreach ($particulars as $particular) {
+            $address = new Address();
+            $address
+                ->setStreet($faker->streetAddress)
+                ->setZipCode($faker->randomNumber(5))
+                ->setCity($faker->city)
+                ->setCreatedAt(new \DateTimeImmutable())
+                ->setUpdatedAt(new \DateTime())
+                ->setParticular($particular);
 
-        $manager->persist($address);
+            $manager->persist($address);
+        }
 
         $manager->flush();
     }

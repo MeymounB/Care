@@ -190,7 +190,6 @@ class Plant
     public function setParticular(?Particular $particular): static
     {
         $this->particular = $particular;
-
         return $this;
     }
 

@@ -72,6 +72,12 @@ class Comment
         return $this->commentPlant;
     }
 
+    public function getCommentPlantName(): string
+    {
+        return $this->commentPlant ? $this->commentPlant->getName() : '';
+    }
+
+
     public function setCommentPlant(?Plant $commentPlant): static
     {
         $this->commentPlant = $commentPlant;
