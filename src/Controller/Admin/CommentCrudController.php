@@ -24,10 +24,11 @@ class CommentCrudController extends AbstractCrudController
             IdField::new('id')->hideWhenCreating(),
             TextField::new('content'),
             DateTimeField::new('createdAt'),
-            AssociationField::new('user')
-                ->hideWhenCreating(),
-            // ArrayField::new('roles'),
-
+            TextField::new('user.fullName', 'User Name')
+                ->onlyOnIndex(),
+            AssociationField::new('commentPlant')
+                ->setLabel('Plant Name')
+                ->onlyOnIndex(),
         ];
     }
 }

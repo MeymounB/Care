@@ -19,6 +19,8 @@ class ParticularCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideWhenCreating(),
+            TextField::new('FullName')->setLabel('Full Name'),
+            TextField::new('email'),
             CollectionField::new('plants')->setLabel('Name of plants'),
             TextField::new('requestTypes', 'Types of Requests'),
             CollectionField::new('address')->setLabel('Adress of the particular'),

@@ -9,6 +9,7 @@ use App\Entity\Botanist;
 use App\Entity\Advice;
 use App\Entity\Appointment;
 use App\Entity\Comment;
+use App\Entity\Request;
 use App\Entity\Address;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -25,7 +26,7 @@ class DashboardController extends AbstractDashboardController
     {
 
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+        return $this->redirect($adminUrlGenerator->setController(PlantCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -36,14 +37,22 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('User', 'fa fa-home', User::class);
-        yield MenuItem::linkToCrud('Plant', 'fa fa-home', Plant::class);
-        yield MenuItem::linkToCrud('Particular', 'fa fa-home', Particular::class);
-        yield MenuItem::linkToCrud('Botanist', 'fa fa-home', Botanist::class);
-        yield MenuItem::linkToCrud('appointmentRequest', 'fa fa-home', Appointment::class);
-        yield MenuItem::linkToCrud('adviceRequest', 'fa fa-home', Advice::class);
-        yield MenuItem::linkToCrud('Comment', 'fa fa-home', Comment::class);
-        yield MenuItem::linkToCrud('Address', 'fa fa-home', Address::class);
+        yield MenuItem::linkToCrud('Plants', 'fa fa-leaf', Plant::class);
+
+        yield MenuItem::subMenu('Users', 'fa fa-users')->setSubItems([
+            MenuItem::linkToCrud('All Users', 'fa fa-users', User::class),
+            MenuItem::linkToCrud('Individuals', 'fas fa-user', Particular::class),
+            MenuItem::linkToCrud('Botanists', 'fas fa-user-tie', Botanist::class)
+        ]);
+
+        yield MenuItem::subMenu('Requests', 'fa fa-paper-plane')->setSubItems([
+            MenuItem::linkToCrud('All requests', 'fa fa-paper-plane', Request::class),
+            MenuItem::linkToCrud('Appointment requests', 'fa fa-calendar-check', Appointment::class),
+            MenuItem::linkToCrud('Advice requests', 'fa fa-comments', Advice::class)
+        ]);
+
+        yield MenuItem::linkToCrud('Comments', 'fa fa-comment-dots', Comment::class);
+        // yield MenuItem::linkToCrud('Address', 'fa fa-home', Address::class);
         yield MenuItem::linkToLogout('Logout', 'fa fa-exit');
         // https://fontawesome.com/v6/search?o=r&m=free
     }

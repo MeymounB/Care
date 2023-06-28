@@ -136,4 +136,9 @@ class Particular extends User
     {
         return $this->getFirstName() . ' ' . $this->getLastName();
     }
+
+    public function getFullName(): string
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
 }
