@@ -10,13 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BotanistRepository::class)]
 class Botanist extends User
 {
-    #[ORM\Column(type: 'boolean')]
-    private bool $isVerified = false;
-
-    #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Request::class)]
+    #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Request::class, orphanRemoval: true)]
     private Collection $requests;
 
-    #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Certificate::class)]
+    #[ORM\OneToMany(mappedBy: 'botanist', targetEntity: Certificate::class, orphanRemoval: true)]
     private Collection $certificates;
 
     public function __construct()
@@ -26,19 +23,6 @@ class Botanist extends User
         $this->certificates = new ArrayCollection();
         $this->roles[] = 'ROLE_BOTANIST';
     }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
 
     public function getRoles(): array
     {
@@ -107,6 +91,6 @@ class Botanist extends User
 
     public function __toString(): string
     {
-        return $this->getFirstName() . ' ' . $this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName();
     }
 }

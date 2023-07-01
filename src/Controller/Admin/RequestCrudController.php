@@ -2,16 +2,18 @@
 
 namespace App\Controller\Admin;
 
+use App\Controller\Admin\Trait\ReadOnlyTrait;
 use App\Entity\Request;
-use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class RequestCrudController extends AbstractCrudController
 {
+    use ReadOnlyTrait;
+
     public static function getEntityFqcn(): string
     {
         return Request::class;
@@ -23,10 +25,14 @@ class RequestCrudController extends AbstractCrudController
             IdField::new('id'),
             TextField::new('title'),
             TextEditorField::new('description'),
-            DateTimeField::new('createdAt'),
-            DateTimeField::new('updqtedAt'),
-            DateTimeField::new('date'),
 
+            DateTimeField::new('createdAt'),
+            DateTimeField::new('updatedAt'),
+            DateTimeField::new('date'),
+            TextField::new('status')
+                ->setFormTypeOptions([
+                    'disabled' => true,
+                ]),
         ];
     }
 }

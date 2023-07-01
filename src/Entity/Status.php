@@ -11,12 +11,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StatusRepository::class)]
 class Status
 {
+    // Could create dynamic status for this table BUT it's not necessary for the moment
+    public const STATUS = [
+        1 => 'En attente',
+        2 => 'En cours',
+        3 => 'Terminé',
+        4 => 'Annulé',
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'status', targetEntity: Request::class)]
+    #[ORM\OneToMany(mappedBy: 'status', targetEntity: Request::class, orphanRemoval: true)]
     private Collection $stateRequest;
 
     #[ORM\Column(type: Types::TEXT)]

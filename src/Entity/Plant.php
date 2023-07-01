@@ -25,36 +25,26 @@ class Plant
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $species = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $purchasedAt = null;
+    // TODO: check plugin to manage slug
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class)]
+    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class, orphanRemoval: true)]
     private Collection $photos;
-
-    // Temporaire, le temps d'ajouter le service de gestion des images
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $smallThumbnail = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $thumbnail = null;
 
     #[ORM\ManyToOne(inversedBy: 'plants')]
     private ?Particular $particular = null;
 
-    #[ORM\ManyToMany(targetEntity: Request::class, mappedBy: 'plants')]
+    #[ORM\ManyToMany(targetEntity: Request::class, mappedBy: 'plants', orphanRemoval: true)]
     private Collection $requests;
-
-    #[ORM\OneToMany(mappedBy: 'commentPlant', targetEntity: Comment::class)]
-    private Collection $comments;
 
     public function __construct()
     {
         $this->photos = new ArrayCollection();
         $this->requests = new ArrayCollection();
-        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,14 +88,14 @@ class Plant
         return $this;
     }
 
-    public function getPurchasedAt(): ?\DateTimeImmutable
+    public function getSlug(): ?string
     {
-        return $this->purchasedAt;
+        return $this->slug;
     }
 
-    public function setPurchasedAt(\DateTimeImmutable $purchasedAt): static
+    public function setSlug(string $slug): static
     {
-        $this->purchasedAt = $purchasedAt;
+        $this->slug = $slug;
 
         return $this;
     }
@@ -118,30 +108,6 @@ class Plant
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getSmallThumbnail(): ?string
-    {
-        return $this->smallThumbnail;
-    }
-
-    public function setSmallThumbnail(?string $smallThumbnail): static
-    {
-        $this->smallThumbnail = $smallThumbnail;
-
-        return $this;
-    }
-
-    public function getThumbnail(): ?string
-    {
-        return $this->thumbnail;
-    }
-
-    public function setThumbnail(?string $thumbnail): static
-    {
-        $this->thumbnail = $thumbnail;
 
         return $this;
     }
@@ -176,11 +142,17 @@ class Plant
         return $this;
     }
 
-    public function getParticularName(): string
+    public function getThumbnails(): array
     {
-        return $this->particular ? $this->particular->getFirstName() . ' ' . $this->particular->getLastName() : '';
+        return $this->photos->map(function (Photo $photo) {
+            return $photo->getThumbnail();
+        })->toArray();
     }
 
+    public function getParticularName(): string
+    {
+        return $this->particular ? $this->particular->getFirstName().' '.$this->particular->getLastName() : '';
+    }
 
     public function getParticular(): ?Particular
     {
@@ -190,6 +162,7 @@ class Plant
     public function setParticular(?Particular $particular): static
     {
         $this->particular = $particular;
+
         return $this;
     }
 
@@ -216,36 +189,6 @@ class Plant
         if ($this->requests->removeElement($request)) {
             if ($request->getPlants() === $this) {
                 $request->removePlant($this);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Comment>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comment $comment): static
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setCommentPlant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): static
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getCommentPlant() === $this) {
-                $comment->setCommentPlant(null);
             }
         }
 

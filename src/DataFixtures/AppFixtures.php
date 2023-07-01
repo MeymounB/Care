@@ -2,14 +2,17 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Address;
 use App\Entity\Advice;
 use App\Entity\Appointment;
 use App\Entity\Botanist;
+use App\Entity\Certificate;
 use App\Entity\Comment;
 use App\Entity\Particular;
+use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Entity\Status;
-use App\Entity\Address;
+// use for passwordEncoder ?
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as Faker;
@@ -18,7 +21,16 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker::create('fr_FR');
+        $faker = Faker::create('en_US');
+
+        // Create types of Status
+        $status = [];
+        foreach (Status::STATUS as $value) {
+            $oneStatus = new Status();
+            $oneStatus->setName($value);
+            $manager->persist($oneStatus);
+            $status[] = $oneStatus;
+        }
 
         // Create 10 botanists
         $botanists = [];
@@ -27,16 +39,15 @@ class AppFixtures extends Fixture
             $botanist
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
-                // ->setPassword($this->passwordEncoder->encodePassword($particular, 'password')) 
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
                 ->setRoles(['ROLE_USER'])
                 ->setCellphone($faker->phoneNumber);
-            // ->setIsVerified(true);
+            // ->setIsVerified($faker->boolean);
 
             $manager->persist($botanist);
             $botanists[] = $botanist;
-            $this->addReference(Botanist::class . '_' . $i, $botanist);
+            $this->addReference(Botanist::class.'_'.$i, $botanist);
         }
 
         // Create 20 particular
@@ -53,53 +64,23 @@ class AppFixtures extends Fixture
 
             $manager->persist($particular);
             $particulars[] = $particular;
-            $this->addReference(Particular::class . '_' . $i, $particular);
+            $this->addReference(Particular::class.'_'.$i, $particular);
         }
 
-        // Create 20 plants
-        $plants = [];
-        for ($i = 0; $i < 20; ++$i) {
-            $plant = new Plant();
-            $plant
-                ->setName($faker->name)
-                ->setDescription($faker->paragraph)
-                ->setSpecies($faker->name)
-                ->setPurchasedAt(new \DateTimeImmutable('now'))
-                ->setThumbnail('https://picsum.photos/200/300')
-                ->setSmallThumbnail('https://picsum.photos/100/150')
-                ->setCreatedAt(new \DateTimeImmutable('now'));
+        // Create 50 certificates for botanists
+        for ($i = 1; $i <= 50; ++$i) {
+            $certificate = new Certificate();
+            $certificate->setTitle($faker->sentence(4))
+                ->setState($faker->randomElement(Certificate::getPossibleStates()))
+                ->setCertificateFile('/path/to/file')
+                ->setCreatedAt(new \DateTimeImmutable())
+                ->setUpdatedAt(new \DateTimeImmutable());
 
-            // set a particular to a plant
-            if ($this->hasReference(Particular::class . '_' . $i)) {
-                $plant->setParticular($this->getReference(Particular::class . '_' . $i));
+            if ($this->hasReference(Botanist::class.'_'.$i)) {
+                $certificate->setBotanist($this->getReference(Botanist::class.'_'.rand(0, 9)));
             }
 
-            $manager->persist($plant);
-            $this->addReference(Plant::class . '_' . $i, $plant);
-            $plants[] = $plant;
-        }
-
-        // Create 50 comments
-        $comments = [];
-        for ($i = 0; $i < 50; ++$i) {
-            $comment = new Comment();
-            $comment
-                ->setContent($faker->paragraph)
-                ->setCreatedAt(new \DateTimeImmutable('now'));
-
-            // 20 is the number of particular created
-            if ($this->hasReference(Particular::class . '_' . $i % 20)) {
-                $particular = $this->getReference(Particular::class . '_' . $i % 20);
-                $comment->setUser($particular);
-            }
-
-            // 20 is the number of plants created
-            if ($this->hasReference(Plant::class . '_' . $i % 20)) {
-                $comment->setCommentPlant($this->getReference(Plant::class . '_' . $i % 20));
-            }
-
-            $comments[] = $comment;
-            $manager->persist($comment);
+            $manager->persist($certificate);
         }
 
         // Create 10 appointments
@@ -108,24 +89,27 @@ class AppFixtures extends Fixture
             // Appointment
             $appointment = new Appointment();
             $appointment
-                ->setTitle($faker->sentence)
+                ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now  ' . $i . ' days'))
-                ->setType('appointment')
-                ->setPlannedAt(new \DateTimeImmutable('now + ' . $i . ' days'))
+                ->setDate(new \DateTimeImmutable('now  '.$i.' days'))
+                ->setPlannedAt(new \DateTimeImmutable('now + '.$i.' days'))
                 ->setIsPresential($faker->boolean)
                 ->setAdress($faker->address)
                 ->setLink($faker->url)
-                // Reference on Botaniste
-                ->setBotanist($this->getReference(Botanist::class . '_' . ($i % 10)))
-                ->setCreatedAt(new \DateTimeImmutable('now'));
+                ->setCreatedAt(new \DateTimeImmutable('now'))
+                ->setUpdatedAt(new \DateTimeImmutable())
+                ->setSlug($faker->slug)
+                ->setStatus($status[rand(0, count($status) - 1)])
+                ->setBotanist($botanists[$i % 10])
+                ->setParticular($particulars[$i]);
 
-            if ($this->hasReference(Particular::class . '_' . $i)) {
-                $appointment->setParticular($this->getReference(Particular::class . '_' . $i));
+            if ($this->hasReference(Particular::class.'_'.$i)) {
+                $appointment->setParticular($this->getReference(Particular::class.'_'.$i));
             }
 
-            $appointments[] = $appointment;
             $manager->persist($appointment);
+            $appointments[] = $appointment;
+            $this->addReference(Appointment::class.'_'.$i, $appointment);
         }
 
         // Create 10 advices
@@ -134,29 +118,91 @@ class AppFixtures extends Fixture
             // Advice
             $advice = new Advice();
             $advice
-                ->setTitle($faker->sentence)
+                ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now + ' . $i . ' days'))
-                ->setType('advice')
+                ->setDate(new \DateTimeImmutable('now + '.$i.' days'))
                 ->setIsPublic($faker->boolean)
-                // Reference on Botaniste
-                ->setBotanist($this->getReference(Botanist::class . '_' . ($i % 10)));
+                ->setCreatedAt(new \DateTimeImmutable('now'))
+                ->setUpdatedAt(new \DateTimeImmutable())
+                ->setSlug($faker->slug)
+                ->setStatus($status[rand(0, count($status) - 1)])
+                ->setBotanist($botanists[$i % 10])
+                ->setParticular($particulars[$i]);
 
-            if ($this->hasReference(Particular::class . '_' . $i)) {
-                $advice->setParticular($this->getReference(Particular::class . '_' . $i));
+            if ($this->hasReference(Particular::class.'_'.$i)) {
+                $advice->setParticular($this->getReference(Particular::class.'_'.$i));
             }
 
-            $advices[] = $advice;
             $manager->persist($advice);
+            $advices[] = $advice;
+            $this->addReference(Advice::class.'_'.$i, $advice);
         }
 
-        // Create types of Status
-        $status = [];
-        foreach (['En attente', 'En cours', 'Terminé'] as $value) {
-            $oneStatus = new Status();
-            $oneStatus->setName($value);
-            $manager->persist($oneStatus);
-            $status[] = $oneStatus;
+        // Create 20 plants
+        $plants = [];
+
+        for ($i = 0; $i < 20; ++$i) {
+            $plant = new Plant();
+
+            // set a botanist to a plant
+            $appointment = $this->getReference(Appointment::class.'_'.rand(0, 9));
+            $plant->addRequest($appointment);
+
+            // set a advice to a plant
+            $advice = $this->getReference(Advice::class.'_'.rand(0, 9));
+            $plant->addRequest($advice);
+
+            // set a particular to a plant
+            if ($this->hasReference(Particular::class.'_'.$i)) {
+                $plant->setParticular($this->getReference(Particular::class.'_'.$i));
+            }
+
+            $plant
+                ->setName($faker->name)
+                ->setDescription($faker->paragraph)
+                ->setSpecies($faker->name)
+                ->setCreatedAt(new \DateTimeImmutable('now'))
+                ->setSlug($faker->slug)
+                ->addRequest($appointments[$i % 10])
+                ->addRequest($advices[$i % 10]);
+
+            $manager->persist($plant);
+            $plants[] = $plant;
+            $this->addReference(Plant::class.'_'.$i, $plant);
+        }
+
+        // Create 20 comments
+        $comments = [];
+        for ($i = 0; $i < 20; ++$i) {
+            $comment = new Comment();
+            $comment
+                ->setContent($faker->paragraph)
+                ->setCreatedAt(new \DateTimeImmutable('now'));
+
+            // 20 is the number of particular created
+            if ($this->hasReference(Particular::class.'_'.$i % 20)) {
+                $particular = $this->getReference(Particular::class.'_'.$i % 20);
+                $comment->setUser($particular);
+            }
+
+            // 20 is the number of plants created
+            if ($this->hasReference(Advice::class.'_'.$i % 20)) {
+                $comment->setCommentAdvice($this->getReference(Advice::class.'_'.$i % 20));
+            }
+
+            $comments[] = $comment;
+            $manager->persist($comment);
+        }
+
+        foreach ($plants as $plant) {
+            $photo = new Photo();
+            $photo
+                ->setThumbnail('https://picsum.photos/200/300')
+                ->setSmallThumbnail('https://picsum.photos/100/150')
+                ->setCreatedAt(new \DateTimeImmutable('now'))
+                ->setPlant($plant);
+
+            $manager->persist($photo);
         }
 
         foreach ($particulars as $particular) {
@@ -166,7 +212,7 @@ class AppFixtures extends Fixture
                 ->setZipCode($faker->randomNumber(5))
                 ->setCity($faker->city)
                 ->setCreatedAt(new \DateTimeImmutable())
-                ->setUpdatedAt(new \DateTime())
+                ->setUpdatedAt(new \DateTimeImmutable())
                 ->setParticular($particular);
 
             $manager->persist($address);

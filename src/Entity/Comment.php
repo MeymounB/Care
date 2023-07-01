@@ -24,7 +24,7 @@ class Comment
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?Plant $commentPlant = null;
+    private ?Advice $commentAdvice = null;
 
     public function getId(): ?int
     {
@@ -67,21 +67,25 @@ class Comment
         return $this;
     }
 
-    public function getCommentPlant(): ?Plant
+    public function getCommentAdvice(): ?Advice
     {
-        return $this->commentPlant;
+        return $this->commentAdvice;
     }
 
-    public function getCommentPlantName(): string
+    public function setCommentAdvice(?Advice $commentAdvice): static
     {
-        return $this->commentPlant ? $this->commentPlant->getName() : '';
-    }
-
-
-    public function setCommentPlant(?Plant $commentPlant): static
-    {
-        $this->commentPlant = $commentPlant;
+        $this->commentAdvice = $commentAdvice;
 
         return $this;
+    }
+
+    public function getUserRole(): ?string
+    {
+        return $this->user ? $this->user->getRoles()[0] : null;
+    }
+
+    public function getAdviceTitle(): ?string
+    {
+        return $this->commentAdvice ? $this->commentAdvice->getTitle() : null;
     }
 }
