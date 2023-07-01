@@ -28,6 +28,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastName = null;
+
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -43,20 +49,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cellphone = null;
 
+    // TODO : setup this attribut in Botanist Class : only Botanist can be verified
+    #[ORM\Column(type: 'boolean')]
+    private bool $isVerified = false;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
-
-    #[ORM\Column(length: 255)]
-    private ?string $firstName = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $lastName = null;
 
     public function __construct()
     {
@@ -164,6 +168,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -242,11 +258,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->getFirstName() . ' ' . $this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName();
     }
 
     public function getFullName(): string
     {
-        return $this->getFirstName() . ' ' . $this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName();
     }
 }

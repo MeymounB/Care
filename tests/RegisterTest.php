@@ -3,6 +3,8 @@
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Faker\Factory;
 
+ini_set('memory_limit', '256M');
+
 class RegisterTest extends WebTestCase
 {
 	public function testRegister(): void

@@ -112,6 +112,6 @@ class Address
 
     public function __toString(): string
     {
-        return $this->street . ' ' . $this->zipCode . ' ' . $this->city;
+        return $this->street.' '.$this->zipCode.' '.$this->city;
     }
 }

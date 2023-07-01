@@ -10,10 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ParticularRepository::class)]
 class Particular extends User
 {
-    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Plant::class)]
+    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Plant::class, orphanRemoval: true)]
     private Collection $plants;
 
-    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Request::class)]
+    #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Request::class, orphanRemoval: true)]
     private Collection $requests;
 
     #[ORM\OneToMany(mappedBy: 'particular', targetEntity: Address::class, orphanRemoval: true)]
@@ -36,7 +36,10 @@ class Particular extends User
     public function getRequestTypes(): string
     {
         $requestTypes = $this->requests->map(function (Request $request) {
-            return $request->getType();
+            $class = get_class($request); // récupère le nom complet de la classe
+            $parts = explode('\\', $class); // découpe le nom de la classe par les backslashes
+
+            return end($parts); // retourne le dernier élément du tableau, soit le nom de la classe sans le namespace
         });
 
         return implode(', ', $requestTypes->toArray());
@@ -132,13 +135,13 @@ class Particular extends User
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return $this->getFirstName() . ' ' . $this->getLastName();
-    }
-
     public function getFullName(): string
     {
-        return $this->getFirstName() . ' ' . $this->getLastName();
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
+    public function getPlantCount(): int
+    {
+        return $this->plants->count();
     }
 }
