@@ -1,4 +1,4 @@
-name: CI - PHP QA
+name: php-quality-checker
 
 on:
   push:
