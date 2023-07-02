@@ -10,4 +10,4 @@ jobs:
       - name: Run gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENCE}}
