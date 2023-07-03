@@ -88,6 +88,7 @@ sf-log: ## Show symfony logs.
 
 sf-dc: ## Create symfony database.
 	$(SYMFONY_CONSOLE) doctrine:database:create --if-not-exists
+	$(SYMFONY_CONSOLE) doctrine:database:create --if-not-exists
 .PHONY: sf-dc
 
 sf-dd: ## Drop symfony database.
@@ -242,6 +243,12 @@ qa-audit: ## Run composer audit.
 #---------------------------------------------#
 
 ## === 🔎  TESTS =================================================
+prepare-tests:
+	$(SYMFONY_CONSOLE) doctrine:database:drop --if-exists --force --env=test
+	$(SYMFONY_CONSOLE) doctrine:database:create --if-not-exists --env=test
+	$(SYMFONY_CONSOLE) doctrine:schema:update --env=test --force --complete
+	$(SYMFONY_CONSOLE) doctrine:fixtures:load --no-interaction --env=test
+.PHONY: prepare-tests
 tests: ## Run tests.
 	$(PHPUNIT) --testdox
 .PHONY: tests
