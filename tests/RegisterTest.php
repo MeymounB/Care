@@ -2,12 +2,19 @@
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Faker\Factory;
+use Faker\Generator;
 
 class RegisterTest extends WebTestCase
 {
+    private Generator $faker;
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Factory::create();
+    }
+
 	public function testRegister(): void
 	{
-		$faker = Factory::create();
 
 		$client = static::createClient();
 		$crawler = $client->request('GET', '/');
@@ -16,11 +23,11 @@ class RegisterTest extends WebTestCase
 
 		$form = $crawler->selectButton("S'inscrire")->form();
 
-		$password = $faker->password(8);
+		$password = $this->faker->password(8);
 
-		$form['particular_form[firstName]'] = $faker->firstName();
-		$form['particular_form[lastName]'] = $faker->lastName();
-		$form['particular_form[email]'] = $faker->email();
+		$form['particular_form[firstName]'] = $this->faker->firstName();
+		$form['particular_form[lastName]'] = $this->faker->lastName();
+		$form['particular_form[email]'] = $this->faker->email();
 		$form['particular_form[cellphone]'] = 123456789;
 		$form['particular_form[password][first]'] = $password;
 		$form['particular_form[password][second]'] = $password;
@@ -33,8 +40,6 @@ class RegisterTest extends WebTestCase
 
 	public function testRegisterBotanist(): void
 	{
-		$faker = Factory::create();
-
 		$client = static::createClient();
 		$crawler = $client->request('GET', '/botanist');
 
@@ -42,10 +47,10 @@ class RegisterTest extends WebTestCase
 
 		$form = $crawler->selectButton("S'inscrire")->form();
 
-		$password = $faker->password(8);
-		$form['botanist_form[firstName]'] = $faker->firstName();
-		$form['botanist_form[lastName]'] = $faker->lastName();
-		$form['botanist_form[email]'] = $faker->email();
+		$password = $this->faker->password(8);
+		$form['botanist_form[firstName]'] = $this->faker->firstName();
+		$form['botanist_form[lastName]'] = $this->faker->lastName();
+		$form['botanist_form[email]'] = $this->faker->email();
 		$form['botanist_form[cellphone]'] = 123456789;
 		$form['botanist_form[password][first]'] = $password;
 		$form['botanist_form[password][second]'] = $password;
