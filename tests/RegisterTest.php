@@ -4,14 +4,16 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Faker\Factory;
 use Faker\Generator;
 
+ini_set('memory_limit', '1024M');
+
 class RegisterTest extends WebTestCase
 {
-    private Generator $faker;
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->faker = Factory::create();
-    }
+	private Generator $faker;
+	protected function setUp(): void
+	{
+		parent::setUp();
+		$this->faker = Factory::create();
+	}
 
 	public function testRegister(): void
 	{

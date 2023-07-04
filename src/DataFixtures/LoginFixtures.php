@@ -16,8 +16,8 @@ class LoginFixtures extends Fixture
         // Create a new botanist using faker
         $botanist = new Botanist();
         $botanist
-            ->setEmail("botanist@verified.com")
-            ->setPassword("123456789")
+            ->setEmail('botanist@verified.com')
+            ->setPassword('123456789')
             ->setFirstName($faker->firstName)
             ->setLastName($faker->lastName)
             ->setCellphone($faker->phoneNumber)
