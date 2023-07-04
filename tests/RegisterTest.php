@@ -33,7 +33,7 @@ class RegisterTest extends WebTestCase
 		$this->assertResponseRedirects('/login');
 	}
 
-	public function testRegisterDoctor(): void
+	public function testRegisterBotanist(): void
 	{
 		$faker = Factory::create();
 
@@ -44,7 +44,7 @@ class RegisterTest extends WebTestCase
 
 		$form = $crawler->selectButton("S'inscrire")->form();
 
-		$password = $faker->password();
+		$password = $faker->password(8);
 		$form['botanist_form[firstName]'] = $faker->firstName();
 		$form['botanist_form[lastName]'] = $faker->lastName();
 		$form['botanist_form[email]'] = $faker->email();
