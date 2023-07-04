@@ -88,7 +88,6 @@ sf-log: ## Show symfony logs.
 
 sf-dc: ## Create symfony database.
 	$(SYMFONY_CONSOLE) doctrine:database:create --if-not-exists
-	$(SYMFONY_CONSOLE) doctrine:database:create --if-not-exists
 .PHONY: sf-dc
 
 sf-dd: ## Drop symfony database.
