@@ -98,7 +98,6 @@ class AppFixtures extends Fixture
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
-                ->setRoles(['ROLE_USER'])
                 ->setCellphone($faker->phoneNumber);
 
             $manager->persist($botanist);
@@ -119,7 +118,6 @@ class AppFixtures extends Fixture
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
-                ->setRoles(['ROLE_USER'])
                 ->setCellphone($faker->phoneNumber);
 
             $this->createAddress($faker, $manager, $particular);
