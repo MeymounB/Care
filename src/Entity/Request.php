@@ -7,13 +7,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
 
 #[ORM\Entity(repositoryClass: RequestRepository::class)]
-#[ORM\InheritanceType('JOINED')]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap([
     'appointment' => Appointment::class,
     'advice' => Advice::class,
 ])]
+#[ORM\MappedSuperclass()]
 class Request
 {
     #[ORM\Id]
@@ -29,9 +32,6 @@ class Request
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $type = null; // types de demandes
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -97,18 +97,6 @@ class Request
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -155,6 +143,7 @@ class Request
     {
         if (!$this->plants->contains($plant)) {
             $this->plants[] = $plant;
+            $plant->addRequest($this);
         }
 
         return $this;
@@ -162,7 +151,10 @@ class Request
 
     public function removePlant(Plant $plant): static
     {
-        $this->plants->removeElement($plant);
+        if ($this->plants->contains($plant)) {
+            $this->plants->removeElement($plant);
+            $plant->removeRequest($this);
+        }
 
         return $this;
     }
@@ -201,5 +193,10 @@ class Request
         $this->status = $status;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

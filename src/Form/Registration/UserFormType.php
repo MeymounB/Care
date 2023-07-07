@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Registration;
 
-use App\Entity\Botanist;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class BotanistRegistrationType extends AbstractType
+abstract class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -59,7 +57,6 @@ class BotanistRegistrationType extends AbstractType
                     new Length([
                         'min' => 8,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
@@ -69,14 +66,6 @@ class BotanistRegistrationType extends AbstractType
                 'required' => true,
                 'label' => 'Numéro de téléphone',
                 'error_bubbling' => true,
-            ])
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Botanist::class,
-        ]);
+            ]);
     }
 }

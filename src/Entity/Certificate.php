@@ -9,16 +9,23 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CertificateRepository::class)]
 class Certificate
 {
+    public const STATUS_REFUSED = 'Refusé';
+    public const STATUS_PENDING = 'En attente';
+    public const STATUS_VALIDATED = 'Validé';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $state = null;
+    private ?string $title = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $state = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)] // Usually "blob" type is used for files : type: Types::BLOB
+    private $certificateFile;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
@@ -34,26 +41,58 @@ class Certificate
         return $this->id;
     }
 
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
     public function getState(): ?string
     {
         return $this->state;
     }
 
+    public static function getPossibleStates()
+    {
+        return [
+            self::STATUS_REFUSED,
+            self::STATUS_PENDING,
+            self::STATUS_VALIDATED,
+        ];
+    }
+
     public function setState(string $state): static
     {
+        if (!in_array($state, self::getPossibleStates())) {
+            throw new \InvalidArgumentException('Invalid status');
+        }
+
         $this->state = $state;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getCertificateFile()
     {
-        return $this->name;
+        return $this->certificateFile;
     }
 
-    public function setName(string $name): static
+    public function setCertificateFile($certificateFile): static
     {
-        $this->name = $name;
+        $this->certificateFile = $certificateFile;
 
         return $this;
     }
