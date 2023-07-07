@@ -244,7 +244,7 @@ qa-audit: ## Run composer audit.
 ## === 🔎  TESTS =================================================
 
 prepare-tests:
-	APP_ENV=test $(SYMFONY_CONSOLE) doctrine:database:drop --if-exists --force
+	APP_ENV=test $(SYMFONY_CONSOLE) doctrine:database:drop --if-exists --force 
 	APP_ENV=test $(SYMFONY_CONSOLE) doctrine:database:create --if-not-exists
 	APP_ENV=test $(SYMFONY_CONSOLE) doctrine:schema:update --force
 	APP_ENV=test $(SYMFONY_CONSOLE) doctrine:fixtures:load --no-interaction
