@@ -1,13 +1,11 @@
 version: '3'
-# TODO : use local env file for env variables
 services:
-  # PostgreSQL service
   database:
     image: postgres:15-alpine
     environment:
-      POSTGRES_DB: app
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ChangeMe
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - database_data:/var/lib/postgresql/data:rw
     ports: 
@@ -15,19 +13,22 @@ services:
     networks:
       - app-network
 
-  # mailer:
-  #   image: schickling/mailcatcher
-  #   ports: 
-  #     - "1025:1025"
-  #     - "1080:1080"
-  #   networks:
-  #     - app-network
+  database_test:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${DB_TEST_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - database_test_data:/var/lib/postgresql/data:rw
+    ports: 
+      - 5434:5432
+    networks:
+      - app-network
 
 volumes:
   database_data:
+  database_test_data:
 
 networks:
   app-network:
-
-
-
