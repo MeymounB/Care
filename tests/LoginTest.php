@@ -3,6 +3,8 @@
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+ini_set('memory_limit', '1024M');
+
 class LoginTest extends WebTestCase
 {
     public function testLogin(): void
