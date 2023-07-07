@@ -102,7 +102,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($botanist);
             $botanists[] = $botanist;
-            $this->addReference(Botanist::class . '_' . $i, $botanist);
+            $this->addReference(Botanist::class.'_'.$i, $botanist);
         }
 
         return $botanists;
@@ -124,7 +124,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($particular);
             $particulars[] = $particular;
-            $this->addReference(Particular::class . '_' . $i, $particular);
+            $this->addReference(Particular::class.'_'.$i, $particular);
         }
 
         return $particulars;
@@ -140,8 +140,8 @@ class AppFixtures extends Fixture
                 ->setCreatedAt(new \DateTimeImmutable())
                 ->setUpdatedAt(new \DateTimeImmutable());
 
-            if ($this->hasReference(Botanist::class . '_' . $i)) {
-                $certificate->setBotanist($this->getReference(Botanist::class . '_' . rand(0, 9)));
+            if ($this->hasReference(Botanist::class.'_'.$i)) {
+                $certificate->setBotanist($this->getReference(Botanist::class.'_'.rand(0, 9)));
             }
 
             $manager->persist($certificate);
@@ -157,8 +157,8 @@ class AppFixtures extends Fixture
             $appointment
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now  ' . $i . ' days'))
-                ->setPlannedAt(new \DateTimeImmutable('now + ' . $i . ' days'))
+                ->setDate(new \DateTimeImmutable('now  '.$i.' days'))
+                ->setPlannedAt(new \DateTimeImmutable('now + '.$i.' days'))
                 ->setIsPresential($faker->boolean)
                 ->setAdress($faker->address)
                 ->setLink($faker->url)
@@ -169,13 +169,13 @@ class AppFixtures extends Fixture
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
 
-            if ($this->hasReference(Particular::class . '_' . $i)) {
-                $appointment->setParticular($this->getReference(Particular::class . '_' . $i));
+            if ($this->hasReference(Particular::class.'_'.$i)) {
+                $appointment->setParticular($this->getReference(Particular::class.'_'.$i));
             }
 
             $manager->persist($appointment);
             $appointments[] = $appointment;
-            $this->addReference(Appointment::class . '_' . $i, $appointment);
+            $this->addReference(Appointment::class.'_'.$i, $appointment);
         }
 
         return $appointments;
@@ -190,7 +190,7 @@ class AppFixtures extends Fixture
             $advice
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now + ' . $i . ' days'))
+                ->setDate(new \DateTimeImmutable('now + '.$i.' days'))
                 ->setIsPublic($faker->boolean)
                 ->setCreatedAt(new \DateTimeImmutable('now'))
                 ->setUpdatedAt(new \DateTimeImmutable())
@@ -199,13 +199,13 @@ class AppFixtures extends Fixture
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
 
-            if ($this->hasReference(Particular::class . '_' . $i)) {
-                $advice->setParticular($this->getReference(Particular::class . '_' . $i));
+            if ($this->hasReference(Particular::class.'_'.$i)) {
+                $advice->setParticular($this->getReference(Particular::class.'_'.$i));
             }
 
             $manager->persist($advice);
             $advices[] = $advice;
-            $this->addReference(Advice::class . '_' . $i, $advice);
+            $this->addReference(Advice::class.'_'.$i, $advice);
         }
 
         return $advices;
@@ -219,16 +219,16 @@ class AppFixtures extends Fixture
             $plant = new Plant();
 
             // set a botanist to a plant
-            $appointment = $this->getReference(Appointment::class . '_' . rand(0, 9));
+            $appointment = $this->getReference(Appointment::class.'_'.rand(0, 9));
             $plant->addRequest($appointment);
 
             // set a advice to a plant
-            $advice = $this->getReference(Advice::class . '_' . rand(0, 9));
+            $advice = $this->getReference(Advice::class.'_'.rand(0, 9));
             $plant->addRequest($advice);
 
             // set a particular to a plant
-            if ($this->hasReference(Particular::class . '_' . $i)) {
-                $plant->setParticular($this->getReference(Particular::class . '_' . $i));
+            if ($this->hasReference(Particular::class.'_'.$i)) {
+                $plant->setParticular($this->getReference(Particular::class.'_'.$i));
             }
 
             $plant
@@ -244,7 +244,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($plant);
             $plants[] = $plant;
-            $this->addReference(Plant::class . '_' . $i, $plant);
+            $this->addReference(Plant::class.'_'.$i, $plant);
         }
 
         return $plants;
@@ -260,14 +260,14 @@ class AppFixtures extends Fixture
                 ->setCreatedAt(new \DateTimeImmutable('now'));
 
             // 20 is the number of particular created
-            if ($this->hasReference(Particular::class . '_' . $i % 20)) {
-                $particular = $this->getReference(Particular::class . '_' . $i % 20);
+            if ($this->hasReference(Particular::class.'_'.$i % 20)) {
+                $particular = $this->getReference(Particular::class.'_'.$i % 20);
                 $comment->setUser($particular);
             }
 
             // 20 is the number of plants created
-            if ($this->hasReference(Advice::class . '_' . $i % 20)) {
-                $comment->setCommentAdvice($this->getReference(Advice::class . '_' . $i % 20));
+            if ($this->hasReference(Advice::class.'_'.$i % 20)) {
+                $comment->setCommentAdvice($this->getReference(Advice::class.'_'.$i % 20));
             }
 
             $comments[] = $comment;
