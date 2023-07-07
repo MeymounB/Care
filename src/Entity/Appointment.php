@@ -9,11 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment extends Request
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeInterface $plannedAt = null;
 
@@ -26,10 +21,8 @@ class Appointment extends Request
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $slug = null;
 
     public function getPlannedAt(): ?\DateTimeInterface
     {
@@ -55,6 +48,11 @@ class Appointment extends Request
         return $this;
     }
 
+    public function getIsPresential(): ?bool
+    {
+        return $this->isPresential;
+    }
+
     public function getAdress(): ?string
     {
         return $this->adress;
@@ -75,6 +73,18 @@ class Appointment extends Request
     public function setLink(?string $link): static
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

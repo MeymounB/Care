@@ -2,12 +2,21 @@
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Faker\Factory;
+use Faker\Generator;
+
+ini_set('memory_limit', '1024M');
 
 class RegisterTest extends WebTestCase
 {
+	private Generator $faker;
+	protected function setUp(): void
+	{
+		parent::setUp();
+		$this->faker = Factory::create();
+	}
+
 	public function testRegister(): void
 	{
-		$faker = Factory::create();
 
 		$client = static::createClient();
 		$crawler = $client->request('GET', '/');
@@ -16,25 +25,23 @@ class RegisterTest extends WebTestCase
 
 		$form = $crawler->selectButton("S'inscrire")->form();
 
-		$password = $faker->password(8);
+		$password = $this->faker->password(8);
 
-		$form['registration_form[firstName]'] = $faker->firstName();
-		$form['registration_form[lastName]'] = $faker->lastName();
-		$form['registration_form[email]'] = $faker->email();
-		$form['registration_form[cellphone]'] = 123456789;
-		$form['registration_form[password][first]'] = $password;
-		$form['registration_form[password][second]'] = $password;
-		$form['registration_form[agreeTerms]'] = true;
+		$form['particular_form[firstName]'] = $this->faker->firstName();
+		$form['particular_form[lastName]'] = $this->faker->lastName();
+		$form['particular_form[email]'] = $this->faker->email();
+		$form['particular_form[cellphone]'] = 123456789;
+		$form['particular_form[password][first]'] = $password;
+		$form['particular_form[password][second]'] = $password;
+		$form['particular_form[agreeTerms]'] = true;
 
 		$client->submit($form);
 
 		$this->assertResponseRedirects('/login');
 	}
 
-	public function testRegisterDoctor(): void
+	public function testRegisterBotanist(): void
 	{
-		$faker = Factory::create();
-
 		$client = static::createClient();
 		$crawler = $client->request('GET', '/botanist');
 
@@ -42,14 +49,14 @@ class RegisterTest extends WebTestCase
 
 		$form = $crawler->selectButton("S'inscrire")->form();
 
-		$password = $faker->password();
-		$form['botanist_registration[firstName]'] = $faker->firstName();
-		$form['botanist_registration[lastName]'] = $faker->lastName();
-		$form['botanist_registration[email]'] = $faker->email();
-		$form['botanist_registration[cellphone]'] = 123456789;
-		$form['botanist_registration[password][first]'] = $password;
-		$form['botanist_registration[password][second]'] = $password;
-		$form['botanist_registration[agreeTerms]'] = true;
+		$password = $this->faker->password(8);
+		$form['botanist_form[firstName]'] = $this->faker->firstName();
+		$form['botanist_form[lastName]'] = $this->faker->lastName();
+		$form['botanist_form[email]'] = $this->faker->email();
+		$form['botanist_form[cellphone]'] = 123456789;
+		$form['botanist_form[password][first]'] = $password;
+		$form['botanist_form[password][second]'] = $password;
+		$form['botanist_form[agreeTerms]'] = true;
 
 		$client->submit($form);
 
