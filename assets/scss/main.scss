@@ -1,6 +1,9 @@
 @use "./utils" as vars;
 @import "./utils/boilerplates";
 @import './components/index';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .container {
     width: 100%;

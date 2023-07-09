@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Appointment index{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4">
+        <h1 class="text-2xl font-bold mb-4">Appointment index</h1>
+
+        <table class="table-auto w-full mb-4">
+            <thead>
+                 <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    {# <th>CreatedAt</th>
+                    <th>UpdatedAt</th> #}
+                    <th>PlannedAt</th>
+                    <th>IsPresential</th>
+                    <th>Adress</th>
+                    <th>Link</th>
+                    <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for appointment in appointments %}
+                {# Determine the row color based on the status of the appointment #}
+                {% set rowColor = appointment.status == 'En attente' ? 'bg-yellow-200' :  
+                    appointment.status == 'En cours' ? 'bg-blue-200' : 
+                    appointment.status == 'Terminé' ? 'bg-green-200' : 
+                    appointment.status == 'Annulé' ? 'bg-red-200' : 'bg-green-200' %}
+                <tr class="{{ rowColor }}">
+                          <td>{{ appointment.id }}</td>
+                            <td>{{ appointment.title }}</td>
+                            <td>{{ appointment.description }}</td>
+                            <td>{{ appointment.date ? appointment.date|date('Y-m-d H:i:s') : '' }}</td>
+                            {# <td>{{ appointment.createdAt ? appointment.createdAt|date('Y-m-d') : '' }}</td>
+                            <td>{{ appointment.updatedAt ? appointment.updatedAt|date('Y-m-d') : '' }}</td> #}
+                            <td>{{ appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ appointment.isPresential ? 'Yes' : 'No' }}</td>
+                            <td>{{ appointment.adress }}</td>
+                            <td>{{ appointment.link }}</td>
+                    <td class="px-4 py-2">
+                        <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}" class="text-blue-600 hover:underline">show</a>
+                        <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}" class="text-blue-600 hover:underline">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12" class="px-4 py-2">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_appointment_new') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Create new</a>
+    </div>
+{% endblock %}

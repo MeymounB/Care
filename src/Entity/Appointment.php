@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+// use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment extends Request
@@ -21,8 +22,9 @@ class Appointment extends Request
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $slug = null;
+    // #[Gedmo\Slug(fields: ['title'])]
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?string $slug = null;
 
     public function getPlannedAt(): ?\DateTimeInterface
     {
@@ -73,18 +75,6 @@ class Appointment extends Request
     public function setLink(?string $link): static
     {
         $this->link = $link;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
 
         return $this;
     }
