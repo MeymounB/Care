@@ -4,31 +4,36 @@ namespace App\Controller;
 
 use App\Entity\Botanist;
 use App\Entity\Particular;
-use App\Form\Registration\BotanistFormType;
-use App\Form\Registration\ParticularFormType;
-use App\Repository\UserRepository;
+use App\Entity\Certificate;
 use App\Security\EmailVerifier;
+use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Registration\BotanistFormType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\Registration\ParticularFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
     private VerifyEmailHelperInterface $verifyEmailHelper;
+    private SluggerInterface $slugger;
 
-    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper)
+    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, SluggerInterface $slugger)
     {
         $this->emailVerifier = $emailVerifier;
         $this->verifyEmailHelper = $verifyEmailHelper;
+        $this->slugger = $slugger;
     }
 
     private function sendConfirmationEmail($user)
@@ -49,7 +54,7 @@ class RegistrationController extends AbstractController
         );
     }
 
-    private function processRegistration(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, $user, string $formType, string $template): Response
+    private function processRegistration(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, Botanist|Particular $user, string $formType, string $template): Response
     {
         $form = $this->createForm($formType, $user);
         $form->handleRequest($request);
@@ -61,6 +66,33 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+
+            if (get_class($user) === Botanist::class) {
+                $certifData = $form->get('certif')->getData();
+
+                if ($certifData) {
+                    $currentTime = time();
+                    $newFilename = "Document_certification_" . $user->getFullName() . "_" . $currentTime;
+                    $safeFilename = $this->slugger->slug($newFilename)  . '.' . $certifData->guessExtension();
+
+                    try {
+                        $certifData->move(
+                            $this->getParameter('certif_directory'),
+                            $safeFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
+
+                    $certificate = new Certificate();
+
+                    $certificate->setTitle($user->getFullName() . " - " . $currentTime);
+                    $certificate->setCertificateFile($safeFilename);
+                    $user->addCertificate($certificate);
+
+                    $entityManager->persist($certificate);
+                }
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
