@@ -57,7 +57,7 @@ help: ## Show this help.
 
 ## === 🐋  DOCKER ================================================
 docker-up: ## Start docker containers.
-	$(DOCKER_COMPOSE_UP)
+	$(DOCKER_COMPOSE) --env-file .env.local up -d
 .PHONY: docker-up
 
 docker-stop: ## Stop docker containers.
