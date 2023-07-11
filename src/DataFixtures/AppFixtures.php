@@ -158,13 +158,12 @@ class AppFixtures extends Fixture
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
                 ->setDate(new \DateTimeImmutable('now  '.$i.' days'))
-                ->setPlannedAt(new \DateTimeImmutable('now + '.$i.' days'))
+                ->setPlannedAt(new \DateTime('now + '."{$i} days"))
                 ->setIsPresential($faker->boolean)
-                ->setAdress($faker->address)
+                ->setAddress($faker->address)
                 ->setLink($faker->url)
                 ->setCreatedAt(new \DateTimeImmutable('now'))
                 ->setUpdatedAt(new \DateTimeImmutable())
-                ->setSlug($faker->slug)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
@@ -194,7 +193,6 @@ class AppFixtures extends Fixture
                 ->setIsPublic($faker->boolean)
                 ->setCreatedAt(new \DateTimeImmutable('now'))
                 ->setUpdatedAt(new \DateTimeImmutable())
-                ->setSlug($faker->slug)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
@@ -236,7 +234,6 @@ class AppFixtures extends Fixture
                 ->setDescription($faker->paragraph)
                 ->setSpecies($faker->name)
                 ->setCreatedAt(new \DateTimeImmutable('now'))
-                ->setSlug($faker->slug)
                 ->addRequest($appointments[$i % 10])
                 ->addRequest($advices[$i % 10]);
 

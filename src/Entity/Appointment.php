@@ -5,19 +5,26 @@ namespace App\Entity;
 use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\ValidMeetingDetails;
 // use Gedmo\Mapping\Annotation as Gedmo;
 
+
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
+#[ValidMeetingDetails]
 class Appointment extends Request
 {
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $plannedAt = null;
 
     #[ORM\Column]
+    #[ValidMeetingDetails]
     private ?bool $isPresential = null;
 
+
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adress = null;
+    private ?string $address = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
@@ -55,14 +62,14 @@ class Appointment extends Request
         return $this->isPresential;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(?string $adress): static
+    public function setAddress(?string $address): static
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }

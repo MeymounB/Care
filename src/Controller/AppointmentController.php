@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Appointment;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
+use App\Repository\StatusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,17 +15,42 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppointmentController extends AbstractController
 {
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository): Response
+    public function index(AppointmentRepository $appointmentRepository, StatusRepository $statusRepository): Response
     {
+
+        // $status = $statusRepository->findOneBy(['name' => 'En cours']);
+
+        // $appointment = new Appointment();
+        // $appointment->setStatus($status);
+
+        $appointments = $appointmentRepository->findAll();
+
+        // Group appointments by status
+        $groupedAppointments = [];
+        foreach ($appointments as $appointment) {
+
+            $statusName = $appointment->getStatus()->getName();
+            if (!isset($groupedAppointments[$statusName])) {
+                $groupedAppointments[$statusName] = [];
+            }
+            $groupedAppointments[$statusName][] = $appointment;
+        }
+
         return $this->render('appointment/index.html.twig', [
-            'appointments' => $appointmentRepository->findAll(),
+            'groupedAppointments' => $groupedAppointments,
         ]);
     }
 
     #[Route('/new', name: 'app_appointment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AppointmentRepository $appointmentRepository): Response
+    public function new(Request $request, AppointmentRepository $appointmentRepository, StatusRepository $statusRepository): Response
     {
         $appointment = new Appointment();
+
+        $defaultStatus = $statusRepository->findOneBy(['name' => 'En attente']);
+        if ($defaultStatus !== null) {
+            $appointment->setStatus($defaultStatus);
+        }
+
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);
 
@@ -69,7 +95,7 @@ class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
     public function delete(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 

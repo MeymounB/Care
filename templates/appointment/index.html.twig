@@ -1,58 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Appointment index{% endblock %}
+{% block title %}Historique de vos demandes{% endblock %}
 
 {% block body %}
-    <div class="container mx-auto px-4">
-        <h1 class="text-2xl font-bold mb-4">Appointment index</h1>
+    <div class="mx-auto px-4">
+        <h1 class="text-2xl font-bold mb-4">Historique de vos demandes</h1>
 
+   {% for status, appointments in groupedAppointments %}
+    <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
+    <div class="rounded-lg shadow-lg bg-white my-3">
         <table class="table-auto w-full mb-4">
-            <thead>
-                 <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Date</th>
-                    {# <th>CreatedAt</th>
-                    <th>UpdatedAt</th> #}
-                    <th>PlannedAt</th>
-                    <th>IsPresential</th>
-                    <th>Adress</th>
-                    <th>Link</th>
-                    <th>actions</th>
-            </tr>
+            <thead class=" bg-indigo-100 border-indigo-500 border-b">
+                <tr>
+                    <th class="text-start px-2 py-1 text-xs">Title</th>
+                    <th class="text-start px-2 py-1 text-xs">Description</th>
+                    <th class="text-start px-2 py-1 text-xs">PlannedAt</th>
+                    <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
+                    <th class="text-start px-2 py-1 text-xs">IsPresential</th>
+                    <th class="text-start px-2 py-1 text-xs">actions</th>
+                </tr>
             </thead>
             <tbody>
             {% for appointment in appointments %}
-                {# Determine the row color based on the status of the appointment #}
-                {% set rowColor = appointment.status == 'En attente' ? 'bg-yellow-200' :  
-                    appointment.status == 'En cours' ? 'bg-blue-200' : 
-                    appointment.status == 'Terminé' ? 'bg-green-200' : 
-                    appointment.status == 'Annulé' ? 'bg-red-200' : 'bg-green-200' %}
-                <tr class="{{ rowColor }}">
-                          <td>{{ appointment.id }}</td>
-                            <td>{{ appointment.title }}</td>
-                            <td>{{ appointment.description }}</td>
-                            <td>{{ appointment.date ? appointment.date|date('Y-m-d H:i:s') : '' }}</td>
-                            {# <td>{{ appointment.createdAt ? appointment.createdAt|date('Y-m-d') : '' }}</td>
-                            <td>{{ appointment.updatedAt ? appointment.updatedAt|date('Y-m-d') : '' }}</td> #}
-                            <td>{{ appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ appointment.isPresential ? 'Yes' : 'No' }}</td>
-                            <td>{{ appointment.adress }}</td>
-                            <td>{{ appointment.link }}</td>
+                <tr class="text-center border-b text-sm text-gray-600">
+                    <td class="px-4 py-2">{{ appointment.title }}</td>
+                    <td class="px-4 py-2">{{ appointment.description }}</td>
+                    <td class="px-4 py-2">{{ appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '' }}</td>
+                     <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td> 
                     <td class="px-4 py-2">
-                        <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}" class="text-blue-600 hover:underline">show</a>
-                        <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}" class="text-blue-600 hover:underline">edit</a>
+                        {% if appointment.isPresential %}
+                            <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                Yes
+                            {% if appointment.address %}
+                                - {{ appointment.address }}
+                            {% endif %}
+                            </span>
+                        {% else %}
+                            <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                No
+                            {% if appointment.link %}
+                                - <a href="{{ appointment.link }}" class="text-indigo-600 underline hover:text-indigo-900">Link</a>
+                            {% endif %}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-2 flex justify-center">
+                        <button onclick="location.href='{{ path('app_appointment_show', {'id': appointment.id}) }}'" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">show</button>
+                        <button onclick="location.href='{{ path('app_appointment_edit', {'id': appointment.id}) }}'" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">edit</button>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="12" class="px-4 py-2">no records found</td>
+                    <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+    </div>
+{% else %}
+    <p class="text-lg text-red-500">No appointments found</p>
+{% endfor %}
 
-        <a href="{{ path('app_appointment_new') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Create new</a>
+
+        <button onclick="location.href='{{ path('app_appointment_new') }}'" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">New</button>       
     </div>
 {% endblock %}
