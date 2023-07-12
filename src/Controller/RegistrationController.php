@@ -30,7 +30,6 @@ class RegistrationController extends AbstractController
     {
         $this->emailVerifier = $emailVerifier;
         $this->verifyEmailHelper = $verifyEmailHelper;
-        $this->urlGenerator = $urlGenerator;
     }
 
     #[Route(path: '/', name: 'app_login')]
