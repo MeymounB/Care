@@ -37,22 +37,37 @@ class RegistrationController extends AbstractController
         $this->urlGenerator = $urlGenerator;
     }
 
-    private function sendConfirmationEmail($user)
+    #[Route(path: '/', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $email = (new TemplatedEmail())
-            ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
-            ->to($user->getEmail())
-            ->subject('Welcome to GreenCare! Verify your email')
-            ->htmlTemplate('auth/confirmation_email.html.twig')
-            ->context([
-                'username' => $user->getFirstName(),
-            ]);
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
 
-        $this->emailVerifier->sendEmailConfirmation(
-            'app_verify_email',
-            $user,
-            $email
-        );
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('auth/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    #[Route('/register', name: 'register_page')]
+    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
+        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
+    }
+
+    #[Route('/botanist', name: 'register_page_doctor')]
+    public function registerBot(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
+        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
     }
 
     private function processRegistration(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, $user, string $formType, string $template): Response
@@ -82,43 +97,22 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/register', name: 'register_page')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    private function sendConfirmationEmail($user)
     {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_logout');
-        }
-        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
-    }
+        $email = (new TemplatedEmail())
+            ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
+            ->to($user->getEmail())
+            ->subject('Welcome to GreenCare! Verify your email')
+            ->htmlTemplate('auth/confirmation_email.html.twig')
+            ->context([
+                'username' => $user->getFirstName(),
+            ]);
 
-    #[Route('/botanist', name: 'register_page_doctor')]
-    public function registerBot(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_logout');
-        }
-        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
-    }
-
-    #[Route(path: '/', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('app_logout');
-        }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('auth/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
-
-    #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
-    public function logout(): void
-    {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            $email
+        );
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]
@@ -155,5 +149,11 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Votre adresse email a été vérifiée avec succès ! Redirection en cours...');
 
         return $this->redirectToRoute('register_page');
+    }
+
+    #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
+    public function logout(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
