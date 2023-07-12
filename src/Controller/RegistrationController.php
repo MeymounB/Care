@@ -11,11 +11,14 @@ use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
@@ -25,10 +28,13 @@ class RegistrationController extends AbstractController
     private EmailVerifier $emailVerifier;
     private VerifyEmailHelperInterface $verifyEmailHelper;
 
-    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper)
+    private UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, UrlGeneratorInterface $urlGenerator)
     {
         $this->emailVerifier = $emailVerifier;
         $this->verifyEmailHelper = $verifyEmailHelper;
+        $this->urlGenerator = $urlGenerator;
     }
 
     private function sendConfirmationEmail($user)
@@ -76,23 +82,35 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'register_page')]
+    #[Route('/register', name: 'register_page')]
     public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
         return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
     }
 
     #[Route('/botanist', name: 'register_page_doctor')]
     public function registerBot(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
         return $this->processRegistration($request, $passwordEncoder, $entityManager, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
     }
 
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/no_role', name: 'no_role')]
+    public function no_role(): Response
+    {
+        return $this->render('no_role.html.twig');
+    }
+
+    #[Route(path: '/', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('register_page');
+            return $this->redirectToRoute('app_logout');
         }
 
         // get the login error if there is one
