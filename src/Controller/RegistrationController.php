@@ -100,12 +100,6 @@ class RegistrationController extends AbstractController
         return $this->processRegistration($request, $passwordEncoder, $entityManager, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
     }
 
-    #[Route(path: '/no_role', name: 'no_role')]
-    public function no_role(): Response
-    {
-        return $this->render('no_role.html.twig');
-    }
-
     #[Route(path: '/', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

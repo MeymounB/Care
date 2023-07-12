@@ -1,5 +1,4 @@
 <?php
-// src/Controller/CustomAuthenticationSuccessHandler.php
 
 namespace App\Controller;
 
@@ -10,7 +9,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class redirectLoginController implements AuthenticationSuccessHandlerInterface
 {
