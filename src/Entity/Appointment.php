@@ -6,19 +6,16 @@ use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\ValidMeetingDetails;
 // use Gedmo\Mapping\Annotation as Gedmo;
 
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
-#[ValidMeetingDetails]
 class Appointment extends Request
 {
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $plannedAt = null;
 
     #[ORM\Column]
-    #[ValidMeetingDetails]
     private ?bool $isPresential = null;
 
 
