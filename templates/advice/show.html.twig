@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Advice{% endblock %}
+
+{% block body %}
+    <h1 class="text-4xl mb-5">Advice</h1>
+
+    <table class="table-auto bg-white rounded-lg overflow-hidden w-full shadow-lg">
+        <tbody>
+        {% for field, value in {
+            'Id': advice.id,
+            'Title': advice.title,
+            'Description': advice.description,
+            'CreatedAt': advice.createdAt ? advice.createdAt|date('Y-m-d') : '',
+            'UpdatedAt': advice.updatedAt ? advice.updatedAt|date('Y-m-d') : '',
+            'isPublic': advice.isPublic ? 'Yes' : 'No',
+        } %}
+            <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">
+                <th class="px-4 py-2 text-left text-gray-600">{{ field }}</th>
+                <td class="px-4 py-2">{{ value }}</td>
+            </tr>
+           
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-5">
+        <a href="{{ path('app_advice_index') }}"
+           class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">back to list</a>
+
+        <a href="{{ path('app_advice_edit', {'id': advice.id}) }}"
+           class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">edit</a>
+
+        <div class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md ">
+            {{ include('advice/_delete.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

@@ -34,6 +34,7 @@ class AppointmentType extends AbstractType
                     'Distanciel' => false,
                 ],
                 'expanded' => true,
+                'label' => 'Vous préférez un rendez-vous :',
             ])
 
             ->add('address', TextType::class, [

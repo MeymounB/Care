@@ -15,12 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppointmentController extends AbstractController
 {
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository, StatusRepository $statusRepository): Response
+    public function index(AppointmentRepository $appointmentRepository): Response
     {
-        // $status = $statusRepository->findOneBy(['name' => 'En cours']);
-
-        // $appointment = new Appointment();
-        // $appointment->setStatus($status);
 
         $appointments = $appointmentRepository->findAll();
 
@@ -93,7 +89,7 @@ class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
     public function delete(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 
