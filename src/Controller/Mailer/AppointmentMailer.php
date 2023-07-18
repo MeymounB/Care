@@ -1,12 +1,12 @@
 <?php
-//
-//namespace App\Mailer;
-//
-//use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-//use Symfony\Component\Mailer\MailerInterface;
-//
-//class AppointmentMailer
-//{
+
+namespace App\Controller\Mailer;
+
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+
+class AppointmentMailer
+{
 //     private $mailer;
 //
 //     public function __construct(MailerInterface $mailer)
@@ -27,4 +27,4 @@
 //
 //         $this->mailer->send($email);
 //     }
-//}
+}
