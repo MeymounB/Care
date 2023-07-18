@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Particular;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -22,6 +23,7 @@ class ParticularCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+            BooleanField::new('is_verified'),
             TextField::new('FullName')->setLabel('Full Name'),
             TextField::new('email'),
             // CollectionField::new('plants')->setLabel('Name of plants'),

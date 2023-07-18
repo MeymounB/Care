@@ -22,11 +22,9 @@ class CertificateCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
-            TextField::new('title'),
-            TextField::new('state'),
             TextField::new('certificateFile'),
+            TextField::new('state'),
             AssociationField::new('botanist'),
-            DateTimeField::new('createdAt'),
             DateTimeField::new('updatedAt'),
         ];
     }
