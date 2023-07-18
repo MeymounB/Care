@@ -17,7 +17,6 @@ class AppointmentController extends AbstractController
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository, StatusRepository $statusRepository): Response
     {
-
         // $status = $statusRepository->findOneBy(['name' => 'En cours']);
 
         // $appointment = new Appointment();
@@ -28,7 +27,6 @@ class AppointmentController extends AbstractController
         // Group appointments by status
         $groupedAppointments = [];
         foreach ($appointments as $appointment) {
-
             $statusName = $appointment->getStatus()->getName();
             if (!isset($groupedAppointments[$statusName])) {
                 $groupedAppointments[$statusName] = [];
@@ -47,7 +45,7 @@ class AppointmentController extends AbstractController
         $appointment = new Appointment();
 
         $defaultStatus = $statusRepository->findOneBy(['name' => 'En attente']);
-        if ($defaultStatus !== null) {
+        if (null !== $defaultStatus) {
             $appointment->setStatus($defaultStatus);
         }
 
@@ -95,7 +93,7 @@ class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
     public function delete(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 

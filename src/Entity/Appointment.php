@@ -5,9 +5,8 @@ namespace App\Entity;
 use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-// use Gedmo\Mapping\Annotation as Gedmo;
 
+// use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment extends Request
@@ -18,10 +17,8 @@ class Appointment extends Request
     #[ORM\Column]
     private ?bool $isPresential = null;
 
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
-
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
