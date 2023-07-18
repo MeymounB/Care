@@ -1,45 +1,48 @@
 @use "../utils" as vars;
 
-header{
+header {
   @include vars.flexer(center, space-between);
   width: 100%;
+
+  height: -moz-fit-content;
   height: fit-content;
+
   box-shadow: 0 0 vars.rem(10) 0 vars.$gray;
   padding: 0 vars.rem(10);
 }
 
-.left_header{
+.left_header {
   display: flex;
   justify-content: center;
 }
 
-.header_nav{
+.header_nav {
   @include vars.flexer(center, start);
 }
 
-.header_nav_element{
+.header_nav_element {
   @include vars.flexer(center, center, column);
   height: vars.rem(100);
   aspect-ratio: 1/1;
   cursor: pointer;
 }
 
-.header_nav_element:hover{
+.header_nav_element:hover {
   background-color: #f6f5f5;
 }
 
-.header_nav_element img{
+.header_nav_element img {
   height: 38px;
   width: 38px;
   margin-bottom: 7px;
 }
 
 
-.header_nav p{
+.header_nav p {
   font-size: 80%;
 }
 
-.right_header{
+.right_header {
   @include vars.flexer(center, start);
   gap: vars.rem(10);
 }

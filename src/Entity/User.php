@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[InheritanceType('SINGLE_TABLE')]
 #[DiscriminatorColumn(name: 'discr', type: 'string')]
-#[DiscriminatorMap(['particular' => Particular::class, 'botanist' => Botanist::class])]
+#[DiscriminatorMap(['particular' => Particular::class, 'botanist' => Botanist::class, 'admin' => Admin::class])]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[ORM\Table(name: '`user`')]
