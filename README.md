@@ -4,6 +4,7 @@
 
 1. Cloner le projet
 2. Démarrer son serveur Apache
+<<<<<<< HEAD
 3. Installer les dépendances PHP : `composer install`
 4. Installer les dépendances front : `à voir`
 5. Créer les fichiers `.env.local` à la racine
@@ -13,6 +14,17 @@
 9. Créer un nouveau fichier `.env.test.local` et copier le contenu de `.env.local` dans ce nouveau fichier
 10. Créer la base(s) de données de dev : `composer prepare-db`
 11. Créer la base(s) de données de test : `composer prepare-test`
+=======
+3. Installer les dépendances PHP : ```composer install```
+4. Installer les dépendances front : ```à voir```
+5. Créer les fichiers ```.env.local```  à la racine
+6. Copier le contenu de .env et coller dans les 2 fichiers de l'étape 5 
+7. Décommenter MySQL et commenter Postgres dans le nouveau .env 
+8. Update le lien avec ses infos (username MySQL, password, et nom de la base de données)
+9. Créer un nouveau fichier ```.env.test.local``` et copier le contenu de ```.env.local``` dans ce nouveau fichier 
+10. Créer la base(s) de données de dev : ```composer prepare-db```
+11. Créer la base(s) de données de test : ```composer prepare-test```
+>>>>>>> feature/init
 
 ## Normes de codage et Protocole de commit
 
@@ -37,4 +49,8 @@ Ensuite, avant chaque commit, lancez la commande `make before-commit`. Cela déc
 
 Ce guide de configuration est sujet à modifications au fur et à mesure de l'évolution du projet, alors assurez-vous toujours d'être à jour avec le processus de configuration actuel du projet.
 
+<<<<<<< HEAD
 By l'equipe
+=======
+By WilFrite
+>>>>>>> feature/init
