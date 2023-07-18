@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping\DiscriminatorColumn;
     'advice' => Advice::class,
 ])]
 #[ORM\MappedSuperclass()]
+#[ORM\HasLifecycleCallbacks]
 class Request
 {
     #[ORM\Id]
@@ -119,6 +120,18 @@ class Request
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function prePersist(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     /**

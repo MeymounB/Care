@@ -7,14 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+// use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: AdviceRepository::class)]
 class Advice extends Request
 {
     #[ORM\Column]
     private ?bool $isPublic = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $slug = null;
+    // #[Gedmo\Slug(fields: ['title'])]
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'commentAdvice', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -45,18 +48,6 @@ class Advice extends Request
     public function getIsPublicString(): ?string
     {
         return $this->isPublic ? 'Oui' : 'Non';
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     public function getComments(): Collection

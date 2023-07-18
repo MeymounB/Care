@@ -1,7 +1,3 @@
-import "./styles/app.scss";
+import {initIsPresential} from "./components/appointmentForm";
 
-import {foo} from "./exemple/module1";
-import {bar} from "./exemple/module2";
-
-foo();
-bar();
+initIsPresential();

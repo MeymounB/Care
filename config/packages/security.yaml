@@ -24,10 +24,11 @@ security:
                 check_path: app_login
                 default_target_path: / #TODO mettre vers la page d'accueil
                 enable_csrf: true
+                success_handler: App\Controller\redirectLoginController
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: register_page #TODO mettre vers la landaing page'
+                target: app_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -40,7 +41,7 @@ security:
     access_control:
         #- { path: ^/particular, roles: ROLE_PARTICULAR }
         #- { path: ^/botanist, roles: ROLE_BOTANIST }
-        #- { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: '^/admin', roles: ROLE_ADMIN }
         - { path: '^/verify/email', roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 when@test:
@@ -48,7 +49,7 @@ when@test:
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
+            # are not important, waste resources and increase redirectLoginController times. The following
             # reduces the work factor to the lowest possible values.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto
