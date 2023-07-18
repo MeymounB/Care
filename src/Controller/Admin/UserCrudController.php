@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\Admin\Trait\ReadDeleteTrait;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
