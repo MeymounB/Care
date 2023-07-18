@@ -6,8 +6,6 @@ use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-// use Gedmo\Mapping\Annotation as Gedmo;
-
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment extends Request
 {
