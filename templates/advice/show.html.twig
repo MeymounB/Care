@@ -21,8 +21,25 @@
             </tr>
            
         {% endfor %}
+
+      
         </tbody>
     </table>
+
+    {% for comment in advice.comments %}
+        <div>
+            {% if comment.user is not null %}
+                <h3>{{ comment.user.fullName }} says:</h3>
+                {% else %}
+                    <h3>Anonymous says:</h3>
+                {% endif %}
+
+                <p>{{ comment.content }}</p>
+                <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
+        </div>
+            {% else %}
+            <p>No comments yet.</p>
+    {% endfor %}
 
     <div class="mt-5">
         <a href="{{ path('app_advice_index') }}"

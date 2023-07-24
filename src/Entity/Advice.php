@@ -19,7 +19,7 @@ class Advice extends Request
     // #[ORM\Column(length: 255, nullable: true)]
     // private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'commentAdvice', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'commentAdvice', targetEntity: Comment::class, orphanRemoval: true, cascade: ["persist"])]
     private Collection $comments;
 
     public function __construct()
@@ -53,5 +53,28 @@ class Advice extends Request
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCommentAdvice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getCommentAdvice() === $this) {
+                $comment->setCommentAdvice(null);
+            }
+        }
+
+        return $this;
     }
 }

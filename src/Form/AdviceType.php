@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Advice;
+use App\Form\CommentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,6 +31,10 @@ class AdviceType extends AbstractType
                 ],
                 'expanded' => true,
                 'label' => 'Voulez vous rendre votre conseil soit :',
+            ])
+            ->add('new_comment', CommentType::class, [
+                'mapped' => false,
+                'label' => false,
             ]);
     }
 
