@@ -233,7 +233,6 @@ class AppFixtures extends Fixture
                 ->setName($faker->name)
                 ->setDescription($faker->paragraph)
                 ->setSpecies($faker->name)
-                ->setCreatedAt(new \DateTimeImmutable('now'))
                 ->addRequest($appointments[$i % 10])
                 ->addRequest($advices[$i % 10]);
 
