@@ -76,7 +76,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'register_page')]
+    #[Route('/register', name: 'register_page')]
     public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
     {
         return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
