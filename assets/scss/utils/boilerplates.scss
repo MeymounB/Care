@@ -72,7 +72,7 @@ textarea {
     border-radius: funcs.rem(4);
 
     &:focus, &:hover {
-        border-color:  colors.$green;
+        border-color: colors.$green;
     }
 }
 
@@ -87,6 +87,11 @@ option {
     margin-bottom: funcs.rem(5);
     outline: none;
     border-radius: funcs.rem(5);
+}
+
+.section {
+    width: 100%;
+    margin: funcs.rem(10) 0;
 }
 
 .center-space {
