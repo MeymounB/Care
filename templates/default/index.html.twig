@@ -24,18 +24,12 @@
         </div>
 
         <ul class="landing_feats">
-            <li>
-                <img src="{{ asset('images/calendar.svg') }}" alt="{{ baseAlt }} of a calendar">
-                <p>Réservation</p>
-            </li>
-            <li>
-                <img src="{{ asset('images/chat.svg') }}" alt="{{ baseAlt }} of a chat">
-                <p>Discutez</p>
-            </li>
-            <li>
-                <img src="{{ asset('images/share.svg') }}" alt="{{ baseAlt }} of share">
-                <p>Partagez</p>
-            </li>
+            {% for link in links %}
+                <li>
+                    <img src="{{ asset('images/' ~ link['img']) }}" alt="{{ baseAlt }} of a {{ link['alt'] }}">
+                    <p>{{ link['text'] }}</p>
+                </li>
+            {% endfor %}
         </ul>
     </section>
 {% endblock %}
