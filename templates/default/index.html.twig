@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Greencare - Bête d'appli{% endblock %}
+
+{% block header %}
+    <header>
+        <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+
+        <nav class="header_nav">
+            <a href="{{ path('app_default') }}">Accueil</a>
+            <button class="btn btn-secondary" id="about-us">A propos</button>
+            <button class="btn btn-secondary" id="download">Télécharger</button>
+        </nav>
+    </header>
+
+{% endblock %}
+
+{% block body %}
+    <section class="section hero">
+        <div>
+            <h1 class="main-title">L’application N°1 pour garder tes plantes </h1>
+            <p class="second-title">GreenCare : au service de la santé de vos plantes</p>
+        </div>
+        <div class="hero_links">
+            <button class="btn btn-primary">
+                <a href="#">Se connecter</a>
+            </button>
+            <button class="btn btn-secondary">
+                <a href="#">S'inscrire</a>
+            </button>
+        </div>
+    </section>
+{% endblock %}
+
+{% block footer %}{% endblock %}

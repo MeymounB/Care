@@ -1,0 +1,13 @@
+@use "../utils" as vars;
+
+.hero {
+	background: red;
+	@include vars.flexer(center, center, column);
+	text-align: center;
+	height: 100%;
+
+	&_links {
+		@include vars.flexer(center, start);
+		gap: vars.rem(10);
+	}
+}
