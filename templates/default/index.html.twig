@@ -3,19 +3,40 @@
 {% block title %}Greencare - Bête d'appli{% endblock %}
 
 {% block body %}
+    {% set baseAlt = 'Hero section - icon' %}
     <section class="section hero">
         <div>
             <h1 class="main-title">L’application N°1 pour garder tes plantes </h1>
-            <p class="second-title">GreenCare : au service de la santé de vos plantes</p>
+            <p class="reg-bold">GreenCare : au service de la santé de vos plantes</p>
         </div>
+
         <div class="hero_links">
-            <button class="btn btn-primary">
-                <a href="#">Se connecter</a>
-            </button>
-            <button class="btn btn-secondary">
-                <a href="#">S'inscrire</a>
-            </button>
+            <a href="{{ path('app_login') }}">
+                <button class="btn btn-primary">
+                    Se connecter
+                </button>
+            </a>
+            <a href="{{ path('register_page') }}">
+                <button class="btn btn-secondary">
+                    S'inscrire
+                </button>
+            </a>
         </div>
+
+        <ul class="hero_feats">
+            <li>
+                <img src="{{ asset('images/calendar.svg') }}" alt="{{ baseAlt }} of a calendar">
+                <p>Réservation</p>
+            </li>
+            <li>
+                <img src="{{ asset('images/chat.svg') }}" alt="{{ baseAlt }} of a chat">
+                <p>Discutez</p>
+            </li>
+            <li>
+                <img src="{{ asset('images/share.svg') }}" alt="{{ baseAlt }} of share">
+                <p>Partagez</p>
+            </li>
+        </ul>
     </section>
 {% endblock %}
 
