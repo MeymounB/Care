@@ -4,13 +4,13 @@
 
 {% block body %}
     {% set baseAlt = 'Hero section - icon' %}
-    <section class="section hero">
+    <section class="section landing">
         <div>
             <h1 class="main-title">L’application N°1 pour garder tes plantes </h1>
             <p class="reg-bold">GreenCare : au service de la santé de vos plantes</p>
         </div>
 
-        <div class="hero_links">
+        <div class="landing_links">
             <a href="{{ path('app_login') }}">
                 <button class="btn btn-primary">
                     Se connecter
@@ -23,7 +23,7 @@
             </a>
         </div>
 
-        <ul class="hero_feats">
+        <ul class="landing_links">
             <li>
                 <img src="{{ asset('images/calendar.svg') }}" alt="{{ baseAlt }} of a calendar">
                 <p>Réservation</p>
