@@ -41,12 +41,15 @@ h6
 a,
 a:visited,
 a:focus {
-    color: #04DC40;
     text-decoration: none;
+    color: inherit;
+
+    &.link {
+        color: #04DC40;
+    }
 }
 
-a:hover,
-a:focus{
+a.link:is(:hover, :focus) {
     text-decoration: underline;
     text-decoration-color: #04DC40;
     opacity: 0.8;
