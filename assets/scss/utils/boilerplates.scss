@@ -92,6 +92,11 @@ option {
 .section {
     width: 100%;
     margin: funcs.rem(10) 0;
+    padding: funcs.rem(50);
+
+    @include mixins.media(tablet-small, max) {
+        padding: funcs.rem(20);
+    }
 }
 
 .center-space {
