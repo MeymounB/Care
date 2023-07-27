@@ -16,9 +16,13 @@
 	}
 
 	&_feats {
-		@include vars.flexer(center, start);
+		@include vars.flexer(center, center);
 		gap: vars.rem(50);
 		flex-wrap: wrap;
+
+		li {
+			min-width: 100px;
+		}
 
 		img {
 			filter: invert(97%) sepia(6%) saturate(372%) hue-rotate(324deg) brightness(119%) contrast(96%);
