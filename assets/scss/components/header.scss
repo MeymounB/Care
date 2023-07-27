@@ -18,7 +18,7 @@ header{
   @include vars.flexer(center, start);
   gap: vars.rem(10);
 
-  @include vars.media(tablet, max){
+  @include vars.media(tablet-small, max){
     position: absolute;
     background: vars.$green;
     width: 100%;
@@ -60,6 +60,14 @@ header{
 }
 
 /** HEADER BURGER **/
+
+label {
+  display: none;
+
+  @include vars.media(tablet-small, max){
+    display: block;
+  }
+}
 
 #header_burger {
   width: 40px;
