@@ -5,9 +5,11 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Trait\ReadDeleteTrait;
 use App\Entity\Comment;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
 class CommentCrudController extends AbstractCrudController
 {
@@ -26,8 +28,10 @@ class CommentCrudController extends AbstractCrudController
                 ->hideWhenUpdating(),
             TextField::new('user.fullName', 'User Name')->onlyOnIndex(),
             TextField::new('content'),
-            TextField::new('adviceTitle', 'Advice Title')->onlyOnIndex(),
-            TextField::new('userRole', 'User Role')->onlyOnIndex(),
+            AssociationField::new('commentAdvice', 'Advice title'),
+            AssociationField::new('user'),
+            TextField::new('userRole', 'has role')->onlyOnIndex(),
+            BooleanField::new('isPublished'),
             DateTimeField::new('createdAt'),
         ];
     }

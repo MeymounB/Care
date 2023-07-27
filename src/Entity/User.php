@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cellphone = null;
 
-    // TODO : setup this attribut in Botanist Class : only Botanist can be verified
+    // @TODO : setup this attribut in Botanist Class : only Botanist can be verified
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
@@ -258,11 +258,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 
     public function getFullName(): string
     {
-        return $this->getFirstName().' '.$this->getLastName();
+        return $this->getFirstName() . ' ' . $this->getLastName();
     }
 }

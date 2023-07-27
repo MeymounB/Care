@@ -8,7 +8,6 @@
     <table class="table-auto bg-white rounded-lg overflow-hidden w-full shadow-lg">
         <tbody>
         {% for field, value in {
-            'Id': advice.id,
             'Title': advice.title,
             'Description': advice.description,
             'CreatedAt': advice.createdAt ? advice.createdAt|date('Y-m-d') : '',

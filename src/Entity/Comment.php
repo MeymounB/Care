@@ -26,6 +26,9 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Advice $commentAdvice = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $isPublished = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,5 +90,17 @@ class Comment
     public function getAdviceTitle(): ?string
     {
         return $this->commentAdvice ? $this->commentAdvice->getTitle() : null;
+    }
+
+    public function isIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
     }
 }
