@@ -2,22 +2,15 @@
 <header>
     <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
 
+    <input type="checkbox" id="header_toggle">
+
+    <label for="header_toggle">
+        {% include 'parts/burger.html.twig' %}
+    </label>
+
     <nav class="header_nav">
-        <div class="header_nav_element">
-            <img src="{{ asset('images/calendar.svg') }}" alt="Reserver">
-            <p>Réservation</p>
-        </div>
-        <div class="header_nav_element">
-            <img src="{{ asset('images/chat.svg') }}" alt="Discutez">
-            <p>Discutez</p>
-        </div>
-        <div class="header_nav_element">
-            <img src="{{ asset('images/share.svg') }}" alt="Partagez">
-            <p>Partagez</p>
-        </div>
-    </nav>
-    <div class="right_header">
-        <button class="btn btn-secondary" id="about-us">A propos</button>
+        <a href="{{ path('app_default') }}">Accueil</a>
+        <a href="#">A propos</a>
         <button class="btn btn-secondary" id="download">Télécharger</button>
-    </div>
+    </nav>
 </header>
