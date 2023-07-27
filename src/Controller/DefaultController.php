@@ -13,11 +13,11 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-			'links' => [
-				['img' => 'calendar.svg', 'alt' => 'of a calendar', 'text' => 'Réservation'],
-				['img' => 'chat.svg', 'alt' => 'of a chat', 'text' => 'Discussion'],
-				['img' => 'share.svg', 'alt' => 'of share', 'text' => 'Partage'],
-			]
+            'links' => [
+                ['img' => 'calendar.svg', 'alt' => 'of a calendar', 'text' => 'Réservation'],
+                ['img' => 'chat.svg', 'alt' => 'of a chat', 'text' => 'Discussion'],
+                ['img' => 'share.svg', 'alt' => 'of share', 'text' => 'Partage'],
+            ],
         ]);
     }
 }
