@@ -7,15 +7,14 @@ use App\Entity\Comment;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CommentRepository;
 use App\Repository\StatusRepository;
 use App\Service\CommentService;
-use App\Repository\CommentRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-
 
 #[Route('/advice')]
 class AdviceController extends AbstractController
@@ -25,7 +24,7 @@ class AdviceController extends AbstractController
     {
         $advices = $adviceRepository->findAll();
 
-        //Group advices by status
+        // Group advices by status
         $groupedAdvices = [];
         foreach ($advices as $advice) {
             $statusName = $advice->getStatus()->getName();
@@ -54,7 +53,6 @@ class AdviceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $comment = new Comment();
             $comment->setContent($form->get('new_comment')->get('content')->getData());
             $comment->setCreatedAt(new \DateTimeImmutable());
@@ -86,6 +84,7 @@ class AdviceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentService->addComment($form->get('content')->getData(), $advice);
+
             return $this->redirectToRoute('app_advice_show', ['id' => $id]);
         }
 
@@ -116,9 +115,9 @@ class AdviceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_advice_delete', methods: ['POST'])]
-    public function delete(Request $request,  Advice $advice, AdviceRepository $adviceRepository): Response
+    public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 

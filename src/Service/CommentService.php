@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use App\Entity\Comment;
 use App\Entity\Advice;
+use App\Entity\Comment;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CommentService

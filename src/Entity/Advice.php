@@ -19,7 +19,7 @@ class Advice extends Request
     // #[ORM\Column(length: 255, nullable: true)]
     // private ?string $slug = null;
 
-    #[ORM\OneToMany(mappedBy: 'commentAdvice', targetEntity: Comment::class, orphanRemoval: true, cascade: ["persist"])]
+    #[ORM\OneToMany(mappedBy: 'commentAdvice', targetEntity: Comment::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $comments;
 
     public function __construct()

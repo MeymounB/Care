@@ -5,14 +5,13 @@ namespace App\DataFixtures;
 use App\Entity\Admin;
 use App\Entity\Botanist;
 use App\Entity\Particular;
-use Faker\Factory as Faker;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory as Faker;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class LoginFixtures extends Fixture
 {
-
     private $passwordHasher;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)

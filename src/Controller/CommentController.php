@@ -5,19 +5,18 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
     #[Route('/{id}/edit', name: 'app_comment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, CommentRepository $commentRepository, int $id,  Comment $comment): Response
+    public function edit(Request $request, CommentRepository $commentRepository, int $id, Comment $comment): Response
     {
-
         $user = $this->getUser();
 
         if (!$user || $user !== $comment->getUser()) {
@@ -37,6 +36,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->save($comment, true);
+
             return new JsonResponse(['message' => 'Success!'], 200);
         }
 
@@ -69,7 +69,7 @@ class CommentController extends AbstractController
 
         $comment = $commentRepository->find($id);
 
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 

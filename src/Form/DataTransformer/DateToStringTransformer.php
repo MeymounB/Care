@@ -11,7 +11,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class DateToStringTransformer implements DataTransformerInterface
 {
-
     public function transform($date)
     {
         if (null === $date) {
@@ -20,7 +19,6 @@ class DateToStringTransformer implements DataTransformerInterface
 
         return $date->format('d-m-Y H:i');
     }
-
 
     public function reverseTransform($date)
     {
@@ -32,10 +30,7 @@ class DateToStringTransformer implements DataTransformerInterface
         $dateObj = \DateTime::createFromFormat('d-m-Y H:i', $date);
 
         if (!$dateObj) {
-            throw new TransformationFailedException(sprintf(
-                'La date "%s" n\'est pas au bon format !',
-                $date
-            ));
+            throw new TransformationFailedException(sprintf('La date "%s" n\'est pas au bon format !', $date));
         }
 
         return $dateObj;
