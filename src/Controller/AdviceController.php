@@ -58,7 +58,7 @@ class AdviceController extends AbstractController
             $comment = new Comment();
             $comment->setContent($form->get('new_comment')->get('content')->getData());
             $comment->setCreatedAt(new \DateTimeImmutable());
-            // $comment->setUser($this->getUser());
+            $comment->setUser($this->getUser());
             $comment->setCommentAdvice($advice);
 
             $advice->addComment($comment);
@@ -89,31 +89,10 @@ class AdviceController extends AbstractController
             return $this->redirectToRoute('app_advice_show', ['id' => $id]);
         }
 
-        // Create forms for editing and deleting existing comments
-        $comments = $commentRepository->findBy(['commentAdvice' => $advice]);
-        $editForms = [];
-        $deleteForms = [];
-        foreach ($comments as $comment) {
-            if ($security->getUser() === $comment->getUser()) {
-                $editForms[$comment->getId()] = $this->createForm(CommentType::class, $comment)->createView();
-                $deleteForms[$comment->getId()] = $this->createDeleteForm($comment)->createView();
-            }
-        }
-
         return $this->render('advice/show.html.twig', [
             'advice' => $advice,
             'form' => $form->createView(),
-            'editForms' => $editForms,
-            'deleteForms' => $deleteForms,
         ]);
-    }
-
-    private function createDeleteForm(Comment $comment)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('app_comment_delete', ['id' => $comment->getId()]))
-            ->setMethod('DELETE')
-            ->getForm();
     }
 
     #[Route('/{id}/edit', name: 'app_advice_edit', methods: ['GET', 'POST'])]
@@ -137,22 +116,10 @@ class AdviceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_advice_delete', methods: ['POST'])]
-    public function delete(Request $request, AdviceRepository $adviceRepository, int $id): Response
+    public function delete(Request $request,  Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        $advice = $adviceRepository->find($id);
         if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
-        }
-
-        return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-    #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
-    public function deleteComment(Request $request, CommentRepository $commentRepository, int $id): Response
-    {
-        $comment = $commentRepository->find($id);
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
-            $commentRepository->remove($comment, true);
         }
 
         return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);

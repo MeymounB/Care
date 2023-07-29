@@ -26,7 +26,7 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Advice $commentAdvice = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $isPublished = null;
 
     public function getId(): ?int

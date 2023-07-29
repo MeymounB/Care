@@ -56,8 +56,12 @@ help: ## Show this help.
 #---------------------------------------------#
 
 ## === 🐋  DOCKER ================================================
-docker-up: ## Start docker containers.
-	$(DOCKER_COMPOSE_UP)
+# docker-up: ## Start docker containers.
+# 	$(DOCKER_COMPOSE_UP)
+# .PHONY: docker-up
+
+docker-up:
+	docker-compose --env-file .env.local up -d
 .PHONY: docker-up
 
 docker-stop: ## Stop docker containers.
@@ -263,7 +267,7 @@ tests-coverage: ## Run tests with coverage.
 before-commit: qa-cs-fixer qa-phpstan qa-security-checker qa-phpcpd qa-lint-twigs qa-lint-yaml qa-lint-container qa-lint-schema prepare-tests tests ## Run before commit.
 .PHONY: before-commit
 
-first-install: docker-up composer-install npm-install npm-build sf-perm sf-dc sf-dmm sf-start sf-open ## First install.
+first-install: docker-up composer-install npm-install npm-build sf-perm sf-dc sf-dmm sf-start sf-open  ## First install.
 .PHONY: first-install
 
 start: docker-up sf-start sf-open ## Start project.

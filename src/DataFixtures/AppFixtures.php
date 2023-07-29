@@ -97,6 +97,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
+                ->setAvatar('https://picsum.photos/200/300')
                 ->setLastName($faker->lastName)
                 ->setCellphone($faker->phoneNumber);
 
@@ -117,6 +118,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
+                ->setAvatar('https://picsum.photos/200/300')
                 ->setLastName($faker->lastName)
                 ->setCellphone($faker->phoneNumber);
 
