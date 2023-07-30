@@ -25,16 +25,4 @@ class CommentService
         $this->entityManager->persist($comment);
         $this->entityManager->flush();
     }
-
-    public function editComment(Comment $comment, string $newContent): void
-    {
-        $comment->setContent($newContent);
-        $this->entityManager->flush();
-    }
-
-    public function deleteComment(Comment $comment): void
-    {
-        $this->entityManager->remove($comment);
-        $this->entityManager->flush();
-    }
 }

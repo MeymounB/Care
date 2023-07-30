@@ -6,7 +6,6 @@
     <main class="grow">
         <div class="px-4 sm:px-6 lg:px-8 py-8 md:py-0 w-full max-w-9xl mx-auto">
             <div class="xl:flex">
-                <!-- Left + Middle content -->
                 <div class="md:flex flex-1">
                     <!-- Middle content -->
                     <div class="flex-1 md:ml-8 xl:mx-4 2xl:mx-8">
@@ -110,7 +109,7 @@
                         <div class="p-8 flex flex-wrap text-xs min-w-10">
                             <div class="flex items-center text-sm text-slate-600 px-2">
                                 <div class="block mr-2" href="#0">
-                                     <img class="rounded w-10 h-10" src="{{ comment.user.avatar|default('https://url-vers-votre-image-par-defaut.com') }}" alt="avatar">
+                                     <img class="rounded w-10 h-10" src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}" alt="avatar">
 
                                 </div>
 
@@ -169,13 +168,19 @@
 
             <a href="{{ path('app_advice_edit', {'id': advice.id}) }}"
                class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">edit</a>
-
+{# 
                 <a href="{{ path('app_advice_delete', {'id': advice.id}) }}"
-               class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-700">delete</a>
+               class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-700">delete</a> #}
 
-            {# <div class="px-4 py-2  text-white rounded-lg shadow-md ">
+            {# <div class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md ">
                 {{ include('advice/_delete.html.twig') }}
             </div> #}
+
+            <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
+                <button id="delete-button" class="btn">Delete</button>
+            </form>
+
         </div>
     </div>
 

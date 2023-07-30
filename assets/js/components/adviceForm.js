@@ -35,4 +35,37 @@ export function initShowModal() {
   });
 }
 
+export function initDeleteForm() {
+  document.addEventListener("DOMContentLoaded", function () {
+    let deleteButton = document.getElementById("delete-button");
+    if (deleteButton) {
+      deleteButton.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        let deleteForm = document.getElementById("delete-form");
+        let request = new XMLHttpRequest();
+        request.open("DELETE", deleteForm.action, true);
+        request.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded; charset=UTF-8"
+        );
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 400) {
+            // Redirect to the index page
+            window.location.href = "/advice";
+          } else {
+            // reached our target server, but it returned an error
+            console.log(
+              "Une erreur est survenue lors de la suppression de l'élément",
+              request.responseText
+            );
+          }
+        };
+
+        request.send(new URLSearchParams(new FormData(deleteForm)).toString());
+      });
+    }
+  });
+}
+
 console.log("adviceForm.js loaded");
