@@ -10,16 +10,21 @@ export function initShowModal() {
 
         let commentId = this.getAttribute("data-id");
 
-        fetch("/comment/" + commentId + "/edit", {
+        fetch("/comment/" + commentId + "/edit-form", {
           method: "GET",
           headers: {
             "X-Requested-With": "XMLHttpRequest",
           },
         })
-          .then((response) => response.text())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
           .then((data) => {
             // Set the inner HTML of the modal
-            modalContainer.innerHTML = data;
+            modalContainer.innerHTML = data.form;
 
             // Show the modal
             modalContainer.classList.remove("hidden");
@@ -34,7 +39,7 @@ export function initShowModal() {
 
               let formData = new FormData(form);
 
-              fetch(form.action, {
+              fetch("/comment/" + commentId + "/edit", {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -47,8 +52,9 @@ export function initShowModal() {
                   }
                   return response.json();
                 })
-                .then((data) => {
-                  console.log(data);
+                .then(() => {
+                  modalContainer.classList.add("hidden");
+                  location.reload();
                 })
                 .catch((error) => {
                   console.log(
