@@ -14,45 +14,60 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
-    #[Route('/{id}/edit', name: 'app_comment_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_comment_edit', methods: ['POST'])]
     public function edit(Request $request, CommentRepository $commentRepository, int $id, Comment $comment): Response
     {
+        $comment = $commentRepository->find($id);
+
+        if (!$comment) {
+            return new JsonResponse(['message' => 'The comment does not exist.'], 404);
+        }
+
         $user = $this->getUser();
 
         if (!$user || $user !== $comment->getUser()) {
-            $this->addFlash(
-                'notice',
-                'You can only edit your own comments.'
-            );
+            return new JsonResponse(['message' => 'You can only edit your own comments.'], 403);
         }
 
-        $comment = $commentRepository->find($id);
-
-        // check if the user is the author of the comment or an administrator
-        // $this->denyAccessUnlessGranted('EDIT', $comment);
-
         $form = $this->createForm(CommentType::class, $comment);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->save($comment, true);
-
             return new JsonResponse(['message' => 'Success!'], 200);
-        }
-
-        if ($request->isXmlHttpRequest()) {
-            return $this->render('comment/_edit_form.html.twig', [
-                'comment' => $comment,
-                'form' => $form->createView(),
-            ]);
         } else {
-            return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
+            $errors = [];
+            foreach ($form->getErrors(true, false) as $error) {
+                $errors[] = $error->getMessage();
+            }
+            return new JsonResponse(['message' => 'Error!', 'errors' => $errors], 400);
+        }
+    }
+
+    #[Route('/{id}/edit-form', name: 'app_comment_edit_form', methods: ['GET'])]
+    public function editForm(CommentRepository $commentRepository, int $id, Comment $comment): Response
+    {
+        $comment = $commentRepository->find($id);
+
+        if (!$comment) {
+            return new JsonResponse(['message' => 'The comment does not exist.'], 404);
         }
 
-        return $this->render('comment/edit.html.twig', [
+        $user = $this->getUser();
+
+        if (!$user || $user !== $comment->getUser()) {
+            return new JsonResponse(['message' => 'You can only edit your own comments.'], 403);
+        }
+
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $formView = $this->renderView('comment/_edit_form.html.twig', [
             'comment' => $comment,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
+
+        return new JsonResponse(['form' => $formView], 200);
     }
 
     #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
@@ -69,11 +84,10 @@ class CommentController extends AbstractController
 
         $comment = $commentRepository->find($id);
 
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 
         return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
-        // return $this->redirectToRoute('app_advice_show', ['id' => $id]);
     }
 }

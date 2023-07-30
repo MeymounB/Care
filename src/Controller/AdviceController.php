@@ -53,16 +53,8 @@ class AdviceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $comment = new Comment();
-            $comment->setContent($form->get('new_comment')->get('content')->getData());
-            $comment->setCreatedAt(new \DateTimeImmutable());
-            $comment->setUser($this->getUser());
-            $comment->setCommentAdvice($advice);
-
-            $advice->addComment($comment);
 
             $adviceRepository->save($advice, true);
-
             return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -73,7 +65,7 @@ class AdviceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, CommentRepository $commentRepository, Security $security, int $id): Response
+    public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, Security $security, int $id): Response
     {
         $advice = $adviceRepository->find($id);
 
@@ -83,7 +75,9 @@ class AdviceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentService->addComment($form->get('content')->getData(), $advice);
+            // get the current user logged in
+            $user = $security->getUser();
+            $commentService->addComment($form->get('content')->getData(), $advice, $user);
 
             return $this->redirectToRoute('app_advice_show', ['id' => $id]);
         }
@@ -114,10 +108,10 @@ class AdviceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_advice_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_advice_delete', methods: ['DELETE'])]
     public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 

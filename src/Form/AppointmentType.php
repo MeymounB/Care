@@ -21,7 +21,7 @@ class AppointmentType extends AbstractType
                     'rows' => 10,
                 ],
             ])
-            // TODO : Add JS Librairie Calendar : field is actually a text field
+
             ->add('plannedAt', DateTimeType::class, [
                 'widget' => 'single_text',
                 'html5' => false,
