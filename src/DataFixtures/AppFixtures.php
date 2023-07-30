@@ -94,6 +94,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
+                ->setAvatar('https://picsum.photos/200/300')
                 ->setLastName($faker->lastName)
                 ->setCellphone($faker->phoneNumber);
 
@@ -114,6 +115,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
+                ->setAvatar('https://picsum.photos/200/300')
                 ->setLastName($faker->lastName)
                 ->setCellphone($faker->phoneNumber);
 
@@ -152,7 +154,6 @@ class AppFixtures extends Fixture
             $appointment
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now  '.$i.' days'))
                 ->setPlannedAt(new \DateTime('now + '."{$i} days"))
                 ->setIsPresential($faker->boolean)
                 ->setAddress($faker->address)
@@ -182,7 +183,6 @@ class AppFixtures extends Fixture
             $advice
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now + '.$i.' days'))
                 ->setIsPublic($faker->boolean)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])
