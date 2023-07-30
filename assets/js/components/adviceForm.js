@@ -1,14 +1,14 @@
 export function initShowModal() {
   // Get the modal container
   document.addEventListener("DOMContentLoaded", (event) => {
-    var modalContainer = document.getElementById("edit-comment-modal");
+    let modalContainer = document.getElementById("edit-comment-modal");
 
     // Listen for the click event on each "Edit" button
     document.querySelectorAll(".edit-comment").forEach(function (element) {
       element.addEventListener("click", function (e) {
         e.preventDefault();
 
-        var commentId = this.getAttribute("data-id");
+        let commentId = this.getAttribute("data-id");
 
         fetch("/comment/" + commentId + "/edit", {
           method: "GET",
@@ -24,11 +24,50 @@ export function initShowModal() {
             // Show the modal
             modalContainer.classList.remove("hidden");
 
-            modalContainer
-              .querySelector("#modal-close")
-              .addEventListener("click", function () {
-                modalContainer.classList.add("hidden");
-              });
+            let form = modalContainer.querySelector("form");
+            console.log(form);
+            let button = form.querySelector('button[type="submit"]');
+            console.log(button);
+
+            button.addEventListener("click", function (e) {
+              e.preventDefault();
+
+              let formData = new FormData(form);
+
+              fetch(form.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                  "X-Requested-With": "XMLHttpRequest",
+                },
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                  }
+                  return response.json();
+                })
+                .then((data) => {
+                  console.log(data);
+                })
+                .catch((error) => {
+                  console.log(
+                    "There was a problem with the fetch operation: " +
+                      error.message
+                  );
+                });
+            });
+
+            // hide the modal when clicking on the close button
+            let modalClose = modalContainer.querySelector("#modal-close");
+
+            if (!modalClose) {
+              return;
+            }
+
+            modalClose.addEventListener("click", function () {
+              modalContainer.classList.add("hidden");
+            });
           });
       });
     });

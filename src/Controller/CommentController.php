@@ -17,6 +17,17 @@ class CommentController extends AbstractController
     #[Route('/{id}/edit', name: 'app_comment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, CommentRepository $commentRepository, int $id, Comment $comment): Response
     {
+        $comment = $commentRepository->find($id);
+
+        if (!$comment) {
+            $this->addFlash(
+                'notice',
+                'The comment does not exist.'
+            );
+
+            return $this->redirectToRoute('app_advice_show');
+        }
+
         $user = $this->getUser();
 
         if (!$user || $user !== $comment->getUser()) {
@@ -24,21 +35,23 @@ class CommentController extends AbstractController
                 'notice',
                 'You can only edit your own comments.'
             );
+
+            return $this->redirectToRoute('app_advice_show');
         }
-
-        $comment = $commentRepository->find($id);
-
-        // check if the user is the author of the comment or an administrator
-        // $this->denyAccessUnlessGranted('EDIT', $comment);
 
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentRepository->save($comment, true);
-
-            return new JsonResponse(['message' => 'Success!'], 200);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $commentRepository->save($comment, true);
+                return new JsonResponse(['message' => 'Success!'], 200);
+            } else {
+                $errors = $form->getErrors();
+                return new JsonResponse(['message' => 'Error!', 'errors' => $errors], 400);
+            }
         }
+
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('comment/_edit_form.html.twig', [
@@ -48,12 +61,8 @@ class CommentController extends AbstractController
         } else {
             return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
         }
-
-        return $this->render('comment/edit.html.twig', [
-            'comment' => $comment,
-            'form' => $form,
-        ]);
     }
+
 
     #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository, int $id): Response
@@ -69,11 +78,10 @@ class CommentController extends AbstractController
 
         $comment = $commentRepository->find($id);
 
-        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 
         return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
-        // return $this->redirectToRoute('app_advice_show', ['id' => $id]);
     }
 }

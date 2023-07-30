@@ -65,7 +65,7 @@ class AdviceController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, CommentRepository $commentRepository, Security $security, int $id): Response
+    public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, Security $security, int $id): Response
     {
         $advice = $adviceRepository->find($id);
 
@@ -75,7 +75,9 @@ class AdviceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentService->addComment($form->get('content')->getData(), $advice);
+            // get the current user logged in
+            $user = $security->getUser();
+            $commentService->addComment($form->get('content')->getData(), $advice, $user);
 
             return $this->redirectToRoute('app_advice_show', ['id' => $id]);
         }

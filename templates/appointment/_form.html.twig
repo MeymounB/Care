@@ -4,9 +4,9 @@
 
     {{ form_row(form.description, { 'label': 'Description', 'attr': { 'class': 'appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' } }) }}
 
-    {{ form_row(form.plannedAt, { 'label': 'Date', 'attr': { 'class': 'appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' } }) }}
+    {{ form_row(form.plannedAt, { 'label': 'Planned At', 'attr': { 'placeholder': "yyyy-MM-dd HH:mm:ss", 'class': 'block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:z-10 sm:text-sm p-4' } }) }}
 
-    {{ form_row(form.isPresential, { 'label': 'Is Presential', 'attr': { 'placeholder': "Entrez la valeur ici", 'class': 'block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:z-10 sm:text-sm p-4' } }) }}
+    {{ form_row(form.isPresential, { 'label': 'Is Presential', 'attr': { 'class': 'block w-full px-3 py-2 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:z-10 sm:text-sm p-4' } }) }}
 
     <div id="addressDiv" class="hidden">
         {{ form_label(form.address, 'Address') }}

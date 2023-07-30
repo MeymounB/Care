@@ -19,7 +19,6 @@ export function initIsPresential() {
       !addressDiv ||
       !linkDiv
     ) {
-      console.log("Missing elements");
       return;
     }
 
@@ -55,6 +54,7 @@ export function initIsPresential() {
 }
 
 export function initDatetimeValidation() {
+  // @TODO: should be great if the placeholder was percistant
   let previousValue = "";
 
   // prevent undifined error
@@ -103,7 +103,7 @@ export function initDatetimeValidation() {
     previousValue = datetime;
   });
 
-  // @TODO: should be great to use flatpickr instead
+  // @TODO: should be great to use flatpickr with it but it's not working + should be great to format the date like this : 16-04-2021 14:00 (dd-mm-yyyy hh:mm)
   // https://flatpickr.js.org/examples/
 
   // let datetimeInput = document.getElementById("appointment_plannedAt");

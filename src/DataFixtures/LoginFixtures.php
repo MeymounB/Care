@@ -28,8 +28,8 @@ class LoginFixtures extends Fixture
         $botanist
             ->setEmail('botanist@verified.com')
             ->setPassword($this->passwordHasher->hashPassword($botanist, '123456789'))
-            ->setFirstName($faker->firstName)
-            ->setLastName($faker->lastName)
+            ->setFirstName('botanist')
+            ->setLastName('verified')
             ->setAvatar('https://picsum.photos/200/300')
             ->setCellphone($faker->phoneNumber)
             ->setIsVerified(true);
@@ -41,8 +41,8 @@ class LoginFixtures extends Fixture
         $particular
             ->setEmail('particular@verified.com')
             ->setPassword($this->passwordHasher->hashPassword($particular, '123456789'))
-            ->setFirstName($faker->firstName)
-            ->setLastName($faker->lastName)
+            ->setFirstName('particular')
+            ->setLastName('verified')
             ->setAvatar('https://picsum.photos/200/300')
             ->setCellphone($faker->phoneNumber)
             ->setIsVerified(true);
@@ -53,8 +53,8 @@ class LoginFixtures extends Fixture
         $admin
             ->setEmail('admin@verified.com')
             ->setPassword($this->passwordHasher->hashPassword($admin, '123456789'))
-            ->setFirstName($faker->firstName)
-            ->setLastName($faker->lastName)
+            ->setFirstName('admin')
+            ->setLastName('verified')
             ->setAvatar('https://picsum.photos/200/300')
             ->setCellphone($faker->phoneNumber)
             ->setIsVerified(true);
