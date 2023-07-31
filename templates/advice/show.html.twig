@@ -109,14 +109,16 @@
                         <div class="p-8 flex flex-wrap text-xs min-w-10">
                             <div class="flex items-center text-sm text-slate-600 px-2">
                                 <div class="block mr-2" href="#0">
-                                     <img class="rounded w-10 h-10" src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}" alt="avatar">
+                                    <img class="rounded w-10 h-10"
+                                         src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}"
+                                         alt="avatar">
 
                                 </div>
 
                                 <div class="flex">
-                                {% if comment.user  %}
+                                    {% if comment.user %}
                                         <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                        href="#0">{{ comment.user.fullName }}</a>
+                                           href="#0">{{ comment.user.fullName }}</a>
                                     {% else %}
                                         <h3 class="">Anonymous says:</h3>
                                     {% endif %}
@@ -125,39 +127,40 @@
                                         <p>{{ comment.content }}</p>
                                     </div>
 
-                                    </div>
-                                    <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
                                 </div>
-
-                                <div class="flex items-center text-sm text-slate-600 px-2">
-                                    <a class="font-medium  "
-                                    href="#0">Reply</a>
-                                </div>
-
-                                 {% if app.user == comment.user %}
-                                    <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto " aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                                        <!-- Modal here -->
-                                    </div>
-                                    <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">Edit</button>
-    
-
-                                    <div class="bg-red-800 flex items-center">
-                                       <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                {% endif %}
-
+                                <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
                             </div>
+
+                            {#<div class="flex items-center text-sm text-slate-600 px-2">
+                                <a class="font-medium  "
+                                   href="#0">Reply</a>
+                            </div>#}
+
+                            {% if app.user == comment.user %}
+                                <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
+                                     aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                    <!-- Modal here -->
+                                </div>
+                                <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">Edit
+                                </button>
+
+
+                                <div class="bg-red-800 flex items-center">
+                                    <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ comment.id) }}">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+
+                        </div>
                         {% endfor %}
                         {% else %}
                             <p>No comments yet.</p>
                         {% endif %}
-                        </div>
                     </div>
-
                 </div>
             </li>
         </ul>

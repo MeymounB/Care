@@ -3,11 +3,11 @@
 {% block title %}Historique de vos conseils{% endblock %}
 
 {% block body %}
-<div class="mx-auto px-4">
-    <h1 class="text-2xl font-bold mb-4">Historique de vos conseils</h1>
+    <div class="mx-auto px-4">
+        <h1 class="text-2xl font-bold mb-4">Historique de vos conseils</h1>
 
-    {% for status, advices in groupedAdvices %}
-      <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
+        {% for status, advices in groupedAdvices %}
+            <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
             <div class="rounded-lg shadow-lg bg-white my-3">
                 <table class="table-auto w-full mb-4">
                     <thead class=" bg-indigo-100 border-indigo-500 border-b">
@@ -65,7 +65,7 @@
             <p class="text-lg text-red-500">No advices found</p>
         {% endfor %}
 
-          <button onclick="location.href='{{ path('app_advice_new') }}'" type="button"
+        <button onclick="location.href='{{ path('app_advice_new') }}'" type="button"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">New
         </button>
     </div>
