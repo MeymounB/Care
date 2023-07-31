@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cellphone = null;
 
-    // TODO : setup this attribut in Botanist Class : only Botanist can be verified
+    // @TODO : setup this attribut in Botanist Class : only Botanist can be verified
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
@@ -61,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $avatar = null;
 
     public function __construct()
     {
@@ -228,6 +231,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

@@ -54,4 +54,27 @@ class Advice extends Request
     {
         return $this->comments;
     }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCommentAdvice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getCommentAdvice() === $this) {
+                $comment->setCommentAdvice(null);
+            }
+        }
+
+        return $this;
+    }
 }

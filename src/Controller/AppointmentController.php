@@ -15,13 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppointmentController extends AbstractController
 {
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository, StatusRepository $statusRepository): Response
+    public function index(AppointmentRepository $appointmentRepository): Response
     {
-        // $status = $statusRepository->findOneBy(['name' => 'En cours']);
-
-        // $appointment = new Appointment();
-        // $appointment->setStatus($status);
-
         $appointments = $appointmentRepository->findAll();
 
         // Group appointments by status
