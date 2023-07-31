@@ -7,7 +7,6 @@ use App\Entity\Comment;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
-use App\Repository\CommentRepository;
 use App\Repository\StatusRepository;
 use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,8 +52,8 @@ class AdviceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $adviceRepository->save($advice, true);
+
             return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -111,7 +110,7 @@ class AdviceController extends AbstractController
     #[Route('/{id}', name: 'app_advice_delete', methods: ['DELETE'])]
     public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 

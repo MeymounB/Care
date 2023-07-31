@@ -30,7 +30,7 @@ class ResetPasswordController extends AbstractController
     public function __construct(
         private ResetPasswordHelperInterface $resetPasswordHelper,
         private EntityManagerInterface $entityManager,
-		private UrlGeneratorInterface $generator,
+        private UrlGeneratorInterface $generator,
     ) {
     }
 
@@ -159,7 +159,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-		$appRequestPasswordUrl = $this->generator->generate('app_reset_password', ['token' => $resetToken->getToken()], UrlGenerator::ABSOLUTE_URL);
+        $appRequestPasswordUrl = $this->generator->generate('app_reset_password', ['token' => $resetToken->getToken()], UrlGenerator::ABSOLUTE_URL);
 
         $email = (new TemplatedEmail())
             ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
@@ -168,7 +168,7 @@ class ResetPasswordController extends AbstractController
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-				'requestUrl' => $appRequestPasswordUrl
+                'requestUrl' => $appRequestPasswordUrl,
             ])
         ;
 

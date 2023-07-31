@@ -35,12 +35,14 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->save($comment, true);
+
             return new JsonResponse(['message' => 'Success!'], 200);
         } else {
             $errors = [];
             foreach ($form->getErrors(true, false) as $error) {
                 $errors[] = $error->getMessage();
             }
+
             return new JsonResponse(['message' => 'Error!', 'errors' => $errors], 400);
         }
     }
@@ -84,7 +86,7 @@ class CommentController extends AbstractController
 
         $comment = $commentRepository->find($id);
 
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 

@@ -23,8 +23,7 @@ class CommentRepository extends ServiceEntityRepository
 
     public function save(Comment $entity, bool $flush = false): void
     {
-
-        if ($entity->getId() === null) {
+        if (null === $entity->getId()) {
             $this->getEntityManager()->persist($entity);
         }
 
