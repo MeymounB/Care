@@ -20,7 +20,7 @@ class CommentService
     {
         $comment = new Comment();
         $comment->setContent($content);
-        $comment->setCreatedAt(new \DateTimeImmutable());
+        $comment->setCreatedAt();
         $comment->setCommentAdvice($advice);
         $comment->setUser($user);
         $advice->addComment($comment);
