@@ -16,6 +16,8 @@
 .vscode/
 ###< symfony/framework-bundle ###
 
+.composer.lock
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
