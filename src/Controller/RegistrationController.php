@@ -31,7 +31,7 @@ class RegistrationController extends AbstractController
         $this->verifyEmailHelper = $verifyEmailHelper;
     }
 
-    #[Route(path: '/', name: 'app_login')]
+    #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
