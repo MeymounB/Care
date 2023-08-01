@@ -3,9 +3,9 @@
 namespace App\Form\Registration;
 
 use App\Entity\Botanist;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 
 class BotanistFormType extends UserFormType
@@ -21,11 +21,12 @@ class BotanistFormType extends UserFormType
                 'constraints' => [
                     new File([
                         'mimeTypes' => ['application/pdf'],
-                        'maxSize' => 1024 * 512 // max file size is
-                    ])
-                ]
+                        'maxSize' => 1024 * 512, // max file size is
+                    ]),
+                ],
             ]);
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

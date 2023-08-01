@@ -3,25 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\Botanist;
-use App\Entity\Particular;
 use App\Entity\Certificate;
-use App\Security\EmailVerifier;
-use App\Repository\UserRepository;
-use Symfony\Component\Mime\Address;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Particular;
 use App\Form\Registration\BotanistFormType;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Form\Registration\ParticularFormType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
+use App\Repository\UserRepository;
+use App\Security\EmailVerifier;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -67,13 +67,13 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            if (get_class($user) === Botanist::class) {
+            if (Botanist::class === get_class($user)) {
                 $certifData = $form->get('certif')->getData();
 
                 if ($certifData) {
                     $currentTime = time();
-                    $newFilename = "Document_certification_" . $user->getFullName() . "_" . $currentTime;
-                    $safeFilename = $this->slugger->slug($newFilename)  . '.' . $certifData->guessExtension();
+                    $newFilename = 'Document_certification_'.$user->getFullName().'_'.$currentTime;
+                    $safeFilename = $this->slugger->slug($newFilename).'.'.$certifData->guessExtension();
 
                     try {
                         $certifData->move(
@@ -86,7 +86,7 @@ class RegistrationController extends AbstractController
 
                     $certificate = new Certificate();
 
-                    $certificate->setTitle($user->getFullName() . " - " . $currentTime);
+                    $certificate->setTitle($user->getFullName().' - '.$currentTime);
                     $certificate->setCertificateFile($safeFilename);
                     $user->addCertificate($certificate);
 
