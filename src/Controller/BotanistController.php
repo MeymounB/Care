@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
-use App\Repository\PlantRepository;
 use App\Repository\StatusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
