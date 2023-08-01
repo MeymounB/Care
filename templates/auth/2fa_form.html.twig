@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{# ... #}
+{% block title %}Connexion{% endblock %}
+
+{% block header %}
+    {% include 'parts/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <form class="form" action="{{ checkPathUrl }}" method="post">
+        <h2 class="title">2FA</h2>
+        <div class="form-field">
+            <p>Installez l'application Google Authenticator et scannez ce code.</p>
+            <img src="{{ codeUrl }}" alt="QR Code" />
+        </div>
+        <div class="form-field">
+            <label for="_auth_code">Google Auth Code</label>
+            <input
+                    id="_auth_code"
+                    type="text"
+                    name="{{ authCodeParameterName }}"
+                    autocomplete="one-time-code"
+                    autofocus
+            />
+        </div>
+        {# <p class="submit"><input type="submit" value="{{ "login"|trans({}, 'SchebTwoFactorBundle') }}" /></p> #}
+        <button type="submit" class="btn btn-primary">{{ "login"|trans({}, 'SchebTwoFactorBundle') }}</button>
+        <p class="cancel"><a href="{{ path('app_logout') }}">{{ "cancel"|trans({}, 'SchebTwoFactorBundle') }}</a></p>
+    </form>
+
+    {# The logout link gives the user a way out if they can't complete two-factor authentication #}
+
+{% endblock %}

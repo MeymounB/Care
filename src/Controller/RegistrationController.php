@@ -9,6 +9,7 @@ use App\Form\Registration\ParticularFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,8 @@ class RegistrationController extends AbstractController
     private EmailVerifier $emailVerifier;
     private VerifyEmailHelperInterface $verifyEmailHelper;
 
-    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper)
+
+    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, private GoogleAuthenticatorInterface $authenticator)
     {
         $this->emailVerifier = $emailVerifier;
         $this->verifyEmailHelper = $verifyEmailHelper;
@@ -61,6 +63,9 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $secret = $this->authenticator->generateSecret();
+
+            $user->setGoogleAuthenticatorSecret($secret);
 
             $entityManager->persist($user);
             $entityManager->flush();
