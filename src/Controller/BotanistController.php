@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
 use App\Repository\CommentRepository;
 use App\Repository\StatusRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,11 +40,15 @@ class BotanistController extends AbstractController
         ]);
     }
 
-
     #[Route('/recent_advice', name: 'app_botanist_list_recent_advice', methods: ['GET'])]
     public function show_recent_advice(AdviceRepository $adviceRepository, CommentRepository $commentRepository): Response
     {
         $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
+
         $userId = $user->getId();
 
         $userComments = $commentRepository->findBy(['user' => $userId], ['createdAt' => 'DESC']);
@@ -54,7 +58,7 @@ class BotanistController extends AbstractController
         // Parcourir les commentaires et récupérer les IDs des conseils associés
         foreach ($userComments as $comment) {
             $commentAdvice = $comment->getCommentAdvice();
-            if ($commentAdvice !== null) {
+            if (null !== $commentAdvice) {
                 $adviceIds[] = $commentAdvice->getId();
             }
         }
