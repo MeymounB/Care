@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\MfaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,16 +18,30 @@ class MfaController extends AbstractController
     }
 
     #[Route('/2fa', name: '2fa_login')]
-    public function check2fa(GoogleAuthenticatorInterface $authenticator, TokenStorageInterface $storage): Response
+    public function check2fa(Request $request, Security $security): Response
     {
-        $code = $authenticator->getQRContent($storage->getToken()->getUser());
+        $url = $this->mfaService->getQRContent($security->getUser());
 
-        $url = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" . $code;
+        $authenticationException = $this->getLastAuthenticationException($request->getSession());
 
         return $this->render('auth/2fa_form.html.twig', [
             'codeUrl' => $url,
             'checkPathUrl' => '/2fa_check',
-            'authCodeParameterName' => '_auth_code'
+            'authCodeParameterName' => '_auth_code',
+            'authenticationError' => $authenticationException?->getMessage(),
+            'authenticationErrorData' => $authenticationException?->getMessageData(),
         ]);
+    }
+
+    protected function getLastAuthenticationException(SessionInterface $session): ?AuthenticationException
+    {
+        $authException = $session->get(Security::AUTHENTICATION_ERROR);
+        if ($authException instanceof AuthenticationException) {
+            $session->remove(Security::AUTHENTICATION_ERROR);
+
+            return $authException;
+        }
+
+        return null; // The value does not come from the security component.
     }
 }
