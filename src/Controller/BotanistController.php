@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\CommentRepository;
 use App\Repository\StatusRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,6 +36,64 @@ class BotanistController extends AbstractController
         }
 
         return $this->render('botanist/list_all_advice.html.twig', [
+            'groupedAdvices' => $groupedAdvices,
+        ]);
+    }
+
+
+    #[Route('/recent_advice', name: 'app_botanist_list_recent_advice', methods: ['GET'])]
+    public function show_recent_advice(AdviceRepository $adviceRepository, CommentRepository $commentRepository): Response
+    {
+        $user = $this->getUser();
+        $userId = $user->getId();
+
+        $userComments = $commentRepository->findBy(['user' => $userId], ['createdAt' => 'DESC']);
+
+        $adviceIds = [];
+
+        // Parcourir les commentaires et récupérer les IDs des conseils associés
+        foreach ($userComments as $comment) {
+            $commentAdvice = $comment->getCommentAdvice();
+            if ($commentAdvice !== null) {
+                $adviceIds[] = $commentAdvice->getId();
+            }
+        }
+
+        // Récupérer les conseils associés aux IDs récupérés
+        $advices = $adviceRepository->findBy(['id' => $adviceIds]);
+
+        // Grouper les conseils par statut
+        $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $statusName = $advice->getStatus()->getName();
+
+            if (!isset($groupedAdvices[$statusName])) {
+                $groupedAdvices[$statusName] = [];
+            }
+
+            $groupedAdvices[$statusName][] = $advice;
+        }
+
+        // Trier les commentaires de chaque conseil par date de création (du plus récent au moins récent)
+        foreach ($groupedAdvices as $statusName => &$adviceGroup) {
+            usort($adviceGroup, function ($advice1, $advice2) {
+                // Compare les dates de création du dernier commentaire de chaque conseil
+                $lastComment1 = $advice1->getComments()->last();
+                $lastComment2 = $advice2->getComments()->last();
+
+                if ($lastComment1 && $lastComment2) {
+                    return $lastComment2->getCreatedAt() <=> $lastComment1->getCreatedAt();
+                } elseif ($lastComment1) {
+                    return -1;
+                } elseif ($lastComment2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        }
+
+        return $this->render('botanist/recent_advice.html.twig', [
             'groupedAdvices' => $groupedAdvices,
         ]);
     }
