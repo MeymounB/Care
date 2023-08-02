@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface;
+use App\Service\MfaService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 
 class MfaController extends AbstractController
 {
+    public function __construct(private MfaService $mfaService)
+    {
+    }
+
     #[Route('/2fa', name: '2fa_login')]
     public function check2fa(GoogleAuthenticatorInterface $authenticator, TokenStorageInterface $storage): Response
     {
