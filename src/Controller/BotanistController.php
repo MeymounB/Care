@@ -105,7 +105,7 @@ class BotanistController extends AbstractController
     #[Route('/appointments', name: 'app_botanist_appointments', methods: ['GET'])]
     public function list_appointments(AppointmentRepository $appointmentRepository): Response
     {
-//        Récupération des rendez-vous en attente (donc sans botaniste associé), trié par plannification de la plus proche à la plus éloignée
+        //        Récupération des rendez-vous en attente (donc sans botaniste associé), trié par plannification de la plus proche à la plus éloignée
         $appointments = $appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC']);
 
         // Group appointments by status

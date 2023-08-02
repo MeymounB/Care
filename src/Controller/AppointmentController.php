@@ -17,7 +17,7 @@ class AppointmentController extends AbstractController
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository): Response
     {
-        #TODO: lister uniquement pour l'utilisateur connecté
+        // TODO: lister uniquement pour l'utilisateur connecté
         $appointments = $appointmentRepository->findAll();
 
         // Group appointments by status
