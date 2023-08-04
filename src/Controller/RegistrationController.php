@@ -8,6 +8,7 @@ use App\Form\Registration\BotanistFormType;
 use App\Form\Registration\ParticularFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use App\Service\MfaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class RegistrationController extends AbstractController
     private EmailVerifier $emailVerifier;
     private VerifyEmailHelperInterface $verifyEmailHelper;
 
-    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper)
+    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, private MfaService $mfaService)
     {
         $this->emailVerifier = $emailVerifier;
         $this->verifyEmailHelper = $verifyEmailHelper;
@@ -61,6 +62,9 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            $secret = $this->mfaService->generateSecret();
+
+            $user->setGoogleAuthenticatorSecret($secret);
 
             $entityManager->persist($user);
             $entityManager->flush();
