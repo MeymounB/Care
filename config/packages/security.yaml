@@ -45,7 +45,6 @@ security:
         #- { path: ^/botanist, roles: ROLE_BOTANIST }
         #- { path: ^/admin, roles: ROLE_ADMIN }
         - { path: '^/verify/email', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: '^/2fa', roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
 
 when@test:
     security:

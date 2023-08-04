@@ -20,6 +20,10 @@ class MfaController extends AbstractController
     #[Route('/2fa', name: '2fa_login')]
     public function check2fa(Request $request, Security $security): Response
     {
+        if (!$security->getUser() || !$security->isGranted('IS_AUTHENTICATED_2FA_IN_PROGRESS')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $url = $this->mfaService->getQRContent($security->getUser());
 
         $authenticationException = $this->getLastAuthenticationException($request->getSession());
