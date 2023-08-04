@@ -9,9 +9,9 @@ use App\Repository\AppointmentRepository;
 use App\Repository\CommentRepository;
 use App\Repository\StatusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 #[Route('/botanist')]
 class BotanistController extends AbstractController
@@ -126,9 +126,9 @@ class BotanistController extends AbstractController
     }
 
     #[Route('/appointments/{id}', name: 'app_botanist_accept_appointment', methods: ['GET'])]
-    public function accept_appointment(AppointmentRepository $appointmentRepository, $id, StatusRepository $statusRepository, Security $security): Response
+    public function accept_appointment(AppointmentRepository $appointmentRepository, $id, StatusRepository $statusRepository): Response
     {
-        $user = $security->getUser();
+        $user = $this->getUser();;
 
         if (!$user instanceof Botanist) {
             throw $this->createAccessDeniedException('Access denied');
@@ -151,9 +151,9 @@ class BotanistController extends AbstractController
     }
 
     #[Route('/incoming_appointment', name: 'app_botanist_incoming_appointment', methods: ['GET'])]
-    public function incoming_appointment(AppointmentRepository $appointmentRepository, Security $security): Response
+    public function incoming_appointment(AppointmentRepository $appointmentRepository): Response
     {
-        $user = $security->getUser();
+        $user = $this->getUser();
 
         if (!$user instanceof Botanist) {
             throw $this->createAccessDeniedException('Access denied');
@@ -174,5 +174,30 @@ class BotanistController extends AbstractController
         return $this->render('botanist/incoming_appointments.html.twig', [
             'groupedAppointments' => $groupedAppointments,
         ]);
+    }
+
+    #[Route('/change_appointment_status', name: 'app_botanist_change_appointment_status', methods: ['GET'])]
+    public function change_appointment_status(AppointmentRepository $appointmentRepository, StatusRepository $statusRepository, Request $request): Response
+    {
+        $status_name = $request->get('status_name');
+        $appointment_id = $request->get('appointment_id');
+
+        $status = $statusRepository->findOneBy(['name' => $status_name]);
+
+        $appointment = $appointmentRepository->find($appointment_id);
+
+        if (!$appointment) {
+            throw $this->createNotFoundException('Appointment introuvable');
+        }
+
+        $appointment->setStatus($status);
+
+        if ($status_name === 'En attente') {
+            $appointment->setBotanist(null);
+        }
+
+        $appointmentRepository->save($appointment, true);
+
+        return $this->render('botanist/dashboard.html.twig');
     }
 }
