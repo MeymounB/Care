@@ -11,8 +11,12 @@
     <form class="form" action="{{ checkPathUrl }}" method="post">
         <h2 class="title">2FA</h2>
         <div class="form-field" style="text-align: center;">
-            <p>Installez l'application Google Authenticator et scannez ce code.</p>
+            <p>
+                Installez l'application <strong>Google Authenticator</strong>, scannez ce code,
+                puis entrez le code généré par l'application
+            </p>
             <img src="{{ codeUrl }}" alt="QR Code" />
+            <p>{{ app.user.email }}</p>
         </div>
         <div class="form-field">
             <label for="{{ authCodeParameterName }}">Google Auth Code</label>
