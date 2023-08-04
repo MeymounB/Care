@@ -10,8 +10,7 @@ class MfaService
 {
     public function __construct(
         private readonly GoogleAuthenticatorInterface $authenticator,
-    )
-    {
+    ) {
     }
 
     public function generateSecret(): string
@@ -23,6 +22,6 @@ class MfaService
     {
         $code = $this->authenticator->getQRContent($user);
 
-        return "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" . $code;
+        return 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl='.$code;
     }
 }

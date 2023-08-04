@@ -26,7 +26,6 @@ class RegistrationController extends AbstractController
     private EmailVerifier $emailVerifier;
     private VerifyEmailHelperInterface $verifyEmailHelper;
 
-
     public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, private MfaService $mfaService)
     {
         $this->emailVerifier = $emailVerifier;
