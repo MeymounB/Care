@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Botanist;
 use App\Entity\User;
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
@@ -10,6 +11,7 @@ use App\Repository\StatusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/botanist')]
 class BotanistController extends AbstractController
@@ -121,5 +123,30 @@ class BotanistController extends AbstractController
         return $this->render('botanist/appointments.html.twig', [
             'groupedAppointments' => $groupedAppointments,
         ]);
+    }
+
+    #[Route('/appointments/{id}', name: 'app_botanist_accept_appointment', methods: ['GET'])]
+    public function accept_appointment(AppointmentRepository $appointmentRepository, $id, StatusRepository $statusRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        if (!$user instanceof Botanist) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $status = $statusRepository->findOneBy(['name' => 'En cours']);
+
+        $appointment = $appointmentRepository->find($id);
+
+        if (!$appointment) {
+            throw $this->createNotFoundException('Appointment introuvable');
+        }
+
+        $appointment->setStatus($status);
+        $appointment->setBotanist($user);
+
+        $appointmentRepository->save($appointment, true);
+
+        return $this->render('botanist/dashboard.html.twig');
     }
 }

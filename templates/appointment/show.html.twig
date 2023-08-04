@@ -58,7 +58,7 @@
         {% endif %}
 
         {% if appointment.status == "En attente" and is_granted('ROLE_BOTANIST') %}
-            <button type="button" class="btn btn-primary">Prendre en charge le rendez-vous</button>
+            <a class="btn btn-primary" href="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">Prendre en charge le rendez-vous</a>
         {% endif %}
     </div>
 {% endblock %}
