@@ -1,7 +1,10 @@
-import "./styles/app.scss";
+import {initIsPresential} from "./components/appointmentForm";
+import {initDatetimeValidation} from "./components/appointmentForm";
+import {initShowModal} from "./components/adviceForm";
+import {initDeleteForm} from "./components/adviceForm";
 
-import {foo} from "./exemple/module1";
-import {bar} from "./exemple/module2";
+initIsPresential();
+initDatetimeValidation();
 
-foo();
-bar();
+initShowModal();
+initDeleteForm();

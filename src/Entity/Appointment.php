@@ -9,20 +9,21 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment extends Request
 {
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $plannedAt = null;
 
     #[ORM\Column]
     private ?bool $isPresential = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $adress = null;
+    private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $slug = null;
+    // #[Gedmo\Slug(fields: ['title'])]
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?string $slug = null;
 
     public function getPlannedAt(): ?\DateTimeInterface
     {
@@ -53,14 +54,14 @@ class Appointment extends Request
         return $this->isPresential;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(?string $adress): static
+    public function setAddress(?string $address): static
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
@@ -73,18 +74,6 @@ class Appointment extends Request
     public function setLink(?string $link): static
     {
         $this->link = $link;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): static
-    {
-        $this->slug = $slug;
 
         return $this;
     }

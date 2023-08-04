@@ -53,7 +53,6 @@ class AppFixtures extends Fixture
             $photo
                 ->setThumbnail('https://picsum.photos/200/300')
                 ->setSmallThumbnail('https://picsum.photos/100/150')
-                ->setCreatedAt(new \DateTimeImmutable('now'))
                 ->setPlant($plant);
 
             $manager->persist($photo);
@@ -65,8 +64,6 @@ class AppFixtures extends Fixture
                 ->setStreet($faker->streetAddress)
                 ->setZipCode($faker->randomNumber(5))
                 ->setCity($faker->city)
-                ->setCreatedAt(new \DateTimeImmutable())
-                ->setUpdatedAt(new \DateTimeImmutable())
                 ->setParticular($particular);
 
             $manager->persist($address);
@@ -97,6 +94,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
+                ->setAvatar('https://picsum.photos/200/300')
                 ->setLastName($faker->lastName)
                 ->setCellphone($faker->phoneNumber);
 
@@ -117,6 +115,7 @@ class AppFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail)
                 ->setPassword($faker->password)
                 ->setFirstName($faker->firstName)
+                ->setAvatar('https://picsum.photos/200/300')
                 ->setLastName($faker->lastName)
                 ->setCellphone($faker->phoneNumber);
 
@@ -136,9 +135,7 @@ class AppFixtures extends Fixture
             $certificate = new Certificate();
             $certificate->setTitle($faker->sentence(4))
                 ->setState($faker->randomElement(Certificate::getPossibleStates()))
-                ->setCertificateFile('/path/to/file')
-                ->setCreatedAt(new \DateTimeImmutable())
-                ->setUpdatedAt(new \DateTimeImmutable());
+                ->setCertificateFile('/path/to/file');
 
             if ($this->hasReference(Botanist::class.'_'.$i)) {
                 $certificate->setBotanist($this->getReference(Botanist::class.'_'.rand(0, 9)));
@@ -157,14 +154,10 @@ class AppFixtures extends Fixture
             $appointment
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now  '.$i.' days'))
-                ->setPlannedAt(new \DateTimeImmutable('now + '.$i.' days'))
+                ->setPlannedAt(new \DateTime('now + '."{$i} days"))
                 ->setIsPresential($faker->boolean)
-                ->setAdress($faker->address)
+                ->setAddress($faker->address)
                 ->setLink($faker->url)
-                ->setCreatedAt(new \DateTimeImmutable('now'))
-                ->setUpdatedAt(new \DateTimeImmutable())
-                ->setSlug($faker->slug)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
@@ -190,11 +183,7 @@ class AppFixtures extends Fixture
             $advice
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setDate(new \DateTimeImmutable('now + '.$i.' days'))
                 ->setIsPublic($faker->boolean)
-                ->setCreatedAt(new \DateTimeImmutable('now'))
-                ->setUpdatedAt(new \DateTimeImmutable())
-                ->setSlug($faker->slug)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
@@ -235,8 +224,6 @@ class AppFixtures extends Fixture
                 ->setName($faker->name)
                 ->setDescription($faker->paragraph)
                 ->setSpecies($faker->name)
-                ->setCreatedAt(new \DateTimeImmutable('now'))
-                ->setSlug($faker->slug)
                 ->addRequest($appointments[$i % 10])
                 ->addRequest($advices[$i % 10]);
 
@@ -256,8 +243,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; ++$i) {
             $comment = new Comment();
             $comment
-                ->setContent($faker->paragraph)
-                ->setCreatedAt(new \DateTimeImmutable('now'));
+                ->setContent($faker->paragraph);
 
             // 20 is the number of particular created
             if ($this->hasReference(Particular::class.'_'.$i % 20)) {
@@ -283,7 +269,6 @@ class AppFixtures extends Fixture
         $photo
             ->setThumbnail('https://picsum.photos/200/300')
             ->setSmallThumbnail('https://picsum.photos/100/150')
-            ->setCreatedAt(new \DateTimeImmutable('now'))
             ->setPlant($plant);
 
         $manager->persist($photo);
@@ -296,8 +281,6 @@ class AppFixtures extends Fixture
             ->setStreet($faker->streetAddress)
             ->setZipCode($faker->randomNumber(5))
             ->setCity($faker->city)
-            ->setCreatedAt(new \DateTimeImmutable())
-            ->setUpdatedAt(new \DateTimeImmutable())
             ->setParticular($particular);
 
         $manager->persist($address);

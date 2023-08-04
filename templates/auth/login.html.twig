@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{{ path('app_login') }}" method="post">
+<div class="container">
+    <form class="form-login" action="{{ path('app_login') }}" method="post">
         <h2 class="title">Se connecter</h2>
         <div class="form-field">
             <label for="username">Adresse email</label>
@@ -24,7 +25,7 @@
             <a href="{{ path('register_page') }}">Vous n'avez pas de compte?</a>
         </div>
         <div class="form-link">
-            <a href="">Mot de passe oublié?</a>
+            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié?</a>
         </div>
         <button type="submit" class="btn btn-primary">Se connecter</button>
 

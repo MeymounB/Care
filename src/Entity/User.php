@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[InheritanceType('SINGLE_TABLE')]
 #[DiscriminatorColumn(name: 'discr', type: 'string')]
-#[DiscriminatorMap(['particular' => Particular::class, 'botanist' => Botanist::class])]
+#[DiscriminatorMap(['particular' => Particular::class, 'botanist' => Botanist::class, 'admin' => Admin::class])]
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[ORM\Table(name: '`user`')]
@@ -50,14 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $cellphone = null;
 
-    // TODO : setup this attribut in Botanist Class : only Botanist can be verified
+    // @TODO : setup this attribut in Botanist Class : only Botanist can be verified
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(name: 'google_authenticator_secret', type: Types::STRING, nullable: true)]
@@ -65,6 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $avatar = null;
 
     public function __construct()
     {
@@ -232,6 +235,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

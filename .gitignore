@@ -1,6 +1,8 @@
 
 ###> symfony/framework-bundle ###
 
+.history
+.env
 /.env
 /.env.local
 /.env.local.php
@@ -13,6 +15,8 @@
 .idea/
 .vscode/
 ###< symfony/framework-bundle ###
+
+.composer.lock
 
 ###> phpunit/phpunit ###
 /phpunit.xml

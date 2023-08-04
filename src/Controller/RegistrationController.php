@@ -32,22 +32,82 @@ class RegistrationController extends AbstractController
         $this->verifyEmailHelper = $verifyEmailHelper;
     }
 
-    private function sendConfirmationEmail($user)
+    #[Route(path: '/login', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $email = (new TemplatedEmail())
-            ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
-            ->to($user->getEmail())
-            ->subject('Welcome to GreenCare! Verify your email')
-            ->htmlTemplate('auth/confirmation_email.html.twig')
-            ->context([
-                'username' => $user->getFirstName(),
-            ]);
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
 
-        $this->emailVerifier->sendEmailConfirmation(
-            'app_verify_email',
-            $user,
-            $email
-        );
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('auth/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    #[Route('/register', name: 'register_page')]
+    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
+
+        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
+    }
+
+    #[Route('/botanist', name: 'register_page_doctor')]
+    public function registerBot(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_logout');
+        }
+
+        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
+    }
+
+    #[Route('/verify/email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        // retrieve the user id from the url
+        $id = $request->get('id');
+
+        // Verify the user id exists and is not null
+        if (null === $id) {
+            return $this->redirectToRoute('register_page');
+        }
+
+        $user = $userRepository->find($id);
+
+        // Ensure the user exists in persistence
+        if (null === $user) {
+            return $this->redirectToRoute('register_page');
+        }
+
+        // Do not get the User's Id or Email Address from the Request object
+        try {
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+        } catch (VerifyEmailExceptionInterface $e) {
+            $this->addFlash('verify_email_error', $e->getReason());
+
+            return $this->redirectToRoute('register_page');
+        }
+
+        // @TODO : Verify type of user before setting isVerified to true : only Botanist can be verified
+        $user->setIsVerified(true);
+        $entityManager->flush();
+
+        // @TODO Change the redirect on success and handle or remove the flash message in your templates
+        $this->addFlash('success', 'Votre adresse email a été vérifiée avec succès ! Redirection en cours...');
+
+        return $this->redirectToRoute('register_page');
+    }
+
+    #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
+    public function logout(): void
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
     private function processRegistration(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, $user, string $formType, string $template): Response
@@ -80,72 +140,21 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'register_page')]
-    public function register(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    private function sendConfirmationEmail($user)
     {
-        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
-    }
+        $email = (new TemplatedEmail())
+            ->from(new Address($this->getParameter('mail_address'), 'GreenCare'))
+            ->to($user->getEmail())
+            ->subject('Welcome to GreenCare! Verify your email')
+            ->htmlTemplate('auth/confirmation_email.html.twig')
+            ->context([
+                'username' => $user->getFirstName(),
+            ]);
 
-    #[Route('/botanist', name: 'register_page_doctor')]
-    public function registerBot(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
-    {
-        return $this->processRegistration($request, $passwordEncoder, $entityManager, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
-    }
-
-    #[Route(path: '/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        if ($this->getUser()) {
-            return $this->redirectToRoute('register_page');
-        }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('auth/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
-
-    #[Route(path: '/logout', name: 'app_logout', methods: ['POST', 'GET'])]
-    public function logout(): void
-    {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-    }
-
-    #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
-    {
-        $id = $request->get('id'); // retrieve the user id from the url
-
-        // Verify the user id exists and is not null
-        if (null === $id) {
-            return $this->redirectToRoute('register_page');
-        }
-
-        $user = $userRepository->find($id);
-
-        // Ensure the user exists in persistence
-        if (null === $user) {
-            return $this->redirectToRoute('register_page');
-        }
-
-        // Do not get the User's Id or Email Address from the Request object
-        try {
-            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
-        } catch (VerifyEmailExceptionInterface $e) {
-            $this->addFlash('verify_email_error', $e->getReason());
-
-            return $this->redirectToRoute('register_page');
-        }
-
-        // TODO : Verify type of user before setting isVerified to true : only Botanist can be verified
-        $user->setIsVerified(true);
-        $entityManager->flush();
-
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Votre adresse email a été vérifiée avec succès ! Redirection en cours...');
-
-        return $this->redirectToRoute('register_page');
+        $this->emailVerifier->sendEmailConfirmation(
+            'app_verify_email',
+            $user,
+            $email
+        );
     }
 }

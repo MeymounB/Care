@@ -22,12 +22,12 @@ security:
                 # "app_login" is the name of the route created previously
                 login_path: app_login
                 check_path: app_login
-                default_target_path: / #TODO mettre vers la page d'accueil
                 enable_csrf: true
+                success_handler: App\Controller\redirectLoginController
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: register_page #TODO mettre vers la landaing page'
+                target: app_login
             two_factor:
                 auth_form_path: 2fa_login
                 check_path: 2fa_login_check
