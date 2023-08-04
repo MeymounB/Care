@@ -149,4 +149,30 @@ class BotanistController extends AbstractController
 
         return $this->render('botanist/dashboard.html.twig');
     }
+
+    #[Route('/incoming_appointment', name: 'app_botanist_incoming_appointment', methods: ['GET'])]
+    public function incoming_appointment(AppointmentRepository $appointmentRepository, Security $security): Response
+    {
+        $user = $security->getUser();
+
+        if (!$user instanceof Botanist) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $appointments = $appointmentRepository->findBy(['botanist' => $user->getId()]);
+
+        // Group appointments by status
+        $groupedAppointments = [];
+        foreach ($appointments as $appointment) {
+            $statusName = $appointment->getStatus()->getName();
+            if (!isset($groupedAppointments[$statusName])) {
+                $groupedAppointments[$statusName] = [];
+            }
+            $groupedAppointments[$statusName][] = $appointment;
+        }
+
+        return $this->render('botanist/incoming_appointments.html.twig', [
+            'groupedAppointments' => $groupedAppointments,
+        ]);
+    }
 }
