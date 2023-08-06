@@ -2,6 +2,7 @@
 
 - plant/new : ajouter l'upload de photo
 - advice/new : ajouter le selecteur de plante
+- advice/show : corriger le problème de Delete alors qu'on est pas propriété du commentaire
 
 
 //////////////////////// Ajouté : 
@@ -50,5 +51,8 @@ HTML
 
 - ajout plant : plant/new.html.twig
 - profil : user/profile.html.twig
+- advice : advice/show.html.twig 
+(refaire les boutons et les noms en fonction du role connecté /src/advice commentaire)
+
 
 - landing page : default/index.html.twig
