@@ -38,6 +38,8 @@ class PlantController extends abstractController
             return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        //        dd($form);
+
         return $this->renderForm('plant/new.html.twig', [
             'plant' => $plant,
             'form' => $form,

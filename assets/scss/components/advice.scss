@@ -117,7 +117,7 @@
 					@include vars.flexer(center, flex-start, row);
 					gap: 5px;
 
-					p {
+					#fullname {
 						color: vars.$green;
 					}
 

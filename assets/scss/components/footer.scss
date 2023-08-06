@@ -25,7 +25,7 @@ Footer {
 		}
 	}
 
-	.container {
+	.container-footer {
 		@include vars.flexer(flex-start, flex-start, column);
 		gap: 10px;
 
