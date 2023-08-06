@@ -17,8 +17,7 @@
 
 				<fieldset class="file-box">
 					<label for="image" id="imageLabel" onclick="openFileInput()">
-						<img src="/images/telecharger.png" alt="" id="previewImage">
-						<!-- <div class="delete-image" onclick="deleteImage()"></div> -->
+						<img src="{{ asset('/images/telecharger.png') }}" alt="" id="previewImage">
 					</label>
 					<span>ajouter une image</span>
 					<input title="image" type="file" id="image" accept=".png,.jpeg,.jpg" multiple
