@@ -1,0 +1,16 @@
+SCSS
+- ajout plant
+- conseil
+- demander conseil 
+- footer 
+- forum conseils -> historique conseil
+- profil botaniste
+- profil user
+
+HTML
+- profil : user/profile.html.twig
+- ajout plant : plant/new.html.twig
+- demander conseil : advice/new.html.twig
+- historique conseil : advice/index.html.twig
+- conseil ( section commentaire) : advice/show.html.twig
+- profil botaniste : botanist/profil.html.twig
