@@ -16,7 +16,7 @@
                         <th class="text-start px-2 py-1 text-xs">Description</th>
                         <th class="text-start px-2 py-1 text-xs">createdAt</th>
                         <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
-                        <th class="text-start px-2 py-1 text-xs">isPublic</th>
+                        <th class="text-start px-2 py-1 text-xs">Type de rendez-vous</th>
                         <th class="text-start px-2 py-1 text-xs">actions</th>
                     </tr>
                     </thead>
@@ -27,7 +27,23 @@
                             <td class="px-4 py-2">{{ appointment.description }}</td>
                             <td class="px-4 py-2">{{ appointment.createdAt ? appointment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
-                            <td class="px-4 py-2">
+                            <td>
+                                {% if appointment.isPresential %}
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                        À domicile
+                                    {% if appointment.address and appointment.status == "En cours" %}
+                                        - {{ appointment.address }}
+                                    {% endif %}
+                                    </span>
+                                {% else %}
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                En ligne
+                            {% if appointment.link and appointment.status == "En cours" %}
+                                - <a href="{{ appointment.link }}"
+                                     class="text-indigo-600 underline hover:text-indigo-900">Link</a>
+                            {% endif %}
+                            </span>
+                                {% endif %}
                             </td>
                             <td class="px-4 py-2 flex justify-center">
                                 <button onclick="location.href='{{ path('app_appointment_show', {'id': appointment.id}) }}'"

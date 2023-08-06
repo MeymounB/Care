@@ -199,6 +199,6 @@ class BotanistController extends AbstractController
 
         $appointmentRepository->save($appointment, true);
 
-        return $this->redirectToRoute('app_botanist_index');
+        return $this->redirectToRoute('app_botanist_incoming_appointment');
     }
 }

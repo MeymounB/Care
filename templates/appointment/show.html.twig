@@ -8,32 +8,31 @@
     <table class="table-auto bg-white rounded-lg overflow-hidden w-full shadow-lg">
         <tbody>
         {% for field, value in {
-            'Id': appointment.id,
-            'Title': appointment.title,
+            'Objet': appointment.title,
             'Description': appointment.description,
-            'CreatedAt': appointment.createdAt ? appointment.createdAt|date('Y-m-d') : '',
-            'PlannedAt': appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '',
-            'UpdatedAt': appointment.updatedAt ? appointment.updatedAt|date('Y-m-d') : '',
-            'IsPresential': appointment.isPresential ? 'Yes' : 'No',
+            'Créé le': appointment.createdAt ? appointment.createdAt|date('d-m-Y') : '',
+            'Planifié le': appointment.plannedAt ? appointment.plannedAt|date('d-m-Y H:i:s') : '',
+            'Mis à jour le': appointment.updatedAt ? appointment.updatedAt|date('d-m-Y H:i:s') : '',
+            'Type de rencontre': appointment.isPresential ? 'À domicile' : 'En ligne',
             'Rendez-vous prévu avec': appointment.botanist ? appointment.botanist.FullName : 'Aucun botaniste assigné',
         } %}
             <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">
                 <th class="px-4 py-2 text-left text-gray-600">{{ field }}</th>
                 <td class="px-4 py-2">{{ value }}</td>
             </tr>
-            {% if field == 'IsPresential' and value == 'Yes' %}
+            {% if field == 'Type de rencontre' and value == 'À domicile' and appointment.status == "En cours" %}
                 {% if appointment.address %}
                     <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">
-                        <th class="px-4 py-2 text-left text-gray-600">Address</th>
+                        <th class="px-4 py-2 text-left text-gray-600">Adresse</th>
                         <td class="px-4 py-2">{{ appointment.address }}</td>
                     </tr>
                 {% endif %}
-            {% elseif field == 'IsPresential' and value == 'No' %}
+            {% elseif field == 'Type de rencontre' and value == 'En ligne' and appointment.status == "En cours" %}
                 {% if appointment.link %}
                     <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">
-                        <th class="px-4 py-2 text-left text-gray-600">Link</th>
+                        <th class="px-4 py-2 text-left text-gray-600">Lien</th>
                         <td class="px-4 py-2">
-                            <a href="{{ appointment.link }}">Link</a>
+                            <a href="{{ appointment.link }}">Accéder au rendez-vous en ligne</a>
                         </td>
                     </tr>
                 {% endif %}
@@ -45,26 +44,27 @@
     <div class="mt-5">
         {% if is_granted('ROLE_PARTICULAR') %}
             <a href="{{ path('app_appointment_index') }}"
-               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">back to list</a>
+               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">Retour à la liste</a>
 
             <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}"
-               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">edit</a>
+               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
 
             <div class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md">
                 {{ include('appointment/_delete_form.html.twig') }}
             </div>
-
-        {% else %}
-            <a href="{{ path('app_botanist_appointments') }}">back to list</a>
         {% endif %}
 
         {% if is_granted('ROLE_BOTANIST') %}
             {% if appointment.status == "En attente" %}
+                <a href="{{ path('app_botanist_appointments') }}">Retour à la liste</a>
                 <a class="btn btn-primary" href="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">Prendre
                     en charge le rendez-vous</a>
             {% elseif appointment.status == "En cours" %}
-                <a class="btn btn-danger" href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}">Annuler</a>
-                <a class="btn btn-primary" href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">Terminer</a>
+                <a href="{{ path('app_botanist_incoming_appointment') }}">Retour à la liste</a>
+                <a class="btn btn-danger"
+                   href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}">Annuler</a>
+                <a class="btn btn-primary"
+                   href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">Terminer</a>
             {% endif %}
         {% endif %}
     </div>
