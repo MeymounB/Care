@@ -3,6 +3,8 @@
 - plant/new : ajouter l'upload de photo
 - advice/new : ajouter le selecteur de plante
 - advice/show : corriger le problème de Delete alors qu'on est pas propriété du commentaire
+- plant/edit : condition à faire pour le bouton "edit" (actuellement ajouter une plante) 
+- botanist/recent_advice activité récente (forum mais filtré par "participé")
 
 
 //////////////////////// Ajouté : 
@@ -28,22 +30,21 @@ HTML
 
 //////////////////////// Manquant HTML : 
 
-- page d'accueil (connecté)
+- page d'accueil (connecté) + scss
 
 - botanist/dashbord.html.twig / + scss
 
-[prendre la div depuis profil-user et faire un include dans profil-user depuis index.html.twig]- plant/index.html.twig 
+[prendre la div depuis profil-user et faire un include dans profil-user depuis index.html.twig] - plant/index.html.twig 
 (nom / description / espece / date + bouton "show") + scss
-- plant/edit.html.twig / + scss
+
 - plant/show.html.twig / + scss
 
 - historique conseil : advice/index.html.twig 
 (ajouter bouton avec "show" et "edit")
 
-[pas à faire] - activité récente (forum mais filtré par "participé")
-
 - nouveaux rendez-vous disponible 
 ( titre / date / botaniste "prit en charge par ..." / presentiel ou distanciel / action "show" ""plus de détails"")
+
 - page détails en appyant sur "show" un seul rendez-vous
 (createur nom de l'utilisateur / titre / description / date created / date planified / date mise à jour (uniquement si édité) / presentiel ou distanciel / lien ou adresse (en fonction de présentiel ou dist) (pas affiché si "terminé") / botaniste "prit en charge par ..." )
 
@@ -53,6 +54,5 @@ HTML
 - profil : user/profile.html.twig
 - advice : advice/show.html.twig 
 (refaire les boutons et les noms en fonction du role connecté /src/advice commentaire)
-
 
 - landing page : default/index.html.twig
