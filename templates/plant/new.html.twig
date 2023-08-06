@@ -1,56 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Add plant{% endblock %}
+{% block title %}Ajouter une plante{% endblock %}
 
 {% block body %}
-    {# <h1>Add new plant</h1>
+	<h1>Ajouter une plante</h1>
 
-    {{ include('plant/_form.html.twig') }}
+	{{ include('plant/_form.html.twig') }}
 
-    <a href="{{ path('app_plant_index') }}">back to list</a> #}
+	<a href="{{ path('app_plant_index') }}">back to list</a>
 
-   	<section class="ajout-plante">
-		<div class="form-ajout">
-			<h1>Ajouter une plante</h1>
-
-			<form action="/">
-
-				<fieldset class="file-box">
-					<label for="image" id="imageLabel" onclick="openFileInput()">
-						<img src="{{ asset('/images/telecharger.png') }}" alt="" id="previewImage">
-					</label>
-					<span>ajouter une image</span>
-					<input title="image" type="file" id="image" accept=".png,.jpeg,.jpg" multiple
-						onchange="handleFileSelect(event)">
-				</fieldset>
-
-				<div class="fieldset-container">
-					<fieldset>
-						<label for="name">Nom</label>
-						<input id="name" title="name" type="text">
-					</fieldset>
-
-					<fieldset>
-						<label for="famille">Famille de plante</label>
-						<input id="famille" title="famille" type="text">
-					</fieldset>
-
-					<fieldset>
-						<label for="couleur">Couleur</label>
-						<input id="couleur" title="couleur" type="text">
-					</fieldset>
-				</div>
-
-				<fieldset class="description">
-					<label for="commentaire">Description / Commentaire :</label>
-					<textarea title="commentaire" id="commentaire" type="text"
-						placeholder="ex : Ma jolie rose violette que j'ai adopté en Janvier :)"></textarea>
-				</fieldset>
-
-				<button id="button" value="submit" type="button" class="btn btn-secondary">Ajouter une
-					plante</button>
-			</form>
-		</div>
-	</section>
-    
 {% endblock %}
