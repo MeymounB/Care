@@ -15,6 +15,7 @@
             'PlannedAt': appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '',
             'UpdatedAt': appointment.updatedAt ? appointment.updatedAt|date('Y-m-d') : '',
             'IsPresential': appointment.isPresential ? 'Yes' : 'No',
+            'Rendez-vous prévu avec': appointment.botanist ? appointment.botanist.FullName : 'Aucun botaniste assigné',
         } %}
             <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">
                 <th class="px-4 py-2 text-left text-gray-600">{{ field }}</th>
@@ -61,9 +62,9 @@
             {% if appointment.status == "En attente" %}
                 <a class="btn btn-primary" href="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">Prendre
                     en charge le rendez-vous</a>
-            {% else %}
+            {% elseif appointment.status == "En cours" %}
                 <a class="btn btn-danger" href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}">Annuler</a>
-                <a class="btn btn-primary" href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">Terminé</a>
+                <a class="btn btn-primary" href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">Terminer</a>
             {% endif %}
         {% endif %}
     </div>
