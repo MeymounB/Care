@@ -1,0 +1,175 @@
+.ajout-plante {
+	min-height: 100vh;
+
+	padding: 10vh 10vw;
+
+	@include vars.flexer(center, center, column);
+	gap: 40px;
+
+	.form-ajout {
+		@include vars.flexer(flex-start, center, column);
+
+		h1 {}
+
+		gap: 20px;
+
+		width: calc(100% - 10vw);
+		min-height: 60vh;
+
+		form {
+			border: 2px solid vars.$black;
+			border-radius: 25px;
+			@include vars.flexer(flex-start, center, row);
+			flex-wrap: wrap;
+			gap: vars.rem(30);
+			width: 100%;
+			padding: 5vh 5vw;
+
+			.fieldset-container {
+				@include vars.flexer(flex-start, space-evenly, row);
+				flex-wrap: wrap;
+				gap: vars.rem(30);
+
+				width: 100%;
+			}
+
+			fieldset {
+				outline: none;
+				border: none;
+
+				@include vars.flexer(flex-start, center, column);
+
+				ul {
+					display: none;
+				}
+
+				label {}
+
+				input {}
+
+				input[type=file] {}
+
+
+				input[type=checkbox] {}
+
+				textarea {}
+
+				&.description {
+					width: 100%;
+				}
+			}
+
+			// .file-box {
+			// 	@include vars.flexer(center, center, column);
+
+			// 	label {
+			// 		height: 200px;
+			// 		width: 300px;
+			// 		background-color: vars.$gray;
+			// 		cursor: pointer;
+			// 		@include vars.flexer(center, center, column);
+
+			// 		padding: 75px;
+
+			// 		img {
+			// 			height: 50px;
+			// 		}
+			// 	}
+
+			// 	span {
+			// 		text-decoration: underline;
+			// 		color: rgb(0, 155, 255);
+			// 	}
+
+			// 	input {
+			// 		display: none;
+			// 	}
+			// }
+
+			// Variables
+			$file-label-height: 200px;
+			$border-radius: 8px;
+
+			@mixin show-delete-icon($show: none) {
+				display: $show;
+			}
+
+			@mixin center-both {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+
+			@mixin file-box-style {
+				position: relative;
+				width: 100%;
+
+				label {
+					@include vars.flexer(center, center, row);
+					gap: 20px;
+					width: 100%;
+					height: $file-label-height;
+					background-color: #f0f0f0;
+					border-radius: $border-radius;
+					text-align: center;
+					cursor: pointer;
+					// overflow: hidden;
+					position: relative;
+					padding: 20px;
+
+					img {
+						width: 100px;
+						height: 100px;
+						aspect-ratio: 1/1;
+					}
+
+					span {
+						@include center-both;
+					}
+
+					// .delete-image {
+					// 	@include center-both;
+					// 	width: 20px;
+					// 	height: 20px;
+					// 	background-image: url("/images/fermer.png");
+					// 	background-size: cover;
+					// 	cursor: pointer;
+					// 	// @include show-delete-icon(none);
+					// 	display: none;
+					// 	/* Hide the delete image by default */
+					// }
+
+					// &:hover .delete-image {
+					// 	top: 30px;
+					// 	@include show-delete-icon(block);
+					// 	position: absolute;
+					// 	left: 60vw;
+					// 	/* Show the delete image on hover */
+					// }
+				}
+
+				input[type="file"] {
+					display: none;
+				}
+
+				img#previewImage {
+					width: 120px;
+					height: 120px;
+					aspect-ratio: 1/1;
+					object-fit: cover;
+				}
+			}
+
+			.file-box {
+				@include file-box-style;
+				@include vars.flexer(center, center, column);
+			}
+
+			button {
+				align-self: end;
+			}
+		}
+	}
+
+}

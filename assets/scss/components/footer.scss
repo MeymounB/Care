@@ -1,0 +1,46 @@
+Footer {
+	@include vars.flexer(flex-start, space-between, row);
+	height: 40vh;
+	padding: 6vh 5vw;
+
+	ul {
+		width: 100%;
+		height: 100%;
+		padding: 0 40px 0 0;
+		@include vars.flexer(flex-start, space-around, row);
+
+		li {
+			h3 {}
+		}
+	}
+
+	.mentions {
+		height: 100%;
+		@include vars.flexer(flex-start, space-between, column);
+		padding: 0 0 0 40px;
+		border-left: 1px solid vars.$darkgray;
+
+		h1 {
+			font-size: 40px;
+		}
+	}
+
+	.container {
+		@include vars.flexer(flex-start, flex-start, column);
+		gap: 10px;
+
+		img {
+			width: 25px;
+		}
+
+		a {
+			color: vars.$black !important;
+		}
+
+		.socials {
+			@include vars.flexer(center, space-between, row);
+			gap: 10px;
+			flex-wrap: nowrap;
+		}
+	}
+}

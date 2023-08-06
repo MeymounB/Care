@@ -3,7 +3,8 @@
 {% block title %}Historique de vos conseils{% endblock %}
 
 {% block body %}
-    <div class="mx-auto px-4">
+
+    {# <div class="mx-auto px-4">
         <h1 class="text-2xl font-bold mb-4">Historique de vos conseils</h1>
 
         {% for status, advices in groupedAdvices %}
@@ -68,6 +69,97 @@
         <button onclick="location.href='{{ path('app_advice_new') }}'" type="button"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">New
         </button>
-    </div>
+    </div> #}
+    
+    <section class="forum">
+		<h2>Forum : Demandes de conseils en ligne</h2>
+
+		<div class="form-container">
+			<form id="searchForm">
+				<input type="text" id="searchInput" placeholder="Rechercher...">
+				<div class="filter-container">
+					<label>
+						<input type="checkbox" name="filter" value="public">
+						<span>Public</span>
+					</label>
+					<label>
+						<input type="checkbox" name="filter" value="private">
+						<span>Privé</span>
+					</label>
+				</div>
+				<button type="submit">Rechercher</button>
+			</form>
+		</div>
+
+		<div id="results">
+			<a href="/" id="conseil">
+				<div class="img-container"><img src="/images/plante1.jpg" alt=""></div>
+				<div class="infos-box">
+					<div class="infos-container">
+						<div class="infos-box">
+							<div class="info h3">
+								<!-- <p>Titre</p> -->
+								<h3> Des points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?</h3>
+							</div>
+							<div class="infos-sub-box">
+								<div class="info">
+									<!-- <p>Utilisateur</p> -->
+									<p id="name">Black NextGen</p>
+								</div>
+								<div class="info">
+									<!-- <p>Date</p> -->
+									<p id="date">02/08/2023</p>
+								</div>
+								<div class="info">
+									<!-- <p>Status</p> -->
+									<p id="status2">Public</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="button-container">
+					<a href="/">
+						<p>Accéder</p><img src="/images/right-arrow-white.png" alt="">
+					</a>
+				</div> -->
+			</a>
+			<a href="/" id="conseil">
+				<div class="img-container"><img src="/images/plante1.jpg" alt=""></div>
+				<div class="infos-box">
+					<div class="infos-container">
+						<div class="infos-box">
+							<div class="info h3">
+								<!-- <p>Titre</p> -->
+								<h3> Des points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?Des
+									points blancs sur ma plante, que faire ?</h3>
+							</div>
+							<div class="infos-sub-box">
+								<div class="info">
+									<!-- <p>Utilisateur</p> -->
+									<p id="name">Black NextGen</p>
+								</div>
+								<div class="info">
+									<!-- <p>Date</p> -->
+									<p id="date">02/08/2023</p>
+								</div>
+								<div class="info">
+									<!-- <p>Status</p> -->
+									<p id="status1">Privé</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</section>
 
 {% endblock %}

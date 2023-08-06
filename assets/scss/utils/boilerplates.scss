@@ -14,13 +14,16 @@
 
 body {
     min-height: 100vh;
-    width: 100vw;
     line-height: 1.5;
     font-weight: 400;
     font-size: funcs.rem(16);
     scroll-behavior: smooth;
     margin: 0;
     padding: 0;
+}
+
+button {
+    cursor: pointer;
 }
 
 p,
@@ -33,24 +36,19 @@ h2,
 h3,
 h4,
 h5,
-h6
-{
+h6 {
     font-family: 'Montserrat-Medium', sans-serif;
 }
-
 
 a,
 a:visited,
 a:focus {
+    color: #04DC40;
     text-decoration: none;
-    color: inherit;
-
-    &.link {
-        color: #04DC40;
-    }
 }
 
-a.link:is(:hover, :focus) {
+a:hover,
+a:focus {
     text-decoration: underline;
     text-decoration-color: #04DC40;
     opacity: 0.8;
@@ -72,7 +70,8 @@ textarea {
     padding: funcs.rem(10);
     border-radius: funcs.rem(4);
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
         border-color: colors.$green;
     }
 }
@@ -88,16 +87,6 @@ option {
     margin-bottom: funcs.rem(5);
     outline: none;
     border-radius: funcs.rem(5);
-}
-
-.section {
-    width: 100%;
-    margin: funcs.rem(10) 0;
-    padding: funcs.rem(50);
-
-    @include mixins.media(tablet-small, max) {
-        padding: funcs.rem(20);
-    }
 }
 
 .center-space {
