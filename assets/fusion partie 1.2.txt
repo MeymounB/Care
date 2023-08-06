@@ -1,3 +1,11 @@
+////////////////////////  PHP à modifier (Controller) : 
+
+- plant/new : ajouter l'upload de photo
+- advice/new : ajouter le selecteur de plante
+
+
+//////////////////////// Ajouté : 
+
 SCSS
 - ajout plant
 - conseil
@@ -14,3 +22,20 @@ HTML
 - historique conseil : advice/index.html.twig
 - conseil ( section commentaire) : advice/show.html.twig
 - profil botaniste : botanist/profil.html.twig
+- footer : parts/footer.html.twig
+
+
+//////////////////////// Manquant HTML : 
+
+- botanist/dashbord.html.twig / + scss
+
+- plant/index.html.twig / + scss
+- plant/edit.html.twig / + scss
+- plant/show.html.twig / + scss
+
+//////////////////////// Scss à modifier : 
+
+- ajout plant : plant/new.html.twig
+- profil : user/profile.html.twig
+
+- landing page : default/index.html.twig
