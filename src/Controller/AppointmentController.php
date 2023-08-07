@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Appointment;
+use App\Entity\Particular;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
 use App\Repository\StatusRepository;
@@ -17,9 +18,15 @@ class AppointmentController extends AbstractController
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository): Response
     {
-        $userID = $this->getUser()->getId();
+        $user = $this->getUser();
 
-        $appointments = $appointmentRepository->findBy(['particular' => $userID], ['plannedAt' => 'ASC']);
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $currentUserId = $user->getId();
+
+        $appointments = $appointmentRepository->findBy(['particular' => $currentUserId], ['plannedAt' => 'ASC']);
 
         // Group appointments by status
         $groupedAppointments = [];

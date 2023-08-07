@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\Particular;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
@@ -27,7 +28,14 @@ class AdviceController extends AbstractController
         $groupedAdvices = [];
         foreach ($advices as $advice) {
             $statusName = $advice->getStatus()->getName();
-            $currentUserId = $this->getUser()->getId();
+            $user = $this->getUser();
+
+            if (!$user instanceof Particular) {
+                throw $this->createAccessDeniedException('Access denied');
+            }
+
+            $currentUserId = $user->getId();
+
             $adviceUserId = $advice->getParticular()->getId();
 
             // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
