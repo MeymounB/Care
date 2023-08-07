@@ -21,6 +21,6 @@ class LoginTest extends WebTestCase
         $client->loginUser($testUser);
 
         $client->request('GET', '/login');
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/register');
     }
 }
