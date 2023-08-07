@@ -105,7 +105,7 @@ class BotanistController extends AbstractController
 
         $appointmentRepository->save($appointment, true);
 
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('app_botanist_index');
     }
 
     #[Route('/change_appointment_status', name: 'change_appointment_status', methods: ['GET'])]
@@ -129,6 +129,6 @@ class BotanistController extends AbstractController
 
         $appointmentRepository->save($appointment, true);
 
-        return $this->redirectToRoute('incoming_appointment');
+        return $this->redirectToRoute('app_botanist_incoming_appointment');
     }
 }
