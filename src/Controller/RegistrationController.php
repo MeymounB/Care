@@ -129,7 +129,7 @@ class RegistrationController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('register_page');
+            return $this->redirectToRoute('app_logout');
         }
 
         // get the login error if there is one
