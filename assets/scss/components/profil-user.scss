@@ -1,3 +1,5 @@
+@use "../utils" as vars;
+
 .user-profil {
 	padding: 10vh 0;
 	@include vars.flexer(flex-start, center, column);

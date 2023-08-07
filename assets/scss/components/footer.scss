@@ -1,3 +1,5 @@
+@use "../utils" as vars;
+
 Footer {
 	@include vars.flexer(flex-start, space-between, row);
 	height: 40vh;
