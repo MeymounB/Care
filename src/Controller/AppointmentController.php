@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Appointment;
 use App\Form\AppointmentType;
-use App\Service\AppointmentService;
-use App\Repository\StatusRepository;
 use App\Repository\AppointmentRepository;
+use App\Repository\StatusRepository;
+use App\Service\AppointmentService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/appointment')]
 class AppointmentController extends AbstractController
@@ -86,7 +86,7 @@ class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
     public function delete(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 

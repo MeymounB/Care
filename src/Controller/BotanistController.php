@@ -3,14 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Botanist;
+use App\Repository\AppointmentRepository;
+use App\Repository\StatusRepository;
 use App\Service\AdviceService;
 use App\Service\AppointmentService;
-use App\Repository\StatusRepository;
-use App\Repository\AppointmentRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/dashboard', name: 'app_botanist_')]
 class BotanistController extends AbstractController
@@ -65,7 +65,6 @@ class BotanistController extends AbstractController
             'groupedAppointments' => $groupedAppointments,
         ]);
     }
-
 
     #[Route('/incoming_appointment', name: 'incoming_appointment', methods: ['GET'])]
     public function incoming_appointment(): Response

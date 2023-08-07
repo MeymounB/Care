@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Repository\AppointmentRepository;
@@ -17,18 +16,21 @@ class AppointmentService
     public function getGroupedAppointments(): array
     {
         $appointments = $this->appointmentRepository->findAll();
+
         return $this->groupAppointmentsByStatus($appointments);
     }
 
     public function getPendingAppointmentsGroupedByStatus(): array
     {
         $appointments = $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC']);
+
         return $this->groupAppointmentsByStatus($appointments);
     }
 
     public function getGroupedAppointmentsByBotanist(int $botanistId): array
     {
         $appointments = $this->appointmentRepository->findBy(['botanist' => $botanistId]);
+
         return $this->groupAppointmentsByStatus($appointments);
     }
 
@@ -42,6 +44,7 @@ class AppointmentService
             }
             $groupedAppointments[$statusName][] = $appointment;
         }
+
         return $groupedAppointments;
     }
 }

@@ -20,6 +20,7 @@ class AdviceService
     public function getGroupedAdvices()
     {
         $advices = $this->adviceRepository->findAll();
+
         return $this->groupAdvicesByStatus($advices);
     }
 
@@ -27,6 +28,7 @@ class AdviceService
     {
         $adviceIds = $this->getAdviceIdsFromUserComments($user);
         $advices = $this->adviceRepository->findBy(['id' => $adviceIds]);
+
         return $this->groupAndSortAdvices($advices);
     }
 
@@ -38,10 +40,11 @@ class AdviceService
         $adviceIds = [];
         foreach ($userComments as $comment) {
             $commentAdvice = $comment->getCommentAdvice();
-            if ($commentAdvice !== null) {
+            if (null !== $commentAdvice) {
                 $adviceIds[] = $commentAdvice->getId();
             }
         }
+
         return $adviceIds;
     }
 
@@ -86,6 +89,7 @@ class AdviceService
             }
             $groupedAdvices[$statusName][] = $advice;
         }
+
         return $groupedAdvices;
     }
 }
