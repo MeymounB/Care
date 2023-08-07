@@ -34,7 +34,7 @@ class PlantController extends abstractController
     }
 
     #[Route('/new', name: 'app_plant_new', methods: ['GET', 'POST'])]
-    public function new(#[CurrentUser] ?User $user, Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $plant = new Plant();
 
@@ -43,31 +43,34 @@ class PlantController extends abstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-//			dd($form->getData());
 
 	        $certifData = $form->get('photos')->getData();
 
+
 	        if ($certifData) {
-		        $currentTime = time();
-		        $newFilename = 'Photo_'.$user->getFullName().'_'.$currentTime;
-		        $safeFilename = $this->slugger->slug($newFilename).'.'.$certifData->guessExtension();
 
-		        try {
-			        $certifData->move(
-				        $this->getParameter('photos_directory'),
-				        $safeFilename
-			        );
-		        } catch (FileException $e) {
-			        // ... handle exception if something happens during file upload
-		        }
+				foreach ($certifData as $certif) {
+					$currentTime = time();
+					$newFilename = 'Photo_'.$this->getUser()->getFullName().'_'.$currentTime;
+					$safeFilename = $this->slugger->slug($newFilename).'.'.$certif->guessExtension();
 
-		        $photo = new Photo();
+					try {
+						$certif->move(
+							$this->getParameter('photos_directory'),
+							$safeFilename
+						);
+					} catch (FileException $e) {
+						// ... handle exception if something happens during file upload
+					}
 
-				$photo->setPhoto($safeFilename);
+					$photo = new Photo();
 
-		        $plant->addPhoto($photo);
+					$photo->setPhoto($safeFilename);
 
-		        $entityManager->persist($photo);
+					$plant->addPhoto($photo);
+
+					$entityManager->persist($photo);
+				}
 	        }
 
 			$entityManager->persist($plant);

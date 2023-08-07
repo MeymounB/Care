@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\File;
 
 class PlantType extends AbstractType
@@ -32,10 +33,18 @@ class PlantType extends AbstractType
 				'mapped' => false,
 				'multiple' => true,
 		        'constraints' => [
-			        new File([
-//				        'mimeTypes' => ['application/pdf'],
-				        'maxSize' => 1024 * 512, // max file size is
-			        ]),
+			        new All([
+						'constraints' => [
+							new File([
+								'maxSize' => '1024k',
+								'mimeTypes' => [
+									'image/jpeg',
+									'image/png',
+								],
+								'mimeTypesMessage' => 'Please upload a valid image',
+							])
+						]
+					])
 		        ],
 	        ]);
         ;
