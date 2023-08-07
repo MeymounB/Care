@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Appointment;
-use App\Entity\Particular;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
 use App\Repository\StatusRepository;
+use App\Service\AppointmentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,28 +15,17 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/appointment')]
 class AppointmentController extends AbstractController
 {
-    #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository): Response
+    private $appointmentService;
+
+    public function __construct(AppointmentService $appointmentService)
     {
-        $user = $this->getUser();
+        $this->appointmentService = $appointmentService;
+    }
 
-        if (!$user instanceof Particular) {
-            throw $this->createAccessDeniedException('Access denied');
-        }
-
-        $currentUserId = $user->getId();
-
-        $appointments = $appointmentRepository->findBy(['particular' => $currentUserId], ['plannedAt' => 'ASC']);
-
-        // Group appointments by status
-        $groupedAppointments = [];
-        foreach ($appointments as $appointment) {
-            $statusName = $appointment->getStatus()->getName();
-            if (!isset($groupedAppointments[$statusName])) {
-                $groupedAppointments[$statusName] = [];
-            }
-            $groupedAppointments[$statusName][] = $appointment;
-        }
+    #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $groupedAppointments = $this->appointmentService->getGroupedAppointments();
 
         return $this->render('appointment/index.html.twig', [
             'groupedAppointments' => $groupedAppointments,
