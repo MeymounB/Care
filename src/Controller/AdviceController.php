@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
-use App\Entity\Particular;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;

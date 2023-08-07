@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Appointment;
-use App\Entity\Particular;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
 use App\Repository\StatusRepository;
