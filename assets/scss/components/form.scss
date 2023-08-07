@@ -1,6 +1,6 @@
 @use "../utils" as vars;
 
-.form-login {
+.form-auth {
   width: 100%;
   max-width: vars.rem(600);
   @include vars.flexer(center, center, column);
