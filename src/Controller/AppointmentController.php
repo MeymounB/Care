@@ -4,31 +4,28 @@ namespace App\Controller;
 
 use App\Entity\Appointment;
 use App\Form\AppointmentType;
-use App\Repository\AppointmentRepository;
+use App\Service\AppointmentService;
 use App\Repository\StatusRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/appointment')]
 class AppointmentController extends AbstractController
 {
-    #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
-    public function index(AppointmentRepository $appointmentRepository): Response
-    {
-        // TODO: lister uniquement pour l'utilisateur connecté
-        $appointments = $appointmentRepository->findAll();
+    private $appointmentService;
 
-        // Group appointments by status
-        $groupedAppointments = [];
-        foreach ($appointments as $appointment) {
-            $statusName = $appointment->getStatus()->getName();
-            if (!isset($groupedAppointments[$statusName])) {
-                $groupedAppointments[$statusName] = [];
-            }
-            $groupedAppointments[$statusName][] = $appointment;
-        }
+    public function __construct(AppointmentService $appointmentService)
+    {
+        $this->appointmentService = $appointmentService;
+    }
+
+    #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $groupedAppointments = $this->appointmentService->getGroupedAppointments();
 
         return $this->render('appointment/index.html.twig', [
             'groupedAppointments' => $groupedAppointments,
@@ -89,7 +86,7 @@ class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
     public function delete(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 

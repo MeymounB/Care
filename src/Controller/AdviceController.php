@@ -6,32 +6,31 @@ use App\Entity\Advice;
 use App\Entity\Comment;
 use App\Form\AdviceType;
 use App\Form\CommentType;
+use App\Service\AdviceService;
+use App\Service\CommentService;
 use App\Repository\AdviceRepository;
 use App\Repository\StatusRepository;
-use App\Service\CommentService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/advice')]
 class AdviceController extends AbstractController
 {
-    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
-    public function index(AdviceRepository $adviceRepository): Response
-    {
-        $advices = $adviceRepository->findAll();
+    private $adviceService;
 
-        // Group advices by status
-        $groupedAdvices = [];
-        foreach ($advices as $advice) {
-            $statusName = $advice->getStatus()->getName();
-            if (!isset($groupedAdvices[$statusName])) {
-                $groupedAdvices[$statusName] = [];
-            }
-            $groupedAdvices[$statusName][] = $advice;
-        }
+    public function __construct(AdviceService $adviceService)
+    {
+        $this->adviceService = $adviceService;
+    }
+
+    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
+    public function index(): Response
+    {
+
+        $groupedAdvices = $this->adviceService->getGroupedAdvices();
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,
@@ -110,7 +109,7 @@ class AdviceController extends AbstractController
     #[Route('/{id}', name: 'app_advice_delete', methods: ['DELETE'])]
     public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 
