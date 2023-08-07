@@ -63,7 +63,7 @@ header{
 
 /** HEADER BURGER **/
 
-label {
+.header_burger {
   display: none;
 
   @include vars.media(tablet-small, max){

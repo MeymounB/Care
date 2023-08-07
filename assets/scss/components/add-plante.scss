@@ -1,3 +1,6 @@
+@use "../utils" as vars;
+
+
 .ajout-plante {
 	min-height: 100vh;
 
@@ -149,9 +152,9 @@
 					// }
 				}
 
-				input[type="file"] {
-					display: none;
-				}
+				//input[type="file"] {
+				//	display: none;
+				//}
 
 				img#previewImage {
 					width: 120px;

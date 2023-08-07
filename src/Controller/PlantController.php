@@ -2,17 +2,26 @@
 
 namespace App\Controller;
 
+use App\Entity\Photo;
 use App\Entity\Plant;
+use App\Entity\User;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
 class PlantController extends abstractController
 {
+	public function __construct(private SluggerInterface $slugger)
+	{
+	}
     #[Route('/', name: 'app_plant_index', methods: ['GET'])]
     public function index(PlantRepository $plantRepository): Response
     {
@@ -25,24 +34,54 @@ class PlantController extends abstractController
     }
 
     #[Route('/new', name: 'app_plant_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PlantRepository $plantRepository): Response
+    public function new(#[CurrentUser] ?User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
         $plant = new Plant();
 
         $form = $this->createForm(PlantType::class, $plant);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $plantRepository->save($plant, true);
+//			dd($form->getData());
+
+	        $certifData = $form->get('photos')->getData();
+
+	        if ($certifData) {
+		        $currentTime = time();
+		        $newFilename = 'Photo_'.$user->getFullName().'_'.$currentTime;
+		        $safeFilename = $this->slugger->slug($newFilename).'.'.$certifData->guessExtension();
+
+		        try {
+			        $certifData->move(
+				        $this->getParameter('photos_directory'),
+				        $safeFilename
+			        );
+		        } catch (FileException $e) {
+			        // ... handle exception if something happens during file upload
+		        }
+
+		        $photo = new Photo();
+
+				$photo->setPhoto($safeFilename);
+
+		        $plant->addPhoto($photo);
+
+		        $entityManager->persist($photo);
+	        }
+
+			$entityManager->persist($plant);
+
+			$entityManager->flush();
 
             return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        //        dd($form);
 
         return $this->renderForm('plant/new.html.twig', [
             'plant' => $plant,
             'form' => $form,
+	        'error' => $form->getErrors()->current(),
         ]);
     }
 

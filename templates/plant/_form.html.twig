@@ -3,28 +3,35 @@
         {{ form_start(form, { 'attr': { 'class': 'w-full max-w-sm mx-auto mt-20 space-y-3' } }) }}
 
         <fieldset class="file-box">
-            <label for="image" id="imageLabel" onclick="openFileInput()">
+            <label for="plant_photos" id="imageLabel">
                 <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
             </label>
             <span>Ajouter une image</span>
+            {{ form_row(form.photos) }}
 {#            {{ form_widget(form.image, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'onchange': 'handleFileSelect(event)' } }) }}#}
         </fieldset>
 
         <div class="fieldset-container">
             <fieldset>
-                {{ form_row(form.name, { 'attr': { 'title': 'Nom', 'type': 'text' } }) }}
+                {{ form_row(form.name) }}
             </fieldset>
 
             <fieldset>
-                {{ form_row(form.species, { 'attr': { 'title': 'Famille de plante', 'type': 'text' } }) }}
+                {{ form_row(form.species) }}
             </fieldset>
         </div>
 
         <fieldset class="description">
-            {{ form_widget(form.description, { 'attr': { 'title': 'Description / Commentaire', 'type': 'text', 'placeholder': "ex : Ma jolie rose violette que j'ai adopté en Janvier :)" } }) }}
+            {{ form_widget(form.description) }}
         </fieldset>
 
-        <button id="button" value="submit" type="button" class="btn btn-secondary">{{ button_label|default('Ajouter la plante') }}</button>
+        <button id="button" type="submit" class="btn btn-secondary">{{ button_label|default('Ajouter la plante') }}</button>
+
+        {% if error %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(error.message) }}
+        {% endif %}
+
 
         {{ form_end(form) }}
     </div>
