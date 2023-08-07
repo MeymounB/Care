@@ -17,7 +17,9 @@ class AppointmentController extends AbstractController
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository): Response
     {
-        $appointments = $appointmentRepository->findAll();
+        $userID = $this->getUser()->getId();
+
+        $appointments = $appointmentRepository->findBy(['particular' => $userID], ['plannedAt' => 'ASC']);
 
         // Group appointments by status
         $groupedAppointments = [];

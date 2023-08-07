@@ -27,10 +27,16 @@ class AdviceController extends AbstractController
         $groupedAdvices = [];
         foreach ($advices as $advice) {
             $statusName = $advice->getStatus()->getName();
-            if (!isset($groupedAdvices[$statusName])) {
-                $groupedAdvices[$statusName] = [];
+            $currentUserId = $this->getUser()->getId();
+            $adviceUserId = $advice->getParticular()->getId();
+
+            // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
+            if ($statusName != "Annulé" && $currentUserId != $adviceUserId) {
+                if (!isset($groupedAdvices[$statusName])) {
+                    $groupedAdvices[$statusName] = [];
+                }
+                $groupedAdvices[$statusName][] = $advice;
             }
-            $groupedAdvices[$statusName][] = $advice;
         }
 
         return $this->render('advice/index.html.twig', [

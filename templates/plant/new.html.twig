@@ -3,10 +3,11 @@
 {% block title %}Ajouter une plante{% endblock %}
 
 {% block body %}
-	<h1>Ajouter une plante</h1>
+    <h1>Ajouter une plante</h1>
 
-	{{ include('plant/_form.html.twig') }}
+    <a href="{{ path('app_plant_index') }}">Retour</a>
 
-	<a href="{{ path('app_plant_index') }}">back to list</a>
+    {{ include('plant/_form.html.twig') }}
+
 
 {% endblock %}

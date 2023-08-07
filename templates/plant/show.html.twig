@@ -12,7 +12,7 @@
             'Title': plant.name,
             'Description': plant.description,
             'Species': plant.species,
-            'CreatedAt': plant.createdAt ? plant.createdAt|date('Y-m-d') : '',
+            'CreatedAt': plant.createdAt ? plant.createdAt|date('d-m-Y') : '',
         } %}
             <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">
                 <th class="px-4 py-2 text-left text-gray-600">{{ field }}</th>
