@@ -37,6 +37,13 @@ class Certificate
     #[ORM\ManyToOne(inversedBy: 'certificates')]
     private ?Botanist $botanist = null;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTime();
+        $this->state = self::STATUS_PENDING;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
