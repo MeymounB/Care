@@ -117,8 +117,31 @@
 
                                 <div class="flex">
                                     {% if comment.user %}
-                                        <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                           href="#0">{{ comment.user.fullName }}</a>
+                                        {# Vérifier si l'utilisateur est un botaniste #}
+                                        {% set isBotanist = false %}
+                                        {% for role in comment.user.roles %}
+                                            {% if role == 'ROLE_BOTANIST' %}
+                                                {% set isBotanist = true %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {# Vérifier si l'utilisateur est l'auteur de la demande de conseil #}
+                                        {% set isAuthor = advice.particular == comment.user.fullName %}
+
+                                        {% if isBotanist %}
+                                            <a style="color: #5ac55a">
+                                                {{ comment.user.fullName }}
+                                            </a>
+                                        {% elseif isAuthor %}
+                                            <a style="color: #ce1313">
+                                                {{ comment.user.fullName }}
+                                            </a>
+                                        {% else %}
+                                            <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+                                               href="#0">
+                                                {{ comment.user.fullName }}
+                                            </a>
+                                        {% endif %}
                                     {% else %}
                                         <h3 class="">Anonymous says:</h3>
                                     {% endif %}
@@ -131,10 +154,10 @@
                                 <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
                             </div>
 
-                            {#<div class="flex items-center text-sm text-slate-600 px-2">
+                            {# <div class="flex items-center text-sm text-slate-600 px-2">
                                 <a class="font-medium  "
                                    href="#0">Reply</a>
-                            </div>#}
+                            </div> #}
 
                             {% if app.user == comment.user %}
                                 <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
@@ -166,18 +189,20 @@
         </ul>
 
         <div class="mt-5">
-            <a href="{{ path('app_advice_index') }}"
-               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">back to list</a>
-
-            <a href="{{ path('app_advice_edit', {'id': advice.id}) }}"
-               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">edit</a>
 
 
-            <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
-                <button id="delete-button" class="btn">Delete</button>
-            </form>
+            {% if is_granted('ROLE_PARTICULAR') %}
+                <a href="{{ path('app_advice_index') }}">back to list</a>
 
+                <a href="{{ path('app_advice_edit', {'id': advice.id}) }}">edit</a>
+
+                <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
+                    <button id="delete-button" class="btn">Delete</button>
+                </form>
+            {% else %}
+                <a href="{{ path('app_botanist_list_all_advice') }}">back to list</a>
+            {% endif %}
         </div>
     </div>
 

@@ -8,6 +8,7 @@ use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
 use App\Repository\StatusRepository;
+use App\Service\AdviceService;
 use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,20 +19,17 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/advice')]
 class AdviceController extends AbstractController
 {
-    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
-    public function index(AdviceRepository $adviceRepository): Response
-    {
-        $advices = $adviceRepository->findAll();
+    private $adviceService;
 
-        // Group advices by status
-        $groupedAdvices = [];
-        foreach ($advices as $advice) {
-            $statusName = $advice->getStatus()->getName();
-            if (!isset($groupedAdvices[$statusName])) {
-                $groupedAdvices[$statusName] = [];
-            }
-            $groupedAdvices[$statusName][] = $advice;
-        }
+    public function __construct(AdviceService $adviceService)
+    {
+        $this->adviceService = $adviceService;
+    }
+
+    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $groupedAdvices = $this->adviceService->getGroupedAdvices();
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,

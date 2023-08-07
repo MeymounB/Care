@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
         return $this->processRegistration($request, $passwordEncoder, $entityManager, new Particular(), ParticularFormType::class, 'auth/register.html.twig');
     }
 
-    #[Route('/botanist', name: 'register_page_doctor')]
+    #[Route('/register/botanist', name: 'register_page_doctor')]
     public function registerBot(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
     {
         if ($this->getUser()) {
