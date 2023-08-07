@@ -8,8 +8,8 @@ use App\Repository\CommentRepository;
 
 class AdviceService
 {
-    private $adviceRepository;
-    private $commentRepository;
+    private AdviceRepository $adviceRepository;
+    private CommentRepository $commentRepository;
 
     public function __construct(AdviceRepository $adviceRepository, CommentRepository $commentRepository)
     {
@@ -17,11 +17,15 @@ class AdviceService
         $this->commentRepository = $commentRepository;
     }
 
-    public function getGroupedAdvices()
+    public function getGroupedAdvices($groupByStatus = false)
     {
         $advices = $this->adviceRepository->findAll();
 
-        return $this->groupAdvicesByStatus($advices);
+        if ($groupByStatus) {
+            return $this->groupAdvicesByStatus($advices);
+        } else {
+            return $advices;
+        }
     }
 
     public function getGroupedAdvicesByUser(User $user): array
@@ -46,6 +50,27 @@ class AdviceService
         }
 
         return $adviceIds;
+    }
+
+    public function getAdvicesByUser(int $currentUserId)
+    {
+        $advices = $this->getGroupedAdvices(false);
+
+        $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $statusName = $advice->getStatus()->getName();
+            $adviceUserId = $advice->getParticular()->getId();
+
+            // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
+            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
+                if (!isset($groupedAdvices[$statusName])) {
+                    $groupedAdvices[$statusName] = [];
+                }
+                $groupedAdvices[$statusName][] = $advice;
+            }
+        }
+
+        return $groupedAdvices;
     }
 
     private function groupAndSortAdvices(array $advices): array

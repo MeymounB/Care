@@ -34,6 +34,13 @@ class AppointmentService
         return $this->groupAppointmentsByStatus($appointments);
     }
 
+    public function getGroupedAppointmentsByParticular(int $particularId): array
+    {
+        $appointments = $this->appointmentRepository->findBy(['particular' => $particularId], ['plannedAt' => 'ASC']);
+
+        return $this->groupAppointmentsByStatus($appointments);
+    }
+
     private function groupAppointmentsByStatus(array $appointments): array
     {
         $groupedAppointments = [];

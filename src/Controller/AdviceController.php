@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\Particular;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
@@ -29,7 +30,12 @@ class AdviceController extends AbstractController
     #[Route('/', name: 'app_advice_index', methods: ['GET'])]
     public function index(): Response
     {
-        $groupedAdvices = $this->adviceService->getGroupedAdvices();
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+        $groupedAdvices = $this->adviceService->getAdvicesByUser($user->getId());
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,
