@@ -6,7 +6,6 @@
 - plant/edit : condition à faire pour le bouton "edit" (actuellement ajouter une plante) 
 - botanist/recent_advice : activité récente (forum mais filtré par "participé")
 
-
 //////////////////////// Ajouté : 
 
 SCSS
