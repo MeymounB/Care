@@ -9,6 +9,7 @@ use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
 use App\Repository\StatusRepository;
+use App\Service\AdviceService;
 use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,33 +20,17 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/advice')]
 class AdviceController extends AbstractController
 {
-    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
-    public function index(AdviceRepository $adviceRepository): Response
+    private $adviceService;
+
+    public function __construct(AdviceService $adviceService)
     {
-        $advices = $adviceRepository->findAll();
+        $this->adviceService = $adviceService;
+    }
 
-        // Group advices by status
-        $groupedAdvices = [];
-        foreach ($advices as $advice) {
-            $statusName = $advice->getStatus()->getName();
-            $user = $this->getUser();
-
-            if (!$user instanceof Particular) {
-                throw $this->createAccessDeniedException('Access denied');
-            }
-
-            $currentUserId = $user->getId();
-
-            $adviceUserId = $advice->getParticular()->getId();
-
-            // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
-            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
-                if (!isset($groupedAdvices[$statusName])) {
-                    $groupedAdvices[$statusName] = [];
-                }
-                $groupedAdvices[$statusName][] = $advice;
-            }
-        }
+    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $groupedAdvices = $this->adviceService->getGroupedAdvices();
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,

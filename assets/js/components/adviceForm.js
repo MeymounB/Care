@@ -88,26 +88,26 @@ export function initDeleteForm() {
         e.preventDefault();
 
         let deleteForm = document.getElementById("delete-form");
-        let request = new XMLHttpRequest();
-        request.open("DELETE", deleteForm.action, true);
-        request.setRequestHeader(
-          "Content-Type",
-          "application/x-www-form-urlencoded; charset=UTF-8"
-        );
-        request.onload = function () {
-          if (request.status >= 200 && request.status < 400) {
-            // Redirect to the index page
-            window.location.href = "/advice";
-          } else {
-            // reached our target server, but it returned an error
-            console.log(
-              "Une erreur est survenue lors de la suppression de l'élément",
-              request.responseText
-            );
-          }
-        };
-
-        request.send(new URLSearchParams(new FormData(deleteForm)).toString());
+        fetch(deleteForm.action, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          },
+          body: new URLSearchParams(new FormData(deleteForm)).toString(),
+        })
+            .then(response => {
+              if (!response.ok) { throw response }
+              // Redirect to the index page
+              window.location.href = "/advice";
+            })
+            .catch(error => {
+              error.text().then(errorMessage => {
+                console.log(
+                    "Une erreur est survenue lors de la suppression de l'élément",
+                    errorMessage
+                );
+              });
+            });
       });
     }
   });
