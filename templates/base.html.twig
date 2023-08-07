@@ -11,12 +11,15 @@
             {{ encore_entry_link_tags('app') }}
         {% block javascripts %}{% endblock %}
             {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('script') }}
     </head>
     <body>
         {% include 'parts/header.html.twig' %}
         <main class="container">
             {% block body %}{% endblock %}
+            {% block footer %}{% include('./parts/footer.html.twig') %}{% endblock %}
         </main>
-        {% block footer %}{% endblock %}
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </body>
 </html>
