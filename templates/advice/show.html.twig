@@ -3,182 +3,116 @@
 {% block title %}Advice{% endblock %}
 
 {% block body %}
-    <main class="grow">
-        <div class="px-4 sm:px-6 lg:px-8 py-8 md:py-0 w-full max-w-9xl mx-auto">
-            <div class="xl:flex">
-                <div class="md:flex flex-1">
-                    <!-- Middle content -->
-                    <div class="flex-1 md:ml-8 xl:mx-4 2xl:mx-8">
-                        <div class="md:py-8">
+    <section class="conseil">
+        <div class="navigation">
+            <a href="/">Demandes de conseils</a> >
+            <a href="/">Discussion</a>
+        </div>
 
-                            <!-- Forum entry -->
-                            <article class=" shadow-md rounded border  dark:border-slate-700 p-5">
-                                <!-- Fil d'Ariane -->
-                                <div class="mb-2">
-                                    <ul class="flex flex-wrap text-sm font-medium">
-                                        <li class="flex items-center">
-                                            <a class="  hover:text-indigo-500 dark:hover:text-indigo-500"
-                                               href="#">Home > </a>
-                                            <!-- add svg for right arrow -->
-
-                                        </li>
-                                        <li class="flex items-center">
-                                            <a class="  hover:text-indigo-500 dark:hover:text-indigo-500"
-                                               href="#0">Advice</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <!-- Header -->
-                                <header class="pb-4 block">
-                                    <!-- Title -->
-                                    <div class="flex items-start space-x-3 mb-3">
-                                        <h2 class="text-2xl text-slate-800  font-bold">{{ advice.title }}</h2>
-                                    </div>
-                                    <!-- Description -->
-                                    <div class="gap-px flex-wrap text-sm ">
-                                        {% for field, value in {
-                                            'Nom utilisateur': advice.particular ? (advice.particular.firstName ~ ' ' ~ advice.particular.lastName) : '',
-                                            'Date de création': advice.createdAt ? advice.createdAt|date('Y-m-d') : '',
-                                            'Nombre de commentaires': advice.comments|length,
-                                        } %}
-                                            <div class="flex items-center text-sm text-slate-400 px-2">
-                                                {% if field == 'Nom utilisateur' %}
-                                                    <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                                       href="#">{{ value }}</a>
-                                                {% else %}
-                                                    <span class="">
-                                                            {{ value }}
-                                                        {% if field == 'Nombre de commentaires' %}
-                                                            commentaires
-                                                        {% endif %}
-                                                    </span>
-                                                {% endif %}
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </header>
-
-                                <!-- Content -->
-                                <div class="my-4 mb-6">
-                                    <p>{{ advice.description ? advice.description|nl2br : '' }}</p>
-                                </div>
-
-                                <!-- Comment form -->
-                                <div>
-                                    {{ form_start(form) }}
-                                    <div class="flex items-start space-x-3 mb-3">
-                                        <div class="grow">
-                                            <label for="comment" class="sr-only">Commentaires</label>
-                                            {{ form_widget(form.content, {'attr': {'class': 'form-textarea w-full focus:border-slate-300', 'rows': '4', 'placeholder': 'Write a comment…'}}) }}
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <button type="submit"
-                                                class="btn-sm bg-indigo-500  ">
-                                            Reply -&gt;
-                                        </button>
-                                    </div>
-                                    {{ form_end(form) }}
-                                </div>
-                            </article>
-                            <!-- End forum entry -->
-                        </div>
+        <div class="demande">
+            <h2>{{ advice.title }}</h2>
+            <div class="descritpion-container">
+                <div class="infos">
+                    <div class="posted-by">{{ advice.particular ? (advice.particular.firstName ~ ' ' ~ advice.particular.lastName) : '' }}</div>
+                    ・
+                    <div class="when">{{ advice.createdAt ? advice.createdAt|date('d-m-Y ・ H:m') : '' }}</div>
+                    ・
+                    <div class="nb-comments"><span id="number-comments">{{ advice.comments|length }}</span> Commentaires
                     </div>
                 </div>
+                <div class="description">{{ advice.description ? advice.description|nl2br : '' }}</div>
+            </div>
+            <div class="write-answer">
+                {{ form_start(form) }}
+                <fieldset>
+                    <img src="{{ asset('images/jardinnier.jpg') }}" alt="Photo de profil">
+                    {{ form_widget(form.content) }}
+                </fieldset>
+                <button type="submit"
+                        class="btn-sm bg-indigo-500">
+                    <p>Répondre</p>
+                    <img src="{{ asset("images/right-arrow-white.png") }}" alt="Fèche">
+                </button>
+                {{ form_end(form) }}
             </div>
         </div>
-    </main>
 
-    <!-- Comments -->
-    <div class="mt-4">
-        <h3 class="font-semibold text-slate-800  mb-4">Comments</h3>
-        <ul class="divide-y divide-gray-200">
+        <div class="commentaires">
+            <h3>Commentaires</h3>
+            {% if advice.comments|length > 0 %}
+                {% for comment in advice.comments %}
+                    <div class="reponse">
+                        <p class="text">{{ comment.content }}</p>
+                        <div class="infos">
+                            <img src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}">
+                            <div class="options">
+                                {% if comment.user %}
+                                    {# Vérifier si l'utilisateur est un botaniste #}
+                                    {% set isBotanist = false %}
+                                    {% for role in comment.user.roles %}
+                                        {% if role == 'ROLE_BOTANIST' %}
+                                            {% set isBotanist = true %}
+                                        {% endif %}
+                                    {% endfor %}
 
-            <!-- Comment -->
-            <li class="relative pl-9 py-5 space-y-5 bg-white shadow rounded-md my-3">
-                <!-- Comment wrapper -->
-                <div class="flex items-start">
+                                    {# Vérifier si l'utilisateur est l'auteur de la demande de conseil #}
+                                    {% set isAuthor = advice.particular == comment.user.fullName %}
 
-                    <!-- Comment content -->
-                    {% if advice.comments|length > 0 %}
-                    {% for comment in advice.comments %}
-
-                    <div>
-                        <!-- Comment -->
-                        <div class="p-8 flex flex-wrap text-xs min-w-10">
-                            <div class="flex items-center text-sm text-slate-600 px-2">
-                                <div class="block mr-2" href="#0">
-                                    <img class="rounded w-10 h-10"
-                                         src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}"
-                                         alt="avatar">
-
-                                </div>
-
-                                <div class="flex">
-                                    {% if comment.user %}
-                                        <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                           href="#0">{{ comment.user.fullName }}</a>
+                                    {% if isBotanist %}
+                                        <p style="color: #5ac55a">
+                                            {{ comment.user.fullName }}
+                                        </p>
+                                    {% elseif isAuthor %}
+                                        <p style="color: #ce1313">
+                                            {{ comment.user.fullName }}
+                                        </p>
                                     {% else %}
-                                        <h3 class="">Anonymous says:</h3>
+                                        <p>
+                                            {{ comment.user.fullName }}
+                                        </p>
                                     {% endif %}
-
-                                    <div class=" p-8 mb-6 text-sm text-slate-800  space-y-2 rounded-md bg-gray-100">
-                                        <p>{{ comment.content }}</p>
+                                {% else %}
+                                    <p id="fullname">Utilisateur anonyme</p>
+                                {% endif %}
+                                ・
+                                <p><small>{{ comment.createdAt|date('d-m-Y H:i') }}</small></p>
+                                {% if app.user == comment.user %}
+                                    ・
+                                    <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
+                                         aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                     </div>
-
-                                </div>
-                                <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
-                            </div>
-
-                            {#<div class="flex items-center text-sm text-slate-600 px-2">
-                                <a class="font-medium  "
-                                   href="#0">Reply</a>
-                            </div>#}
-
-                            {% if app.user == comment.user %}
-                                <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
-                                     aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                                    <!-- Modal here -->
-                                </div>
-                                <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">Edit
-                                </button>
-
-
-                                <div class="bg-red-800 flex items-center">
+                                    <button class="edit-comment" data-id="{{ comment.id }}">Edit
+                                    </button>
                                     <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token"
                                                value="{{ csrf_token('delete' ~ comment.id) }}">
-                                        <button class="btn btn-danger">Delete</button>
+                                        ・
+                                        <button>Delete</button>
                                     </form>
-                                </div>
-                            {% endif %}
-
+                                {% endif %}
+                            </div>
                         </div>
-                        {% endfor %}
-                        {% else %}
-                            <p>No comments yet.</p>
-                        {% endif %}
                     </div>
-                </div>
-            </li>
-        </ul>
-
+                {% endfor %}
+            {% else %}
+                <p>Pas encore de commentaire</p>
+            {% endif %}
+        </div>
         <div class="mt-5">
             <a href="{{ path('app_advice_index') }}"
-               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">back to list</a>
+               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">Retour</a>
 
+            {% if app.user == advice.particular %}
             <a href="{{ path('app_advice_edit', {'id': advice.id}) }}"
-               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">edit</a>
+               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
 
-
-            <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
-                <button id="delete-button" class="btn">Delete</button>
-            </form>
-
+                <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
+                    <button id="delete-button" class="btn">Delete</button>
+                </form>
+            {% endif %}
         </div>
-    </div>
+    </section>
 
 {% endblock %}

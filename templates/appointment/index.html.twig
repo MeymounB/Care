@@ -25,7 +25,7 @@
                         <tr class="text-center border-b text-sm text-gray-600">
                             <td class="px-4 py-2">{{ appointment.title }}</td>
                             <td class="px-4 py-2">{{ appointment.description }}</td>
-                            <td class="px-4 py-2">{{ appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="px-4 py-2">{{ appointment.plannedAt ? appointment.plannedAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
                             <td class="px-4 py-2">
                                 {% if appointment.isPresential %}

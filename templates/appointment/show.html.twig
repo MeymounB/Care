@@ -11,9 +11,9 @@
             'Id': appointment.id,
             'Title': appointment.title,
             'Description': appointment.description,
-            'CreatedAt': appointment.createdAt ? appointment.createdAt|date('Y-m-d') : '',
-            'PlannedAt': appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '',
-            'UpdatedAt': appointment.updatedAt ? appointment.updatedAt|date('Y-m-d') : '',
+            'CreatedAt': appointment.createdAt ? appointment.createdAt|date('d-m-Y') : '',
+            'PlannedAt': appointment.plannedAt ? appointment.plannedAt|date('d-m-Y H:i:s') : '',
+            'UpdatedAt': appointment.updatedAt ? appointment.updatedAt|date('d-m-Y') : '',
             'IsPresential': appointment.isPresential ? 'Yes' : 'No',
         } %}
             <tr class="{{ loop.index is odd ? 'bg-gray-100' : 'bg-white' }}">

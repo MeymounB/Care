@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\Particular;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
@@ -27,10 +28,23 @@ class AdviceController extends AbstractController
         $groupedAdvices = [];
         foreach ($advices as $advice) {
             $statusName = $advice->getStatus()->getName();
-            if (!isset($groupedAdvices[$statusName])) {
-                $groupedAdvices[$statusName] = [];
+            $user = $this->getUser();
+
+            if (!$user instanceof Particular) {
+                throw $this->createAccessDeniedException('Access denied');
             }
-            $groupedAdvices[$statusName][] = $advice;
+
+            $currentUserId = $user->getId();
+
+            $adviceUserId = $advice->getParticular()->getId();
+
+            // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
+            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
+                if (!isset($groupedAdvices[$statusName])) {
+                    $groupedAdvices[$statusName] = [];
+                }
+                $groupedAdvices[$statusName][] = $advice;
+            }
         }
 
         return $this->render('advice/index.html.twig', [
