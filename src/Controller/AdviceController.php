@@ -31,7 +31,7 @@ class AdviceController extends AbstractController
             $adviceUserId = $advice->getParticular()->getId();
 
             // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
-            if ($statusName != "Annulé" && $currentUserId != $adviceUserId) {
+            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
                 if (!isset($groupedAdvices[$statusName])) {
                     $groupedAdvices[$statusName] = [];
                 }
