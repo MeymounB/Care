@@ -21,7 +21,7 @@
 
         <fieldset class="file-box">
             <label for="image" id="imageLabel" onclick="openFileInput()">
-                <img src="/images/telecharger.png" alt="" id="previewImage">
+                <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
             </label>
             <span>ajouter une image</span>
 {#            {{ form_widget(form.image, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'onchange': 'handleFileSelect(event)' } }) }}#}

@@ -25,13 +25,13 @@
             <div class="write-answer">
                 {{ form_start(form) }}
                 <fieldset>
-                    <img src="/images/jardinnier.jpg" alt="Photo de profil">
+                    <img src="{{ asset('images/jardinnier.jpg') }}" alt="Photo de profil">
                     {{ form_widget(form.content) }}
                 </fieldset>
                 <button type="submit"
                         class="btn-sm bg-indigo-500">
                     <p>Répondre</p>
-                    <img src="{{ asset("/images/right-arrow-white.png") }}" alt="Fèche">
+                    <img src="{{ asset("images/right-arrow-white.png") }}" alt="Fèche">
                 </button>
                 {{ form_end(form) }}
             </div>
