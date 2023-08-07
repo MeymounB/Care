@@ -1,0 +1,211 @@
+.forum {
+	padding: 10vh 5vw;
+
+	$primary-color: #007bff;
+	$border-color: #333;
+
+	h2 {
+		margin-bottom: 5vh;
+		width: 100%;
+		text-align: center
+	}
+
+	#searchForm {
+		@include vars.flexer(center, flex-start, row);
+		gap: 10px;
+		flex-wrap: wrap;
+
+		input[type="text"],
+		button {
+			padding: 5px;
+		}
+
+		.filter-container {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		input[type="checkbox"] {
+			display: none;
+			// Masquer la case à cocher par défaut
+		}
+
+		label {
+			position: relative;
+			cursor: pointer;
+		}
+
+		// Style personnalisé pour la case à cocher
+		label span {
+			display: inline-block;
+			position: relative;
+			padding-left: 25px;
+			// Espace pour afficher la case à cocher
+			cursor: pointer;
+		}
+
+		label span::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 2px;
+			width: 18px;
+			height: 18px;
+			border: 2px solid $border-color;
+			border-radius: 3px;
+			background-color: #fff;
+		}
+
+		// Style personnalisé pour la case cochée
+		input[type="checkbox"]:checked+span::before {
+			background-color: $primary-color;
+			// Couleur de fond lorsque la case est cochée
+			border: 2px solid $primary-color;
+			// Couleur de bordure lorsque la case est cochée
+		}
+
+		// Style du texte lorsque la case est cochée
+		input[type="checkbox"]:checked+span {
+			color: $primary-color;
+		}
+	}
+
+	#results {
+		padding: 10vh 0;
+		@include vars.flexer(flex-start, center, column);
+		gap: 5vh;
+
+		#conseil {
+			height: 42.5vh;
+			// width: calc((100vw - 20vw)/1.5 - 20px);
+			width: 100%;
+			padding: 5vh;
+			border: 2px solid black;
+			border-radius: 10px;
+			@include vars.flexer(center, space-between, row);
+			gap: 20px;
+
+			color: vars.$black;
+			text-decoration: none;
+
+			@include vars.media(tablet, max) {
+				width: 100%;
+				height: 100%;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 2.5vh;
+			}
+
+			.img-container {
+				overflow: hidden;
+				max-height: calc(42.3vh - 10vh);
+				max-width: 300px;
+
+				min-width: 200px;
+				min-height: 200px;
+				@include vars.flexer(center, center, column);
+
+				@include vars.media(tablet, max) {
+					max-height: calc(25vh);
+				}
+
+				img {
+					width: 100%;
+					height: 100%;
+					border-radius: 10px;
+				}
+			}
+
+			.infos-box {
+				width: 100%;
+
+				.infos-container {
+					width: 100%;
+					@include vars.flexer(center, center, column);
+					gap: 20px;
+
+					.infos-box {
+						@include vars.flexer(flex-start, space-between, column);
+						gap: 20px;
+						width: 100%;
+						height: calc(42.1vh - (10vh));
+					}
+
+					.infos-sub-box {
+						@include vars.flexer(center, flex-start, row);
+						width: 100%;
+						gap: 20px;
+					}
+
+					.info {
+						&.h3 {
+							max-height: calc(42.1vh - (20vh));
+							font-size: 26px;
+							font-weight: 500;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							display: -webkit-box;
+							-webkit-line-clamp: 3;
+							-webkit-box-orient: vertical;
+						}
+
+						#name {
+							color: vars.$green
+						}
+
+						#date {}
+
+						#status1 {
+							color: red;
+						}
+
+						#status2 {
+							color: vars.$green;
+						}
+
+						&.description {
+							border: 2px solid vars.$black;
+							padding: 10px;
+							border-radius: 10px;
+							height: calc(42.1vh - (10vh + 72px + 20px));
+							overflow: hidden;
+							text-overflow: ellipsis;
+							width: 100%;
+						}
+					}
+				}
+			}
+
+			.button-container {
+				height: 100%;
+				align-self: center;
+
+				@include vars.media(tablet, max) {
+					width: 100%;
+				}
+
+				a {
+					height: 100%;
+					width: 100%;
+					padding: 10px;
+					@include vars.flexer(center, center, row);
+					gap: 10px;
+					border: none;
+					background: vars.$green;
+					border-radius: 5px;
+
+					p {
+						color: white;
+						text-decoration-color: white;
+					}
+
+					img {
+						width: 15px
+					}
+				}
+			}
+		}
+	}
+}

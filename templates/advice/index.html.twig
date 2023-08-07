@@ -3,71 +3,78 @@
 {% block title %}Historique de vos conseils{% endblock %}
 
 {% block body %}
-    <div class="mx-auto px-4">
-        <h1 class="text-2xl font-bold mb-4">Historique de vos conseils</h1>
 
-        {% for status, advices in groupedAdvices %}
-            <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
-            <div class="rounded-lg shadow-lg bg-white my-3">
-                <table class="table-auto w-full mb-4">
-                    <thead class=" bg-indigo-100 border-indigo-500 border-b">
-                    <tr>
-                        <th class="text-start px-2 py-1 text-xs">Title</th>
-                        <th class="text-start px-2 py-1 text-xs">Description</th>
-                        <th class="text-start px-2 py-1 text-xs">createdAt</th>
-                        <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
-                        <th class="text-start px-2 py-1 text-xs">isPublic</th>
-                        <th class="text-start px-2 py-1 text-xs">actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for advice in advices %}
-                        <tr class="text-center border-b text-sm text-gray-600">
-                            <td class="px-4 py-2">{{ advice.title }}</td>
-                            <td class="px-4 py-2">{{ advice.description }}</td>
-                            <td class="px-4 py-2">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td class="px-4 py-2">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
-                            <td class="px-4 py-2">
-                                {% if advice.isPublic %}
-                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
-                                Yes
-                          
-                            </span>
-                                {% else %}
-                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
-                                No
-                            
-                            </span>
-                                {% endif %}
-                            </td>
-                            <td class="px-4 py-2 flex justify-center">
-                                <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
-                                        type="button"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                                    show
-                                </button>
-                                <button onclick="location.href='{{ path('app_advice_edit', {'id': advice.id}) }}'"
-                                        type="button"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    edit
-                                </button>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <p class="text-lg text-red-500">No advices found</p>
-        {% endfor %}
+    <section class="forum">
+        <h1 class="text-2xl font-bold mb-4">Demandes de conseils</h1>
 
-        <button onclick="location.href='{{ path('app_advice_new') }}'" type="button"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">New
-        </button>
-    </div>
+        <div id="results">
+            {% for status, advices in groupedAdvices %}
+                <h2>{{ status }} :</h2>
+                {% for advice in advices %}
+                    <div id="conseil">
+                        <div class="img-container"><img src="/images/plante1.jpg" alt=""></div>
+                        <div class="infos-box">
+                            <div class="infos-container">
+                                <div class="infos-box">
+                                    <div class="info h3">
+                                        <h3>{{ advice.title }}</h3>
+                                    </div>
+                                    <div class="infos-sub-box">
+                                        <div class="info">
+                                            <p id="name">{{ advice.particular ? advice.particular.FullName : '' }}</p>
+                                        </div>
+                                        ・
+                                        <div class="info">
+                                            <p id="date">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</p>
+                                        </div>
+                                        ・
+                                        <div class="info">
+                                            {% if advice.isPublic %}
+                                                    <p id="status2" style="color: green">Public</p>
+                                            {% else %}
+                                                    <p id="status2" style="color: red">Privée</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
+                                type="button"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                            show
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}
+
+{#
+{% if is_granted('ROLE_PARTICULAR') %}
+    <a href="{{ path('app_appointment_index') }}"
+       class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">Retour à la liste</a>
+
+    <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}"
+       class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
+
+    <div class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md">
+        {{ include('appointment/_delete_form.html.twig') }}
+    </div>
+{% endif %}
+
+        {% if is_granted('ROLE_BOTANIST') %}
+            {% if appointment.status == "En attente" %}
+                <a href="{{ path('app_botanist_appointments') }}">Retour à la liste</a>
+                <a class="btn btn-primary" href="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">Prendre
+                    en charge le rendez-vous</a>
+            {% elseif appointment.status == "En cours" %}
+                <a href="{{ path('app_botanist_incoming_appointment') }}">Retour à la liste</a>
+                <a class="btn btn-danger"
+                   href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}">Annuler</a>
+                <a class="btn btn-primary"
+                   href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">Terminer</a>
+            {% endif %}
+        {% endif %}#}

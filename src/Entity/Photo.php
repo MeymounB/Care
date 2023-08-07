@@ -15,7 +15,7 @@ class Photo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $photo;
     // Temporaire, le temps d'ajouter le service de gestion des images
     #[ORM\Column(length: 255, nullable: true)]
