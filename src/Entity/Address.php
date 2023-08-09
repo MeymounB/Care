@@ -18,8 +18,8 @@ class Address
     #[ORM\Column(length: 255)]
     private ?string $street = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $zipCode = null;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $zipCode = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -111,6 +111,6 @@ class Address
 
     public function __toString(): string
     {
-        return $this->street.' '.$this->zipCode.' '.$this->city;
+        return $this->street . ' ' . $this->zipCode . ' ' . $this->city;
     }
 }
