@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\Particular;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
 use App\Repository\StatusRepository;
+use App\Service\AdviceService;
 use App\Service\CommentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,20 +20,22 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/advice')]
 class AdviceController extends AbstractController
 {
-    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
-    public function index(AdviceRepository $adviceRepository): Response
-    {
-        $advices = $adviceRepository->findAll();
+    private $adviceService;
 
-        // Group advices by status
-        $groupedAdvices = [];
-        foreach ($advices as $advice) {
-            $statusName = $advice->getStatus()->getName();
-            if (!isset($groupedAdvices[$statusName])) {
-                $groupedAdvices[$statusName] = [];
-            }
-            $groupedAdvices[$statusName][] = $advice;
+    public function __construct(AdviceService $adviceService)
+    {
+        $this->adviceService = $adviceService;
+    }
+
+    #[Route('/', name: 'app_advice_index', methods: ['GET'])]
+    public function index(): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
         }
+        $groupedAdvices = $this->adviceService->getAdvicesByUser($user->getId());
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,

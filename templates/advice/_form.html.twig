@@ -21,12 +21,12 @@
         <div class="fieldset-container">
             <fieldset>
                 {{ form_label(form.title, 'Titre') }}
-                {{ form_widget(form.title) }}
+                {{ form_row(form.title) }}
             </fieldset>
             <fieldset class="plantes-selector">
 {#                {{ form_label(form.plants, 'Sélectionnez vos plantes :') }}#}
 {#                {{ form_widget(form.plants) }}#}
-                <img src="/images/fleche.png" alt="">
+{#                <img src="{{ asset('images/fleche.png') }}" alt="">#}
                 <ul id="myDropdown">
                     <li>
                         <input type="checkbox" id="plantes1" value="plantes1">
@@ -44,7 +44,7 @@
             {{ form_label(form.description, 'Description du problème :') }}
             {{ form_widget(form.description) }}
         </fieldset>
-        <button id="button" value="submit" type="button" class="btn btn-secondary">Créer le post</button>
+        <button id="button" value="submit" type="button" class="btn btn-secondary">Publier la demande</button>
         {{ form_end(form) }}
     </div>
 </section>

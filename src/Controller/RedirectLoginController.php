@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
-class redirectLoginController implements AuthenticationSuccessHandlerInterface
+class RedirectLoginController implements AuthenticationSuccessHandlerInterface
 {
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
     {
         $user = $token->getUser();
 
         if ($user instanceof Botanist) {
-            return new RedirectResponse('/admin'); // TODO mettre vers les bonnes url une fois créé
+            return new RedirectResponse('/dashboard');
         } elseif ($user instanceof Particular) {
             return new RedirectResponse('/admin'); // TODO mettre vers les bonnes url une fois créé
         } elseif ($user instanceof Admin) {

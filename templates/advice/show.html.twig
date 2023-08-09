@@ -25,13 +25,13 @@
             <div class="write-answer">
                 {{ form_start(form) }}
                 <fieldset>
-                    <img src="/images/jardinnier.jpg" alt="Photo de profil">
+                    <img src="{{ asset('images/jardinnier.jpg') }}" alt="Photo de profil">
                     {{ form_widget(form.content) }}
                 </fieldset>
                 <button type="submit"
                         class="btn-sm bg-indigo-500">
                     <p>Répondre</p>
-                    <img src="{{ asset("/images/right-arrow-white.png") }}" alt="Fèche">
+                    <img src="{{ asset("images/right-arrow-white.png") }}" alt="Fèche">
                 </button>
                 {{ form_end(form) }}
             </div>
@@ -100,18 +100,22 @@
             {% endif %}
         </div>
         <div class="mt-5">
-            <a href="{{ path('app_advice_index') }}"
-               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">back to list</a>
 
+            {% if app.user == advice.particular %}
             <a href="{{ path('app_advice_edit', {'id': advice.id}) }}"
-               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">edit</a>
+               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
+            {% endif %}
 
+            {% if is_granted('ROLE_PARTICULAR') %}
+                <a href="{{ path('app_advice_index') }}">Retour</a>
 
-            <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
-                <button id="delete-button" class="btn">Delete</button>
-            </form>
-
+                <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
+                    <button id="delete-button" class="btn">Delete</button>
+                </form>
+            {% else %}
+                <a href="{{ path('app_botanist_list_all_advice') }}">Retour</a>
+            {% endif %}
         </div>
     </section>
 

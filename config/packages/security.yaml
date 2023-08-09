@@ -15,7 +15,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
+            lazy: false
             provider: app_user_provider
             user_checker: App\Security\UserChecker
             form_login:
@@ -23,7 +23,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                success_handler: App\Controller\redirectLoginController
+                success_handler: App\Controller\RedirectLoginController
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -37,6 +37,10 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_PARTICULAR: ROLE_PARTICULAR
+        ROLE_BOTANIST: ROLE_BOTANIST
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'class': 'form-auth'}}) }}
     <h2 class="title">Je suis un Botaniste</h2>
     <div class="form-half">
         <div class="form-field">
@@ -34,6 +34,10 @@
     <div class="form-field">
         {{ form_label(form.cellphone) }}
         {{ form_widget(form.cellphone) }}
+    </div>
+    <div class="form-field">
+        {{ form_label(form.certif) }}
+        {{ form_widget(form.certif) }}
     </div>
     <div class="form-field form-cgu">
         {{ form_widget(form.agreeTerms) }}

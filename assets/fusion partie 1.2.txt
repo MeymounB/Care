@@ -4,8 +4,7 @@
 - advice/new : ajouter le selecteur de plante
 - advice/show : corriger le problème de Delete alors qu'on est pas propriété du commentaire
 - plant/edit : condition à faire pour le bouton "edit" (actuellement ajouter une plante) 
-- botanist/recent_advice activité récente (forum mais filtré par "participé")
-
+- botanist/recent_advice : activité récente (forum mais filtré par "participé")
 
 //////////////////////// Ajouté : 
 
