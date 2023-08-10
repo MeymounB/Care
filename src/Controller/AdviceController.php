@@ -108,7 +108,7 @@ class AdviceController extends AbstractController
     #[Route('/{id}', name: 'app_advice_delete', methods: ['DELETE'])]
     public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 
