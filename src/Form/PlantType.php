@@ -33,31 +33,31 @@ class PlantType extends AbstractType
             ->add('photos', FileType::class, [
                 'mapped' => false,
                 'multiple' => true,
-				'attr' => [
-					'style' => 'display: none;'
-				],
-	            'label_attr' => [
-					'style' => 'display: none;'
-				],
-                'constraints' => [
-					new All([
-						'constraints' => [
-							new File([
-								'maxSize' => '1024k',
-								'mimeTypes' => [
-									'image/jpeg',
-									'image/png',
-								],
-								'mimeTypesMessage' => 'Please upload a valid image',
-							]),
-						]
-					]),
-	                new Count([
-		                'max' => 3,
-		                'maxMessage' => 'Vous ne pouvez pas ajouter plus de 3 photos',
-	                ])
+                'attr' => [
+                    'style' => 'display: none;',
                 ],
-	            'error_bubbling' => true,
+                'label_attr' => [
+                    'style' => 'display: none;',
+                ],
+                'constraints' => [
+                    new All([
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '1024k',
+                                'mimeTypes' => [
+                                    'image/jpeg',
+                                    'image/png',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid image',
+                            ]),
+                        ],
+                    ]),
+                    new Count([
+                        'max' => 3,
+                        'maxMessage' => 'Vous ne pouvez pas ajouter plus de 3 photos',
+                    ]),
+                ],
+                'error_bubbling' => true,
             ]);
     }
 

@@ -43,10 +43,6 @@ class PlantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $certifData = $form->get('photos')->getData();
 
-			if($form->getErrors()->current()) {
-				dd($form->getErrors()->current());
-			}
-
             if ($certifData) {
                 foreach ($certifData as $key => $certif) {
                     $currentTime = time();
