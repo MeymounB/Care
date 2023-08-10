@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Plant;
-use App\Entity\User;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
@@ -49,9 +47,9 @@ class PlantController extends abstractController
 
 	        if ($certifData) {
 
-				foreach ($certifData as $certif) {
+				foreach ($certifData as $key => $certif) {
 					$currentTime = time();
-					$newFilename = 'Photo_'.$this->getUser()->getFullName().'_'.$currentTime;
+					$newFilename = 'photo_'.$key.'_'.$this->getUser()->getFullName().'_'.$plant->getName().'_'.$currentTime;
 					$safeFilename = $this->slugger->slug($newFilename).'.'.$certif->guessExtension();
 
 					try {
@@ -72,6 +70,7 @@ class PlantController extends abstractController
 					$entityManager->persist($photo);
 				}
 	        }
+			$plant->setParticular($this->getUser());
 
 			$entityManager->persist($plant);
 
