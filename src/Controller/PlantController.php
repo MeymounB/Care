@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
-class PlantController extends abstractController
+class PlantController extends AbstractController
 {
     public function __construct(private SluggerInterface $slugger)
     {
