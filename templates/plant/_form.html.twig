@@ -7,7 +7,6 @@
                 <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
             </label>
             <span>Ajouter une image</span>
-            {{ form_row(form.photos) }}
 {#            {{ form_widget(form.image, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'onchange': 'handleFileSelect(event)' } }) }}#}
         </fieldset>
 
@@ -31,7 +30,6 @@
             {% from "parts/error.html.twig" import form_error %}
             {{ form_error(error.message) }}
         {% endif %}
-
 
         {{ form_end(form) }}
     </div>

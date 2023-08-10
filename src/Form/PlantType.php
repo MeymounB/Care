@@ -19,12 +19,12 @@ class PlantType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-	            "label" => "Nom",
+                'label' => 'Nom',
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
                     'rows' => 10,
-	                "placeholder" => "ex : Ma jolie rose violette que j'ai adopté en Janvier :)",
+                    'placeholder' => "ex : Ma jolie rose violette que j'ai adopté en Janvier :)",
                 ],
             ])
             ->add('species', TextType::class, [

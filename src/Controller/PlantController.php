@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Plant;
+use App\Entity\User;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,14 +13,16 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
 class PlantController extends abstractController
 {
-	public function __construct(private SluggerInterface $slugger)
-	{
-	}
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
+
     #[Route('/', name: 'app_plant_index', methods: ['GET'])]
     public function index(PlantRepository $plantRepository): Response
     {
@@ -39,51 +42,50 @@ class PlantController extends abstractController
         $form = $this->createForm(PlantType::class, $plant);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $certifData = $form->get('photos')->getData();
 
-	        $certifData = $form->get('photos')->getData();
+			if($form->getErrors()->current()) {
+				dd($form->getErrors()->current());
+			}
 
+            if ($certifData) {
+                foreach ($certifData as $key => $certif) {
+                    $currentTime = time();
+                    $newFilename = 'photo_'.$key.'_'.$this->getUser()->getFullName().'_'.$plant->getName().'_'.$currentTime;
+                    $safeFilename = $this->slugger->slug($newFilename).'.'.$certif->guessExtension();
 
-	        if ($certifData) {
+                    try {
+                        $certif->move(
+                            $this->getParameter('photos_directory'),
+                            $safeFilename
+                        );
+                    } catch (FileException $e) {
+                        // ... handle exception if something happens during file upload
+                    }
 
-				foreach ($certifData as $key => $certif) {
-					$currentTime = time();
-					$newFilename = 'photo_'.$key.'_'.$this->getUser()->getFullName().'_'.$plant->getName().'_'.$currentTime;
-					$safeFilename = $this->slugger->slug($newFilename).'.'.$certif->guessExtension();
+                    $photo = new Photo();
 
-					try {
-						$certif->move(
-							$this->getParameter('photos_directory'),
-							$safeFilename
-						);
-					} catch (FileException $e) {
-						// ... handle exception if something happens during file upload
-					}
+                    $photo->setPhoto($safeFilename);
 
-					$photo = new Photo();
+                    $plant->addPhoto($photo);
 
-					$photo->setPhoto($safeFilename);
+                    $entityManager->persist($photo);
+                }
+            }
+            $plant->setParticular($this->getUser());
 
-					$plant->addPhoto($photo);
+            $entityManager->persist($plant);
 
-					$entityManager->persist($photo);
-				}
-	        }
-			$plant->setParticular($this->getUser());
-
-			$entityManager->persist($plant);
-
-			$entityManager->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
         }
 
-
         return $this->renderForm('plant/new.html.twig', [
             'plant' => $plant,
             'form' => $form,
-	        'error' => $form->getErrors()->current(),
+            'error' => $form->getErrors()->current(),
         ]);
     }
 

@@ -85,7 +85,7 @@ class RegistrationController extends AbstractController
                         // ... handle exception if something happens during file upload
                     }
 
-					$user->setIsVerified(true);
+                    $user->setIsVerified(true);
 
                     $certificate = new Certificate();
 
