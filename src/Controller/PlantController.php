@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Particular;
 use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Form\PlantType;
@@ -33,7 +34,7 @@ class PlantController extends AbstractController
     }
 
     #[Route('/new', name: 'app_plant_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Particular $user): Response
     {
         $plant = new Plant();
 
@@ -46,7 +47,7 @@ class PlantController extends AbstractController
             if ($certifData) {
                 foreach ($certifData as $key => $certif) {
                     $currentTime = time();
-                    $newFilename = 'photo_'.$key.'_'.$this->getUser()->getFullName().'_'.$plant->getName().'_'.$currentTime;
+                    $newFilename = 'photo_'.$key.'_'.$user->getFullName().'_'.$plant->getName().'_'.$currentTime;
                     $safeFilename = $this->slugger->slug($newFilename).'.'.$certif->guessExtension();
 
                     try {
