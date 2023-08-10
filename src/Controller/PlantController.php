@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Plant;
-use App\Entity\User;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,7 +12,6 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
