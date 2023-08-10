@@ -106,6 +106,7 @@ class PlantController extends AbstractController
         return $this->renderForm('plant/edit.html.twig', [
             'plant' => $plant,
             'form' => $form,
+            'error' => $form->getErrors()->current(),
         ]);
     }
 
