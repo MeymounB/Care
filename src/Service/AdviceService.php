@@ -36,6 +36,29 @@ class AdviceService
         return $this->groupAndSortAdvices($advices);
     }
 
+    public function getAdvicesByBotanist(User $user, $limitResults = 0): array
+    {
+        $adviceIds = $this->getAdviceIdsFromUserComments($user);
+
+        $criteria = ['id' => $adviceIds];
+        $orderBy = [];  // Ajoutez ici les critères de tri si nécessaire
+
+        if ($limitResults == 0) {
+            return $this->adviceRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->adviceRepository->findBy($criteria, $orderBy, $limitResults);
+        }
+    }
+
+    public function countAdvicesByBotanist(User $user): int
+    {
+        $adviceIds = $this->getAdviceIdsFromUserComments($user);
+
+        $criteria = ['id' => $adviceIds];
+
+        return $this->adviceRepository->count($criteria);
+    }
+
     private function getAdviceIdsFromUserComments(User $user): array
     {
         $userId = $user->getId();

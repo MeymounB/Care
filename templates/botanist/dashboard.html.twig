@@ -1,75 +1,52 @@
-{# <h1>Dashboard Botanist</h1>
-
-<button onclick="location.href='{{ path('app_botanist_list_all_advice') }}'"
-        type="button"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-    Voir toutes les demandes de conseils
-</button>
-<button onclick="location.href='{{ path('app_botanist_list_recent_advice') }}'"
-        type="button"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-    Activité récente
-</button>
-<button onclick="location.href='{{ path('app_botanist_appointments') }}'"
-        type="button"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-    Nouveaux rendez-vous disponibles
-</button>
-<button onclick="location.href='{{ path('app_botanist_incoming_appointment') }}'"
-        type="button"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-    Gestion de vos rendez-vous
-</button> #}
-
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Accueil{% endblock %}
 {% block body %}
 
     <section class="dashboard-botaniste">
-		<h2>Bienvenue sur votre Dashboard, <span>Black NextGen</span></h2>
+        <h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_botanist_appointments') }}"><span>{{ app.user }}</span></a>
+        </h2> {# TODO: mettre le lien vers le profil #}
 
-		<div class="top-banner">
-			<div class="take-rdv">
-				<h3><a href="/">Voir les demandes de rendez-vous disponibles</a></h3>
-				<div class="rdvs">
-					<a href="/" class="box">
-						<p>Date</p>
-						・
-						<p>Titre</p>
-						・
-						<p>Présentiel</p>
-					</a>
-					<a href="/" class="box">
-						<p>Date</p>
-						・
-						<p>Titre</p>
-						・
-						<p>Distanciel</p>
-					</a>
-				</div>
-			</div>
-			<div class="statisique">
-				<div>
-					<h3>Mes statistiques</h3>
-					<div>
-						<p>Rendez-vous pris</p>
-						<p>0</p>
-					</div>
-					<div>
-						<p>Conseils donnés</p>
-						<p>1</p>
-					</div>
-				</div>
+        <div class="top-banner">
+            <div class="take-rdv">
+                <h3><a href="{{ path('app_botanist_appointments') }}">Voir les demandes de rendez-vous disponibles</a>
+                </h3>
+                <div class="rdvs">
+                    {% for appointment in appointments %}
+                        <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}" class="box">
+                            <p>{{ appointment.title }}</p>
+                            ・
+                            {% if appointment.isPresential %}
+                                <p>Présentiel</p>
+                            {% else %}
+                                <p>En ligne</p>
+                            {% endif %}
+                            ・
+                            <p>{{ appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="statisique">
+                <div>
+                    <h3>Mes statistiques</h3>
+                    <div>
+                        <p>Rendez-vous pris</p>
+                        <p>{{ appointment_count }}</p>
+                    </div>
+                    <div>
+                        <p>Conseils donnés</p>
+                        <p>{{ advice_count }}</p>
+                    </div>
+                </div>
 
-				<a href="/">Accéder à mon profil</a>
-			</div>
-		</div>
+                <a href="/">Accéder à mon profil</a>
+            </div>
+        </div>
 
-		<div class="bottom-banner">
-			<div class="left">
-				<div class="historique">
+        <div class="bottom-banner">
+            <div class="left">
+                {# <div class="historique">
 					<h3>Gardiennage</h3>
 					<div class="box-container">
 						<a href="/" class="box">
@@ -81,109 +58,57 @@
 							<p>Vos demandes de conseils</p>
 						</a>
 					</div>
-				</div>
+				</div> #}
 
-				<div class="a-venir">
-					<div class="top">
-						<h3>Rendez-vous à venir</h3>
-						<a href="/">Voir tous
-							<img src="/images/right-arrow.png" alt="">
-						</a>
-					</div>
-					<div class="rdvs">
-						<a href="/" class="box">
-							<p>29/08/2023</p>
-							・
-							<p>Présentiel</p>
-							・
-							<p>20h30</p>
-						</a>
-						<a href="/" class="box">
-							<p>29/08/2023</p>
-							・
-							<p>Distanciel</p>
-							・
-							<p>20h30</p>
-						</a>
-						<a href="/" class="box">
-							<p>29/08/2023</p>
-							・
-							<p>Présentiel</p>
-							・
-							<p>20h30</p>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="recent">
-				<div class="top">
-					<h3>Activités récentes</h3>
-					<a href="/">Voir toutes
-						<img src="/images/right-arrow.png" alt="">
-					</a>
-				</div>
+                <div class="a-venir">
+                    <div class="top">
+                        <h3>Rendez-vous à venir</h3>
+                        <a href="{{ path('app_botanist_incoming_appointment') }}">Voir tous
+                            <img src={{ asset('images/right-arrow.png') }}>
+                        </a>
+                    </div>
+                    <div class="rdvs">
+                        {% for incomming_appointment in incomming_appointments %}
+                            <a href="{{ path('app_appointment_show', {'id': incomming_appointment.id}) }}" class="box">
+                                <p>{{ incomming_appointment.title }}</p>
+                                ・
+                                {% if incomming_appointment.isPresential %}
+                                    <p>Présentiel</p>
+                                {% else %}
+                                    <p>En ligne</p>
+                                {% endif %}
+                                ・
+                                <p>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="recent">
+                <div class="top">
+                    <h3>Activités récentes</h3>
+                    <a href="{{ path('app_botanist_list_recent_advice') }}">Voir toutes
+                        <img src={{ asset('images/right-arrow.png') }}>
+                    </a>
+                </div>
 
-				<div class="activities">
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>Titre</p>
-						・
-						<p>Privé</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-					<a href="/" class="activity">
-						<p>Black NextGen</p>
-						・
-						<p>HAHAHAHAHAHA</p>
-						・
-						<p>Public</p>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
-    
-    
+                <div class="activities">
+                    {% for advice in advices %}
+                        <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="activity">
+                            <p>advice.title</p>
+                            ・
+                            {% if advice.isPublic %}
+                                <p>Public</p>
+                            {% else %}
+                                <p>Privé</p>
+                            {% endif %}
+                            ・
+                            <p>{{ advice.createdAt|date('d-m-Y | H:i') }}</p>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
 {% endblock %}

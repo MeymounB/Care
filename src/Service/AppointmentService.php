@@ -27,12 +27,39 @@ class AppointmentService
         return $this->groupAppointmentsByStatus($appointments);
     }
 
+    public function getPendingAppointments($limitResults = 0): array
+    {
+        if ($limitResults == 0) {
+            return $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC']);
+        } else {
+            return $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC'], $limitResults);
+        }
+    }
+
+    public function countPendingAppointments(): int
+    {
+        return $this->appointmentRepository->count(['status' => 45]);
+    }
+
     public function getGroupedAppointmentsByBotanist(int $botanistId): array
     {
         $appointments = $this->appointmentRepository->findBy(['botanist' => $botanistId]);
 
         return $this->groupAppointmentsByStatus($appointments);
     }
+
+    public function getAppointmentsByBotanist(int $botanistId, $limitResults = 0): array
+    {
+        $criteria = ['botanist' => $botanistId];
+        $orderBy = ['plannedAt' => 'ASC'];
+
+        if ($limitResults == 0) {
+            return $this->appointmentRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->appointmentRepository->findBy($criteria, $orderBy, $limitResults);
+        }
+    }
+
 
     public function getGroupedAppointmentsByParticular(int $particularId): array
     {
