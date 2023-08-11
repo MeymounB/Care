@@ -16,12 +16,6 @@
 						<a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
 							<p>advice.title</p>
 							・
-							{% if advice.isPublic %}
-								<p>Public</p>
-							{% else %}
-								<p>Privé</p>
-							{% endif %}
-							・
 							<p>{{ advice.createdAt|date('d-m-Y | H:i') }}</p>
 						</a>
 					{% endfor %}
