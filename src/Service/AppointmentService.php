@@ -50,7 +50,19 @@ class AppointmentService
 
     public function getAppointmentsByBotanist(int $botanistId, $limitResults = 0): array
     {
-        $criteria = ['botanist' => $botanistId];
+        $criteria = ['botanist' => $botanistId, 'status' => 46];
+        $orderBy = ['plannedAt' => 'ASC'];
+
+        if ($limitResults == 0) {
+            return $this->appointmentRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->appointmentRepository->findBy($criteria, $orderBy, $limitResults);
+        }
+    }
+
+    public function getAppointmentsByIndividual(int $individualId, $limitResults = 0): array
+    {
+        $criteria = ['particular' => $individualId, 'status' => 46];
         $orderBy = ['plannedAt' => 'ASC'];
 
         if ($limitResults == 0) {

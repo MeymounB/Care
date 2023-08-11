@@ -36,8 +36,8 @@ class BotanistController extends AbstractController
         $incomming_appointments = $this->appointmentService->getAppointmentsByBotanist($user->getId(), 5);
         $appointments = $this->appointmentService->getPendingAppointments(5);
         $appointment_count = $this->appointmentService->countPendingAppointments();
-        $advices = $this->adviceService->getAdvicesByBotanist($user, 10);
-        $advice_count = $this->adviceService->countAdvicesByBotanist($user);
+        $advices = $this->adviceService->getRecentActivityByUser($user, 10);
+        $advice_count = $this->adviceService->countAdvicesByUser($user);
 
         return $this->render('botanist/dashboard.html.twig', [
             'incomming_appointments' => $incomming_appointments,

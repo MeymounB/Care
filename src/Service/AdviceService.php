@@ -36,7 +36,7 @@ class AdviceService
         return $this->groupAndSortAdvices($advices);
     }
 
-    public function getAdvicesByBotanist(User $user, $limitResults = 0): array
+    public function getRecentActivityByUser(User $user, $limitResults = 0): array
     {
         $adviceIds = $this->getAdviceIdsFromUserComments($user);
 
@@ -50,7 +50,7 @@ class AdviceService
         }
     }
 
-    public function countAdvicesByBotanist(User $user): int
+    public function countAdvicesByUser(User $user): int
     {
         $adviceIds = $this->getAdviceIdsFromUserComments($user);
 
@@ -90,6 +90,23 @@ class AdviceService
                     $groupedAdvices[$statusName] = [];
                 }
                 $groupedAdvices[$statusName][] = $advice;
+            }
+        }
+
+        return $groupedAdvices;
+    }
+
+    public function getAdvicesWaitingByUser(int $currentUserId)
+    {
+        $advices = $this->getGroupedAdvices(false);
+
+        $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $adviceUserId = $advice->getParticular()->getId();
+            $adviceStatus = $advice->getStatus();
+
+            if ($currentUserId != $adviceUserId && $adviceStatus == 'En attente') {
+                $groupedAdvices[] = $advice;
             }
         }
 
