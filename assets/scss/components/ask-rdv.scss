@@ -1,0 +1,160 @@
+.demande-rdv {
+	min-height: 100vh;
+
+	padding: 10vh 10vw;
+
+	@include vars.flexer(center, center, column);
+	gap: 40px;
+
+	.form-ajout {
+		@include vars.flexer(flex-start, center, column);
+
+		gap: 20px;
+
+		width: calc(100% - 10vw);
+		min-height: 60vh;
+
+		form {
+			border: 2px solid black;
+			border-radius: 25px;
+			@include vars.flexer(flex-start, center, column);
+			flex-wrap: wrap;
+			gap: vars.rem(30);
+			width: 100%;
+			padding: 5vh 5vw;
+
+			fieldset {
+				outline: none;
+				border: none;
+
+				@include vars.flexer(flex-start, center, column);
+
+				&.description {
+					width: 100%;
+				}
+			}
+
+			.fieldset-container {
+				@include vars.flexer(center, flex-start, row);
+				flex-wrap: wrap;
+				gap: vars.rem(30);
+
+				width: 100%;
+
+				.datetime-picker {
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					gap: 10px;
+					font-family: Arial, sans-serif;
+
+
+					input[type="date"],
+					select {
+						padding: 5px;
+						border: 1px solid #ccc;
+						border-radius: 5px;
+						font-size: 14px;
+					}
+
+					input[type="date"] {
+						min-width: 120px;
+					}
+
+					select {
+						appearance: none;
+						border: 1px solid transparent;
+						padding: 8px;
+						border-radius: 5px;
+						font-size: 14px;
+						cursor: pointer;
+						min-width: 80px;
+					}
+
+					select:hover {
+						background-color: #e0e0e0;
+					}
+
+					/* Style des options de sélection */
+					option {
+						padding: 8px;
+						font-size: 14px;
+					}
+
+					/* Style pour la date sélectionnée */
+					input[type="date"]::-webkit-calendar-picker-indicator {
+						filter: invert(1);
+						cursor: pointer;
+					}
+
+					/* Style pour le champ de date */
+					input[type="date"] {
+						background-color: vars.$white;
+					}
+				}
+			}
+
+			.place {
+				$primary-color: #007bff;
+				$border-color: #333;
+				@include vars.flexer(center, flex-start, row);
+				gap: 10px;
+				flex-wrap: wrap;
+
+				.filter-container {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+				}
+
+				input[type="radio"] {
+					display: none;
+					// Masquer la case à cocher par défaut
+				}
+
+				label {
+					position: relative;
+					cursor: pointer;
+				}
+
+				// Style personnalisé pour la case à cocher
+				label span {
+					display: inline-block;
+					position: relative;
+					padding-left: 25px;
+					// Espace pour afficher la case à cocher
+					cursor: pointer;
+				}
+
+				label span::before {
+					content: "";
+					position: absolute;
+					left: 0;
+					top: 2px;
+					width: 18px;
+					height: 18px;
+					border: 2px solid $border-color;
+					border-radius: 3px;
+					background-color: #fff;
+				}
+
+				// Style personnalisé pour la case cochée
+				input[type="radio"]:checked+span::before {
+					background-color: $primary-color;
+					// Couleur de fond lorsque la case est cochée
+					border: 2px solid $primary-color;
+					// Couleur de bordure lorsque la case est cochée
+				}
+
+				// Style du texte lorsque la case est cochée
+				input[type="radio"]:checked+span {
+					color: $primary-color;
+				}
+			}
+
+			button {
+				align-self: end;
+			}
+		}
+	}
+}
