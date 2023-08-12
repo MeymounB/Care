@@ -44,7 +44,6 @@
     <div class="mt-5">
         {% if is_granted('ROLE_PARTICULAR') %}
             <a href="{{ path('app_appointment_index') }}"
-               class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700">Retour à la liste</a>
 
             <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}"
                class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
@@ -56,11 +55,9 @@
 
         {% if is_granted('ROLE_BOTANIST') %}
             {% if appointment.status == "En attente" %}
-                <a href="{{ path('app_botanist_appointments') }}">Retour à la liste</a>
                 <a class="btn btn-primary" href="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">Prendre
                     en charge le rendez-vous</a>
             {% elseif appointment.status == "En cours" %}
-                <a href="{{ path('app_botanist_incoming_appointment') }}">Retour à la liste</a>
                 <a class="btn btn-danger"
                    href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}">Annuler</a>
                 <a class="btn btn-primary"
