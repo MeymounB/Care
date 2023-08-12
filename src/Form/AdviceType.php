@@ -30,7 +30,7 @@ class AdviceType extends AbstractType
                     'Non' => false,
                 ],
                 'expanded' => true,
-                'label' => 'Voulez vous rendre votre conseil soit :',
+                'label' => 'Voulez-vous rendre votre demande publique ?',
             ]);
     }
 
