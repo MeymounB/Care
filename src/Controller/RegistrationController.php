@@ -85,8 +85,6 @@ class RegistrationController extends AbstractController
                         // ... handle exception if something happens during file upload
                     }
 
-                    $user->setIsVerified(true);
-
                     $certificate = new Certificate();
 
                     $certificate->setTitle($user->getFullName().' - '.$currentTime);
