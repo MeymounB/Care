@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
@@ -34,7 +35,7 @@ class PlantController extends AbstractController
     }
 
     #[Route('/new', name: 'app_plant_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Particular $user): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] ?Particular $user): Response
     {
         $plant = new Plant();
 
