@@ -6,8 +6,8 @@
 parameters:
     mail_address: '%env(MAILER_ADDRESS)%'
     default_upload_folder: '%kernel.project_dir%/uploads'
-    certif_directory: '%default_upload_folder%/certifications'
-    photos_directory: '%default_upload_folder%/photos'
+    certificates_dir: '%default_upload_folder%/certifications'
+    photos_dir: '%default_upload_folder%/photos'
 
 services:
     # default configuration for services in *this* file
