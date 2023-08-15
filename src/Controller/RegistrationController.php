@@ -9,6 +9,7 @@ use App\Form\Registration\BotanistFormType;
 use App\Form\Registration\ParticularFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use App\Service\FileType;
 use App\Service\FileUploaderService;
 use App\Service\MfaService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,7 +73,7 @@ class RegistrationController extends AbstractController
                 $certifData = $form->get('certif')->getData();
 
                 if ($certifData) {
-                    $this->fileUploaderService->setType(\FileType::CERTIFICATE);
+                    $this->fileUploaderService->setType(FileType::CERTIFICATE);
 
                     $safeFilename = $this->fileUploaderService->getFilename(null, $user->getFullName(), $certifData);
 

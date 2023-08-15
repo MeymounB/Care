@@ -8,7 +8,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploaderService
 {
-    private ?\FileType $type = null;
+    private ?FileType $type = null;
 
     public function __construct(
         private readonly SluggerInterface $slugger,
@@ -16,7 +16,7 @@ class FileUploaderService
     ) {
     }
 
-    public function setType(\FileType $type): void
+    public function setType(FileType $type): void
     {
         $this->type = $type;
     }
@@ -50,8 +50,8 @@ class FileUploaderService
     private function getPrefixName(): string
     {
         return match ($this->type) {
-            \FileType::CERTIFICATE => 'document_certification',
-            \FileType::PHOTO => 'photo',
+            FileType::CERTIFICATE => 'document_certification',
+            FileType::PHOTO => 'photo',
         };
     }
 }

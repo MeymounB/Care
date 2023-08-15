@@ -9,6 +9,7 @@ use App\Form\PlantType;
 use App\Repository\PlantRepository;
 use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +48,7 @@ class PlantController extends AbstractController
 
             if ($certifData) {
                 foreach ($certifData as $key => $certif) {
-                    $this->fileUploaderService->setType(\FileType::PHOTO);
+                    $this->fileUploaderService->setType(FileType::PHOTO);
 
                     $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
 
