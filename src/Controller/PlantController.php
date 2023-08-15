@@ -7,9 +7,9 @@ use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
+use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/plant')]
 class PlantController extends AbstractController
 {
-    public function __construct(private SluggerInterface $slugger)
+    public function __construct(private SluggerInterface $slugger, private FileUploaderService $fileUploaderService)
     {
     }
 
@@ -45,20 +45,14 @@ class PlantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $certifData = $form->get('photos')->getData();
 
+
             if ($certifData) {
                 foreach ($certifData as $key => $certif) {
-                    $currentTime = time();
-                    $newFilename = 'photo_'.$key.'_'.$user->getFullName().'_'.$plant->getName().'_'.$currentTime;
-                    $safeFilename = $this->slugger->slug($newFilename).'.'.$certif->guessExtension();
+					$this->fileUploaderService->setType(\FileType::PHOTO);
 
-                    try {
-                        $certif->move(
-                            $this->getParameter('photos_directory'),
-                            $safeFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
-                    }
+					$safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
+
+					$this->fileUploaderService->upload($safeFilename, $certif);
 
                     $photo = new Photo();
 
@@ -75,7 +69,7 @@ class PlantController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_plant_index');
         }
 
         return $this->renderForm('plant/new.html.twig', [

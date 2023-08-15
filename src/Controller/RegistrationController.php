@@ -9,11 +9,11 @@ use App\Form\Registration\BotanistFormType;
 use App\Form\Registration\ParticularFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
+use App\Service\FileUploaderService;
 use App\Service\MfaService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
@@ -30,7 +30,7 @@ class RegistrationController extends AbstractController
     private VerifyEmailHelperInterface $verifyEmailHelper;
     private SluggerInterface $slugger;
 
-    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, SluggerInterface $slugger, private MfaService $mfaService)
+    public function __construct(EmailVerifier $emailVerifier, VerifyEmailHelperInterface $verifyEmailHelper, SluggerInterface $slugger, private MfaService $mfaService, private FileUploaderService $fileUploaderService)
     {
         $this->emailVerifier = $emailVerifier;
         $this->verifyEmailHelper = $verifyEmailHelper;
@@ -72,23 +72,16 @@ class RegistrationController extends AbstractController
                 $certifData = $form->get('certif')->getData();
 
                 if ($certifData) {
-                    $currentTime = time();
-                    $newFilename = 'Document_certification_'.$user->getFullName().'_'.$currentTime;
-                    $safeFilename = $this->slugger->slug($newFilename).'.'.$certifData->guessExtension();
+					$this->fileUploaderService->setType(\FileType::CERTIFICATE);
 
-                    try {
-                        $certifData->move(
-                            $this->getParameter('certif_directory'),
-                            $safeFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
-                    }
+					$safeFilename = $this->fileUploaderService->getFilename(null, $user->getFullName(), $certifData);
+
+					$this->fileUploaderService->upload($safeFilename['file'], $certifData);
 
                     $certificate = new Certificate();
 
-                    $certificate->setTitle($user->getFullName().' - '.$currentTime);
-                    $certificate->setCertificateFile($safeFilename);
+                    $certificate->setTitle($safeFilename['title']);
+                    $certificate->setCertificateFile($safeFilename['file']);
                     $user->addCertificate($certificate);
 
                     $entityManager->persist($certificate);
