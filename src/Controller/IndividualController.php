@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Particular;
 use App\Service\AdviceService;
 use App\Service\AppointmentService;
@@ -12,6 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndividualController extends abstractController
 {
+    private AdviceService $adviceService;
+    private AppointmentService $appointmentService;
+
     public function __construct(AdviceService $adviceService, AppointmentService $appointmentService)
     {
         $this->adviceService = $adviceService;

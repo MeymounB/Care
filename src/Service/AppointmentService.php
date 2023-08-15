@@ -29,7 +29,7 @@ class AppointmentService
 
     public function getPendingAppointments($limitResults = 0): array
     {
-        if ($limitResults == 0) {
+        if (0 == $limitResults) {
             return $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC']);
         } else {
             return $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC'], $limitResults);
@@ -53,7 +53,7 @@ class AppointmentService
         $criteria = ['botanist' => $botanistId, 'status' => 46];
         $orderBy = ['plannedAt' => 'ASC'];
 
-        if ($limitResults == 0) {
+        if (0 == $limitResults) {
             return $this->appointmentRepository->findBy($criteria, $orderBy);
         } else {
             return $this->appointmentRepository->findBy($criteria, $orderBy, $limitResults);
@@ -65,13 +65,12 @@ class AppointmentService
         $criteria = ['particular' => $individualId, 'status' => 46];
         $orderBy = ['plannedAt' => 'ASC'];
 
-        if ($limitResults == 0) {
+        if (0 == $limitResults) {
             return $this->appointmentRepository->findBy($criteria, $orderBy);
         } else {
             return $this->appointmentRepository->findBy($criteria, $orderBy, $limitResults);
         }
     }
-
 
     public function getGroupedAppointmentsByParticular(int $particularId): array
     {

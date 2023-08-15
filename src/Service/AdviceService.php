@@ -43,7 +43,7 @@ class AdviceService
         $criteria = ['id' => $adviceIds];
         $orderBy = [];  // Ajoutez ici les critères de tri si nécessaire
 
-        if ($limitResults == 0) {
+        if (0 == $limitResults) {
             return $this->adviceRepository->findBy($criteria, $orderBy);
         } else {
             return $this->adviceRepository->findBy($criteria, $orderBy, $limitResults);
@@ -105,7 +105,7 @@ class AdviceService
             $adviceUserId = $advice->getParticular()->getId();
             $adviceStatus = $advice->getStatus();
 
-            if ($currentUserId != $adviceUserId && $adviceStatus == 'En attente') {
+            if ($currentUserId != $adviceUserId && 'En attente' == $adviceStatus) {
                 $groupedAdvices[] = $advice;
             }
         }
