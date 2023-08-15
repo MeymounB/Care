@@ -45,14 +45,13 @@ class PlantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $certifData = $form->get('photos')->getData();
 
-
             if ($certifData) {
                 foreach ($certifData as $key => $certif) {
-					$this->fileUploaderService->setType(\FileType::PHOTO);
+                    $this->fileUploaderService->setType(\FileType::PHOTO);
 
-					$safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
+                    $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
 
-					$this->fileUploaderService->upload($safeFilename, $certif);
+                    $this->fileUploaderService->upload($safeFilename, $certif);
 
                     $photo = new Photo();
 

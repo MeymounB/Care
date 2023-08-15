@@ -72,11 +72,11 @@ class RegistrationController extends AbstractController
                 $certifData = $form->get('certif')->getData();
 
                 if ($certifData) {
-					$this->fileUploaderService->setType(\FileType::CERTIFICATE);
+                    $this->fileUploaderService->setType(\FileType::CERTIFICATE);
 
-					$safeFilename = $this->fileUploaderService->getFilename(null, $user->getFullName(), $certifData);
+                    $safeFilename = $this->fileUploaderService->getFilename(null, $user->getFullName(), $certifData);
 
-					$this->fileUploaderService->upload($safeFilename['file'], $certifData);
+                    $this->fileUploaderService->upload($safeFilename['file'], $certifData);
 
                     $certificate = new Certificate();
 
