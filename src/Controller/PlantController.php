@@ -7,7 +7,7 @@ use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
- use App\Service\FileType;
+use App\Service\FileType;
 use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,12 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/plant')]
 class PlantController extends AbstractController
 {
-    public function __construct(private SluggerInterface $slugger, private FileUploaderService $fileUploaderService)
+    public function __construct(private FileUploaderService $fileUploaderService)
     {
     }
 
