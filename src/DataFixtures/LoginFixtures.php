@@ -12,7 +12,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class LoginFixtures extends Fixture
 {
-    private $passwordHasher;
+    private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
@@ -27,7 +27,7 @@ class LoginFixtures extends Fixture
         $botanist = new Botanist();
         $botanist
             ->setEmail('botanist@verified.com')
-            ->setPassword($this->passwordHasher->hashPassword($botanist, '123456789'))
+            ->setPassword($this->passwordHasher->hashPassword($botanist, 'safeP@ssword123'))
             ->setFirstName('botanist')
             ->setLastName('verified')
             ->setAvatar('https://picsum.photos/200/300')
@@ -40,7 +40,7 @@ class LoginFixtures extends Fixture
         $particular = new Particular();
         $particular
             ->setEmail('particular@verified.com')
-            ->setPassword($this->passwordHasher->hashPassword($particular, '123456789'))
+            ->setPassword($this->passwordHasher->hashPassword($particular, 'safeP@ssword123'))
             ->setFirstName('particular')
             ->setLastName('verified')
             ->setAvatar('https://picsum.photos/200/300')
@@ -52,7 +52,7 @@ class LoginFixtures extends Fixture
         $admin = new Admin();
         $admin
             ->setEmail('admin@verified.com')
-            ->setPassword($this->passwordHasher->hashPassword($admin, '123456789'))
+            ->setPassword($this->passwordHasher->hashPassword($admin, 'safeP@ssword123'))
             ->setFirstName('admin')
             ->setLastName('verified')
             ->setAvatar('https://picsum.photos/200/300')

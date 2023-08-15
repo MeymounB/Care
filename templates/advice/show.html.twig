@@ -190,18 +190,16 @@
 
         <div class="mt-5">
 
+            {% if app.user == advice.particular %}
+            <a href="{{ path('app_advice_edit', {'id': advice.id}) }}"
+               class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
+            {% endif %}
 
             {% if is_granted('ROLE_PARTICULAR') %}
-                <a href="{{ path('app_advice_index') }}">back to list</a>
-
-                <a href="{{ path('app_advice_edit', {'id': advice.id}) }}">edit</a>
-
                 <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
                     <button id="delete-button" class="btn">Delete</button>
                 </form>
-            {% else %}
-                <a href="{{ path('app_botanist_list_all_advice') }}">back to list</a>
             {% endif %}
         </div>
     </div>

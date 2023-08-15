@@ -27,11 +27,7 @@ HTML
 - footer : parts/footer.html.twig
 
 
-//////////////////////// Manquant HTML : 
-
-- page d'accueil (connecté) + scss
-
-- botanist/dashbord.html.twig / + scss
+//////////////////////// Manquant HTML :
 
 [prendre la div depuis profil-user et faire un include dans profil-user depuis index.html.twig] - plant/index.html.twig 
 (nom / description / espece / date + bouton "show") + scss
@@ -49,6 +45,7 @@ HTML
 
 //////////////////////// Scss à modifier : 
 
+- demande de rdv 
 - ajout plant : plant/new.html.twig
 - profil : user/profile.html.twig
 - advice : advice/show.html.twig 

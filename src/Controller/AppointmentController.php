@@ -25,7 +25,13 @@ class AppointmentController extends AbstractController
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
     public function index(): Response
     {
-        $groupedAppointments = $this->appointmentService->getGroupedAppointments();
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $groupedAppointments = $this->appointmentService->getGroupedAppointmentsByParticular($user->getId());
 
         return $this->render('appointment/index.html.twig', [
             'groupedAppointments' => $groupedAppointments,

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Functional\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Faker\Factory;
 use Faker\Generator;
 
-ini_set('memory_limit', '1024M');
-
-class RegisterTest extends WebTestCase
+class RegisterControllerTest extends WebTestCase
 {
 	private Generator $faker;
 	protected function setUp(): void
@@ -24,21 +22,18 @@ class RegisterTest extends WebTestCase
 		$crawler = $client->request('GET', '/register');
 
 		$this->assertResponseIsSuccessful();
-
 		$form = $crawler->selectButton("S'inscrire")->form();
-
 		$password = $this->faker->password(8);
 
 		$form['particular_form[firstName]'] = $this->faker->firstName();
 		$form['particular_form[lastName]'] = $this->faker->lastName();
 		$form['particular_form[email]'] = $this->faker->email();
-		$form['particular_form[cellphone]'] = 123456789;
+		$form['particular_form[cellphone]'] = $this->faker->phoneNumber();
 		$form['particular_form[password][first]'] = $password;
 		$form['particular_form[password][second]'] = $password;
 		$form['particular_form[agreeTerms]'] = true;
 
 		$client->submit($form);
-
 		$this->assertResponseRedirects('/login');
 	}
 
@@ -48,7 +43,6 @@ class RegisterTest extends WebTestCase
 		$crawler = $client->request('GET', '/botanist');
 
 		$this->assertResponseIsSuccessful();
-
 		$form = $crawler->selectButton("S'inscrire")->form();
 
 		$password = $this->faker->password(8);
@@ -61,7 +55,6 @@ class RegisterTest extends WebTestCase
 		$form['botanist_form[agreeTerms]'] = true;
 
 		$client->submit($form);
-
 		$this->assertResponseRedirects('/login');
 	}
 }

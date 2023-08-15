@@ -156,3 +156,77 @@ $(document).ready(function () {
 		// Par exemple, vous pouvez utiliser une requête AJAX pour récupérer les résultats de recherche à partir d'un serveur.
 	});
 });
+
+
+// Scroll horizontal 
+// const content = document.getElementsByClassName('rdvs');
+
+// content.addEventListener('mousemove', (e) => {
+// 	const delta = e.clientX - window.innerWidth / 2;
+// 	content.scrollLeft += delta * 0.05; // Ajustez le facteur de vitesse selon vos préférences
+// });
+
+const rdvsContainer = document.querySelector('.rdvs');
+
+if (rdvsContainer) {
+	let isMouseDown = false;
+	let startX;
+	let scrollLeft;
+
+	rdvsContainer.addEventListener('mousedown', (e) => {
+		isMouseDown = true;
+		startX = e.pageX - rdvsContainer.offsetLeft;
+		scrollLeft = rdvsContainer.scrollLeft;
+	});
+
+	rdvsContainer.addEventListener('mouseleave', () => {
+		isMouseDown = false;
+	});
+
+	rdvsContainer.addEventListener('mouseup', () => {
+		isMouseDown = false;
+	});
+
+	rdvsContainer.addEventListener('mousemove', (e) => {
+		if (!isMouseDown) return;
+		e.preventDefault();
+		const x = e.pageX - rdvsContainer.offsetLeft;
+		const walk = (x - startX) * 3; // Ajustez la vitesse de défilement
+		rdvsContainer.scrollLeft = scrollLeft - walk;
+	});
+}
+
+
+// Demande de rendez-vous
+const datepicker = document.getElementById('datepicker');
+const hourSelect = document.getElementById('hour');
+const minuteSelect = document.getElementById('minute');
+
+// Obtenir la date actuelle et calculer la date dans 3 jours
+const now = new Date();
+const threeDaysLater = new Date(now);
+threeDaysLater.setDate(now.getDate() + 2);
+
+// Calculer la date dans 3 jours + 5 ans
+const threeDaysLaterFiveYears = new Date(threeDaysLater);
+threeDaysLaterFiveYears.setFullYear(threeDaysLater.getFullYear() + 5);
+
+// Configurer les valeurs min et max pour le datepicker
+datepicker.min = threeDaysLater.toISOString().split('T')[0];
+datepicker.max = threeDaysLaterFiveYears.toISOString().split('T')[0];
+
+// Générer les options pour les heures (8-20)
+for (let hour = 8; hour <= 20; hour++) {
+	const option = document.createElement('option');
+	option.value = hour;
+	option.textContent = hour.toString().padStart(2, '0');
+	hourSelect.appendChild(option);
+}
+
+// Générer les options pour les minutes (0-55 par tranche de 5)
+for (let minute = 0; minute <= 55; minute += 5) {
+	const option = document.createElement('option');
+	option.value = minute;
+	option.textContent = minute.toString().padStart(2, '0');
+	minuteSelect.appendChild(option);
+}

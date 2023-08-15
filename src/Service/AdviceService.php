@@ -8,8 +8,8 @@ use App\Repository\CommentRepository;
 
 class AdviceService
 {
-    private $adviceRepository;
-    private $commentRepository;
+    private AdviceRepository $adviceRepository;
+    private CommentRepository $commentRepository;
 
     public function __construct(AdviceRepository $adviceRepository, CommentRepository $commentRepository)
     {
@@ -17,11 +17,15 @@ class AdviceService
         $this->commentRepository = $commentRepository;
     }
 
-    public function getGroupedAdvices()
+    public function getGroupedAdvices($groupByStatus = false)
     {
         $advices = $this->adviceRepository->findAll();
 
-        return $this->groupAdvicesByStatus($advices);
+        if ($groupByStatus) {
+            return $this->groupAdvicesByStatus($advices);
+        } else {
+            return $advices;
+        }
     }
 
     public function getGroupedAdvicesByUser(User $user): array
@@ -30,6 +34,29 @@ class AdviceService
         $advices = $this->adviceRepository->findBy(['id' => $adviceIds]);
 
         return $this->groupAndSortAdvices($advices);
+    }
+
+    public function getRecentActivityByUser(User $user, $limitResults = 0): array
+    {
+        $adviceIds = $this->getAdviceIdsFromUserComments($user);
+
+        $criteria = ['id' => $adviceIds];
+        $orderBy = [];  // Ajoutez ici les critères de tri si nécessaire
+
+        if (0 == $limitResults) {
+            return $this->adviceRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->adviceRepository->findBy($criteria, $orderBy, $limitResults);
+        }
+    }
+
+    public function countAdvicesByUser(User $user): int
+    {
+        $adviceIds = $this->getAdviceIdsFromUserComments($user);
+
+        $criteria = ['id' => $adviceIds];
+
+        return $this->adviceRepository->count($criteria);
     }
 
     private function getAdviceIdsFromUserComments(User $user): array
@@ -46,6 +73,44 @@ class AdviceService
         }
 
         return $adviceIds;
+    }
+
+    public function getAdvicesByUser(int $currentUserId)
+    {
+        $advices = $this->getGroupedAdvices(false);
+
+        $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $statusName = $advice->getStatus()->getName();
+            $adviceUserId = $advice->getParticular()->getId();
+
+            // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
+            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
+                if (!isset($groupedAdvices[$statusName])) {
+                    $groupedAdvices[$statusName] = [];
+                }
+                $groupedAdvices[$statusName][] = $advice;
+            }
+        }
+
+        return $groupedAdvices;
+    }
+
+    public function getAdvicesWaitingByUser(int $currentUserId)
+    {
+        $advices = $this->getGroupedAdvices(false);
+
+        $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $adviceUserId = $advice->getParticular()->getId();
+            $adviceStatus = $advice->getStatus();
+
+            if ($currentUserId != $adviceUserId && 'En attente' == $adviceStatus) {
+                $groupedAdvices[] = $advice;
+            }
+        }
+
+        return $groupedAdvices;
     }
 
     private function groupAndSortAdvices(array $advices): array
