@@ -1,4 +1,4 @@
-{{ form_start(form, { 'attr': { 'class': 'w-full max-w-sm mx-auto mt-20 space-y-3' } }) }}
+{# {{ form_start(form, { 'attr': { 'class': 'w-full max-w-sm mx-auto mt-20 space-y-3' } }) }}
 <div class="rounded-md shadow-sm-space-y-px">
     {{ form_row(form.title, { 'label': 'Title', 'attr': { 'class': 'appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' } }) }}
 
@@ -12,4 +12,96 @@
     <button type="submit"
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md">{{ button_label|default('Save') }}</button>
 </div>
-{{ form_end(form) }}
+{{ form_end(form) }} #}
+
+<section class="demande-conseil">
+    <div class="form-conseil">
+        <h1>Demande de conseil en ligne</h1>
+        {{ form_start(form) }}
+        <div class="fieldset-container">
+            <fieldset>
+                {{ form_label(form.title, 'Titre') }}
+                {{ form_row(form.title) }}
+            </fieldset>
+            <fieldset class="plantes-selector">
+{#                {{ form_label(form.plants, 'Sélectionnez vos plantes :') }}#}
+{#                {{ form_widget(form.plants) }}#}
+{#                <img src="{{ asset('images/fleche.png') }}" alt="">#}
+                <ul id="myDropdown">
+                    <li>
+                        <input type="checkbox" id="plantes1" value="plantes1">
+                        <label for="plantes1">Plantes 1</label>
+                    </li>
+                    <!-- Répétez pour chaque plante -->
+                </ul>
+            </fieldset>
+            <fieldset>
+                {{ form_label(form.isPublic, 'Voulez-vous rendre votre demande publique ?') }}
+                {{ form_widget(form.isPublic) }}
+            </fieldset>
+        </div>
+        <fieldset class="description">
+            {{ form_label(form.description, 'Description du problème :') }}
+            {{ form_widget(form.description) }}
+        </fieldset>
+        <button id="button" value="submit" type="button" class="btn btn-secondary">Publier la demande</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+
+    {# <div class="historique">
+        <h2>Historique de vos demandes en ligne</h2>
+        <div class="status" id="status-1">
+            <p class="title">En cours</p>
+            <ul>
+                <li>
+                    <div class="box">
+                        <p>Date de création</p>
+                        <p>{{ Date }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Nom</p>
+                        <p>{{ Nom }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Plantes</p>
+                        <p>{{ plante }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Description</p>
+                        <p>{{ Description }}</p>
+                    </div>
+                    <div class="operations">
+                        <img src="/images/points.png" alt="operations">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="status" id="status-2">
+            <p class="title">Terminé</p>
+            <ul>
+                <li>
+                    <div class="box">
+                        <p>Date de création</p>
+                        <p>{{ Date }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Nom</p>
+                        <p>{{ Nom }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Plantes</p>
+                        <p>{{ plante }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Description</p>
+                        <p>{{ Description }}</p>
+                    </div>
+                    <div class="operations">
+                        <img src="/images/points.png" alt="operations">
+                    </div>
+                </li>
+                <!-- Répétez le bloc pour chaque élément de l'historique terminé -->
+            </ul>
+        </div>
+    </div> #}

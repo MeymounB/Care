@@ -20,7 +20,7 @@ class LoginTest extends WebTestCase
 
         $client->loginUser($testUser);
 
-        $client->request('GET', '/login');
-        $this->assertResponseRedirects('/register');
+        $client->request('GET', '/dashboard');
+        $this->assertResponseRedirects('http://localhost/dashboard/', 301);
     }
 }

@@ -2,17 +2,27 @@
 
 namespace App\Controller;
 
+use App\Entity\Particular;
+use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
+use App\Service\FileType;
+use App\Service\FileUploaderService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/plant')]
-class PlantController extends abstractController
+class PlantController extends AbstractController
 {
+    public function __construct(private FileUploaderService $fileUploaderService)
+    {
+    }
+
     #[Route('/', name: 'app_plant_index', methods: ['GET'])]
     public function index(PlantRepository $plantRepository): Response
     {
@@ -25,7 +35,7 @@ class PlantController extends abstractController
     }
 
     #[Route('/new', name: 'app_plant_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PlantRepository $plantRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] ?Particular $user): Response
     {
         $plant = new Plant();
 
@@ -33,14 +43,38 @@ class PlantController extends abstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $plantRepository->save($plant, true);
+            $certifData = $form->get('photos')->getData();
 
-            return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
+            if ($certifData) {
+                foreach ($certifData as $key => $certif) {
+                    $this->fileUploaderService->setType(FileType::PHOTO);
+
+                    $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
+
+                    $this->fileUploaderService->upload($safeFilename, $certif);
+
+                    $photo = new Photo();
+
+                    $photo->setPhoto($safeFilename);
+
+                    $plant->addPhoto($photo);
+
+                    $entityManager->persist($photo);
+                }
+            }
+            $plant->setParticular($this->getUser());
+
+            $entityManager->persist($plant);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_plant_index');
         }
 
         return $this->renderForm('plant/new.html.twig', [
             'plant' => $plant,
             'form' => $form,
+            'error' => $form->getErrors()->current(),
         ]);
     }
 
@@ -67,6 +101,7 @@ class PlantController extends abstractController
         return $this->renderForm('plant/edit.html.twig', [
             'plant' => $plant,
             'form' => $form,
+            'error' => $form->getErrors()->current(),
         ]);
     }
 

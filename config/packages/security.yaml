@@ -49,6 +49,7 @@ security:
         #- { path: ^/botanist, roles: ROLE_BOTANIST }
         #- { path: ^/admin, roles: ROLE_ADMIN }
         - { path: '^/verify/email', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/dashboard', roles: ROLE_USER }
 
 when@test:
     security:
