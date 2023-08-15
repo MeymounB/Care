@@ -51,12 +51,12 @@ class Address
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getZipCode(): ?int
     {
         return $this->zipCode;
     }
 
-    public function setZipCode(string $zipCode): static
+    public function setZipCode(int $zipCode): static
     {
         $this->zipCode = $zipCode;
 
@@ -111,6 +111,6 @@ class Address
 
     public function __toString(): string
     {
-        return $this->street . ' ' . $this->zipCode . ' ' . $this->city;
+        return $this->street.' '.$this->zipCode.' '.$this->city;
     }
 }
