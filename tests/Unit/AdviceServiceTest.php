@@ -4,6 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\Status;
 use App\Entity\User;
 use App\Repository\AdviceRepository;
 use App\Repository\CommentRepository;
@@ -40,4 +41,43 @@ class AdviceServiceTest extends TestCase
         $result = $this->adviceService->countAdvicesByUser($userMock);
         $this->assertEquals(2, $result);
     }
+
+    public function testGetGroupedAdvices() {
+        // Creating advice requests
+        $advice1 = new Advice();
+        $status1 = new Status();
+        $status1->setName('Pending');
+        $advice1->setStatus($status1);
+
+        $advice2 = new Advice();
+        $status2 = new Status();
+        $status2->setName('In Progress');
+        $advice2->setStatus($status2);
+
+        $advice3 = new Advice();
+        $status3 = new Status();
+        $status3->setName('Completed');
+        $advice3->setStatus($status3);
+
+        // Creating a mock for AdviceRepository
+        $this->adviceRepositoryMock->expects($this->exactly(2))
+            ->method('findAll')
+            ->willReturn([$advice1, $advice2, $advice3]);
+
+        // Testing the method with $groupByStatus = true
+        $groupedAdvices = $this->adviceService->getGroupedAdvices(true);
+
+        // Verifying if the advices are correctly grouped by status
+        $this->assertArrayHasKey('Pending', $groupedAdvices);
+        $this->assertArrayHasKey('In Progress', $groupedAdvices);
+        $this->assertArrayHasKey('Completed', $groupedAdvices);
+
+        // Testing the method with $groupByStatus without any parameter, thus not sorting by status
+        $allAdvices = $this->adviceService->getGroupedAdvices();
+
+        // Verifying that all advices are returned ungrouped
+        $this->assertCount(3, $allAdvices);
+        $this->assertSame([$advice1, $advice2, $advice3], $allAdvices);
+    }
+
 }
