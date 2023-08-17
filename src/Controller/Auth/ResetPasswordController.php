@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
@@ -169,8 +169,7 @@ class ResetPasswordController extends AbstractController
             ->context([
                 'resetToken' => $resetToken,
                 'requestUrl' => $appRequestPasswordUrl,
-            ])
-        ;
+            ]);
 
         $mailer->send($email);
 
