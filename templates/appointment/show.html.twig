@@ -3,7 +3,7 @@
 {% block title %}Appointment{% endblock %}
 
 {% block body %}
-    <h1 class="text-4xl mb-5">Appointment</h1>
+    {# <h1 class="text-4xl mb-5">Appointment</h1>
 
     <table class="table-auto bg-white rounded-lg overflow-hidden w-full shadow-lg">
         <tbody>
@@ -67,6 +67,27 @@
                    href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">Terminer</a>
             {% endif %}
         {% endif %}
-    </div>
+    </div> #}
+
+    <section class="detail-rdv" aria-labelledby="rdv-heading">
+		<div class="return"><a href="/">Retour à la liste</a></div>
+		<article class="appointment-details">
+			<h2 id="rdv-heading">Détails du Rendez-vous</h2>
+			<p><strong>Auteur :</strong> John Doe</p>
+			<p><strong>Titre :</strong> Réunion d'équipe</p>
+			<p class="description"><strong>Description :</strong> Réunion hebdomadaire pour discuter des
+				projets en cours.</p>
+			<p><strong>Date et Heure :</strong> 15/08/2023 à 10h00</p>
+			<p><strong>Pris en charge par :</strong> Jane Smith</p>
+			<p><strong>Présence :</strong> distanciel</p>
+			<p><strong>Lieu :</strong> <a
+					href="https://discord.com/channels/1063760210780495944/1124989604118921238"
+					aria-describedby="location-desc">Lien vers la réunion</a></p>
+			<div class="buttons">
+				<button>Edit</button>
+				<button>Delete</button>
+			</div>
+		</article>
+	</section>
 
 {% endblock %}
