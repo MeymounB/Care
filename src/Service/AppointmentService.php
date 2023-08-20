@@ -27,11 +27,49 @@ class AppointmentService
         return $this->groupAppointmentsByStatus($appointments);
     }
 
+    public function getPendingAppointments($limitResults = 0): array
+    {
+        if (0 == $limitResults) {
+            return $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC']);
+        } else {
+            return $this->appointmentRepository->findBy(['status' => 45], ['plannedAt' => 'ASC'], $limitResults);
+        }
+    }
+
+    public function countPendingAppointments(): int
+    {
+        return $this->appointmentRepository->count(['status' => 45]);
+    }
+
     public function getGroupedAppointmentsByBotanist(int $botanistId): array
     {
         $appointments = $this->appointmentRepository->findBy(['botanist' => $botanistId]);
 
         return $this->groupAppointmentsByStatus($appointments);
+    }
+
+    public function getAppointmentsByBotanist(int $botanistId, $limitResults = 0): array
+    {
+        $criteria = ['botanist' => $botanistId, 'status' => 46];
+        $orderBy = ['plannedAt' => 'ASC'];
+
+        if (0 == $limitResults) {
+            return $this->appointmentRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->appointmentRepository->findBy($criteria, $orderBy, $limitResults);
+        }
+    }
+
+    public function getAppointmentsByIndividual(int $individualId, $limitResults = 0): array
+    {
+        $criteria = ['particular' => $individualId, 'status' => 46];
+        $orderBy = ['plannedAt' => 'ASC'];
+
+        if (0 == $limitResults) {
+            return $this->appointmentRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->appointmentRepository->findBy($criteria, $orderBy, $limitResults);
+        }
     }
 
     public function getGroupedAppointmentsByParticular(int $particularId): array

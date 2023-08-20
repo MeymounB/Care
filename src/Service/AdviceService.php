@@ -36,6 +36,29 @@ class AdviceService
         return $this->groupAndSortAdvices($advices);
     }
 
+    public function getRecentActivityByUser(User $user, $limitResults = 0): array
+    {
+        $adviceIds = $this->getAdviceIdsFromUserComments($user);
+
+        $criteria = ['id' => $adviceIds];
+        $orderBy = [];  // Ajoutez ici les critères de tri si nécessaire
+
+        if (0 == $limitResults) {
+            return $this->adviceRepository->findBy($criteria, $orderBy);
+        } else {
+            return $this->adviceRepository->findBy($criteria, $orderBy, $limitResults);
+        }
+    }
+
+    public function countAdvicesByUser(User $user): int
+    {
+        $adviceIds = $this->getAdviceIdsFromUserComments($user);
+
+        $criteria = ['id' => $adviceIds];
+
+        return $this->adviceRepository->count($criteria);
+    }
+
     private function getAdviceIdsFromUserComments(User $user): array
     {
         $userId = $user->getId();
@@ -67,6 +90,23 @@ class AdviceService
                     $groupedAdvices[$statusName] = [];
                 }
                 $groupedAdvices[$statusName][] = $advice;
+            }
+        }
+
+        return $groupedAdvices;
+    }
+
+    public function getAdvicesWaitingByUser(int $currentUserId)
+    {
+        $advices = $this->getGroupedAdvices(false);
+
+        $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $adviceUserId = $advice->getParticular()->getId();
+            $adviceStatus = $advice->getStatus();
+
+            if ($currentUserId != $adviceUserId && 'En attente' == $adviceStatus) {
+                $groupedAdvices[] = $advice;
             }
         }
 

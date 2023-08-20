@@ -19,7 +19,7 @@ abstract class UserFormType extends AbstractType
         $builder
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
-                'label' => 'J\'accepte les conditions générales d\'utilisation',
+                'label' => 'En cochant cette case, j’accepte les conditions générales d’utilisation',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',

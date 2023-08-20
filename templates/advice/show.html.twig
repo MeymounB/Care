@@ -107,14 +107,10 @@
             {% endif %}
 
             {% if is_granted('ROLE_PARTICULAR') %}
-                <a href="{{ path('app_advice_index') }}">Retour</a>
-
                 <form id="delete-form" method="post" action="{{ path('app_advice_delete', {'id': advice.id}) }}">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ advice.id) }}">
                     <button id="delete-button" class="btn">Delete</button>
                 </form>
-            {% else %}
-                <a href="{{ path('app_botanist_list_all_advice') }}">Retour</a>
             {% endif %}
         </div>
     </section>
