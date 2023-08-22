@@ -113,7 +113,7 @@
             "php bin/console doctrine:fixtures:load --env=test --no-interaction"
         ],
         "compile": [
-            "app/console assets:install"
+            "php bin/console assets:install"
         ]
     },
     "conflict": {
