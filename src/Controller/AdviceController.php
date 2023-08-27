@@ -35,6 +35,7 @@ class AdviceController extends AbstractController
         if (!$user instanceof Particular) {
             throw $this->createAccessDeniedException('Access denied');
         }
+
         $groupedAdvices = $this->adviceService->getAdvicesByUser($user->getId());
 
         return $this->render('advice/index.html.twig', [
@@ -67,7 +68,7 @@ class AdviceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
+    #[Route('/show/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
     public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, Security $security, int $id): Response
     {
         $advice = $adviceRepository->find($id);
@@ -119,5 +120,21 @@ class AdviceController extends AbstractController
         }
 
         return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/own', name: 'app_advice_own', methods: ['GET'])]
+    public function get_own_advice(): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $groupedAdvices = $this->adviceService->getOwnAdviceByUser($user);
+
+        return $this->render('advice/index.html.twig', [
+            'groupedAdvices' => $groupedAdvices,
+        ]);
     }
 }
