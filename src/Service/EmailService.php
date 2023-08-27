@@ -3,22 +3,18 @@
 namespace App\Service;
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
 
 class EmailService
 {
     public function __construct(
-        private MailerInterface $mailer,
-        private ParameterBagInterface $params,
+        private MailerInterface $mailer
     ) {
     }
 
     public function create(string $receiverEmail): TemplatedEmail
     {
         return (new TemplatedEmail())
-            ->from(new Address($this->params->get('mail_address'), 'GreenCare'))
             ->to($receiverEmail);
     }
 
