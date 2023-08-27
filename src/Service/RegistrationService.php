@@ -113,7 +113,7 @@ class RegistrationService extends AbstractController
 
         $message->context([
             ...$context,
-            'username' => $firstName
+            'username' => $firstName,
         ]);
 
         $this->emailService->send($message);
