@@ -44,6 +44,7 @@ class AppointmentController extends AbstractController
     {
         $appointment = new Appointment();
 
+
         $defaultStatus = $statusRepository->findOneBy(['name' => 'En attente']);
         if (null !== $defaultStatus) {
             $appointment->setStatus($defaultStatus);
