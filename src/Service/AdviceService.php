@@ -161,6 +161,7 @@ class AdviceService
     public function getOwnAdviceByUser($user): array
     {
         $userId = $user->getId();
-        return $this->adviceRepository->findBy(['particular' => $userId]);
+        $advices = $this->adviceRepository->findBy(['particular' => $userId]);
+        return $this->groupAndSortAdvices($advices);
     }
 }
