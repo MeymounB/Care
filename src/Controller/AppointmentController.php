@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/appointment')]
 class AppointmentController extends AbstractController
 {
-    private $appointmentService;
+    private AppointmentService $appointmentService;
 
     public function __construct(AppointmentService $appointmentService)
     {
@@ -65,16 +65,20 @@ class AppointmentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'])]
-    public function show(Appointment $appointment): Response
+    public function show(int $id, AppointmentService $service): Response
     {
+        $appointment = $service->getById($id);
+
         return $this->render('appointment/show.html.twig', [
             'appointment' => $appointment,
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
+    public function edit(Request $request, int $id, AppointmentService $service, AppointmentRepository $appointmentRepository): Response
     {
+        $appointment = $service->getById($id);
+
         $form = $this->createForm(AppointmentType::class, $appointment);
         $form->handleRequest($request);
 
@@ -91,9 +95,11 @@ class AppointmentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_appointment_delete', methods: ['POST'])]
-    public function delete(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
+    public function delete(Request $request, int $id, AppointmentService $service, AppointmentRepository $appointmentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        $appointment = $service->getById($id);
+
+        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 
