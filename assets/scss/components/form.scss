@@ -1,0 +1,74 @@
+@use "../utils" as vars;
+
+.form-auth {
+  width: 100%;
+  max-width: vars.rem(600);
+  @include vars.flexer(center, center, column);
+  border: 1px solid #00000003;
+  border-radius: 10px;
+  box-shadow: 0 0 20px 1px #0000001A;
+  padding: vars.rem(50) vars.rem(20);
+  gap: vars.rem(20);
+  margin: 0 auto;
+
+  &.title{
+    font-size: 130%;
+    font-family: 'Montserrat-Bold', sans-serif;
+  }
+}
+
+.form-field{
+  width: 80%;
+
+  & input {
+    width: 100%;
+  }
+}
+
+.form-half {
+  @include vars.flexer(center, center);
+  gap: vars.rem(20);
+  width: 80%;
+
+}
+
+form label{
+  color: #656D78;
+}
+
+.form-field label{
+  text-transform: uppercase;
+}
+
+.form-cgu{
+  @include vars.flexer(center, center);
+  gap: vars.rem(10);
+}
+
+
+.form-cgu label{
+  font-size: 80%;
+}
+
+input[type="checkbox"]{
+  width: vars.rem(40);
+  height: vars.rem(20);
+}
+
+.form-link{
+  display: block;
+  text-align: center;
+  width: 80%;
+}
+
+.form-link a{
+  font-family: 'Montserrat-Bold', sans-serif;
+  font-size: 80%;
+}
+
+.form-error {
+    color: red;
+    font-size: 80%;
+    text-align: center;
+    width: 100%;
+}

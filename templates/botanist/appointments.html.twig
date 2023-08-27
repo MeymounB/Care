@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveaux rendez-vous disponibles{% endblock %}
+
+{% block body %}
+    <div class="mx-auto px-4">
+        <h1 class="text-2xl font-bold mb-4">Nouveaux rendez-vous disponibles</h1>
+
+        {% for appointments in groupedAppointments %}
+            <div class="rounded-lg shadow-lg bg-white my-3">
+                <table class="table-auto w-full mb-4">
+                    <thead class=" bg-indigo-100 border-indigo-500 border-b">
+                    <tr>
+                        <th class="text-start px-2 py-1 text-xs">Title</th>
+                        <th class="text-start px-2 py-1 text-xs">Description</th>
+                        <th class="text-start px-2 py-1 text-xs">PlannedAt</th>
+                        <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
+                        <th class="text-start px-2 py-1 text-xs">IsPresential</th>
+                        <th class="text-start px-2 py-1 text-xs">actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for appointment in appointments %}
+                        <tr class="text-center border-b text-sm text-gray-600">
+                            <td class="px-4 py-2">{{ appointment.title }}</td>
+                            <td class="px-4 py-2">{{ appointment.description }}</td>
+                            <td class="px-4 py-2">{{ appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
+                            <td class="px-4 py-2">
+                                {% if appointment.isPresential %}
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                Yes
+                            {% if appointment.address %}
+                                - {{ appointment.address }}
+                            {% endif %}
+                            </span>
+                                {% else %}
+                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                No
+                            {% if appointment.link %}
+                                - <a href="{{ appointment.link }}"
+                                     class="text-indigo-600 underline hover:text-indigo-900">Link</a>
+                            {% endif %}
+                            </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 flex justify-center">
+                                <button onclick="location.href='{{ path('app_appointment_show', {'id': appointment.id}) }}'"
+                                        type="button"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                    show
+                                </button>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-lg text-red-500">No appointments found</p>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{# ... #}
+{% block title %}Connexion{% endblock %}
+
+{% block header %}
+    {% include 'parts/header.html.twig' %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <form class="form-auth" action="{{ path('app_login') }}" method="post">
+        <h2 class="title">Se connecter</h2>
+        <div class="form-field">
+            <label for="username">Adresse email</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+        </div>
+        <div class="form-field">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="_password"/>
+        </div>
+        {#Protection contre les attaques CSRF#}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <div class="form-link">
+            <a href="{{ path('register_particular') }}">Vous n'avez pas de compte?</a>
+        </div>
+        <div class="form-link">
+            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié?</a>
+        </div>
+        <button type="submit" class="btn btn-primary">Se connecter</button>
+
+        {% if error %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(error.message) }}
+        {% endif %}
+    </form>
+    {#<form action="{{ path('app_logout') }}" method="post">
+    <button type="submit">Se déconnecter</button>
+</form>#}
+{% endblock %}

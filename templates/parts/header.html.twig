@@ -1,0 +1,16 @@
+{# DESKTOP HEADER #}
+<header>
+    <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+
+    <input type="checkbox" id="header_toggle">
+
+    <label for="header_toggle" class="header_burger">
+        {% include 'parts/burger.html.twig' %}
+    </label>
+
+    <nav class="header_nav">
+        <a href="{{ path('app_default') }}">Accueil</a>
+        <a href="#">A propos</a>
+        <button class="btn btn-secondary" id="download">Télécharger</button>
+    </nav>
+</header>

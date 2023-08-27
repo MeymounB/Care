@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="GreenCare : Conseils personnalisés en botanique pour l'entretien de vos plantes d'intérieur et d'extérieur.">
+        <meta property="og:title" content="GreenCare - Votre expert botanique">
+        <meta property="og:description" content="Découvrez GreenCare, l'application qui facilite les échanges entre botanistes et amateurs de jardinage. Recevez des conseils personnalisés pour l'entretien de vos plantes.">
+        <meta property="og:image" content="public\images\logo.png">
+        <meta property="og:url" content="URL de PROD de la page d'accueil.">
+        <meta property="og:type" content="website">
+        <title>{% block title %}GreenCare - Votre expert botanique{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
+        {% block stylesheets %}{% endblock %}
             {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
+        {% block javascripts %}{% endblock %}
             {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+            {{ encore_entry_script_tags('script') }}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% include 'parts/header.html.twig' %}
+        <main class="container">
+            {% block body %}{% endblock %}
+            {% block footer %}{% include('./parts/footer.html.twig') %}{% endblock %}
+        </main>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </body>
 </html>

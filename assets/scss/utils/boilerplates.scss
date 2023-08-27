@@ -1,0 +1,132 @@
+@use './functions.scss' as funcs;
+@use './mixins.scss' as mixins;
+@use './colors.scss' as colors;
+
+@import "./fonts";
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    line-height: 1.5;
+    font-weight: 400;
+    font-size: funcs.rem(16);
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+p,
+span,
+div,
+a,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
+a,
+a:visited,
+a:focus {
+    color: #04DC40;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    text-decoration: underline;
+    text-decoration-color: #04DC40;
+    opacity: 0.8;
+}
+
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+input,
+select,
+textarea {
+    border: 3px solid transparent;
+    outline: none;
+    font-size: funcs.rem(16);
+    background-color: #f6f5f5;
+    padding: funcs.rem(10);
+    border-radius: funcs.rem(4);
+
+    &:focus,
+    &:hover {
+        border-color: colors.$green;
+    }
+}
+
+select,
+textarea {
+    resize: none;
+    width: 100%;
+}
+
+option {
+    padding: funcs.rem(5);
+    margin-bottom: funcs.rem(5);
+    outline: none;
+    border-radius: funcs.rem(5);
+}
+
+.center-space {
+    padding-left: funcs.rem(104);
+    padding-right: funcs.rem(104);
+
+    @include mixins.media(tablet-wide, max) {
+        padding-left: funcs.rem(50);
+        padding-right: funcs.rem(50);
+    }
+
+    @include mixins.media(tablet, max) {
+        padding-left: funcs.rem(15);
+        padding-right: funcs.rem(15);
+    }
+
+}
+
+.spacer {
+    width: 100%;
+    height: funcs.rem(100);
+    background: transparent;
+}
+
+.main-title {
+    font-weight: 700;
+    font-size: funcs.rem(28.43);
+}
+
+.second-title {
+    font-weight: 600;
+    font-size: 21.33px;
+}
+
+.subtitle {
+    font-weight: 400;
+    font-size: funcs.rem(12);
+}
+
+.reg-bold {
+    font-weight: 600;
+    font-size: funcs.rem(16);
+}

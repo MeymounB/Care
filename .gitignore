@@ -1,13 +1,22 @@
 
 ###> symfony/framework-bundle ###
+
+.history
+.env
+/.env
 /.env.local
 /.env.local.php
+/.env.test
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
+.idea/
+.vscode/
 ###< symfony/framework-bundle ###
+
+.composer.lock
 
 ###> phpunit/phpunit ###
 /phpunit.xml

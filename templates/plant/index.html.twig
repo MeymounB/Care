@@ -1,0 +1,53 @@
+{# templates/image/upload.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Vos plantes{% endblock %}
+
+{% block body %}
+    <div class="mx-auto px-4">
+        <h1 class="text-2xl font-bold mb-4">Vos plantes</h1>
+
+        <div class="rounded-lg shadow-lg bg-white my-3">
+            <table class="table-auto w-full mb-4">
+                <thead class="bg-indigo-100 border-indigo-500 border-b">
+                <tr>
+                    <th class="text-start px-2 py-1 text-xs">Name</th>
+                    <th class="text-start px-2 py-1 text-xs">Description</th>
+                    <th class="text-start px-2 py-1 text-xs">Species</th>
+                    <th class="text-start px-2 py-1 text-xs">actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for plant in plants %}
+                    <tr class="text-center border-b text-sm text-gray-600">
+                        <td class="px-4 py-2">{{ plant.name }}</td>
+                        <td class="px-4 py-2">{{ plant.description }}</td>
+                        <td class="px-4 py-2">{{ plant.species }}</td>
+                        <td class="px-4 py-2 flex justify-center">
+                            <button onclick="location.href='{{ path('app_plant_show', {'id': plant.id}) }}'"
+                                    type="button"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                show
+                            </button>
+                            <button onclick="location.href='{{ path('app_plant_edit', {'id': plant.id}) }}'"
+                                    type="button"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                edit
+                            </button>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="px-4 py-2 text-red-500">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <button onclick="location.href='{{ path('app_plant_new') }}'" type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">New
+        </button>
+    </div>
+{% endblock %}

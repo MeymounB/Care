@@ -1,0 +1,58 @@
+name: php-quality-checker
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  install_dependencies:
+    runs-on: ubuntu-latest
+    container: jakzal/phpqa:php8.2
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: composer install
+
+  security_checker:
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+    container: jakzal/phpqa:php8.2
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check Security
+        run: local-php-security-checker composer.lock
+
+  php_coding_standard:
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+    container: jakzal/phpqa:php8.2
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check Coding Standards
+        run: |
+          composer install
+          php-cs-fixer fix ./src --dry-run --rules=@Symfony --verbose
+          phpstan analyse ./src -l3
+          phpdd ./src
+          phpcpd ./src --exclude './src/Controller/Admin/' --exclude './src/Entity'
+
+  php_lint:
+    needs: install_dependencies
+    runs-on: ubuntu-latest
+    container: jakzal/phpqa:php8.2
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Lint code
+        run: |
+          composer install
+          chmod +x ./bin/console
+          ./bin/console lint:twig templates --env=prod
+          ./bin/console lint:yaml config --parse-tags
+          ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
