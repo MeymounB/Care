@@ -15,7 +15,8 @@ class EmailService
     public function create(string $receiverEmail): TemplatedEmail
     {
         return (new TemplatedEmail())
-            ->to($receiverEmail);
+            ->to($receiverEmail)
+            ->embedFromPath('public/images/logo.png', 'greencare-logo', 'image/png');
     }
 
     public function send(TemplatedEmail $email): void

@@ -1,0 +1,36 @@
+{% apply inline_css(source('@styles/components/emails.css')) %}
+    <table class="container">
+        <table class="img section">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <img src="cid:greencare-logo" alt="logo" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table class="content section">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <h1>{% block title %}{% endblock %}</h1>
+                    </td>
+                </tr>
+                <tr>
+                    {% block message %}{% endblock %}
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="footer section">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <h2 class="">The Greencare Team. Cheers!</h2>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </table>
+{% endapply %}

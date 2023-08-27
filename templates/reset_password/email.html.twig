@@ -1,9 +1,14 @@
-<h1>Hi!</h1>
+{% extends 'mail.html.twig' %}
 
-<p>To reset your password, please visit the following link</p>
+{% block title %}
+    Hi! Resest your password
+{% endblock %}
 
-<a href="{{ requestUrl }}">{{ requestUrl }}</a>
-
-<p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
-
-<p>Cheers!</p>
+{% block message %}
+    <p>Hello {{ username }}!</p> 
+    <p>
+        To reset your password, please visit 
+        <a href="{{ requestUrl|raw }}">this link</a>
+    </p>
+    <p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+{% endblock %}

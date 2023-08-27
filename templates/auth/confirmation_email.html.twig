@@ -1,14 +1,13 @@
-{% extends "base.html.twig" %}
-{# ... #}
+{% extends 'mail.html.twig' %}
 
-{% block body %}
-    <h1>Hi! Please confirm your email!</h1>
-
-    <p>Hello {{ username }}! Please confirm your email address by clicking the following link:</p>
-    <div class="form-link">
-        <a href="{{ signedUrl|raw }}">Confirm my Email.</a>
-    </div>
-
-    <p>This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.</p>
-
+{% block title %}
+    Hi! Please confirm your email!
 {% endblock %}
+
+{% block message %}
+    <p>Hello {{ username }}!</p> 
+    <p>Please confirm your email address by clicking the following link:</p>
+    <a href="{{ signedUrl|raw }}">Confirm my Email.</a>
+    <p>This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.</p>
+{% endblock %}
+
