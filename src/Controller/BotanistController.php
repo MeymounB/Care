@@ -58,22 +58,6 @@ class BotanistController extends AbstractController
         ]);
     }
 
-    #[Route('/recent_advice', name: 'list_recent_advice', methods: ['GET'])]
-    public function show_recent_advice(): Response
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
-        }
-
-        $groupedAdvices = $this->adviceService->getGroupedAdvicesByUser($user);
-
-        return $this->render('botanist/recent_advice.html.twig', [
-            'groupedAdvices' => $groupedAdvices,
-        ]);
-    }
-
     #[Route('/appointments', name: 'appointments', methods: ['GET'])]
     public function list_appointments(): Response
     {

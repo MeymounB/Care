@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Appointment;
+use App\Entity\User;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
 use App\Repository\StatusRepository;
@@ -27,7 +28,7 @@ class AppointmentController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$user instanceof Particular) {
+        if (!$user instanceof User) {
             throw $this->createAccessDeniedException('Access denied');
         }
 
