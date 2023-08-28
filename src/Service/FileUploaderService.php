@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploaderService
@@ -21,25 +22,25 @@ class FileUploaderService
         $this->type = $type;
     }
 
-    public function getFilename(?int $key, string $username, $file): array
+    public function getFilename(?int $key, string $username, UploadedFile $file): array
     {
         $currentTime = time();
 
         if (null !== $key) {
-            $newFilename = $this->getPrefixName().'_'.$key.'_'.$username.'_'.$currentTime;
+            $newFilename = $this->getPrefixName() . '_' . $key . '_' . $username . '_' . $currentTime;
         } else {
-            $newFilename = $this->getPrefixName().'_'.$username.'_'.$currentTime;
+            $newFilename = $this->getPrefixName() . '_' . $username . '_' . $currentTime;
         }
 
         return [
             'title' => $newFilename,
-            'file' => $this->slugger->slug($newFilename).'.'.$file->guessExtension(),
+            'file' => $this->slugger->slug($newFilename) . '.' . $file->guessExtension(),
         ];
     }
 
-    public function upload(string $filename, $file): void
+    public function upload(string $filename, UploadedFile $file): void
     {
-        $directory = $this->params->get($this->type->value.'_dir');
+        $directory = $this->params->get($this->type->value . '_dir');
         try {
             $file->move($directory, $filename);
         } catch (FileException $e) {
