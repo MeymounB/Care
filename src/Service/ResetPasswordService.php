@@ -5,16 +5,16 @@ namespace App\Service;
 use App\Entity\User;
 use App\Message\MailMessage;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
-use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class ResetPasswordService
 {
@@ -55,7 +55,6 @@ class ResetPasswordService
 
             return new RedirectResponse($this->router->generate('app_check_email'));
         }
-
 
         // $message = $emailService->create($emailFormData);
 

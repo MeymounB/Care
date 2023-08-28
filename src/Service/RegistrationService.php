@@ -2,17 +2,17 @@
 
 namespace App\Service;
 
-use App\Entity\User;
 use App\Entity\Botanist;
-use App\Entity\Particular;
 use App\Entity\Certificate;
+use App\Entity\Particular;
+use App\Entity\User;
 use App\Message\MailMessage;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationService
@@ -22,7 +22,6 @@ class RegistrationService
     private FileUploaderService $fileUploaderService;
     private MfaService $mfaService;
     private EmailVerifier $emailVerifier;
-
 
     public function __construct(
         EntityManagerInterface $entityManager,

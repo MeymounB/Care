@@ -57,6 +57,7 @@ class MailMessage
     {
         return $this->context;
     }
+
     public function addContext(string $key, $value): self
     {
         $this->context[$key] = $value;
