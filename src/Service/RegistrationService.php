@@ -7,6 +7,7 @@ use App\Entity\Certificate;
 use App\Entity\Particular;
 use App\Form\Registration\BotanistFormType;
 use App\Form\Registration\ParticularFormType;
+use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,19 +23,22 @@ class RegistrationService extends AbstractController
     private FileUploaderService $fileUploaderService;
     private MfaService $mfaService;
     private EmailService $emailService;
+    private EmailVerifier $emailVerifier;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordEncoder,
         FileUploaderService $fileUploaderService,
         MfaService $mfaService,
-        EmailService $emailService
+        EmailService $emailService,
+        EmailVerifier $emailVerifier,
     ) {
         $this->entityManager = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->fileUploaderService = $fileUploaderService;
         $this->mfaService = $mfaService;
         $this->emailService = $emailService;
+        $this->emailVerifier = $emailVerifier;
     }
 
     public function processRegistrationForParticular(Request $request): Response
@@ -47,7 +51,7 @@ class RegistrationService extends AbstractController
         return $this->processRegistration($request, new Botanist(), BotanistFormType::class, 'auth/register_botanist.html.twig');
     }
 
-    private function processRegistration(Request $request, $user, string $formType, string $template): Response
+    private function processRegistration(Request $request, Botanist|Particular $user, string $formType, string $template): Response
     {
         $form = $this->createForm($formType, $user);
         $form->handleRequest($request);
@@ -85,7 +89,7 @@ class RegistrationService extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            $this->emailService->sendConfirmationEmail($user, $this->getParameter('mail_address'));
+            $this->sendConfirmationEmail($user->getEmail(), $user->getFirstName(), $user->getId());
 
             return $this->redirectToRoute('app_login');
         }
@@ -94,5 +98,24 @@ class RegistrationService extends AbstractController
             'form' => $form->createView(),
             'error' => $form->getErrors()->current(),
         ]);
+    }
+
+    private function sendConfirmationEmail(string $email, string $firstName, int $id)
+    {
+        $message = $this->emailService->create($email);
+
+        $message
+            ->subject('Welcome to GreenCare! Verify your email')
+            ->htmlTemplate('auth/confirmation_email.html.twig')
+        ;
+
+        $context = $this->emailVerifier->getConfirmationContext('app_verify_email', $id, $email, $message);
+
+        $message->context([
+            ...$context,
+            'username' => $firstName,
+        ]);
+
+        $this->emailService->send($message);
     }
 }
