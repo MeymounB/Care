@@ -22,7 +22,7 @@
         {#Protection contre les attaques CSRF#}
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         <div class="form-link">
-            <a href="{{ path('register_particular') }}">Vous n'avez pas de compte?</a>
+            <a href="{{ path('app_register') }}">Vous n'avez pas de compte?</a>
         </div>
         <div class="form-link">
             <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié?</a>
