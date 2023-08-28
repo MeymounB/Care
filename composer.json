@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0",
+        "php": "8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.10",
@@ -110,6 +110,9 @@
             "php bin/console doctrine:database:create --env=test",
             "php bin/console doctrine:schema:update --env=test --force --complete",
             "php bin/console doctrine:fixtures:load --env=test --no-interaction"
+        ],
+        "compile": [
+            "php bin/console assets:install"
         ]
     },
     "conflict": {
