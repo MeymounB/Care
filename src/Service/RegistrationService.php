@@ -6,10 +6,12 @@ use App\Entity\User;
 use App\Entity\Botanist;
 use App\Entity\Particular;
 use App\Entity\Certificate;
+use App\Message\MailMessage;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -19,26 +21,24 @@ class RegistrationService
     private UserPasswordHasherInterface $passwordEncoder;
     private FileUploaderService $fileUploaderService;
     private MfaService $mfaService;
-    private EmailService $emailService;
     private EmailVerifier $emailVerifier;
+
 
     public function __construct(
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordEncoder,
         FileUploaderService $fileUploaderService,
         MfaService $mfaService,
-        EmailService $emailService,
         EmailVerifier $emailVerifier,
     ) {
         $this->entityManager = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->fileUploaderService = $fileUploaderService;
         $this->mfaService = $mfaService;
-        $this->emailService = $emailService;
         $this->emailVerifier = $emailVerifier;
     }
 
-    public function processRegistration(Botanist|Particular $user, string $password, ?UploadedFile $certifData, string $route): ?Response
+    public function processRegistration(Botanist|Particular $user, string $password, ?UploadedFile $certifData, string $route, MessageBusInterface $bus): ?Response
     {
         $this->hashPassword($user, $password);
 
@@ -51,7 +51,12 @@ class RegistrationService
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $this->sendConfirmationEmail($user->getEmail(), $user->getFirstName(), $user->getId());
+        $this->sendConfirmationEmail(
+            $user->getEmail(),
+            $user->getFirstName(),
+            $user->getId(),
+            $bus
+        );
 
         return new RedirectResponse($route);
     }
@@ -90,21 +95,18 @@ class RegistrationService
         $user->setGoogleAuthenticatorSecret($secret);
     }
 
-    private function sendConfirmationEmail(string $email, string $firstName, int $id)
+    private function sendConfirmationEmail(string $email, string $firstName, int $id, MessageBusInterface $bus)
     {
-        $message = $this->emailService->create($email);
+        $context = $this->emailVerifier->getConfirmationContext('app_verify_email', $id, $email);
+        $context['username'] = $firstName;
 
-        $message
-            ->subject('Welcome to GreenCare! Verify your email')
-            ->htmlTemplate('auth/confirmation_email.html.twig');
+        $message = new MailMessage(
+            'Welcome to GreenCare! Verify your email',
+            $email,
+            'auth/confirmation_email.html.twig',
+            $context
+        );
 
-        $context = $this->emailVerifier->getConfirmationContext('app_verify_email', $id, $email, $message);
-
-        $message->context([
-            ...$context,
-            'username' => $firstName,
-        ]);
-
-        $this->emailService->send($message);
+        $bus->dispatch($message);
     }
 }

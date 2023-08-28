@@ -4,7 +4,6 @@ namespace App\Security;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
@@ -24,7 +23,7 @@ class EmailVerifier
         $this->userRepository = $userRepository;
     }
 
-    public function getConfirmationContext(string $verifyEmailRouteName, int $id, string $email, TemplatedEmail $message): array
+    public function getConfirmationContext(string $verifyEmailRouteName, int $id, string $email): array
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
             $verifyEmailRouteName,
@@ -33,7 +32,7 @@ class EmailVerifier
             ['id' => $id] // add the user's id as an extra query param
         );
 
-        $context = $message->getContext();
+        // $context = $message->getContext();
         $context['signedUrl'] = $signatureComponents->getSignedUrl();
         $context['expiresAtMessageKey'] = $signatureComponents->getExpirationMessageKey();
         $context['expiresAtMessageData'] = $signatureComponents->getExpirationMessageData();
