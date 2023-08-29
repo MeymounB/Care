@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\User;
 use App\Message\MailMessage;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,15 +24,16 @@ class ResetPasswordService
         private EntityManagerInterface $entityManager,
         private UrlGeneratorInterface $generator,
         private UrlGeneratorInterface $router,
-        private ContainerInterface $container
     ) {
     }
 
     public function processSendingPasswordResetEmail(string $emailFormData, MessageBusInterface $bus): RedirectResponse
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $emailFormData,
-        ]);
+        $user = $this->entityManager
+            ->getRepository(User::class)
+            ->findOneByEmail([
+                'email' => $emailFormData,
+            ]);
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
