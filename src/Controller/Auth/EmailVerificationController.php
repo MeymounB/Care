@@ -28,7 +28,7 @@ class EmailVerificationController extends AbstractController
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
 
-            return $this->redirectToRoute('register_particular');
+            return $this->redirectToRoute('app_register', ['type' => ""]);
         }
     }
 }
