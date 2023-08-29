@@ -30,8 +30,9 @@ class ResetPasswordService
     public function processSendingPasswordResetEmail(string $emailFormData, MessageBusInterface $bus): RedirectResponse
     {
         $user = $this->entityManager
-            ->getRepository(User::class)
-            ->findOneByEmail([
+            ->getRepository(
+                User::class
+            )->findOneBy([
                 'email' => $emailFormData,
             ]);
 
