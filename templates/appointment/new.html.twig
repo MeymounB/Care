@@ -2,6 +2,10 @@
 
 {% block title %}New Appointment{% endblock %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
 {% block body %}
     {# <h1>Create new Appointment</h1> #}
 
@@ -9,7 +13,7 @@
 
     {# <a href="{{ path('app_appointment_index') }}">back to list</a> #}
 
-       <section class="demande-rdv">
+       {# <section class="demande-rdv">
 		<div class="form-ajout">
 			<h1>Demander rendez-vous</h1>
 
@@ -70,6 +74,6 @@
 					class="btn btn-secondary">Valider</button>
 			</form>
 		</div>
-	</section>
+	</section> #}
 
 {% endblock %}
