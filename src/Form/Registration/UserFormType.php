@@ -34,7 +34,7 @@ abstract class UserFormType extends AbstractType
                 'error_bubbling' => true,
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
+                        'pattern' => '/^[a-zA-Z\s]+$/',
                         'message' => 'Votre prénom ne doit contenir que des lettres',
                     ])
                 ]
@@ -45,7 +45,7 @@ abstract class UserFormType extends AbstractType
                 'error_bubbling' => true,
                 'constraints' => [
                     new Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
+                        'pattern' => '/^[a-zA-Z\s]+$/',
                         'message' => 'Votre nom ne doit contenir que des lettres',
                     ])
                 ]
