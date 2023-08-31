@@ -58,65 +58,70 @@ export function initDatetimeValidation() {
   let previousValue = "";
 
   // prevent undifined error
-  let element = document.getElementById("appointment_plannedAt");
+  // let element = document.getElementById("appointment_plannedAt");
 
-  if (!element) {
-    return;
-  }
+  // if (!element) {
+  //   return;
+  // }
 
-  element.addEventListener("input", function (e) {
-    // check if the input is a delete
-    if (
-      e.inputType === "deleteContentBackward" &&
-      e.target.value.length < previousValue.length
-    ) {
-      previousValue = e.target.value;
-      return; // do nothing
-    }
+  // element.addEventListener("input", function (e) {
+  //   // check if the input is a delete
+  //   if (
+  //     e.inputType === "deleteContentBackward" &&
+  //     e.target.value.length < previousValue.length
+  //   ) {
+  //     previousValue = e.target.value;
+  //     return; // do nothing
+  //   }
 
-    // delete all non-digit characters
-    let datetime = e.target.value.replace(/\D/g, "");
+  //   // delete all non-digit characters
+  //   let datetime = e.target.value.replace(/\D/g, "");
 
-    // YYYY-MM-DD HH:MM:SS
-    if (datetime.length >= 4) {
-      datetime = datetime.slice(0, 4) + "-" + datetime.slice(4);
-    }
-    if (datetime.length >= 7) {
-      datetime = datetime.slice(0, 7) + "-" + datetime.slice(7);
-    }
-    if (datetime.length >= 10) {
-      datetime = datetime.slice(0, 10) + " " + datetime.slice(10);
-    }
-    if (datetime.length >= 13) {
-      datetime = datetime.slice(0, 13) + ":" + datetime.slice(13);
-    }
-    if (datetime.length >= 16) {
-      datetime = datetime.slice(0, 16) + ":" + datetime.slice(16);
-    }
-    // remove extra characters
-    datetime = datetime.slice(0, 19);
+  //   // YYYY-MM-DD HH:MM
+  //   if (datetime.length >= 4) {
+  //     datetime = datetime.slice(0, 4) + "-" + datetime.slice(4);
+  //   }
+  //   if (datetime.length >= 7) {
+  //     datetime = datetime.slice(0, 7) + "-" + datetime.slice(7);
+  //   }
+  //   if (datetime.length >= 10) {
+  //     datetime = datetime.slice(0, 10) + " " + datetime.slice(10);
+  //   }
+  //   if (datetime.length >= 13) {
+  //     datetime = datetime.slice(0, 13) + ":" + datetime.slice(13);
+  //   }
+  //   // if (datetime.length >= 16) {
+  //   //   datetime = datetime.slice(0, 16) + ":" + datetime.slice(16);
+  //   // }
+  //   // remove extra characters
+  //   datetime = datetime.slice(0, 16);
 
-    // update the input value
-    e.target.value = datetime;
+  //   // update the input value
+  //   e.target.value = datetime;
 
-    // update actual value
-    previousValue = datetime;
-  });
+  //   // update actual value
+  //   previousValue = datetime;
+  // });
 
-  // @TODO: should be great to use flatpickr with it but it's not working + should be great to format the date like this : 16-04-2021 14:00 (dd-mm-yyyy hh:mm)
+  // @TODO: should be great to use flatpickr with it but it's not working + should be great to format the date like this : 16-04-2021 14:00 (dd-mm-yyyy hh:mm) : DONE
+  // @TODO: library is working, but config does not change. check why.
   // https://flatpickr.js.org/examples/
 
-  // let datetimeInput = document.getElementById("appointment_plannedAt");
-  // flatpickr(datetimeInput, {
-  //   enableTime: true,
-  //   dateFormat: "Y-m-d H:i:S",
-  // });
-
-  // // Connecter le bouton pour afficher le sélecteur de date
-  // let pickerButton = document.getElementById("datetimePicker");
-  // pickerButton.addEventListener("click", function () {
-  //   datetimeInput._flatpickr.open();
-  // });
+  let datetimeInput = document.getElementById("appointment_plannedAt");
+  flatpickr("#appointment_plannedAt", {
+    enableTime: true,
+    dateFormat: "Y-m-d H:i",
+    minTime: "09:00",
+    maxTime: "20:00",
+    minDate: "today",
+    defaultHour: 9,
+    defaultMinute: 0,
+    enableSeconds: false,
+    minuteIncrement: 5,
+    onOpen: () => {
+      console.log("flatpickr opened");
+    }
+  });
 }
 
 console.log("Hello from appointmentForm.js");
