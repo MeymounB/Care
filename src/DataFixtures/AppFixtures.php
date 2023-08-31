@@ -36,8 +36,10 @@ class AppFixtures extends Fixture
         // Create 50 certificates for botanists
         $this->createCertificates($faker, $manager);
 
+        $addresses = $this->createAddresses($particulars, $faker, $manager);
+
         // Create 10 appointments
-        $appointments = $this->createAppts($faker, $manager, $status, $botanists, $particulars);
+        $appointments = $this->createAppts($faker, $manager, $status, $botanists, $particulars, $addresses);
 
         // Create 10 advices
         $advices = $this->createAdvices($faker, $manager, $status, $botanists, $particulars);
@@ -58,16 +60,6 @@ class AppFixtures extends Fixture
             $manager->persist($photo);
         }
 
-        foreach ($particulars as $particular) {
-            $address = new Address();
-            $address
-                ->setStreet($faker->streetAddress)
-                ->setZipCode($faker->randomNumber(5))
-                ->setCity($faker->city)
-                ->setParticular($particular);
-
-            $manager->persist($address);
-        }
 
         $manager->flush();
     }
@@ -85,6 +77,23 @@ class AppFixtures extends Fixture
         return $status;
     }
 
+    private function createAddresses(array $particulars, Generator $faker, ObjectManager $manager): array
+    {
+        $addresses = [];
+        foreach ($particulars as $particular) {
+            $address = new Address();
+            $address
+                ->setStreet($faker->streetAddress)
+                ->setZipCode($faker->randomNumber(5))
+                ->setCity($faker->city)
+                ->setParticular($particular);
+
+            $manager->persist($address);
+            $addresses[] = $address;
+        }
+        return $addresses;
+    }
+
     private function createBotanists(Generator $faker, ObjectManager $manager): array
     {
         $botanists = [];
@@ -100,7 +109,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($botanist);
             $botanists[] = $botanist;
-            $this->addReference(Botanist::class.'_'.$i, $botanist);
+            $this->addReference(Botanist::class . '_' . $i, $botanist);
         }
 
         return $botanists;
@@ -123,7 +132,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($particular);
             $particulars[] = $particular;
-            $this->addReference(Particular::class.'_'.$i, $particular);
+            $this->addReference(Particular::class . '_' . $i, $particular);
         }
 
         return $particulars;
@@ -137,15 +146,15 @@ class AppFixtures extends Fixture
                 ->setState($faker->randomElement(Certificate::getPossibleStates()))
                 ->setCertificateFile('/path/to/file');
 
-            if ($this->hasReference(Botanist::class.'_'.$i)) {
-                $certificate->setBotanist($this->getReference(Botanist::class.'_'.rand(0, 9)));
+            if ($this->hasReference(Botanist::class . '_' . $i)) {
+                $certificate->setBotanist($this->getReference(Botanist::class . '_' . rand(0, 9)));
             }
 
             $manager->persist($certificate);
         }
     }
 
-    private function createAppts(Generator $faker, ObjectManager $manager, array $status, array $botanists, array $particulars): array
+    private function createAppts(Generator $faker, ObjectManager $manager, array $status, array $botanists, array $particulars, array $addresses): array
     {
         $appointments = [];
         for ($i = 0; $i < 10; ++$i) {
@@ -154,21 +163,23 @@ class AppFixtures extends Fixture
             $appointment
                 ->setTitle($faker->sentence(3))
                 ->setDescription($faker->paragraph)
-                ->setPlannedAt(new \DateTime('now + '."{$i} days"))
+                ->setPlannedAt(new \DateTime('now + ' . "{$i} days"))
                 ->setIsPresential($faker->boolean)
-                ->setAddress($faker->address)
+                ->setAddress(
+                    $addresses[array_rand($addresses)]
+                )
                 ->setLink($faker->url)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
 
-            if ($this->hasReference(Particular::class.'_'.$i)) {
-                $appointment->setParticular($this->getReference(Particular::class.'_'.$i));
+            if ($this->hasReference(Particular::class . '_' . $i)) {
+                $appointment->setParticular($this->getReference(Particular::class . '_' . $i));
             }
 
             $manager->persist($appointment);
             $appointments[] = $appointment;
-            $this->addReference(Appointment::class.'_'.$i, $appointment);
+            $this->addReference(Appointment::class . '_' . $i, $appointment);
         }
 
         return $appointments;
@@ -188,13 +199,13 @@ class AppFixtures extends Fixture
                 ->setBotanist($botanists[$i % 10])
                 ->setParticular($particulars[$i]);
 
-            if ($this->hasReference(Particular::class.'_'.$i)) {
-                $advice->setParticular($this->getReference(Particular::class.'_'.$i));
+            if ($this->hasReference(Particular::class . '_' . $i)) {
+                $advice->setParticular($this->getReference(Particular::class . '_' . $i));
             }
 
             $manager->persist($advice);
             $advices[] = $advice;
-            $this->addReference(Advice::class.'_'.$i, $advice);
+            $this->addReference(Advice::class . '_' . $i, $advice);
         }
 
         return $advices;
@@ -208,16 +219,16 @@ class AppFixtures extends Fixture
             $plant = new Plant();
 
             // set a botanist to a plant
-            $appointment = $this->getReference(Appointment::class.'_'.rand(0, 9));
+            $appointment = $this->getReference(Appointment::class . '_' . rand(0, 9));
             $plant->addRequest($appointment);
 
             // set a advice to a plant
-            $advice = $this->getReference(Advice::class.'_'.rand(0, 9));
+            $advice = $this->getReference(Advice::class . '_' . rand(0, 9));
             $plant->addRequest($advice);
 
             // set a particular to a plant
-            if ($this->hasReference(Particular::class.'_'.$i)) {
-                $plant->setParticular($this->getReference(Particular::class.'_'.$i));
+            if ($this->hasReference(Particular::class . '_' . $i)) {
+                $plant->setParticular($this->getReference(Particular::class . '_' . $i));
             }
 
             $plant
@@ -231,7 +242,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($plant);
             $plants[] = $plant;
-            $this->addReference(Plant::class.'_'.$i, $plant);
+            $this->addReference(Plant::class . '_' . $i, $plant);
         }
 
         return $plants;
@@ -246,14 +257,14 @@ class AppFixtures extends Fixture
                 ->setContent($faker->paragraph);
 
             // 20 is the number of particular created
-            if ($this->hasReference(Particular::class.'_'.$i % 20)) {
-                $particular = $this->getReference(Particular::class.'_'.$i % 20);
+            if ($this->hasReference(Particular::class . '_' . $i % 20)) {
+                $particular = $this->getReference(Particular::class . '_' . $i % 20);
                 $comment->setUser($particular);
             }
 
             // 20 is the number of plants created
-            if ($this->hasReference(Advice::class.'_'.$i % 20)) {
-                $comment->setCommentAdvice($this->getReference(Advice::class.'_'.$i % 20));
+            if ($this->hasReference(Advice::class . '_' . $i % 20)) {
+                $comment->setCommentAdvice($this->getReference(Advice::class . '_' . $i % 20));
             }
 
             $comments[] = $comment;
