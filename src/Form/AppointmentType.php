@@ -4,16 +4,24 @@ namespace App\Form;
 
 use App\Entity\Appointment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Range;
 
 class AppointmentType extends AbstractType
 {
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -55,6 +63,29 @@ class AppointmentType extends AbstractType
                 'label' => 'Vous préférez un rendez-vous :',
                 'error_bubbling' => true,
                 'required' => true
+            ])
+            ->add('address', ChoiceType::class, [
+                'choices' => array(
+                    // "Veuillez choisir",
+                    ...$this->security->getUser()->getAddress()
+                ),
+                'choice_label' => function ($value) {
+                    if (is_object($value)) {
+                        return $value->__toString();
+                    } else {
+                        return $value;
+                    }
+                },
+                'choice_value' => function ($value) {
+                    if (is_object($value)) {
+                        return $value->getId();
+                    } else {
+                        return 0;
+                    }
+                },
+                'label' => 'Adresse',
+                'error_bubbling' => true,
+                'required' => false
             ]);
     }
 
