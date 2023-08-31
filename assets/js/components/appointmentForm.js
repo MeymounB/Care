@@ -2,15 +2,33 @@ import flatpickr from "flatpickr";
 
 export function initIsPresential() {
   document.addEventListener("DOMContentLoaded", function () {
-    let isPresentialInputs = document.querySelectorAll(
-      'input[name="appointment[isPresential]"]'
+    let isPresentialInputs = document.querySelector(
+      '#appointment_isPresential'
     );
     let addressInput = document.querySelector(
-      'input[name="appointment[address]"]'
+      '#appointment_address'
     );
+    let addressParent = addressInput.parentElement;
     let linkInput = document.querySelector('input[name="appointment[link]"]');
     let addressDiv = document.querySelector("#addressDiv");
     let linkDiv = document.querySelector("#linkDiv");
+
+    console.log(isPresentialInputs.value, addressInput);
+
+    if (Boolean(Number(isPresentialInputs.value)) === false) {
+      addressInput.parentElement.style.display = "none";
+    }  
+
+    isPresentialInputs.addEventListener("change", (e) => {
+      const isPresential = Boolean(Number(e.target.value)) === true;
+      console.log(isPresential);
+
+      if (isPresential) {
+        addressParent.style.display = "block";
+      } else {
+        addressParent.style.display = "none";
+      }
+    });
 
     if (
       !isPresentialInputs.length ||

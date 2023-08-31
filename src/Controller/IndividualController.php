@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Address;
+use App\Form\AddressType;
 use App\Entity\Particular;
 use App\Service\AdviceService;
 use App\Service\AppointmentService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndividualController extends abstractController
 {
@@ -20,7 +25,7 @@ class IndividualController extends abstractController
         $this->appointmentService = $appointmentService;
     }
 
-    #[Route('/user_dashboard', name: 'index', methods: ['GET'])]
+    #[Route('/user_dashboard', name: 'app.user.index', methods: ['GET'])]
     public function index(): Response
     {
         $user = $this->getUser();
@@ -43,6 +48,30 @@ class IndividualController extends abstractController
             'appointment_count' => $appointment_count,
             'advice_count' => $advice_count,
             'recent_activity' => $recent_activity,
+        ]);
+    }
+
+    #[Route('/user_dashboard/address', name: 'app.user.edit.address', methods: ['GET', 'POST'])]
+    public function editAddress(Request $request, #[CurrentUser] ?Particular $user, EntityManagerInterface $manager): Response
+    {
+        $address = new Address();
+        $form = $this->createForm(AddressType::class, $address);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $address->setParticular($user);
+
+            $manager->persist($address);
+            $manager->flush();
+
+            $this->addFlash("success", "Votre adresse a bien été modifiée");
+
+            return $this->redirectToRoute('app.user.index');
+        }
+
+        return $this->render('user/edit_address.html.twig', [
+            "form" => $form->createView()
         ]);
     }
 }
