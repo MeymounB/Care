@@ -15,7 +15,6 @@ class Appointment extends Request
     #[ORM\Column]
     private ?bool $isPresential = null;
 
-    // #[ORM\Column(length: 255, nullable: true)]
     #[ORM\ManyToOne(targetEntity: Address::class)]
     private ?Address $address = null;
 
