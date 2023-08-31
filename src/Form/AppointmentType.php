@@ -52,17 +52,10 @@ class AppointmentType extends AbstractType
                     'Présentiel' => true,
                     'Distanciel' => false,
                 ],
-                // 'expanded' => true,
                 'label' => 'Vous préférez un rendez-vous :',
                 'error_bubbling' => true,
                 'required' => true
-            ])
-
-            // ->add('address', TextType::class, [
-            //     'required' => false,
-            //     "label" => "Adresse"
-            // ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
