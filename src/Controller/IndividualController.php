@@ -20,7 +20,7 @@ class IndividualController extends abstractController
         $this->appointmentService = $appointmentService;
     }
 
-    #[Route('/user_dashboard', name: 'index', methods: ['GET'])]
+    #[Route('/homepage', name: 'app_individual_index', methods: ['GET'])]
     public function index(): Response
     {
         $user = $this->getUser();

@@ -26,7 +26,7 @@ class PlantController extends AbstractController
     #[Route('/', name: 'app_plant_index', methods: ['GET'])]
     public function index(PlantRepository $plantRepository): Response
     {
-        //        Affichage des plantes de la plus récente à la plus ancienne
+        // Display plants from the most recent to the oldest
         $plants = $plantRepository->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('plant/index.html.twig', [
@@ -50,15 +50,10 @@ class PlantController extends AbstractController
                     $this->fileUploaderService->setType(FileType::PHOTO);
 
                     $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
-
                     $this->fileUploaderService->upload($safeFilename, $certif);
-
                     $photo = new Photo();
-
                     $photo->setPhoto($safeFilename);
-
                     $plant->addPhoto($photo);
-
                     $entityManager->persist($photo);
                 }
             }
@@ -108,7 +103,7 @@ class PlantController extends AbstractController
     #[Route('/{id}', name: 'app_plant_delete', methods: ['POST'])]
     public function delete(Request $request, Plant $plant, PlantRepository $plantRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$plant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $plant->getId(), $request->request->get('_token'))) {
             $plantRepository->remove($plant, true);
         }
 
