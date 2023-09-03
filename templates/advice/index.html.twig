@@ -11,7 +11,7 @@
             {% for status, advices in groupedAdvices %}
                 <h2>{{ status }} :</h2>
                 {% for advice in advices %}
-                    <div id="conseil">
+                    <a href="/" id="conseil">
                         <div class="img-container"><img src="/images/plante1.jpg" alt=""></div>
                         <div class="infos-box">
                             <div class="infos-container">
@@ -51,7 +51,7 @@
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
                             show
                         </button> #}
-                    </div>
+                    </a>
                 {% endfor %}
             {% endfor %}
         </div>
