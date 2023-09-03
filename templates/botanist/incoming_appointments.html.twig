@@ -3,67 +3,295 @@
 {% block title %}Gestion de vos rendez-vous{% endblock %}
 
 {% block body %}
-    <div class="mx-auto px-4">
-        <h1 class="text-2xl font-bold mb-4">Gestion de vos rendez-vous</h1>
 
-        {% for status, appointments in groupedAppointments %}
-            <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
-            <div class="rounded-lg shadow-lg bg-white my-3">
-                <table class="table-auto w-full mb-4">
-                    <thead class=" bg-indigo-100 border-indigo-500 border-b">
-                    <tr>
-                        <th class="text-start px-2 py-1 text-xs">Title</th>
-                        <th class="text-start px-2 py-1 text-xs">Description</th>
-                        <th class="text-start px-2 py-1 text-xs">createdAt</th>
-                        <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
-                        <th class="text-start px-2 py-1 text-xs">Type de rendez-vous</th>
-                        <th class="text-start px-2 py-1 text-xs">actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for appointment in appointments %}
-                        <tr class="text-center border-b text-sm text-gray-600">
-                            <td class="px-4 py-2">{{ appointment.title }}</td>
-                            <td class="px-4 py-2">{{ appointment.description }}</td>
-                            <td class="px-4 py-2">{{ appointment.createdAt ? appointment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
-                            <td>
-                                {% if appointment.isPresential %}
-                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
-                                        À domicile
-                                    {% if appointment.address and appointment.status == "En cours" %}
-                                        - {{ appointment.address }}
-                                    {% endif %}
-                                    </span>
-                                {% else %}
-                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
-                                En ligne
-                            {% if appointment.link and appointment.status == "En cours" %}
-                                - <a href="{{ appointment.link }}"
-                                     class="text-indigo-600 underline hover:text-indigo-900">Link</a>
-                            {% endif %}
-                            </span>
-                                {% endif %}
-                            </td>
-                            <td class="px-4 py-2 flex justify-center">
-                                <button onclick="location.href='{{ path('app_appointment_show', {'id': appointment.id}) }}'"
-                                        type="button"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                                    show
-                                </button>
-                            </td>
-                        </tr>
-                    {% else %}
+<section class="appointments-section">
+		<h2>Demandes de rendez-vous</h2>
+
+		<h3>Actuelles</h3>
+		<h4>Rendez-vous en cours</h4>
+		<table class="appointments-table">
+			<tr class="appointments-row en-cours">
+				<th class="appointments-cell">Auteur</th>
+				<th class="appointments-cell">Titre</th>
+				<th class="appointments-cell description">Description</th>
+				<th class="appointments-cell">Date et Heure</th>
+				<th class="appointments-cell">Pris en charge par</th>
+				<th class="appointments-cell">Présence</th>
+				<th class="appointments-cell lieu">Adresse / Lien Zoom</th>
+				<th class="appointments-cell boutons">
+					Actions
+				</th>
+			</tr>
+			<!-- Exemple de ligne -->
+			<tr class="appointments-row en-cours">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell distanciel">distanciel</td>
+				<td class="appointments-cell distanciel">
+					<a
+						href="https://discord.com/channels/1063760210780495944/1124989604118921238">lien</a>
+				</td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<tr class="appointments-row en-cours">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell presentiel">Présentiel</td>
+				<td class="appointments-cell presentiel"><a
+						href="https://www.google.com/maps/search/3ruedelaMirtille,92100,Mirtille-la-fleure">3
+						rue de la Mirtille, 92100,
+						Mirtille-la-fleure
+					</a></td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<!-- Ajoutez d'autres lignes ici... -->
+		</table>
+		<h4>Rendez-vous en attente</h4>
+		<table class="appointments-table">
+			<tr class="appointments-row en-attente">
+				<th class="appointments-cell">Auteur</th>
+				<th class="appointments-cell">Titre</th>
+				<th class="appointments-cell description">Description</th>
+				<th class="appointments-cell">Date et Heure</th>
+				<th class="appointments-cell">Pris en charge par</th>
+				<th class="appointments-cell">Présence</th>
+				<th class="appointments-cell lieu">Adresse / Lien Zoom</th>
+				<th class="appointments-cell boutons">
+					Actions
+				</th>
+			</tr>
+			<!-- Exemple de ligne -->
+			<tr class="appointments-row en-attente">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell distanciel">distanciel</td>
+				<td class="appointments-cell distanciel">
+					<a
+						href="https://discord.com/channels/1063760210780495944/1124989604118921238">lien</a>
+				</td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<tr class="appointments-row en-attente">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell presentiel">Présentiel</td>
+				<td class="appointments-cell presentiel"><a
+						href="https://www.google.com/maps/search/3ruedelaMirtille,92100,Mirtille-la-fleure">3
+						rue de la Mirtille, 92100,
+						Mirtille-la-fleure
+					</a></td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<!-- Ajoutez d'autres lignes ici... -->
+		</table>
+
+		<h3>Historique</h3>
+		<h4>Rendez-vous terminés</h4>
+		<table class="appointments-table">
+			<tr class="appointments-row termine">
+				<th class="appointments-cell">Auteur</th>
+				<th class="appointments-cell">Titre</th>
+				<th class="appointments-cell description">Description</th>
+				<th class="appointments-cell">Date et Heure</th>
+				<th class="appointments-cell">Pris en charge par</th>
+				<th class="appointments-cell">Présence</th>
+				<th class="appointments-cell lieu">Adresse / Lien Zoom</th>
+				<th class="appointments-cell boutons">
+					Actions
+				</th>
+			</tr>
+			<!-- Exemple de ligne -->
+			<tr class="appointments-row termine">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell distanciel">distanciel</td>
+				<td class="appointments-cell distanciel">
+					<a
+						href="https://discord.com/channels/1063760210780495944/1124989604118921238">lien</a>
+				</td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<tr class="appointments-row termine">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell presentiel">Présentiel</td>
+				<td class="appointments-cell presentiel"><a
+						href="https://www.google.com/maps/search/3ruedelaMirtille,92100,Mirtille-la-fleure">3
+						rue de la Mirtille, 92100,
+						Mirtille-la-fleure
+					</a></td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<!-- Ajoutez d'autres lignes ici... -->
+		</table>
+
+		<h4>Rendez-vous annulés</h4>
+		<table class="appointments-table">
+			<tr class="appointments-row annule">
+				<th class="appointments-cell">Auteur</th>
+				<th class="appointments-cell">Titre</th>
+				<th class="appointments-cell description">Description</th>
+				<th class="appointments-cell">Date et Heure</th>
+				<th class="appointments-cell">Pris en charge par</th>
+				<th class="appointments-cell">Présence</th>
+				<th class="appointments-cell lieu">Adresse / Lien Zoom</th>
+				<th class="appointments-cell boutons">
+					Actions
+				</th>
+			</tr>
+			<!-- Exemple de ligne -->
+			<tr class="appointments-row annule">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell distanciel">distanciel</td>
+				<td class="appointments-cell distanciel">
+					<a
+						href="https://discord.com/channels/1063760210780495944/1124989604118921238">lien</a>
+				</td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<tr class="appointments-row annule">
+				<td class="appointments-cell">John Doe</td>
+				<td class="appointments-cell">Réunion d'équipe</td>
+				<td class="appointments-cell description">Réunion hebdomadaire pour discuter des projets
+					en cours.
+				</td>
+				<td class="appointments-cell">15/08/2023 à 10h00</td>
+				<td class="appointments-cell">Jane Smith</td>
+				<td class="appointments-cell presentiel">Présentiel</td>
+				<td class="appointments-cell presentiel"><a
+						href="https://www.google.com/maps/search/3ruedelaMirtille,92100,Mirtille-la-fleure">3
+						rue de la Mirtille, 92100,
+						Mirtille-la-fleure
+					</a></td>
+				<td class="appointments-cell boutons">
+					<button><a href="/">Détails</a></button>
+					<button><a href="/">Modifier</a></button>
+				</td>
+			</tr>
+			<!-- Ajoutez d'autres lignes ici... -->
+		</table>
+	</section>
+
+    {# 
+        <div class="mx-auto px-4">
+            <h1 class="text-2xl font-bold mb-4">Gestion de vos rendez-vous</h1>
+
+            {% for status, appointments in groupedAppointments %}
+                <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
+                <div class="rounded-lg shadow-lg bg-white my-3">
+                    <table class="table-auto w-full mb-4">
+                        <thead class=" bg-indigo-100 border-indigo-500 border-b">
                         <tr>
-                            <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
+                            <th class="text-start px-2 py-1 text-xs">Title</th>
+                            <th class="text-start px-2 py-1 text-xs">Description</th>
+                            <th class="text-start px-2 py-1 text-xs">createdAt</th>
+                            <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
+                            <th class="text-start px-2 py-1 text-xs">Type de rendez-vous</th>
+                            <th class="text-start px-2 py-1 text-xs">actions</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <p class="text-lg text-red-500">No appointment found</p>
-        {% endfor %}
-    </div>
+                        </thead>
+                        <tbody>
+                        {% for appointment in appointments %}
+                            <tr class="text-center border-b text-sm text-gray-600">
+                                <td class="px-4 py-2">{{ appointment.title }}</td>
+                                <td class="px-4 py-2">{{ appointment.description }}</td>
+                                <td class="px-4 py-2">{{ appointment.createdAt ? appointment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
+                                <td>
+                                    {% if appointment.isPresential %}
+                                        <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                            À domicile
+                                        {% if appointment.address and appointment.status == "En cours" %}
+                                            - {{ appointment.address }}
+                                        {% endif %}
+                                        </span>
+                                    {% else %}
+                                        <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                    En ligne
+                                {% if appointment.link and appointment.status == "En cours" %}
+                                    - <a href="{{ appointment.link }}"
+                                            class="text-indigo-600 underline hover:text-indigo-900">Link</a>
+                                {% endif %}
+                                </span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-4 py-2 flex justify-center">
+                                    <button onclick="location.href='{{ path('app_appointment_show', {'id': appointment.id}) }}'"
+                                            type="button"
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                        show
+                                    </button>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-lg text-red-500">No appointment found</p>
+            {% endfor %}
+        </div> 
+    #}
 
 {% endblock %}
