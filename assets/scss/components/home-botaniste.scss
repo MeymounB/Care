@@ -182,10 +182,11 @@
 		}
 
 		.left {
-			height: 100%;
+			align-self: flex-start;
 			width: calc(100% - (27vw + 20px));
-			@include vars.flexer(center, space-between, column);
+			@include vars.flexer(center, flex-start, column);
 			gap: 5vh;
+			padding: 20px;
 
 			@include vars.media(tablet, max) {
 				width: 100%;
@@ -293,6 +294,7 @@
 					text-overflow: ellipsis;
 					padding-left: 2px;
 					padding-right: 2px;
+					padding-top: 10px;
 
 					.box {
 						// border: 1px solid vars.$black;
@@ -352,7 +354,7 @@
 			width: calc(100% - ((100% - 27vw) + 50px));
 			// background-color: antiquewhite;
 			padding: 20px;
-			height: 100%;
+			align-self: flex-start;
 			border-radius: 10px;
 
 			@include vars.flexer(flex-start, flex-start, column);
