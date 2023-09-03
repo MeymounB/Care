@@ -105,6 +105,7 @@
 					flex-wrap: wrap;
 					color: vars.$black;
 					text-overflow: ellipsis;
+					white-space: nowrap;
 
 					p:nth-child(1) {
 						max-width: 100px;
