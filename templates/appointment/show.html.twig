@@ -3,7 +3,33 @@
 {% block title %}Appointment{% endblock %}
 
 {% block body %}
-    <section class="detail-rdv" aria-labelledby="rdv-heading">
+
+<section class="appointment-details" aria-labelledby="rdv-heading">
+		<div class="return">
+			<a href="/">Retour à la liste</a>
+		</div>
+		<article class="appointment-content">
+			<h2 id="rdv-heading">Détails du Rendez-vous</h2>
+			<ul class="appointment-info">
+				<li><strong>Auteur :</strong> John Doe</li>
+				<li><strong>Titre :</strong> Réunion d'équipe</li>
+				<li class="description"><strong>Description :</strong> Réunion hebdomadaire pour
+					discuter des projets en cours.</li>
+				<li><strong>Date et Heure :</strong> 15/08/2023 à 10h00</li>
+				<li><strong>Pris en charge par :</strong> Jane Smith</li>
+				<li><strong>Présence :</strong> distanciel</li>
+				<li><strong>Lieu :</strong> <a
+						href="https://discord.com/channels/1063760210780495944/1124989604118921238"
+						aria-describedby="location-desc">Lien vers la réunion</a></li>
+			</ul>
+			<div class="buttons">
+				<button>Edit</button>
+				<button class="delete-button">Delete</button>
+			</div>
+		</article>
+	</section>
+
+    {# <section class="detail-rdv" aria-labelledby="rdv-heading">
         <div class="return"><a href="/">Retour à la liste</a></div>
         <article class="appointment-details">
             <h2 id="rdv-heading">Détails du Rendez-vous</h2>
@@ -46,5 +72,5 @@
                 {% endif %}
             </div>
         </article>
-    </section>
+    </section> #}
 {% endblock %}
