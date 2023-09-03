@@ -24,7 +24,7 @@
 						<a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
 							<p>{{ advice.title }}</p>
 							・
-							<p>{{ advice.createdAt|date('d-m-Y | H:i') }}</p>
+							<p>{{ advice.createdAt|date('d-m-Y') }}</p>
 						</a>
 					{% endfor %}
 				</div>
