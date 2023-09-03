@@ -4,7 +4,7 @@
     </a>
 
     <div class="right_header">
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if is_granted('IS_AUTHENTICATED') %}
             {% if is_granted('ROLE_PARTICULAR') %}
                 <div>
                     <a href="{{ path('app_advice_new') }}">
