@@ -1,10 +1,13 @@
-import {initIsPresential} from "./components/appointmentForm";
-import {initDatetimeValidation} from "./components/appointmentForm";
-import {initShowModal} from "./components/adviceForm";
-import {initDeleteForm} from "./components/adviceForm";
+import {
+  initIsPresential,
+  initDatetimeValidation,
+} from "./components/appointmentForm";
+
+import {initShowModal, initDeleteForm} from "./components/adviceForm";
+import {initDeleteAccountPopup} from "./components/delete_account_popup";
 
 initIsPresential();
 initDatetimeValidation();
-
+initDeleteAccountPopup();
 initShowModal();
 initDeleteForm();
