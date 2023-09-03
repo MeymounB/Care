@@ -4,15 +4,21 @@
     </a>
 
     <div class="right_header">
-        {% if is_granted('ROLE_PARTICULAR') %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if is_granted('ROLE_PARTICULAR') %}
+                <div>
+                    <button class="btn btn-secondary" id="home">Conseil en ligne</button>
+                    <button class="btn btn-secondary" id="news">Demande de RDV</button>
+                </div>
+            {% endif %}
             <div>
-                <button class="btn btn-secondary" id="home">Conseil en ligne</button>
-                <button class="btn btn-secondary" id="news">Demande de RDV</button>
+                <button class="btn btn-secondary" id="profil">Profil</button>
+                <button class="btn btn-secondary" id="disconnect">Déconnexion</button>
+            </div>
+        {% else %}
+            <div class="right_header">
+                <button class="btn btn-secondary" id="home">Accueil</button>
             </div>
         {% endif %}
-        <div>
-            <button class="btn btn-secondary" id="profil">Profil</button>
-            <button class="btn btn-secondary" id="disconnect">Déconnexion</button>
-        </div>
     </div>
 </header>

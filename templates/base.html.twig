@@ -60,12 +60,7 @@
     {{ encore_entry_script_tags('script') }}
 </head>
 <body>
-{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    {% include 'parts/header.html.twig' %}
-{% else %}
-    {% include 'parts/header-not-logged.html.twig' %}
-{% endif %}
-
+{% include 'parts/header.html.twig' %}
 <main>
     {% block body %}{% endblock %}
 </main>
