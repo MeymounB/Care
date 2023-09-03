@@ -4,30 +4,38 @@
 
 {% block body %}
 
-<section class="appointment-details" aria-labelledby="rdv-heading">
-		<div class="return">
-			<a href="/">Retour à la liste</a>
-		</div>
-		<article class="appointment-content">
-			<h2 id="rdv-heading">Détails du Rendez-vous</h2>
-			<ul class="appointment-info">
-				<li><strong>Auteur :</strong> John Doe</li>
-				<li><strong>Titre :</strong> Réunion d'équipe</li>
-				<li class="description"><strong>Description :</strong> Réunion hebdomadaire pour
-					discuter des projets en cours.</li>
-				<li><strong>Date et Heure :</strong> 15/08/2023 à 10h00</li>
-				<li><strong>Pris en charge par :</strong> Jane Smith</li>
-				<li><strong>Présence :</strong> distanciel</li>
-				<li><strong>Lieu :</strong> <a
-						href="https://discord.com/channels/1063760210780495944/1124989604118921238"
-						aria-describedby="location-desc">Lien vers la réunion</a></li>
-			</ul>
-			<div class="buttons">
-				<button>Edit</button>
-				<button class="delete-button">Delete</button>
-			</div>
-		</article>
-	</section>
+    <section class="appointment-details" aria-labelledby="rdv-heading">
+        <article class="appointment-content">
+            <h2 id="rdv-heading">Détails du Rendez-vous</h2>
+            <ul class="appointment-info">
+                <li><strong>Auteur : </strong>{{ appointment.particular.Fullname }}</li>
+                <li><strong>Titre : </strong>{{ appointment.title }}</li>
+                <li class="description"><strong>Description : </strong>{{ appointment.description }}</li>
+                <li><strong>Date et Heure
+                        : </strong>{{ appointment.plannedAt ? appointment.plannedAt|date('d-m-Y H:i:s') : '' }}</li>
+                <li><strong>Pris en charge par
+                        : </strong>{{ appointment.botanist ? appointment.botanist.FullName : 'Aucun botaniste assigné' }}
+                </li>
+                <li><strong>Présence : </strong>{{ appointment.isPresential ? 'À domicile' : 'En ligne' }}</li>
+                {% if appointment.isPresential and appointment.status == "En cours" %}
+                {% if appointment.address %}
+                    <p><strong>Lieu : </strong>{{ appointment.address }}</p>
+                {% endif %}
+                {% elseif appointment.isPresential == false and appointment.status == "En cours" %}
+                {% if appointment.link %}
+                <li><strong>Lieu : </strong> <a
+                            href="https://discord.com/channels/1063760210780495944/1124989604118921238"
+                            aria-describedby="location-desc">Lien vers la réunion</a></li>
+            </ul>
+            {% endif %}
+            {% endif %}
+
+            <div class="buttons">
+                <button>Edit</button>
+                <button class="delete-button">Delete</button>
+            </div>
+        </article>
+    </section>
 
     {# <section class="detail-rdv" aria-labelledby="rdv-heading">
         <div class="return"><a href="/">Retour à la liste</a></div>
