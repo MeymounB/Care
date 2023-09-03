@@ -8,10 +8,10 @@
             {% if is_granted('ROLE_PARTICULAR') %}
                 <div>
                     <a href="{{ path('app_advice_new') }}">
-                        <button class="btn btn-secondary" id="home">Conseil en ligne</button>
+                        <button class="btn btn-secondary">Conseil en ligne</button>
                     </a>
                     <a href="{{ path('app_appointment_new') }}">
-                        <button class="btn btn-secondary" id="news">Demande de RDV</button>
+                        <button class="btn btn-secondary">Demande de RDV</button>
                     </a>
                 </div>
             {% endif %}
@@ -24,7 +24,10 @@
         {% else %}
             <div class="right_header">
                 <a href="{{ path('app_default') }}">
-                    <button class="btn btn-secondary" id="home">Accueil</button>
+                    <button class="btn btn-secondary">Accueil</button>
+                </a>
+                <a href="{{ path('app_register', {'type':'botaniste'}) }}">
+                    <button class="btn btn-secondary">Professionnel ?</button>
                 </a>
             </div>
         {% endif %}

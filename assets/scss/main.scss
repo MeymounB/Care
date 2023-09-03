@@ -2,6 +2,11 @@
 @import './components/index';
 @import './pages/index';
 
+main {
+    // padding: 10vh 10vw;
+    min-height: 100vh;
+}
+
 $header-height: 90px;
 $container-margin: 20;
 
