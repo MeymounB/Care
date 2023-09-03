@@ -123,7 +123,7 @@
 				<div class="activities">
 					{% for recent in recent_activity %}
 						<a href="{{ path('app_advice_show', {'id': recent.id}) }}" class="activity">
-							<p>recent.title</p>
+							<p>{{ recent.title }}</p>
 							・
 							{% if recent.isPublic %}
 								<p>Public</p>
