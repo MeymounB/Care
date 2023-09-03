@@ -26,8 +26,8 @@
 			min-width: 150px;
 
 			img {
-				width: 85%;
-				border-radius: 25%;
+				width: 100%;
+				border-radius: 50%;
 			}
 		}
 
@@ -68,35 +68,6 @@
 						}
 					}
 				}
-
-				.personnal-action {
-					width: 30px;
-					height: 30px;
-					cursor: pointer;
-
-					background: none;
-					border: none;
-					position: relative;
-
-					img {
-						width: 100%;
-						aspect-ratio: 1/1
-					}
-
-					.elementCache {
-						// display: none;
-					}
-
-					#monElementCache {
-						position: absolute;
-						width: 200px;
-						top: 35px;
-						right: 0px;
-						background-color: white;
-						border: 1px solid black;
-						padding: 5px;
-					}
-				}
 			}
 
 			.stats {
@@ -131,6 +102,23 @@
 
 					p:nth-child(2) {}
 				}
+			}
+		}
+
+		.personnal-action {
+			cursor: pointer;
+			@include vars.flexer(flex-start, flex-start, row);
+			gap: 20px;
+			flex-wrap: wrap;
+			width: 100%;
+
+			background: none;
+			border-top: 2px solid black;
+			padding-top: 5px;
+
+			img {
+				width: 100%;
+				aspect-ratio: 1/1
 			}
 		}
 	}
@@ -189,15 +177,10 @@
 						p:nth-child(1) {
 							border-bottom: 1px solid vars.$black;
 						}
-
-						p:nth-child(2) {}
-
 					}
-
 				}
 
 				.buttons {
-					// margin-left: auto;
 					@include vars.flexer(center, flex-start, row);
 					gap: 10px;
 
@@ -205,10 +188,7 @@
 						width: 100%;
 						padding: 5px;
 						border-radius: 5px;
-					}
-
-					button:nth-child(2) {
-						border: 2px solid red;
+						border: 2px solid black;
 					}
 				}
 			}

@@ -136,5 +136,22 @@
 				color: vars.$green;
 			}
 		}
+
+		.personnal-action {
+			cursor: pointer;
+			@include vars.flexer(flex-start, flex-start, row);
+			gap: 20px;
+			flex-wrap: wrap;
+			width: 100%;
+
+			background: none;
+			border-top: 2px solid black;
+			padding-top: 5px;
+
+			img {
+				width: 100%;
+				aspect-ratio: 1/1
+			}
+		}
 	}
 }
