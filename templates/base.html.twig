@@ -49,11 +49,13 @@
             {{ encore_entry_script_tags('script') }}
     </head>
     <body>
-        {% include 'parts/header.html.twig' %}
+        {% include 'parts/header-not-logged.html.twig' %}
+
         <main>
             {% block body %}{% endblock %}
-            {% block footer %}{% include('./parts/footer.html.twig') %}{% endblock %}
         </main>
+
+        {% include './parts/footer.html.twig' %}
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </body>
