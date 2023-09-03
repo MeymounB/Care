@@ -71,11 +71,15 @@
 		<div class="bottom-banner">
 			<div class="left">
 				 <div class="historique">
-					<h3>Gardiennage</h3>
+					<h3>Besoin d'aide ?</h3>
 					<div class="box-container">
-						<a href="{{ path('app_advice_list_recent_advice') }}" class="box">
+						<a href="{{ path('app_advice_new') }}" class="box">
 							<img src={{ asset('images/plante1.jpg') }}>
-							<p>Vos demandes de conseils</p>
+							<p>Conseil en ligne</p>
+						</a>
+						<a href="{{ path('app_appointment_new') }}" class="box">
+							<img src={{ asset('images/plante1.jpg') }}>
+							<p>Prendre rendez-vous</p>
 						</a>
 					</div>
 				</div>
