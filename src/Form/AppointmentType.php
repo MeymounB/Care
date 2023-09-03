@@ -86,6 +86,28 @@ class AppointmentType extends AbstractType
                 'label' => 'Adresse',
                 'error_bubbling' => true,
                 'required' => false
+            ])
+            ->add('plants', ChoiceType::class, [
+                "mapped" => false,
+                'choices' => $this->security->getUser()->getPlants(),
+                'choice_label' => function ($value) {
+                    if (is_object($value)) {
+                        return $value->__toString();
+                    } else {
+                        return $value;
+                    }
+                },
+                'choice_value' => function ($value) {
+                    if (is_object($value)) {
+                        return $value->getId();
+                    } else {
+                        return 0;
+                    }
+                },
+                'label' => 'Plantes',
+                'error_bubbling' => true,
+                'required' => true,
+                'multiple' => true,
             ]);
     }
 
