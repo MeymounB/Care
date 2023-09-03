@@ -29,7 +29,7 @@
 	}
 
 	.top-banner {
-		@include vars.flexer(center, space-between, row);
+		@include vars.flexer(center, flex-start, row);
 		gap: vars.rem(60);
 		width: 100%;
 
