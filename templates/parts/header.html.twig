@@ -1,16 +1,16 @@
-{# DESKTOP HEADER #}
-<header>
-    <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+<header class="header-accueil">
+		<a href="/" class="left_header">
+			<img class="greencare_logo" id="logo" src="/images/logoG.png" alt="greencare">
+		</a>
 
-    <input type="checkbox" id="header_toggle">
-
-    <label for="header_toggle" class="header_burger">
-        {% include 'parts/burger.html.twig' %}
-    </label>
-
-    <nav class="header_nav">
-        <a href="{{ path('app_default') }}">Accueil</a>
-        <a href="#">A propos</a>
-        <button class="btn btn-secondary" id="download">Télécharger</button>
-    </nav>
+		<div class="right_header">
+			<div>
+				<button class="btn btn-secondary" id="home">Conseil en ligne</button>
+				<button class="btn btn-secondary" id="news">Demande de RDV</button>
+			</div>
+			<div>
+				<button class="btn btn-secondary" id="profil">Profil</button>
+				<button class="btn btn-secondary" id="disconnect">Déconnexion</button>
+			</div>
+		</div>
 </header>
