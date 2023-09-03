@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use DateInterval;
-use App\Entity\User;
 use App\Entity\Appointment;
+use App\Entity\Particular;
+use App\Entity\User;
 use App\Form\AppointmentType;
+use App\Repository\AppointmentRepository;
+use App\Repository\StatusRepository;
 use App\Service\AppointmentService;
 use App\Service\LinkManagerService;
-use App\Repository\StatusRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
-use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/appointment')]
 class AppointmentController extends AbstractController
@@ -43,7 +44,7 @@ class AppointmentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_appointment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AppointmentRepository $appointmentRepository, StatusRepository $statusRepository, LinkManagerService $linkCreatorService): Response
+    public function new(#[CurrentUser] ?Particular $user, Request $request, AppointmentRepository $appointmentRepository, StatusRepository $statusRepository, LinkManagerService $linkCreatorService): Response
     {
         $appointment = new Appointment();
 
@@ -52,7 +53,10 @@ class AppointmentController extends AbstractController
             $appointment->setStatus($defaultStatus);
         }
 
-        $form = $this->createForm(AppointmentType::class, $appointment);
+        $form = $this->createForm(AppointmentType::class, $appointment, [
+            'plants' => array(...$user->getPlants()),
+            'address' => array(...$user->getAddress()),
+        ]);
         $form->handleRequest($request);
 
 
