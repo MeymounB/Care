@@ -14,27 +14,27 @@ class AddressType extends AbstractType
     {
         $builder
             ->add('street', TextType::class, [
-                "label" => "Rue",
+                'label' => 'Rue',
                 'error_bubbling' => true,
                 'required' => true,
                 'attr' => [
-                    "placeholder" => "1 Rue de l'Exemple"
+                    'placeholder' => "1 Rue de l'Exemple",
                 ],
             ])
             ->add('zipCode', TextType::class, [
-                "label" => "Code postal",
+                'label' => 'Code postal',
                 'error_bubbling' => true,
                 'required' => true,
                 'attr' => [
-                    "placeholder" => "75000"
+                    'placeholder' => '75000',
                 ],
             ])
             ->add('city', TextType::class, [
-                "label" => "Ville",
+                'label' => 'Ville',
                 'error_bubbling' => true,
                 'required' => true,
                 'attr' => [
-                    "placeholder" => "Paris"
+                    'placeholder' => 'Paris',
                 ],
             ]);
     }

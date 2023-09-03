@@ -21,7 +21,6 @@ class Appointment extends Request
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
 
-
     // #[Gedmo\Slug(fields: ['title'])]
     // #[ORM\Column(length: 255, nullable: true)]
     // private ?string $slug = null;

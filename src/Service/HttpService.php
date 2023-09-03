@@ -22,6 +22,7 @@ class HttpService
 
         return $response->toArray();
     }
+
     public function post(string $url, array $data, array $headers): array
     {
         $response = $this->client->request(
@@ -29,7 +30,7 @@ class HttpService
             $url,
             [
                 'body' => $data,
-                "headers" => $headers,
+                'headers' => $headers,
             ]
         );
 

@@ -3,16 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Address;
-use App\Form\AddressType;
 use App\Entity\Particular;
+use App\Form\AddressType;
 use App\Service\AdviceService;
 use App\Service\AppointmentService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndividualController extends abstractController
 {
@@ -65,13 +65,13 @@ class IndividualController extends abstractController
             $manager->persist($address);
             $manager->flush();
 
-            $this->addFlash("success", "Votre adresse a bien été modifiée");
+            $this->addFlash('success', 'Votre adresse a bien été modifiée');
 
             return $this->redirectToRoute('app.user.index');
         }
 
         return $this->render('user/edit_address.html.twig', [
-            "form" => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

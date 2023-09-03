@@ -36,8 +36,8 @@ abstract class UserFormType extends AbstractType
                     new Regex([
                         'pattern' => '/^[a-zA-Z\s]+$/',
                         'message' => 'Votre prénom ne doit contenir que des lettres',
-                    ])
-                ]
+                    ]),
+                ],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
@@ -47,8 +47,8 @@ abstract class UserFormType extends AbstractType
                     new Regex([
                         'pattern' => '/^[a-zA-Z\s]+$/',
                         'message' => 'Votre nom ne doit contenir que des lettres',
-                    ])
-                ]
+                    ]),
+                ],
             ])
             ->add('email', TextType::class, [
                 'label' => 'Adresse email',

@@ -54,17 +54,16 @@ class AppointmentController extends AbstractController
         }
 
         $form = $this->createForm(AppointmentType::class, $appointment, [
-            'plants' => array(...$user->getPlants()),
-            'address' => array(...$user->getAddress()),
+            'plants' => [...$user->getPlants()],
+            'address' => [...$user->getAddress()],
         ]);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $isPresential = $form->get("isPresential")->getData();
-            $address = $form->get("address")->getData();
-            $plannedDate = $form->get("plannedAt")->getData();
-            $plants = $form->get("plants")->getData();
+            $isPresential = $form->get('isPresential')->getData();
+            $address = $form->get('address')->getData();
+            $plannedDate = $form->get('plannedAt')->getData();
+            $plants = $form->get('plants')->getData();
 
             // dd($plannedDate->format("Y-m-d\TH:i:s\Z"));
 
@@ -86,8 +85,8 @@ class AppointmentController extends AbstractController
                 $link = $linkCreatorService->createLink(
                     [
                         'endDate' => $plannedDate
-                            ->add(DateInterval::createFromDateString('1 day'))
-                            ->format("Y-m-d\TH:i:s\Z")
+                            ->add(\DateInterval::createFromDateString('1 day'))
+                            ->format("Y-m-d\TH:i:s\Z"),
                     ]
                 );
                 $appointment->setLink($link);
@@ -141,7 +140,7 @@ class AppointmentController extends AbstractController
     {
         $appointment = $service->getById($id);
 
-        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 

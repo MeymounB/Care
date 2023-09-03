@@ -7,8 +7,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class LinkManagerService
 {
     private HttpService $httpService;
-    private  ParameterBagInterface $params;
-
+    private ParameterBagInterface $params;
 
     public function __construct(HttpService $httpService, ParameterBagInterface $params)
     {
@@ -18,7 +17,7 @@ class LinkManagerService
 
     public function createLink(array $data): string
     {
-        $url = "https://api.whereby.dev/v1/meetings/";
+        $url = 'https://api.whereby.dev/v1/meetings/';
         $request = [
             'roomNamePrefix' => 'greencare-',
             'roomNamePattern' => 'uuid',
@@ -28,7 +27,7 @@ class LinkManagerService
         ];
 
         $headers = [
-            "Authorization" => "Bearer " . $this->params->get("whereby_token")
+            'Authorization' => 'Bearer '.$this->params->get('whereby_token'),
         ];
 
         $response = $this->httpService->post($url, $request, $headers);
