@@ -19,22 +19,29 @@
                                     <div class="info h3">
                                         <h3>{{ advice.title }}</h3>
                                     </div>
-                                    <div class="infos-sub-box">
-                                        <div class="info">
-                                            <p id="name">{{ advice.particular ? advice.particular.FullName : '' }}</p>
+
+                                    <div class="infos-action">
+								        <div class="infos-sub-box">
+                                            <div class="info">
+                                                <p id="name">{{ advice.particular ? advice.particular.FullName : '' }}</p>
+                                            </div>
+                                            ・
+                                            <div class="info">
+                                                <p id="date">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</p>
+                                            </div>
+                                            ・
+                                            <div class="info">
+                                                {% if advice.isPublic %}
+                                                        <p id="status2" style="color: green">Public</p>
+                                                {% else %}
+                                                        <p id="status2" style="color: red">Privée</p>
+                                                {% endif %}
+                                            </div>
                                         </div>
-                                        ・
-                                        <div class="info">
-                                            <p id="date">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</p>
-                                        </div>
-                                        ・
-                                        <div class="info">
-                                            {% if advice.isPublic %}
-                                                    <p id="status2" style="color: green">Public</p>
-                                            {% else %}
-                                                    <p id="status2" style="color: red">Privée</p>
-                                            {% endif %}
-                                        </div>
+                                        <div class="buttons">
+									        <button>Edit</button>
+									        <button class="delete-button">Delete</button>
+								        </div>
                                     </div>
                                 </div>
                             </div>

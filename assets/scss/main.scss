@@ -7,11 +7,11 @@ main {
     min-height: 100vh;
 }
 
-$header-height: 90px;
-$container-margin: 20;
+// $header-height: 90px;
+// $container-margin: 20;
 
-.container {
-    width: 100%;
-    height: calc(100vh - ($header-height + 2 * $container-margin * 1px));
-    margin: vars.rem($container-margin) 0;
-}
+// .container {
+//     width: 100%;
+//     height: calc(100vh - ($header-height + 2 * $container-margin * 1px));
+//     margin: vars.rem($container-margin) 0;
+// }
