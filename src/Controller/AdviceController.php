@@ -30,7 +30,7 @@ class AdviceController extends AbstractController
     #[Route('/', name: 'app_advice_index', methods: ['GET'])]
     public function index(): Response
     {
-        $groupedAdvices = $this->adviceService->getGroupedAdvices();
+        $groupedAdvices = $this->adviceService->getGroupedAdvices(true);
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,
