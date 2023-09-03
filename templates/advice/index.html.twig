@@ -11,7 +11,7 @@
             {% for status, advices in groupedAdvices %}
                 <h2>{{ status }} :</h2>
                 {% for advice in advices %}
-                    <a href="/" id="conseil">
+                    <a href='{{ path('app_advice_show', {'id': advice.id}) }}' id="conseil">
                         <div class="img-container"><img src="/images/plante1.jpg" alt=""></div>
                         <div class="infos-box">
                             <div class="infos-container">
@@ -46,11 +46,6 @@
                                 </div>
                             </div>
                         </div>
-                        {# <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
-                                type="button"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                            show
-                        </button> #}
                     </a>
                 {% endfor %}
             {% endfor %}
