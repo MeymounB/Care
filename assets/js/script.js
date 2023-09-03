@@ -38,6 +38,7 @@
 //     // Process the selected file(s) as needed
 //     for (var i = 0; i < files.length; i++) {
 //       var file = files[i];
+//       fileInput;
 //       console.log("Selected file:", file.name);
 //       // You can perform further actions with the file, such as reading its content or uploading it to a server.
 //     }
