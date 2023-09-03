@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
-use App\Entity\Particular;
+use App\Entity\User;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
@@ -30,13 +30,7 @@ class AdviceController extends AbstractController
     #[Route('/', name: 'app_advice_index', methods: ['GET'])]
     public function index(): Response
     {
-        $user = $this->getUser();
-
-        if (!$user instanceof Particular) {
-            throw $this->createAccessDeniedException('Access denied');
-        }
-
-        $groupedAdvices = $this->adviceService->getAdvicesByUser($user->getId());
+        $groupedAdvices = $this->adviceService->getGroupedAdvices();
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,
@@ -122,18 +116,18 @@ class AdviceController extends AbstractController
         return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/own', name: 'app_advice_own', methods: ['GET'])]
-    public function get_own_advice(): Response
+    #[Route('/recent_advice', name: 'app_advice_list_recent_advice', methods: ['GET'])]
+    public function show_recent_advice(): Response
     {
         $user = $this->getUser();
 
-        if (!$user instanceof Particular) {
+        if (!$user instanceof User) {
             throw $this->createAccessDeniedException('Access denied');
         }
 
-        $groupedAdvices = $this->adviceService->getOwnAdviceByUser($user);
+        $groupedAdvices = $this->adviceService->getGroupedAdvicesByUser($user);
 
-        return $this->render('advice/index.html.twig', [
+        return $this->render('advice/recent_advice.html.twig', [
             'groupedAdvices' => $groupedAdvices,
         ]);
     }

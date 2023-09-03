@@ -18,10 +18,13 @@ class BotanistFormType extends UserFormType
                 'mapped' => false,
                 'label' => 'Document de certification',
                 'required' => true,
+                'error_bubbling' => true,
                 'constraints' => [
                     new File([
                         'mimeTypes' => ['application/pdf'],
-                        'maxSize' => 1024 * 512, // max file size is
+                        'maxSize' => '3M', // max file size is
+                        'maxSizeMessage' => 'Le fichier ne doit pas dépasser 3 Mo',
+                        'mimeTypesMessage' => 'Le fichier doit être au format PDF',
                     ]),
                 ],
             ]);

@@ -18,8 +18,8 @@ class Address
     #[ORM\Column(length: 255)]
     private ?string $street = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $zipCode = null;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $zipCode = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -51,12 +51,12 @@ class Address
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getZipCode(): ?int
     {
         return $this->zipCode;
     }
 
-    public function setZipCode(string $zipCode): static
+    public function setZipCode(int $zipCode): static
     {
         $this->zipCode = $zipCode;
 

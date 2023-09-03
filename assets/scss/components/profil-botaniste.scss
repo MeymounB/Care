@@ -1,3 +1,5 @@
+@use "../utils" as vars;
+
 .profil-botaniste {
 	padding: 10vh 0;
 	@include vars.flexer(flex-start, center, column);

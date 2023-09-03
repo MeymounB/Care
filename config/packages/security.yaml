@@ -23,7 +23,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                success_handler: App\Controller\RedirectLoginController
+                success_handler: App\Controller\Auth\RedirectLoginController
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -45,9 +45,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        #- { path: ^/particular, roles: ROLE_PARTICULAR }
-        #- { path: ^/botanist, roles: ROLE_BOTANIST }
-        #- { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: '^/$', roles: ROLE_USER }
+        - { path: '^/logout', roles: ROLE_USER }
+        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/dashboard', roles: ROLE_BOTANIST }
+        - { path: '^/user_dashboard', roles: ROLE_PARTICULAR }
+        - { path: '^/appointment', roles: [ ROLE_BOTANIST, ROLE_PARTICULAR ] }
+        - { path: '^/advice', roles: [ ROLE_BOTANIST, ROLE_PARTICULAR ] }
+        # - { path: '^/', roles: ROLE_ADMIN }
         - { path: '^/verify/email', roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 when@test:

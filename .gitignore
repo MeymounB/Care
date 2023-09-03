@@ -12,6 +12,7 @@
 /public/bundles/
 /var/
 /vendor/
+/uploads/certifications/
 .idea/
 .vscode/
 ###< symfony/framework-bundle ###

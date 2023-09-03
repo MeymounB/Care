@@ -7,6 +7,14 @@
 		<h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_botanist_appointments') }}"><span>{{ app.user }}</span></a>
 		</h2> {# TODO: mettre le lien vers le profil #}
 
+		{% if app.user.address is empty %}
+			<p>
+				Veuillez renseigner au moins une adresse pour pouvoir faire des demandes de rendez-vous. 
+				<a href="{{ path('app.user.edit.address') }}">Cliquez ici.</a>
+			</p>
+		{% endif %}
+		
+
 		<div class="top-banner">
 			<div class="take-rdv">
 				<h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a>
@@ -21,21 +29,43 @@
 					{% endfor %}
 				</div>
 			</div>
-			<div class="statisique">
-				<div>
+			<aside>
+				<article class="statisique">
 					<h3>Mes statistiques</h3>
 					<div>
-						<p>Rendez-vous pris</p>
-						<p>{{ appointment_count }}</p>
+						<p>
+							<span>Rendez-vous pris : </span>
+							<span>{{ appointment_count }}</span>
+						</p>
+						<p>
+							<span>Conseils donnés : </span>
+							<span>{{ advice_count }}</span>
+						</p>
 					</div>
-					<div>
-						<p>Conseils donnés</p>
-						<p>{{ advice_count }}</p>
-					</div>
-				</div>
 
-				<a href="/">Accéder à mon profil</a>
-			</div>
+					<a href="/">Accéder à mon profil</a>
+				</article>
+				<article class="addresses">
+					<div>
+						<h3>Mes adresses</h3>
+						{% if app.user.address is empty %}
+							<p>Vous n'avez pas encore d'adresses</p>
+						{% else %}
+							{# <ul>
+								{% for address in app.user.addresses %}
+									<li>{{ address.street  }}</li>
+								{% endfor %}
+							</ul> #}
+							<p>
+								<span>Nombre d'adresses : </span>
+								<span>{{ app.user.address|length  }}</span>
+							</p>
+						{% endif %}
+					</div>
+
+					<a href="{{ path('app.user.edit.address') }}">Ajouter une adresse</a>
+				</article>
+			</aside>
 		</div>
 
 		<div class="bottom-banner">
@@ -77,7 +107,7 @@
 			<div class="recent">
 				<div class="top">
 					<h3>Activités récentes</h3>
-					<a href="{{ path('app_botanist_list_recent_advice') }}">Voir toutes
+					<a href="{{ path('app_advice_list_recent_advice') }}">Voir toutes
 						<img src={{ asset('images/right-arrow.png') }}>
 					</a>
 				</div>
