@@ -95,7 +95,7 @@
                 <div class="activities">
                     {% for advice in advices %}
                         <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="activity">
-                            <p>advice.title</p>
+                            <p>{{ advice.title }}</p>
                             ・
                             {% if advice.isPublic %}
                                 <p>Public</p>
