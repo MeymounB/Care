@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AppointmentType extends AbstractType
 {
@@ -108,6 +109,12 @@ class AppointmentType extends AbstractType
                 'error_bubbling' => true,
                 'required' => true,
                 'multiple' => true,
+
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Vous devez choisir au moins une plante',
+                    ]),
+                ]
             ]);
     }
 

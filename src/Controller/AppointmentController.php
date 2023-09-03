@@ -60,8 +60,15 @@ class AppointmentController extends AbstractController
             $isPresential = $form->get("isPresential")->getData();
             $address = $form->get("address")->getData();
             $plannedDate = $form->get("plannedAt")->getData();
+            $plants = $form->get("plants")->getData();
 
             // dd($plannedDate->format("Y-m-d\TH:i:s\Z"));
+
+            if ($plants) {
+                foreach ($plants as $plant) {
+                    $appointment->addPlant($plant);
+                }
+            }
 
             if ($isPresential) {
                 if (is_null($address)) {
