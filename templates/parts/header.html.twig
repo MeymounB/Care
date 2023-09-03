@@ -7,8 +7,12 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             {% if is_granted('ROLE_PARTICULAR') %}
                 <div>
-                    <button class="btn btn-secondary" id="home">Conseil en ligne</button>
-                    <button class="btn btn-secondary" id="news">Demande de RDV</button>
+                    <a href="{{ path('app_advice_new') }}">
+                        <button class="btn btn-secondary" id="home">Conseil en ligne</button>
+                    </a>
+                    <a href="{{ path('app_appointment_new') }}">
+                        <button class="btn btn-secondary" id="news">Demande de RDV</button>
+                    </a>
                 </div>
             {% endif %}
             <div>
@@ -19,7 +23,9 @@
             </div>
         {% else %}
             <div class="right_header">
-                <button class="btn btn-secondary" id="home">Accueil</button>
+                <a href="{{ path('app_default') }}">
+                    <button class="btn btn-secondary" id="home">Accueil</button>
+                </a>
             </div>
         {% endif %}
     </div>
