@@ -1,16 +1,18 @@
 <header class="header-accueil">
-		<a href="/" class="left_header">
-			<img class="greencare_logo" id="logo" src="/images/logoG.png" alt="greencare">
-		</a>
+    <a href="/" class="left_header">
+        <img class="greencare_logo" id="logo" src="/images/logoG.png" alt="greencare">
+    </a>
 
-		<div class="right_header">
-			<div>
-				<button class="btn btn-secondary" id="home">Conseil en ligne</button>
-				<button class="btn btn-secondary" id="news">Demande de RDV</button>
-			</div>
-			<div>
-				<button class="btn btn-secondary" id="profil">Profil</button>
-				<button class="btn btn-secondary" id="disconnect">Déconnexion</button>
-			</div>
-		</div>
+    <div class="right_header">
+        {% if is_granted('ROLE_PARTICULAR') %}
+            <div>
+                <button class="btn btn-secondary" id="home">Conseil en ligne</button>
+                <button class="btn btn-secondary" id="news">Demande de RDV</button>
+            </div>
+        {% endif %}
+        <div>
+            <button class="btn btn-secondary" id="profil">Profil</button>
+            <button class="btn btn-secondary" id="disconnect">Déconnexion</button>
+        </div>
+    </div>
 </header>
