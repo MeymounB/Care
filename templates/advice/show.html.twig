@@ -3,7 +3,82 @@
 {% block title %}Advice{% endblock %}
 
 {% block body %}
-    <main class="grow">
+
+<section class="conseil">
+		<div class="navigation">
+			<a href="/">Demandes de conseils</a> >
+			<a href="/">Discussion</a>
+		</div>
+
+		<div class="demande">
+			<div class="img-plante"><img src="/images/plante1.jpg" alt=""></div>
+			<div class="details">
+				<h2>Des points blancs sur ma plante, que faire ?</h2>
+				<div class="descritpion-container">
+					<div class="infos">
+						<div class="posted-by">Black NextGen</div>
+						・
+						<div class="when">3h</div>
+						・
+						<div class="nb-comments"><span id="number-comments">18</span>
+							Commentaires</div>
+					</div>
+					<div class="description">Des points blanc sont apparus sur ma plante il y a deux
+						jours
+						et je ne sais pas quoi faire. (Alaid)</div>
+				</div>
+				<div class="write-answer">
+					<form action="/">
+						<fieldset>
+							<img src="/images/jardinnier.jpg" alt="Photo de profil">
+							<textarea name="" id="" cols="30" rows="7" required
+								placeholder="Ecrivez un commentaire..."></textarea>
+						</fieldset>
+						<button>
+							<p>Répondre</p>
+							<img src="/images/right-arrow-white.png" alt="flèche">
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="commentaires">
+			<h3>Commentaires</h3>
+			<div class="reponse">
+				<p class="text">Juste pour dire que ton problème, on s'en fout royalement. Je dis ça, je
+					dis rien.
+				</p>
+				<div class="infos">
+					<img src="/images/jardinnier.jpg" alt="Photo de profil">
+					<div class="options">
+						<p>Black NextGen</p>
+						・
+						<button>Répondre</button>
+						・
+						<button>Partager</button>
+					</div>
+				</div>
+			</div>
+			<div class="reponse">
+				<p class="text">Juste pour dire que ton problème, on s'en fout royalement. Je dis ça, je
+					dis rien.
+				</p>
+				<div class="infos">
+					<img src="/images/jardinnier.jpg" alt="Photo de profil">
+					<div class="options">
+						<p>Black NextGen</p>
+						・
+						<button>Répondre</button>
+						・
+						<button>Partager</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    {# <main class="grow">
         <div class="px-4 sm:px-6 lg:px-8 py-8 md:py-0 w-full max-w-9xl mx-auto">
             <div class="xl:flex">
                 <div class="md:flex flex-1">
@@ -88,10 +163,10 @@
                 </div>
             </div>
         </div>
-    </main>
+    </main> #}
 
     <!-- Comments -->
-    <div class="mt-4">
+    {# <div class="mt-4">
         <h3 class="font-semibold text-slate-800  mb-4">Comments</h3>
         <ul class="divide-y divide-gray-200">
 
@@ -117,7 +192,7 @@
 
                                 <div class="flex">
                                     {% if comment.user %}
-                                        {# Vérifier si l'utilisateur est un botaniste #}
+                                        <!-- Vérifier si l'utilisateur est un botaniste -->
                                         {% set isBotanist = false %}
                                         {% for role in comment.user.roles %}
                                             {% if role == 'ROLE_BOTANIST' %}
@@ -125,7 +200,7 @@
                                             {% endif %}
                                         {% endfor %}
 
-                                        {# Vérifier si l'utilisateur est l'auteur de la demande de conseil #}
+                                        <!-- Vérifier si l'utilisateur est l'auteur de la demande de conseil -->
                                         {% set isAuthor = advice.particular == comment.user.fullName %}
 
                                         {% if isBotanist %}
@@ -153,11 +228,6 @@
                                 </div>
                                 <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
                             </div>
-
-                            {# <div class="flex items-center text-sm text-slate-600 px-2">
-                                <a class="font-medium  "
-                                   href="#0">Reply</a>
-                            </div> #}
 
                             {% if app.user == comment.user %}
                                 <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
@@ -202,6 +272,6 @@
                 </form>
             {% endif %}
         </div>
-    </div>
+    </div> #}
 
 {% endblock %}
