@@ -68,22 +68,6 @@ class BotanistController extends AbstractController
         ]);
     }
 
-    #[Route('/incoming_appointment', name: 'incoming_appointment', methods: ['GET'])]
-    public function incoming_appointment(): Response
-    {
-        $user = $this->getUser();
-
-        if (!$user instanceof Botanist) {
-            throw $this->createAccessDeniedException('Access denied');
-        }
-
-        $groupedAppointments = $this->appointmentService->getGroupedAppointmentsByBotanist($user->getId());
-
-        return $this->render('botanist/incoming_appointments.html.twig', [
-            'groupedAppointments' => $groupedAppointments,
-        ]);
-    }
-
     #[Route('/appointments/{id}', name: 'accept_appointment', methods: ['GET'])]
     public function accept_appointment(AppointmentRepository $appointmentRepository, $id, StatusRepository $statusRepository): Response
     {
@@ -131,6 +115,6 @@ class BotanistController extends AbstractController
 
         $appointmentRepository->save($appointment, true);
 
-        return $this->redirectToRoute('app_botanist_incoming_appointment');
+        return $this->redirectToRoute('app_appointment_incoming_appointment');
     }
 }

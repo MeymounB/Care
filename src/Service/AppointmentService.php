@@ -47,9 +47,14 @@ class AppointmentService
         return $this->appointmentRepository->count(['status' => 45]);
     }
 
-    public function getGroupedAppointmentsByBotanist(int $botanistId): array
+    public function getGroupedAppointmentsByBotanist(int $user_id, string $type): array
     {
-        $appointments = $this->appointmentRepository->findBy(['botanist' => $botanistId]);
+        if ($type === 'Botanist') {
+            $appointments = $this->appointmentRepository->findBy(['botanist' => $user_id]);
+        } elseif ($type === 'Particular') {
+            $appointments = $this->appointmentRepository->findBy(['particular' => $user_id]);
+        }
+
 
         return $this->groupAppointmentsByStatus($appointments);
     }
