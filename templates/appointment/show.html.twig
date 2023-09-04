@@ -23,7 +23,7 @@
                 {% endif %}
                 {% elseif appointment.isPresential == false and appointment.status == "En cours" %}
                 {% if appointment.link %}
-                <li><strong>Lieu : </strong> <a
+                <li><strong>Lieu : </strong><a
                             href="https://discord.com/channels/1063760210780495944/1124989604118921238"
                             aria-describedby="location-desc">Lien vers la réunion</a></li>
             </ul>
@@ -31,9 +31,35 @@
             {% endif %}
 
             <div class="buttons">
-                <button>Edit</button>
-                <button class="delete-button">Delete</button>
-            </div>
+                {% if is_granted('ROLE_PARTICULAR') %}
+                    {% if (app.user.email == appointment.particular.email) %}
+                        <form id="delete-form" method="post"
+                              action="{{ path('app_appointment_edit', {'id': appointment.id}) }}">
+                            <button type="submit">Éditer</button>
+                        </form>
+                        <form id="delete-form" method="post"
+                              action="{{ path('app_appointment_delete', {'id': appointment.id}) }}">
+                            <button class="delete-button" type="submit">Supprimer</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+                {% if is_granted('ROLE_BOTANIST') %}
+                    {% if appointment.status == "En attente" %}
+                        <form method="POST" action="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">
+                            <button type="submit">Prendre en charge le rendez-vous</button>
+                        </form>
+                    {% elseif appointment.status == "En cours" %}
+                        <form method="post"
+                              action="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}">
+                            <button type="submit">Annuler</button>
+                        </form>
+                        <form method="post"
+                              action="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}">
+                            <button type="submit">Terminer</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+                </div>
         </article>
     </section>
 

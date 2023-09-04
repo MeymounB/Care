@@ -131,4 +131,20 @@ class AdviceController extends AbstractController
             'groupedAdvices' => $groupedAdvices,
         ]);
     }
+
+    #[Route('/my_advice', name: 'app_advice_list_my_advice', methods: ['GET'])]
+    public function show_my_advice(): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $groupedAdvices = $this->adviceService->getOwnAdviceByUser($user->getId());
+
+        return $this->render('advice/index.html.twig', [
+            'groupedAdvices' => $groupedAdvices,
+        ]);
+    }
 }

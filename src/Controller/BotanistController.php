@@ -68,8 +68,8 @@ class BotanistController extends AbstractController
         ]);
     }
 
-    #[Route('/appointments/{id}', name: 'accept_appointment', methods: ['GET'])]
-    public function accept_appointment(AppointmentRepository $appointmentRepository, $id, StatusRepository $statusRepository): Response
+    #[Route('/appointments/{id?}', name: 'accept_appointment', methods: ['POST'])]
+    public function accept_appointment(?int $id, AppointmentRepository $appointmentRepository, StatusRepository $statusRepository): Response
     {
         $user = $this->getUser();
 
@@ -115,6 +115,6 @@ class BotanistController extends AbstractController
 
         $appointmentRepository->save($appointment, true);
 
-        return $this->redirectToRoute('app_appointment_incoming_appointment');
+        return $this->redirectToRoute('app_appointement_incoming_appointment');
     }
 }
