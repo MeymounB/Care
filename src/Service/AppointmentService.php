@@ -55,7 +55,6 @@ class AppointmentService
             $appointments = $this->appointmentRepository->findBy(['particular' => $user_id]);
         }
 
-
         return $this->groupAppointmentsByStatus($appointments);
     }
 
