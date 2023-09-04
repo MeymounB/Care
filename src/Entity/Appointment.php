@@ -15,8 +15,8 @@ class Appointment extends Request
     #[ORM\Column]
     private ?bool $isPresential = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $address = null;
+    #[ORM\ManyToOne(targetEntity: Address::class)]
+    private ?Address $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
@@ -54,12 +54,12 @@ class Appointment extends Request
         return $this->isPresential;
     }
 
-    public function getAddress(): ?string
+    public function getAddress(): ?Address
     {
         return $this->address;
     }
 
-    public function setAddress(?string $address): static
+    public function setAddress(?Address $address): static
     {
         $this->address = $address;
 

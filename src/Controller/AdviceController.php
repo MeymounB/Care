@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
@@ -61,7 +62,7 @@ class AdviceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
+    #[Route('/show/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
     public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, Security $security, int $id): Response
     {
         $advice = $adviceRepository->find($id);
@@ -113,5 +114,21 @@ class AdviceController extends AbstractController
         }
 
         return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/recent_advice', name: 'app_advice_list_recent_advice', methods: ['GET'])]
+    public function show_recent_advice(): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $groupedAdvices = $this->adviceService->getGroupedAdvicesByUser($user);
+
+        return $this->render('advice/recent_advice.html.twig', [
+            'groupedAdvices' => $groupedAdvices,
+        ]);
     }
 }

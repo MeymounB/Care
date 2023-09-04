@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Appointment;
 use App\Repository\AppointmentRepository;
 
 class AppointmentService
@@ -11,6 +12,11 @@ class AppointmentService
     public function __construct(AppointmentRepository $appointmentRepository)
     {
         $this->appointmentRepository = $appointmentRepository;
+    }
+
+    public function getById(int $id): Appointment
+    {
+        return $this->appointmentRepository->find($id);
     }
 
     public function getGroupedAppointments(): array

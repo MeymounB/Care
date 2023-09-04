@@ -8,6 +8,7 @@ parameters:
     default_upload_folder: '%kernel.project_dir%/uploads'
     certificates_dir: '%default_upload_folder%/certifications'
     photos_dir: '%default_upload_folder%/photos'
+    whereby_token: '%env(WHEREBY_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
