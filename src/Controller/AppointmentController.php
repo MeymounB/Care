@@ -116,11 +116,15 @@ class AppointmentController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, int $id, AppointmentService $service, AppointmentRepository $appointmentRepository): Response
+    public function edit(#[CurrentUser] ?Particular $user, Request $request, int $id, AppointmentService $service, AppointmentRepository $appointmentRepository): Response
     {
         $appointment = $service->getById($id);
 
-        $form = $this->createForm(AppointmentType::class, $appointment);
+        $form = $this->createForm(AppointmentType::class, $appointment, [
+            'plants' => [...$user->getPlants()],
+            'address' => [...$user->getAddress()],
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -132,6 +136,7 @@ class AppointmentController extends AbstractController
         return $this->renderForm('appointment/edit.html.twig', [
             'appointment' => $appointment,
             'form' => $form,
+            'error' => $form->getErrors()->current(),
         ]);
     }
 
@@ -140,7 +145,7 @@ class AppointmentController extends AbstractController
     {
         $appointment = $service->getById($id);
 
-        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $appointment->getId(), $request->request->get('_token'))) {
             $appointmentRepository->remove($appointment, true);
         }
 
