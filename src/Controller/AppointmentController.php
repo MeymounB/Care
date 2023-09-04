@@ -131,9 +131,9 @@ class AppointmentController extends AbstractController
     {
         $appointment = $service->getById($id);
 
-//        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
-            $appointmentRepository->remove($appointment, true);
-//        }
+        //        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        $appointmentRepository->remove($appointment, true);
+        //        }
 
         return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -147,10 +147,11 @@ class AppointmentController extends AbstractController
             throw $this->createAccessDeniedException('Access denied');
         }
 
+        $type = null;
         if ($user instanceof Botanist) {
-            $type = "Botanist";
+            $type = 'Botanist';
         } elseif ($user instanceof Particular) {
-            $type = "Particular";
+            $type = 'Particular';
         }
 
         $groupedAppointments = $this->appointmentService->getGroupedAppointmentsByBotanist($user->getId(), $type);

@@ -106,12 +106,12 @@ class AdviceService
             $adviceUserId = $advice->getParticular()->getId();
 
             // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
-//            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
-                if (!isset($groupedAdvices[$statusName])) {
-                    $groupedAdvices[$statusName] = [];
-                }
-                $groupedAdvices[$statusName][] = $advice;
-//            }
+            //            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
+            if (!isset($groupedAdvices[$statusName])) {
+                $groupedAdvices[$statusName] = [];
+            }
+            $groupedAdvices[$statusName][] = $advice;
+            //            }
         }
 
         return $groupedAdvices;
@@ -181,7 +181,7 @@ class AdviceService
 
     public function getOwnAdviceByUser($userId): array
     {
-//        $userId = $user->getId();
+        //        $userId = $user->getId();
         $advices = $this->adviceRepository->findBy(['particular' => $userId]);
 
         return $this->groupAndSortAdvices($advices);

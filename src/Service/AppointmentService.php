@@ -49,9 +49,10 @@ class AppointmentService
 
     public function getGroupedAppointmentsByBotanist(int $user_id, string $type): array
     {
-        if ($type === 'Botanist') {
+        $appointments = null;
+        if ('Botanist' === $type) {
             $appointments = $this->appointmentRepository->findBy(['botanist' => $user_id]);
-        } elseif ($type === 'Particular') {
+        } elseif ('Particular' === $type) {
             $appointments = $this->appointmentRepository->findBy(['particular' => $user_id]);
         }
 
