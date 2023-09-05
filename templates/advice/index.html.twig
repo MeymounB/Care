@@ -3,56 +3,94 @@
 {% block title %}Historique de vos conseils{% endblock %}
 
 {% block body %}
+    <section class="appointments-section">
+        <h2>Demandes de conseil</h2>
 
-    <section class="forum">
-        <h1 class="text-2xl font-bold mb-4">Demandes de conseils</h1>
+        {% for status, advices in groupedAdvices %}
+            <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
+            <table class="appointments-table">
+                {% if (status == 'En attente') %}
+                    <tr class="appointments-row en-attente">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% elseif (status == 'En cours') %}
+                    <tr class="appointments-row en-cours">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% elseif (status == 'Terminé') %}
+                    <tr class="appointments-row termine">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% elseif (status == 'Annulé') %}
+                    <tr class="appointments-row annule">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% endif %}
 
-        <div id="results">
-            {% for status, advices in groupedAdvices %}
-                <h2>{{ status }} :</h2>
                 {% for advice in advices %}
-                    <a href='{{ path('app_advice_show', {'id': advice.id}) }}' id="conseil">
-                        <div class="img-container"><img src="/images/plante1.jpg" alt=""></div>
-                        <div class="infos-box">
-                            <div class="infos-container">
-                                <div class="infos-box">
-                                    <div class="info h3">
-                                        <h3>{{ advice.title }}</h3>
-                                    </div>
-
-                                    <div class="infos-action">
-                                        <div class="infos-sub-box">
-                                            <div class="info">
-                                                <p id="name">{{ advice.particular ? advice.particular.FullName : '' }}</p>
-                                            </div>
-                                            ・
-                                            <div class="info">
-                                                <p id="date">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</p>
-                                            </div>
-                                            ・
-                                            <div class="info">
-                                                {% if advice.isPublic %}
-                                                    <p id="status2" style="color: green">Public</p>
-                                                {% else %}
-                                                    <p id="status2" style="color: red">Privée</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        {% if is_granted('ROLE_PARTICULAR') %}
-                                            {% if (app.user == advice.particular) %}
-                                                <div class="buttons">
-                                                    <button>Edit</button>
-                                                    <button class="delete-button">Delete</button>
-                                                </div>
-                                            {% endif %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    {% if (status == 'En attente') %}
+                        <tr class="appointments-row en-attente">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'En cours') %}
+                        <tr class="appointments-row en-cours">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'Terminé') %}
+                        <tr class="appointments-row termine">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'Annulé') %}
+                        <tr class="appointments-row annule">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
-            {% endfor %}
-        </div>
+            </table>
+        {% else %}
+            <tr>
+                <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
+            </tr>
+        {% endfor %}
     </section>
 {% endblock %}
