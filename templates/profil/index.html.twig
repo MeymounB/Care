@@ -24,38 +24,21 @@
 						</div>
 					</div>
 					
-					{# <div class="personnal-action">
-						<img id="monBouton" src="/images/equipement.png" alt="engrenage">
-						<div id="monElementCache" class="elementCache">
-							<p 					style="color: black; text-decoration-color: black;">
-								Modifier photo de profil
-							</p>
-							<a 
-								id="delete-account-link"
-								aria-labelledby="modal-title" role="dialog" aria-modal="true"
-								style="color: red; text-decoration-color: red;" 
-								>
-								Supprimer mon compte
-							</a>
-							{% include "profil/_delete_account_popup.html.twig" %}
-						</div>
-					</div> #}
-
 					<div class="personnal-action">
 						<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
 						aria-modal="true" style="color: black; text-decoration-color: black;">
-						Modifier photo de profil
-						</a>
+						Modifier photo de profil</a>
 
 						<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
 						aria-modal="true" style="color: red; text-decoration-color: red;">
-						Supprimer mon compte
-						</a>
+						Supprimer mon compte</a>
 						{% include "profil/_delete_account_popup.html.twig" %}
 
-						<a id="add-plant-action" aria-labelledby="modal-title" role="dialog" 
+						<a id="open-plant-form" aria-labelledby="modal-title" role="dialog" 
 						aria-modal="true"> Faire pousser une nouvelle plante</a>
+
 					</div>
+						{# {% include "plant/_edit_form.html.twig" %} #}
 				</div>
 
 				<div class="stats">
@@ -74,12 +57,9 @@
 						<p>{{ nombreDeRendezVous }}</p>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 		
-
 		<div class="my-garden">
 			<ul class="liste-plantes">
             {% for plant in plants %}
@@ -107,7 +87,7 @@
 
 					<div class="buttons">
 						<a id="open-plant-details" aria-labelledby="modal-title" role="dialog" aria-modal="true">Plus de détails</a>
-						<div> {% include 'plant/_plant_form_popup.html.twig'  %}</div>
+						<div> {% include 'plant/_plant_form_popup.html.twig' %}</div>
 						<div> {{ include('plant/_delete_form.html.twig') }}</div> 
 					</div>
 				</li>

@@ -5,7 +5,10 @@ import {
 
 import {initShowModal, initDeleteForm} from "./components/adviceForm";
 import {initDeleteAccountPopup} from "./components/deleteAccountPopup";
-import {initPlantFormPopup} from "./components/plantFormPopup";
+import {
+  initPlantEditFormPopup,
+  initPlantAddFormPopup,
+} from "./components/plantFormPopup";
 
 /*
 import {initImageSelection, deleteImage} from "./modules/imageSelection";
@@ -17,7 +20,8 @@ import {initSearch} from "./modules/search";
 */
 
 /* COMPONENTS */
-initPlantFormPopup();
+initPlantEditFormPopup();
+initPlantAddFormPopup();
 initShowModal();
 initDeleteForm();
 initIsPresential();

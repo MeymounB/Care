@@ -31,12 +31,6 @@ class CommentController extends AbstractController
             return new JsonResponse(['message' => 'The comment does not exist.'], 404);
         }
 
-        $ownershipCheck = $this->ownershipChecker->checkOwnership($comment);
-
-        if ($ownershipCheck) {
-            return $ownershipCheck;
-        }
-
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -61,12 +55,6 @@ class CommentController extends AbstractController
 
         if (!$comment) {
             return new JsonResponse(['message' => 'The comment does not exist.'], 404);
-        }
-
-        $ownershipCheck = $this->ownershipChecker->checkOwnership($comment);
-
-        if ($ownershipCheck) {
-            return $ownershipCheck;
         }
 
         $form = $this->createForm(CommentType::class, $comment);

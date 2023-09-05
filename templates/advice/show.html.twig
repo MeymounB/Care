@@ -164,9 +164,9 @@
                                      aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                     <!-- Modal here -->
                                 </div>
-                                <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">Edit
+                                <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">
+                                    Modifier
                                 </button>
-
 
                                 <div class="bg-red-800 flex items-center">
                                     <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">

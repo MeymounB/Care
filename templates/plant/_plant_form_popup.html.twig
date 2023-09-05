@@ -1,9 +1,10 @@
 {% apply inline_css(source('@styles/components/plant_form_popup.css')) %}
-{% block form_plant_popup %}
+{% block form_plant_popup_edit %}
 
+{# @TODO: add digit to the end of the id to avoid conflict with other popups #}
 <div id="plant-form-popup" class="popup">
     <div class="popup-content">
-        <h2>Sexy nan ?</h2>
+        <h2>Formulaire d'affichage + edition</h2>
         <div action="#" method="post">
             {% for field, value in {
                 'Nom': plant.name,
@@ -31,7 +32,7 @@
                 <button type="submit" class="confirm-button">
                     Mettre a jour
                 </button>
-                <button type="button" id="cancel-plant-button" class="cancel-button">
+                <button type="button"  id="cancel-plant-button" class="cancel-button">
                     Cancel
                 </button>
             </div>
