@@ -33,6 +33,12 @@
     margin-bottom: 20px;
 }
 
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .popup-content .popup-buttons button {
     padding: 10px 20px;
     margin: 0 10px;

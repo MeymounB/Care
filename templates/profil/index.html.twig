@@ -46,13 +46,15 @@
 						aria-modal="true" style="color: black; text-decoration-color: black;">
 						Modifier photo de profil
 						</a>
-						{% include "plant/_plant_form_popup.html.twig" %}
 
 						<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
 						aria-modal="true" style="color: red; text-decoration-color: red;">
 						Supprimer mon compte
 						</a>
 						{% include "profil/_delete_account_popup.html.twig" %}
+
+						<a id="add-plant-action" aria-labelledby="modal-title" role="dialog" 
+						aria-modal="true"> Faire pousser une nouvelle plante</a>
 					</div>
 				</div>
 
@@ -104,8 +106,9 @@
 					</ul>
 
 					<div class="buttons">
-						<a href="/">Plus de détails</a>
-						<div>{{ include('plant/_delete_form.html.twig') }}</div> 
+						<a id="open-plant-details" aria-labelledby="modal-title" role="dialog" aria-modal="true">Plus de détails</a>
+						<div> {% include 'plant/_plant_form_popup.html.twig'  %}</div>
+						<div> {{ include('plant/_delete_form.html.twig') }}</div> 
 					</div>
 				</li>
 			{% endfor %}

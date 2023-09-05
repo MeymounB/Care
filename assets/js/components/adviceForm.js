@@ -89,25 +89,27 @@ export function initDeleteForm() {
 
         let deleteForm = document.getElementById("delete-form");
         fetch(deleteForm.action, {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
           },
           body: new URLSearchParams(new FormData(deleteForm)).toString(),
         })
-            .then(response => {
-              if (!response.ok) { throw response }
-              // Redirect to the index page
-              window.location.href = "/advice";
-            })
-            .catch(error => {
-              error.text().then(errorMessage => {
-                console.log(
-                    "Une erreur est survenue lors de la suppression de l'élément",
-                    errorMessage
-                );
-              });
+          .then((response) => {
+            if (!response.ok) {
+              throw response;
+            }
+            // Redirect to the index page
+            window.location.href = "/advice";
+          })
+          .catch((error) => {
+            error.text().then((errorMessage) => {
+              console.log(
+                "Une erreur est survenue lors de la suppression de l'élément",
+                errorMessage
+              );
             });
+          });
       });
     }
   });

@@ -1,4 +1,3 @@
-
 #plant-form-popup {
     display: none;
     position: fixed;
@@ -8,7 +7,7 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 999;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
@@ -16,7 +15,7 @@
     background-color: #fff;
     border-radius: 5px;
     padding: 20px;
-    width: 300px;
+    width: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -28,6 +27,34 @@
 #plant-form-popup .popup-content h2 {
     font-size: 24px;
     margin-bottom: 10px;
+}
+
+#plant-form-popup .popup-content .form-field {
+    margin-bottom: 15px;
+}
+
+#plant-form-popup .popup-content .form-field label {
+    display: block;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: start;
+}
+
+#plant-form-popup .popup-content .form-field input[type="text"],
+#plant-form-popup .popup-content .form-field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#plant-form-popup .popup-content .form-field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 

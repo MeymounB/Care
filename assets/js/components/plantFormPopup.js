@@ -1,10 +1,10 @@
 export function initPlantFormPopup() {
   let plantFormPopup = document.getElementById("plant-form-popup");
-  let editPlantFormLink = document.getElementById("edit-plant-form-link");
+  let openPlantDetailsLink = document.getElementById("open-plant-details");
   let cancelPlantButton = document.getElementById("cancel-plant-button");
 
-  if (editPlantFormLink) {
-    editPlantFormLink.addEventListener("click", function (e) {
+  if (openPlantDetailsLink) {
+    openPlantDetailsLink.addEventListener("click", function (e) {
       e.preventDefault();
       if (plantFormPopup) {
         plantFormPopup.style.display = "block";
@@ -21,3 +21,5 @@ export function initPlantFormPopup() {
     });
   }
 }
+
+console.log("plantFormPopup.js loaded");

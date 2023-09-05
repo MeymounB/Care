@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Botanist;
+use App\Entity\Particular;
+use App\Entity\Plant;
 use App\Entity\User;
 use App\Repository\PlantRepository;
 use App\Repository\UserRepository;
@@ -11,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/mon-profil')]
 class ProfilController extends AbstractController
@@ -47,9 +51,9 @@ class ProfilController extends AbstractController
         ]);
     }
 
-
+    // Return fuking 405 error
     #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
-    public function delete(Request $request, int $id, User $user, UserRepository $userRepository): Response
+    public function delete(Request $request, #[CurrentUser] ?Particular $user,  UserRepository $userRepository): Response
     {
         // $user = $userRepository->find($id);
 

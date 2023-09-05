@@ -197,7 +197,6 @@ class Plant
 
     public function __toString()
     {
-        return array_map(function (Photo $photo) {
-        }, $this->photos->toArray());
+        return $this->photos;
     }
 }

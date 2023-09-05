@@ -50,15 +50,20 @@
 				<div class="certification">Botaniste certifié</div>
 
 				<div class="personnal-action">
-					<a href="/" style="color: black; text-decoration-color: black;">
+					<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true" style="color: black; text-decoration-color: black;">
 					Modifier photo de profil
 					</a>
 
-					<a href="/" style="color: red; text-decoration-color: red;">
+					<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true" style="color: red; text-decoration-color: red;">
 					Supprimer mon compte
 					</a>
-				</div>
+					{% include "profil/_delete_account_popup.html.twig" %}
 
+					<a id="add-plant-action" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true"> Faire pousser une nouvelle plante</a>
+				</div>
 			</div>
 		</div>
 </section>
