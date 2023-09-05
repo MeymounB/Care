@@ -42,11 +42,13 @@
 					</div> #}
 
 					<div class="personnal-action">
-						<a href="/" style="color: black; text-decoration-color: black;">
+						<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
+						aria-modal="true" style="color: black; text-decoration-color: black;">
 						Modifier photo de profil
 						</a>
+						{# {% include "profil/_form_account_popup.html.twig" %} #}
 
-						<a href="/" id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
+						<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
 						aria-modal="true" style="color: red; text-decoration-color: red;">
 						Supprimer mon compte
 						</a>
@@ -80,8 +82,10 @@
 			<ul class="liste-plantes">
             {% for plant in plants %}
 				<li class="plante">
-					 {% for photo in plant.photos %}
-						<img src="{{ photo.smallThumbnail }}" alt="image">
+					{% for photo in plant.photos %}
+						{% if loop.index == 1 %}
+							<img src="{{ photo.smallThumbnail }}" alt="Photo de {{ plant.name }}">
+						{% endif %}									
 					{% endfor %}
 
 					<ul class="infos-plante">
@@ -95,14 +99,13 @@
 						</li>
 						<li id="couleur">
 							<p>Date</p>
-							<p>{{ plant.CreatedAt }}</p>
+							<p>{{ plant.createdAt|date('d-m-Y') }}</p>
 						</li>
 					</ul>
 
 					<div class="buttons">
 						<a href="/">Plus de détails</a>
-						{# <button>Modifier</button>
-						<div>{{ include('plant/_delete_form.html.twig') }}</div> #}
+						<div>{{ include('plant/_delete_form.html.twig') }}</div> 
 					</div>
 				</li>
 			{% endfor %}
