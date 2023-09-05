@@ -48,16 +48,23 @@ class ProfilController extends AbstractController
     }
 
 
-    #[Route('/{id}', name: 'app_profil_delete', methods: ['DELETE'])]
-    public function delete(Request $request, User $user, userRepository $userRepository): Response
+    #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
+    public function delete(Request $request, int $id, User $user, UserRepository $userRepository): Response
     {
+        // $user = $userRepository->find($id);
+
+        // if (!$user) {
+        //     throw $this->createNotFoundException('Utilisateur introuvable');
+        // }
+
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
+
             $this->addFlash('success', 'Votre compte a été supprimé avec succès');
         } else {
             $this->addFlash('danger', 'Une erreur est survenue lors de la suppression de votre compte');
         }
 
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -1,0 +1,39 @@
+<div id="plant-form-popup" class="popup">
+    <div class="popup-content">
+        <h2>Formulaire d'ajout/édition de plante</h2>
+        {# {{ form_start(form, { 'attr': { 'class': 'plant-form' } }) }}
+
+        <fieldset class="file-box">
+            <label for="plant_photos" id="imageLabel">
+                <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
+            </label>
+            <span>Ajouter une image</span>
+        </fieldset>
+
+        <div class="fieldset-container">
+            <fieldset>
+                {{ form_row(form.name) }}
+            </fieldset>
+
+            <fieldset>
+                {{ form_row(form.species) }}
+            </fieldset>
+        </div>
+
+        <fieldset class="description">
+            {{ form_widget(form.description) }}
+        </fieldset>
+
+        <div class="popup-buttons">
+            <button id="cancel-plant-button" class="cancel-button">Annuler</button>
+            <button type="submit" class="confirm-button">Valider</button>
+        </div>
+
+        {% if error %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(error.message) }}
+        {% endif %}
+
+        {{ form_end(form) }} #}
+    </div>
+</div>

@@ -8,7 +8,9 @@
             <div class="popup-buttons">
                 <button id="cancel-button">Annuler</button>
                 <form method="post" id="delete-form"  action="{{ path('app_profil_delete', {'id': user.id}) }}">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}"/>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" 
+                        value="{{ csrf_token('delete' ~ user.id) }}"/>
                     <button class="btn">Delete</button>
                 </form>
             </div>
