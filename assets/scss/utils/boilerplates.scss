@@ -20,6 +20,7 @@ body {
     scroll-behavior: smooth;
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat-Medium', sans-serif;
 }
 
 button {
@@ -60,15 +61,22 @@ li {
     padding: 0;
 }
 
+table {
+    font-family: 'Montserrat-Medium', sans-serif;
+}
+
 input,
 select,
-textarea {
+textarea,
+select,
+input[type="date"] {
     border: 3px solid transparent;
     outline: none;
     font-size: funcs.rem(16);
     background-color: #f6f5f5;
     padding: funcs.rem(10);
     border-radius: funcs.rem(4);
+    font-family: 'Montserrat-Medium', sans-serif;
 
     &:focus,
     &:hover {

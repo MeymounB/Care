@@ -135,10 +135,32 @@
 						height: calc(42.1vh - (10vh));
 					}
 
-					.infos-sub-box {
-						@include vars.flexer(center, flex-start, row);
+					.infos-action {
+						@include vars.flexer(center, space-between, row);
 						width: 100%;
-						gap: 20px;
+
+						.infos-sub-box {
+							@include vars.flexer(center, flex-start, row);
+							width: 100%;
+							gap: 20px;
+						}
+
+						.buttons {
+							display: flex;
+							justify-content: flex-start;
+							gap: 10px;
+							width: 200px;
+
+							button {
+								width: 100%;
+								padding: 5px;
+								border-radius: 5px;
+
+								&.delete-button {
+									border: 2px solid red;
+								}
+							}
+						}
 					}
 
 					.info {

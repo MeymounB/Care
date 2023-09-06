@@ -1,31 +1,49 @@
 @use "../utils" as vars;
 
 .landing {
+	width: 100%;
 	@include vars.flexer(center, center, column);
+	min-height: calc(100vh - vars.rem(125));
+	gap: vars.rem(60);
+	padding: 40px;
 	text-align: center;
-	min-height: 600px;
-	gap: vars.rem(30);
-	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../../assets/images/filip-urban-ffJ8Qa0VQU0-unsplash.jpg');
-	background-position: center 45%;
+
+	// background: url($landing) no-repeat fixed;
+	background-position-x: center;
+	background-position-y: center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
 	background-size: cover;
-	color: vars.$white;
 
-	&_links {
-		@include vars.flexer(center, start);
-		gap: vars.rem(10);
-	}
+	.title {
+		@include vars.flexer(center, center, column);
 
-	&_feats {
-		@include vars.flexer(center, center);
-		gap: vars.rem(50);
-		flex-wrap: wrap;
-
-		li {
-			min-width: 100px;
+		h1 {
+			color: vars.$green;
+			font-size: 56px
 		}
 
-		img {
-			filter: invert(97%) sepia(6%) saturate(372%) hue-rotate(324deg) brightness(119%) contrast(96%);
+		p {
+			color: vars.$gray;
+		}
+	}
+
+	.buttons {
+		@include vars.flexer(center, center, column);
+		gap: 7px;
+
+		a {
+			@include vars.flexer(center, center, column);
+		}
+
+		#login {
+			color: black;
+			font-weight: 500;
+		}
+
+		#register {
+			text-decoration: underline;
 		}
 	}
 }

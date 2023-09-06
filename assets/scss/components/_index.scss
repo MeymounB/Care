@@ -1,5 +1,4 @@
 // IMPORT ALL COMPONENTS HERE
-@import "logo";
 @import "button";
 
 // composants
@@ -13,14 +12,19 @@
 
 // appointment 
 @import "ask-rdv";
+@import "appointment-details";
 
 // advice
 @import "advice";
 @import "ask-advice";
 @import "forum-advice";
 
+// botanist
+@import "appointment-section";
+
 // plant
 @import "add-plante";
+@import "plant-details";
 
 // accueil : user / botanist
 @import "home-botaniste";

@@ -20,4 +20,10 @@ class DefaultController extends AbstractController
             ],
         ]);
     }
+
+    #[Route('/legal_mentions', name: 'legal_mentions')]
+    public function legal_mentions(): Response
+    {
+        return $this->render('default/cgu.html.twig');
+    }
 }
