@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use AllowDynamicProperties;
 use App\Entity\Advice;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Form\AdviceType;
 use App\Form\CommentType;
 use App\Repository\AdviceRepository;
+use App\Repository\PlantRepository;
 use App\Repository\StatusRepository;
 use App\Service\AdviceService;
 use App\Service\CommentService;
@@ -17,14 +19,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-#[Route('/advice')]
+#[AllowDynamicProperties] #[Route('/advice')]
 class AdviceController extends AbstractController
 {
     private $adviceService;
 
-    public function __construct(AdviceService $adviceService)
+    public function __construct(AdviceService $adviceService, PlantRepository $plantRepository)
     {
         $this->adviceService = $adviceService;
+        $this->plantRepository = $plantRepository;
     }
 
     #[Route('/', name: 'app_advice_index', methods: ['GET'])]
@@ -56,8 +59,17 @@ class AdviceController extends AbstractController
             return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $plants = $this->plantRepository->findBy(['particular' => $user->getId()], ['createdAt' => 'DESC']);
+
         return $this->renderForm('advice/new.html.twig', [
             'advice' => $advice,
+            'plants' => $plants,
             'form' => $form,
         ]);
     }
