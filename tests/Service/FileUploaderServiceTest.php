@@ -4,7 +4,6 @@ namespace App\Tests\Service;
 
 use App\Service\FileType;
 use App\Service\FileUploaderService;
-use PHPUnit\TextUI\XmlConfiguration\Group;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -21,7 +20,6 @@ class FileUploaderServiceTest extends KernelTestCase
 		$this->service = self::getContainer()->get('App\Service\FileUploaderService');
 	}
 
-	#[Group('hello')]
 	public function testGetFilename(): void
 	{
 		$uploadedFile = new UploadedFile(self::PATH . self::FILENAME, self::FILENAME, 'application/pdf', null, true);
@@ -36,7 +34,6 @@ class FileUploaderServiceTest extends KernelTestCase
 		$this->assertArrayHasKey('file', $name);
 	}
 
-	#[Group('hello')]
 	public function testGetValidName(): void
 	{
 		$uploadedFile = new UploadedFile(self::PATH . self::FILENAME, self::FILENAME, 'application/pdf', null, true);
@@ -54,7 +51,6 @@ class FileUploaderServiceTest extends KernelTestCase
 		$this->assertStringContainsString('0', $name['file']);
 	}
 
-	#[Group('hello')]
 	public function testGetNameNoType(): void
 	{
 		$uploadedFile = new UploadedFile(self::PATH . self::FILENAME, self::FILENAME, 'application/pdf', null, true);
@@ -66,7 +62,6 @@ class FileUploaderServiceTest extends KernelTestCase
 		$name = $this->service->getFilename(0, self::USERNAME, $uploadedFile);
 	}
 
-	#[Group('hello')]
 	public function testGetValidNameWithoutKey(): void
 	{
 		$uploadedFile = new UploadedFile(self::PATH . self::FILENAME, self::FILENAME, 'application/pdf', null, true);
@@ -86,7 +81,6 @@ class FileUploaderServiceTest extends KernelTestCase
 		$this->assertStringContainsString('document-certification', $name['file']);
 	}
 
-	#[Group('hello')]
 	public function testUpload(): void
 	{
 		// copy/paste the mock file because it will be moved to another folder
