@@ -2,16 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Plant;
 use App\Entity\Advice;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use App\Entity\Plant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdviceType extends AbstractType
 {
@@ -21,7 +21,7 @@ class AdviceType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Titre',
                 'error_bubbling' => true,
-                'required' => true
+                'required' => true,
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
@@ -29,7 +29,7 @@ class AdviceType extends AbstractType
                     'rows' => 10,
                 ],
                 'error_bubbling' => true,
-                'required' => true
+                'required' => true,
             ])
             ->add('isPublic', ChoiceType::class, [
                 'choices' => [
@@ -38,7 +38,7 @@ class AdviceType extends AbstractType
                 ],
                 'label' => 'Voulez-vous rendre votre demande publique ?',
                 'error_bubbling' => true,
-                'required' => true
+                'required' => true,
             ])
             ->add('plants', EntityType::class, [
                 'class' => Plant::class,
@@ -66,7 +66,7 @@ class AdviceType extends AbstractType
                     new NotBlank([
                         'message' => 'Vous devez choisir au moins une plante',
                     ]),
-                ]
+                ],
             ]);
     }
 
