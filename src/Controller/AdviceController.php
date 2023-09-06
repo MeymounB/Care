@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use AllowDynamicProperties;
 use App\Entity\Advice;
 use App\Entity\Comment;
+use App\Entity\Particular;
 use App\Entity\User;
 use App\Form\AdviceType;
 use App\Form\CommentType;
@@ -18,11 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-#[AllowDynamicProperties] #[Route('/advice')]
+#[Route('/advice')]
 class AdviceController extends AbstractController
 {
-    private $adviceService;
+    private AdviceService $adviceService;
+    private PlantRepository $plantRepository;
 
     public function __construct(AdviceService $adviceService, PlantRepository $plantRepository)
     {
@@ -41,7 +43,7 @@ class AdviceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_advice_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AdviceRepository $adviceRepository, StatusRepository $statusRepository): Response
+    public function new(#[CurrentUser] ?Particular $user, Request $request, AdviceRepository $adviceRepository, StatusRepository $statusRepository): Response
     {
         $advice = new Advice();
 
@@ -50,10 +52,14 @@ class AdviceController extends AbstractController
             $advice->setStatus($defaultStatus);
         }
 
-        $form = $this->createForm(AdviceType::class, $advice);
+        $form = $this->createForm(AdviceType::class, $advice, [
+            'plants' => $this->plantRepository->findBy(['particular' => $user->getId()]),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $advice->setParticular($user);
+            // dd($form->getData());
             $adviceRepository->save($advice, true);
 
             return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
@@ -71,6 +77,8 @@ class AdviceController extends AbstractController
             'advice' => $advice,
             'plants' => $plants,
             'form' => $form,
+            'error' => $form->getErrors()->current(),
+
         ]);
     }
 
@@ -121,7 +129,7 @@ class AdviceController extends AbstractController
     #[Route('/{id}', name: 'app_advice_delete', methods: ['DELETE'])]
     public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 
