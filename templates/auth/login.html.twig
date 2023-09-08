@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="main-container">
     <form class="form-auth" action="{{ path('app_login') }}" method="post">
         <h2 class="title">Se connecter</h2>
         <div class="form-field">
@@ -34,8 +34,10 @@
             {{ form_error(error.message) }}
         {% endif %}
     </form>
+
     {#<form action="{{ path('app_logout') }}" method="post">
     <button type="submit">Se déconnecter</button>
-</form>#}
+    </form>#}
+
 </div>
 {% endblock %}

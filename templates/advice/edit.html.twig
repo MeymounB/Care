@@ -3,6 +3,7 @@
 {% block title %} Edit Advice {% endblock %}
 
 {% block body %}
+<div class="main-container">
     <h1>Edit Advice</h1>
 
     {{ include('advice/_form.html.twig', {'button_label': 'Update'}) }}
@@ -10,4 +11,5 @@
     <a href="{{ path('app_advice_index') }}">back to list</a>
 
     {{ include('advice/_delete.html.twig') }}
+</div>
 {% endblock %}
