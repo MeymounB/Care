@@ -3,42 +3,44 @@
 .landing {
 	width: 100%;
 	@include vars.flexer(center, center, column);
-	min-height: calc(100vh - vars.rem(125));
+	min-height: calc(100vh + vars.rem(125));
 	gap: vars.rem(60);
 	padding: 40px;
 	text-align: center;
-
-	// background: url($landing) no-repeat fixed;
-	background-position-x: center;
-	background-position-y: center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
+	background-image: url("./images/banner-landing.jpg");
 	background-size: cover;
+	background-repeat: no-repeat;
+	background-position-x: center;
+	background-position-y: top;
 
 	.title {
 		@include vars.flexer(center, center, column);
 
 		h1 {
-			color: vars.$green;
-			font-size: 56px
+			color: vars.$white;
+			font-size: 56px;
 		}
 
 		p {
-			color: vars.$gray;
+			color: vars.$white;
 		}
+
+		text-shadow: #333 1px 0 10px;
+
 	}
 
 	.buttons {
-		@include vars.flexer(center, center, column);
-		gap: 7px;
+		@include vars.flexer(center, center, row);
+
+		gap: 20px;
 
 		a {
 			@include vars.flexer(center, center, column);
+			color: white;
 		}
 
 		#login {
-			color: black;
+			// color: black;
 			font-weight: 500;
 		}
 
