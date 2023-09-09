@@ -77,7 +77,7 @@ class BotanistController extends AbstractController
             throw $this->createAccessDeniedException('Access denied');
         }
 
-        $statusNames = ['En cours', 'Terminé'];
+        $statusNames = ['En cours'];
         $status = $statusRepository->findOneBy(['name' => $statusNames]);
 
         $appointment = $appointmentRepository->find($id);
