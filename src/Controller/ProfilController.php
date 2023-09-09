@@ -62,7 +62,7 @@ class ProfilController extends AbstractController
             ]);
         }
     }
-    
+
     #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
     public function delete(Request $request, #[CurrentUser] ?User $user, UserRepository $userRepository): Response
     {
