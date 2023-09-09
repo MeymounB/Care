@@ -23,21 +23,6 @@
 							<p>{{ app.user.email }}</p>
 						</div>
 					</div>
-					
-					<div class="personnal-action">
-						<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
-						aria-modal="true" style="color: black; text-decoration-color: black;">
-						Modifier mes informations</a>
-
-						<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
-						aria-modal="true" style="color: red; text-decoration-color: red;">
-						Supprimer mon compte</a>
-						 {% include "profil/_delete_account_popup.html.twig" %}
-
-						<a id="open-plant-form" aria-labelledby="modal-title" role="dialog" 
-						aria-modal="true"> Faire pousser une nouvelle plante</a>
-
-					</div>
 						{# {% include "plant/_edit_form.html.twig" %} #}
 				</div>
 
@@ -56,6 +41,21 @@
 						<p>Nombre de rendez-vous: </p>
 						<p>{{ nombreDeRendezVous }}</p>
 					</div>
+				</div>
+
+				<div class="personnal-action">
+					<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true" style="color: black; text-decoration-color: black;">
+					Modifier mes informations</a>
+
+					<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true" style="color: red; text-decoration-color: red;">
+					Supprimer mon compte</a>
+						{% include "profil/_delete_account_popup.html.twig" %}
+
+					<a id="open-plant-form" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true"> Faire pousser une nouvelle plante</a>
+
 				</div>
 			</div>
 		</div>
