@@ -8,6 +8,9 @@ use App\Entity\Plant;
 use App\Entity\User;
 use App\Repository\PlantRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\Mapping\MappingException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,19 +62,14 @@ class ProfilController extends AbstractController
             ]);
         }
     }
-
-    // Return fuking 405 error
+    
     #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
-    public function delete(Request $request, #[CurrentUser] ?Particular $user,  UserRepository $userRepository): Response
+    public function delete(Request $request, #[CurrentUser] ?User $user, UserRepository $userRepository): Response
     {
-        // $user = $userRepository->find($id);
-
-        // if (!$user) {
-        //     throw $this->createNotFoundException('Utilisateur introuvable');
-        // }
-
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
+            $this->get('security.token_storage')->setToken(null);
+            $request->getSession()->invalidate();
 
             $this->addFlash('success', 'Votre compte a été supprimé avec succès');
         } else {
