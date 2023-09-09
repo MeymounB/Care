@@ -44,13 +44,13 @@ export function initDeleteAccountPopup() {
           if (!response.ok) {
             throw response;
           }
-          console.log("L'élément a bien été supprimé");
+          console.log("The element has been deleted");
           window.location.href = "/";
         })
         .catch((error) => {
           error.text().then((errorMessage) => {
             console.log(
-              "Une erreur est survenue lors de la suppression de l'élément",
+              "An error occured while deleting the element: " + errorMessage,
               errorMessage
             );
           });
@@ -59,5 +59,3 @@ export function initDeleteAccountPopup() {
     });
   }
 }
-
-console.log("delete account popup loaded");

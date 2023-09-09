@@ -29,5 +29,3 @@ export function initHorizontalScroll() {
     });
   }
 }
-
-console.log("horizontalScroll.js chargé");

@@ -34,5 +34,3 @@ export function deleteImage() {
   previewImage.style.display = "none";
   imageInput.value = null;
 }
-
-console.log("imageSelection.js chargé");

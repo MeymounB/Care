@@ -14,5 +14,3 @@ export function initSearch() {
     // Par exemple, vous pouvez utiliser une requête AJAX pour récupérer les résultats de recherche à partir d'un serveur.
   });
 }
-
-console.log("search.js chargé");

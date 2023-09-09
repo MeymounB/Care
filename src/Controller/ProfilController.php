@@ -42,13 +42,22 @@ class ProfilController extends AbstractController
         $nombreDeRendezVous = $appointmentRepository->findAll();
         $nombreDeRendezVous = count($nombreDeRendezVous);
 
-        return $this->render('profil/index.html.twig', [
-            'user' => $user,
-            'plants' => $plants,
-            'nombreDeRendezVous' => $nombreDeRendezVous,
-            'plantesPossedees' => $nombrePlantesPossedees,
-            'conseilsDemandes' => $nombreDeConseilsDemandes,
-        ]);
+        if ($user instanceof Particular) {
+            return $this->render('user/profil.html.twig', [
+                'user' => $user,
+                'plants' => $plants,
+                'nombreDeRendezVous' => $nombreDeRendezVous,
+                'plantesPossedees' => $nombrePlantesPossedees,
+                'conseilsDemandes' => $nombreDeConseilsDemandes,
+            ]);
+        } elseif ($user instanceof Botanist) {
+            return $this->render('botanist/profil.html.twig', [
+                'user' => $user,
+                'nombreDeRendezVous' => $nombreDeRendezVous,
+                'plantesPossedees' => $nombrePlantesPossedees,
+                'conseilsDemandes' => $nombreDeConseilsDemandes,
+            ]);
+        }
     }
 
     // Return fuking 405 error

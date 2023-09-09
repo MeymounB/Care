@@ -109,9 +109,7 @@ export function initPlantAddFormPopup() {
 }
 
 export function handleFileSelect(evt) {
-  console.log("evt", evt);
   const files = evt.target.files;
-  console.log("files", files);
   const file = files[0];
   if (file && file.type.match("image.*")) {
     const reader = new FileReader();

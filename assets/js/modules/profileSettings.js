@@ -7,5 +7,3 @@ export function initProfileSettingsButton() {
     // elementCache.style.display = 'none'; // Pour masquer l'élément
   });
 }
-
-console.log("profileSettings.js chargé");

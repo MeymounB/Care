@@ -112,5 +112,3 @@ export function initDeleteForm() {
     }
   });
 }
-
-console.log("adviceForm.js loaded");

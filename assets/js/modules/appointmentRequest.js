@@ -32,5 +32,3 @@ export function initAppointmentRequest() {
     minuteSelect.appendChild(option);
   }
 }
-
-console.log("initAppointmentRequest.js chargé");

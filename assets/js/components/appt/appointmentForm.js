@@ -118,5 +118,3 @@ export function initDatetimeValidation() {
   //   datetimeInput._flatpickr.open();
   // });
 }
-
-console.log("Hello from appointmentForm.js");

@@ -1,13 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil Botaniste{% endblock %}
-
 {% block body %}
-
 <section class="profil-botaniste">
 		<div class="infos">
 			<div class="img-container">
-				<img src="/images/jardinnier.jpg" alt="Photo de profil">
+				<img src="{{ app.user.avatar }}" alt="Photo de profil">
 			</div>
 			<div class="infos-container">
 			
@@ -15,17 +12,15 @@
 					<div class="personnal-info">
 						<div class="text-box">
 							<p>Nom :</p>
-							<p>NextGen</p>
-							<button>modifier</button>
+							<p>{{ app.user.lastName }}</p>
 						</div>
 						<div class="text-box">
 							<p>Prénom :</p>
-							<p>Black</p>
-							<button>modifier</button>
+							<p>{{ app.user.firstName }}</p>
 						</div>
 						<div class="text-box mail">
 							<p>Adresse email :</p>
-							<p>mermozlethug@gmail.com</p>
+							<p>{{ app.user.email }}</p>
 						</div>
 					</div>
 				</div>
@@ -47,12 +42,16 @@
 					</div>
 				</div>
 
-				<div class="certification">Botaniste certifié</div>
+				{% if user.isVerified %}
+					<div class="certification">Botaniste certifié</div>
+				{% else %}
+					<div class="certification">Botaniste non certifié</div>
+				{% endif %}
 
 				<div class="personnal-action">
 					<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
 					aria-modal="true" style="color: black; text-decoration-color: black;">
-					Modifier photo de profil
+					Modifier mes informations
 					</a>
 
 					<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
@@ -60,9 +59,6 @@
 					Supprimer mon compte
 					</a>
 					{% include "profil/_delete_account_popup.html.twig" %}
-
-					<a id="add-plant-action" aria-labelledby="modal-title" role="dialog" 
-					aria-modal="true"> Faire pousser une nouvelle plante</a>
 				</div>
 			</div>
 		</div>

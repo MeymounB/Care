@@ -8,5 +8,3 @@ export function initDropdown() {
 
   dropdown.addEventListener("click", toggleDropdown);
 }
-
-console.log("dropdown.js chargé");
