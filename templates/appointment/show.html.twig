@@ -24,7 +24,7 @@
                 {% elseif appointment.isPresential == false and appointment.status == "En cours" %}
                 {% if appointment.link %}
                 <li><strong>Lieu : </strong><a
-                            href="https://discord.com/channels/1063760210780495944/1124989604118921238"
+                            href="{{ appointment.link }}"
                             aria-describedby="location-desc">Lien vers la réunion</a></li>
             </ul>
             {% endif %}
