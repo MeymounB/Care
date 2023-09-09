@@ -117,7 +117,7 @@ class AdviceService
         return $groupedAdvices;
     }
 
-    public function getAdvicesWaitingByUser(int $currentUserId, $groupByStatus = false)
+    public function getAdvicesWaitingByUser(int $currentUserId, $groupByStatus = false, int $limitResults = 0)
     {
         $advices = $this->getGroupedAdvices(false);
         $groupedAdvices = [];
@@ -129,6 +129,11 @@ class AdviceService
             if ($currentUserId != $adviceUserId && 'En attente' == $adviceStatus) {
                 $groupedAdvices[] = $advice;
             }
+
+            if ($limitResults > 0 && sizeof($groupedAdvices) == $limitResults) {
+                break;
+            }
+
         }
 
         if ($groupByStatus) {
