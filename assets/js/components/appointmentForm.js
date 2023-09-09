@@ -1,7 +1,7 @@
 import flatpickr from "flatpickr";
 
 export function initIsPresential() {
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", () => {
     let isPresentialInputs = document.querySelectorAll(
       'input[name="appointment[isPresential]"]'
     );
@@ -36,7 +36,7 @@ export function initIsPresential() {
     }
 
     isPresentialInputs.forEach((input) =>
-      input.addEventListener("change", function () {
+      input.addEventListener("change", () => {
         if (this.value === "1") {
           addressDiv.classList.remove("hidden");
           linkDiv.classList.add("hidden");

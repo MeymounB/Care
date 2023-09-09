@@ -1,14 +1,16 @@
+{% apply inline_css(source('@styles/components/add_plant_form.css')) %}
+
 {% block form_plant_popup %}
     <section id="plant-modal" class="ajout-plante">
         <div class="form-ajout">
-            {{ form_start(form, { 'attr': { 'class': 'w-full max-w-sm mx-auto mt-20 space-y-3' } }) }}
+            {{ form_start(form) }}
 
             <fieldset class="file-box">
                 <label for="plant_photos" id="imageLabel">
                     <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
                 </label>
                 <span>Ajouter une image</span>
-    {#            {{ form_widget(form.image, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'onchange': 'handleFileSelect(event)' } }) }}#}
+                    {{ form_widget(form.photos, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'class': 'invisible-input' } }) }}
             </fieldset>
 
             <div class="fieldset-container">
@@ -25,14 +27,15 @@
                 {{ form_widget(form.description) }}
             </fieldset>
 
-            <button id="cancel-plant-button" type="submit" class="button">{{ button_label|default('Ajouter la plante') }}</button>
-
-            {% if error %}
+            <button id="send-plant-modal" type="submit" class="button">{{ button_label|default('Ajouter la plante') }}</button>
+            <button id="close-plant-modal" type="button" class="button">Annuler</button>
+            {# {% if error %}
                 {% from "parts/error.html.twig" import form_error %}
                 {{ form_error(error.message) }}
-            {% endif %}
+            {% endif %} #}
 
             {{ form_end(form) }}
         </div>
     </section>
 {% endblock %}
+{% endapply %}

@@ -8,6 +8,7 @@ import {initDeleteAccountPopup} from "./components/deleteAccountPopup";
 import {
   initPlantEditFormPopup,
   initPlantAddFormPopup,
+  handleFileSelect,
 } from "./components/plantFormPopup";
 
 /*
@@ -22,6 +23,7 @@ import {initSearch} from "./modules/search";
 /* COMPONENTS */
 initPlantEditFormPopup();
 initPlantAddFormPopup();
+handleFileSelect();
 initShowModal();
 initDeleteForm();
 initIsPresential();

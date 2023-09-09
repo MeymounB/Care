@@ -30,15 +30,13 @@ export function initShowModal() {
             modalContainer.classList.remove("hidden");
 
             let form = modalContainer.querySelector("form");
-            console.log(form);
             let button = form.querySelector('button[type="submit"]');
             console.log(button);
 
-            button.addEventListener("click", function (e) {
+            button.addEventListener("click", (e) => {
               e.preventDefault();
 
               let formData = new FormData(form);
-
               fetch("/comment/" + commentId + "/edit", {
                 method: "POST",
                 body: formData,

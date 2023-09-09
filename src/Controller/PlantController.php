@@ -23,12 +23,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PlantController extends AbstractController
 {
 
-    private OwnershipChecker $ownershipChecker;
     private FileUploaderService $fileUploaderService;
 
-    public function __construct(OwnershipChecker $ownershipChecker, FileUploaderService $fileUploaderService)
+    public function __construct(FileUploaderService $fileUploaderService)
     {
-        $this->ownershipChecker = $ownershipChecker;
+        $this->fileUploaderService = $fileUploaderService;
     }
 
     #[Route('/', name: 'app_plant_index', methods: ['GET'])]
@@ -42,59 +41,79 @@ class PlantController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit-form', name: 'app_plant_edit_form', methods: ['GET'])]
-    public function editForm(PlantRepository $PlantRepository, int $id, plant $plant): Response
-    {
-        $plant = $PlantRepository->find($id);
+    // #[Route('/{id}/edit-form', name: 'app_plant_edit_form', methods: ['GET'])]
+    // public function editForm(PlantRepository $PlantRepository, int $id, plant $plant): Response
+    // {
+    //     $plant = $PlantRepository->find($id);
 
-        if (!$plant) {
-            return new JsonResponse(['message' => 'The plant does not exist.'], 404);
+    //     if (!$plant) {
+    //         return new JsonResponse(['message' => 'The plant does not exist.'], 404);
+    //     }
+
+    //     $form = $this->createForm(plantType::class, $plant);
+
+    //     $formView = $this->renderView('plant/_form.html.html.twig', [
+    //         'plant' => $plant,
+    //         'form' => $form->createView(),
+    //     ]);
+
+    //     return new JsonResponse(['form' => $formView], 200);
+    // }
+
+    #[Route('/new-form', name: 'app_plant_new_form', methods: ['GET'])]
+    public function newForm(#[CurrentUser] $user): Response
+    {
+        if (!$user instanceof Particular) {
+            return new JsonResponse(['message' => 'Only a particular user can add a plant.'], 403);
         }
 
-        $form = $this->createForm(plantType::class, $plant);
+        $plant = new Plant();
+        $form = $this->createForm(PlantType::class, $plant);
 
-        $formView = $this->renderView('plant/_form.html.html.twig', [
+        return $this->render('plant/_form.html.twig', [
             'plant' => $plant,
             'form' => $form->createView(),
         ]);
-
-        return new JsonResponse(['form' => $formView], 200);
     }
 
-    #[Route('/new', name: 'app_plant_new', methods: ['POST'])]
-    public function new(Request $request, PlantRepository $plantRepository, #[CurrentUser] ?Particular $user): Response
-    {
-        $plant = new Plant();
 
+    #[Route('/new', name: 'app_plant_new', methods: ['POST'])]
+    public function new(Request $request, PlantRepository $plantRepository, #[CurrentUser] $user): Response
+    {
+        if (!$user instanceof Particular) {
+            return new JsonResponse(['message' => 'Only a particular user can add a plant.'], 403);
+        }
+
+        $plant = new Plant();
         $form = $this->createForm(PlantType::class, $plant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $certifData = $form->get('photos')->getData();
 
-            // if ($certifData) {
-            //     foreach ($certifData as $key => $certif) {
-            //         $this->fileUploaderService->setType(FileType::PHOTO);
+            $photosData = $form->get('photos')->getData();
 
-            //         $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
-            //         $this->fileUploaderService->upload($safeFilename, $certif);
-            //         $photo = new Photo();
-            //         $photo->setPhoto($safeFilename);
-            //         $plant->addPhoto($photo);
-            //         $entityManager->persist($photo);
-            //     }
-            // }
+            if ($photosData) {
+                foreach ($photosData as $key => $photo) {
+                    $this->fileUploaderService->setType(FileType::PHOTO);
+
+                    $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $photo)['file'];
+                    $this->fileUploaderService->upload($safeFilename, $photo);
+
+                    $photoEntity = new Photo();
+                    $photoEntity->setPhoto($safeFilename);
+                    $plant->addPhoto($photoEntity);
+                    // $plantRepository->save($plant, true);
+                }
+            }
 
             $plant->setParticular($this->getUser());
             $plantRepository->save($plant, true);
-
             return new JsonResponse(['message' => 'Success!'], 200);
         } else {
             $errors = [];
             foreach ($form->getErrors(true, false) as $error) {
                 $errors[] = $error->getMessage();
             }
-
             return new JsonResponse(['message' => 'Error!', 'errors' => $errors], 400);
         }
     }
