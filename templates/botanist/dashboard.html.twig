@@ -47,14 +47,12 @@
         <div class="bottom-banner">
             <div class="left">
                 <div class="historique">
-
                     <h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a></h3>
 					<div class="box-container">
 						{% for advice in advices %}
-                            <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
+                            <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="activity">
                                 <p>{{ advice.title }}</p>
-                                ・
-                                <p>{{ advice.createdAt|date('d-m-Y') }}</p>
+                                <p><span>・</span>{{ advice.createdAt|date('d-m-Y') }}</p>
                             </a>
                         {% endfor %}
 					</div>
