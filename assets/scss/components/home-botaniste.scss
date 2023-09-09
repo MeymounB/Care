@@ -213,7 +213,7 @@
 				}
 
 				.box-container {
-					@include vars.flexer(center, space-evenly, row);
+					@include vars.flexer(flex-start, flex-start, row);
 					flex-wrap: wrap;
 					gap: 10px;
 					padding: 10px;
@@ -240,14 +240,17 @@
 						}
 
 						p {
-							// max-width: calc(60% - 20px);
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
 						}
 
-						p:nth-child(2) {
-							// max-width: 52px;
+						p:first-child {
+							max-width: 157px;
+
+							@include vars.media(tablet, max) {
+								max-width: calc(258px - 20px);
+							}
 						}
 					}
 				}
@@ -425,17 +428,14 @@
 					}
 
 					p {
+						// max-width: calc(60% - 20px);
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
 					}
 
-					p:first-child {
-						max-width: 170px;
-
-						@include vars.media(tablet, max) {
-							max-width: calc(258px - 20px);
-						}
+					p:nth-child(2) {
+						// max-width: 52px;
 					}
 				}
 			}
