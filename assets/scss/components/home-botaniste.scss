@@ -358,7 +358,6 @@
 
 		.recent {
 			width: calc(100% - ((100% - 27vw) + 50px));
-			// background-color: antiquewhite;
 			padding: 20px;
 			align-self: flex-start;
 			border-radius: 10px;
@@ -410,6 +409,7 @@
 
 				@media screen and (max-width:779px) {
 					height: 60vh;
+
 				}
 
 				.activity {
@@ -428,14 +428,9 @@
 					}
 
 					p {
-						// max-width: calc(60% - 20px);
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-					}
-
-					p:nth-child(2) {
-						// max-width: 52px;
 					}
 				}
 			}
