@@ -117,11 +117,11 @@ class AdviceService
         return $groupedAdvices;
     }
 
-    public function getAdvicesWaitingByUser(int $currentUserId)
+    public function getAdvicesWaitingByUser(int $currentUserId, $groupByStatus = false)
     {
         $advices = $this->getGroupedAdvices(false);
-
         $groupedAdvices = [];
+
         foreach ($advices as $advice) {
             $adviceUserId = $advice->getParticular()->getId();
             $adviceStatus = $advice->getStatus();
@@ -131,7 +131,11 @@ class AdviceService
             }
         }
 
-        return $groupedAdvices;
+        if ($groupByStatus) {
+            return $this->groupAdvicesByStatus($groupedAdvices);
+        } else {
+            return $groupedAdvices;
+        }
     }
 
     private function groupAndSortAdvices(array $advices): array
