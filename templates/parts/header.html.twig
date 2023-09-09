@@ -1,16 +1,45 @@
-{# DESKTOP HEADER #}
-<header>
-    <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+<header class="header-accueil">
+    {% if is_granted('IS_AUTHENTICATED') %}
+        {% if is_granted('ROLE_PARTICULAR') %}
+            {% set path = "/user_dashboard" %}
+        {% else %}
+            {% set path = "/dashboard" %}
+        {% endif %}
+    {% else %}
+        {% set path = "/" %}
+    {% endif %}
 
-    <input type="checkbox" id="header_toggle">
+    <a href="{{ path }}" class="left_header">
+        <img class="greencare_logo" id="logo" src="/images/logoG.png" alt="greencare">
+    </a>
 
-    <label for="header_toggle" class="header_burger">
-        {% include 'parts/burger.html.twig' %}
-    </label>
-
-    <nav class="header_nav">
-        <a href="{{ path('app_default') }}">Accueil</a>
-        <a href="#">A propos</a>
-        <button class="btn btn-secondary" id="download">Télécharger</button>
-    </nav>
+    <div class="right_header">
+        {% if is_granted('IS_AUTHENTICATED') %}
+            {% if is_granted('ROLE_PARTICULAR') %}
+                <div>
+                    <a href="{{ path('app_advice_new') }}">
+                        <button class="btn btn-secondary">Conseil en ligne</button>
+                    </a>
+                    <a href="{{ path('app_appointment_new') }}">
+                        <button class="btn btn-secondary">Demande de RDV</button>
+                    </a>
+                </div>
+            {% endif %}
+            <div>
+                <button class="btn btn-secondary" id="profil">Profil</button>
+                <form action="{{ logout_path('main') }}" method="post">
+                    <button id="disconnect" class="btn btn-secondary" type="submit">Déconnexion</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="right_header">
+                <a href="{{ path('app_default') }}">
+                    <button class="btn btn-secondary">Accueil</button>
+                </a>
+                <a href="{{ path('app_register', {'type':'botaniste'}) }}">
+                    <button class="btn btn-secondary">Professionnel ?</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
 </header>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Appointment;
+use App\Entity\Botanist;
 use App\Entity\Particular;
 use App\Entity\User;
 use App\Form\AppointmentType;
@@ -105,16 +106,6 @@ class AppointmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'])]
-    public function show(int $id, AppointmentService $service): Response
-    {
-        $appointment = $service->getById($id);
-
-        return $this->render('appointment/show.html.twig', [
-            'appointment' => $appointment,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
     public function edit(#[CurrentUser] ?Particular $user, Request $request, int $id, AppointmentService $service, AppointmentRepository $appointmentRepository): Response
     {
@@ -145,10 +136,43 @@ class AppointmentController extends AbstractController
     {
         $appointment = $service->getById($id);
 
-        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
-            $appointmentRepository->remove($appointment, true);
-        }
+        //        if ($this->isCsrfTokenValid('delete'.$appointment->getId(), $request->request->get('_token'))) {
+        $appointmentRepository->remove($appointment, true);
+        //        }
 
         return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/incoming_appointment', name: 'app_appointement_incoming_appointment', methods: ['GET'])]
+    public function incoming_appointment(): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $type = null;
+        if ($user instanceof Botanist) {
+            $type = 'Botanist';
+        } elseif ($user instanceof Particular) {
+            $type = 'Particular';
+        }
+
+        $groupedAppointments = $this->appointmentService->getGroupedAppointmentsByBotanist($user->getId(), $type);
+
+        return $this->render('botanist/incoming_appointments.html.twig', [
+            'groupedAppointments' => $groupedAppointments,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'])]
+    public function show(int $id, AppointmentService $service): Response
+    {
+        $appointment = $service->getById($id);
+
+        return $this->render('appointment/show.html.twig', [
+            'appointment' => $appointment,
+        ]);
     }
 }

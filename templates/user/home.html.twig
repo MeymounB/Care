@@ -3,8 +3,8 @@
 {% block title %}Accueil{% endblock %}
 {% block body %}
 
-	<section class="dashboard-botaniste">
-		<h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_botanist_appointments') }}"><span>{{ app.user }}</span></a>
+	<section class="dashboard-user">
+		<h2>Bienvenue sur votre Dashboard, <a href="#"><span>{{ app.user }}</span></a>
 		</h2> {# TODO: mettre le lien vers le profil #}
 
 		<div class="top-banner">
@@ -14,9 +14,9 @@
 				<div class="rdvs">
 					{% for advice in advices %}
 						<a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
-							<p>advice.title</p>
+							<p>{{ advice.title }}</p>
 							・
-							<p>{{ advice.createdAt|date('d-m-Y | H:i') }}</p>
+							<p>{{ advice.createdAt|date('d-m-Y') }}</p>
 						</a>
 					{% endfor %}
 				</div>
@@ -41,11 +41,19 @@
 		<div class="bottom-banner">
 			<div class="left">
 				 <div class="historique">
-					<h3>Gardiennage</h3>
+					<h3>Besoin d'aide ?</h3>
 					<div class="box-container">
-						<a href="/" class="box">
+						<a href="{{ path('app_advice_list_my_advice') }}" class="box">
 							<img src={{ asset('images/plante1.jpg') }}>
 							<p>Vos demandes de conseils</p>
+						</a>
+						<a href="{{ path('app_advice_new') }}" class="box">
+							<img src={{ asset('images/plante1.jpg') }}>
+							<p>Conseil en ligne</p>
+						</a>
+						<a href="{{ path('app_appointment_new') }}" class="box">
+							<img src={{ asset('images/plante1.jpg') }}>
+							<p>Prendre rendez-vous</p>
 						</a>
 					</div>
 				</div>
@@ -53,7 +61,7 @@
 				<div class="a-venir">
 					<div class="top">
 						<h3>Rendez-vous à venir</h3>
-						<a href="{{ path('app_botanist_incoming_appointment') }}">Voir tous
+						<a href="{{ path('app_appointement_incoming_appointment') }}">Voir tous
 							<img src={{ asset('images/right-arrow.png') }}>
 						</a>
 					</div>
@@ -85,7 +93,7 @@
 				<div class="activities">
 					{% for recent in recent_activity %}
 						<a href="{{ path('app_advice_show', {'id': recent.id}) }}" class="activity">
-							<p>recent.title</p>
+							<p>{{ recent.title }}</p>
 							・
 							{% if recent.isPublic %}
 								<p>Public</p>

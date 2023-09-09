@@ -1,0 +1,60 @@
+.appointment-details {
+	min-height: 100vh;
+	padding: 10vh 10vw;
+
+	.return {
+		width: 100%;
+		text-align: end;
+	}
+
+	.appointment-content {
+		border: 1px solid #ccc;
+		padding: 20px;
+		width: 100%;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+		.buttons {
+			display: flex;
+			justify-content: flex-start;
+			gap: 10px;
+			width: 200px;
+
+			button {
+				width: 100%;
+				padding: 5px;
+				border-radius: 5px;
+
+				&.delete-button {
+					border: 2px solid red;
+				}
+			}
+		}
+
+		h2 {
+			margin-top: 0;
+		}
+	}
+
+	.appointment-info {
+		padding: 0;
+
+		li {
+			margin-bottom: 5px;
+
+			&.description {
+				border-top: 1px solid #0070e0;
+				border-bottom: 1px solid #0070e0;
+				margin: 10px 0;
+				padding: 5px 0;
+			}
+
+			a {
+				text-decoration: none;
+				color: #0070e0;
+			}
+		}
+	}
+}
