@@ -1,4 +1,4 @@
-<header class="header-accueil">
+<header>
     {% if is_granted('IS_AUTHENTICATED') %}
         {% if is_granted('ROLE_PARTICULAR') %}
             {% set path = "/user_dashboard" %}
@@ -15,6 +15,12 @@
 
     <div class="right_header">
         {% if is_granted('IS_AUTHENTICATED') %}
+            <div>
+                <button class="btn btn-secondary" id="profil">Profil</button>
+                <form action="{{ logout_path('main') }}" method="post">
+                    <button id="disconnect" class="btn btn-secondary" type="submit">Déconnexion</button>
+                </form>
+            </div>
             {% if is_granted('ROLE_PARTICULAR') %}
                 <div>
                     <a href="{{ path('app_advice_new') }}">
@@ -25,21 +31,15 @@
                     </a>
                 </div>
             {% endif %}
-            <div>
-                <button class="btn btn-secondary" id="profil">Profil</button>
-                <form action="{{ logout_path('main') }}" method="post">
-                    <button id="disconnect" class="btn btn-secondary" type="submit">Déconnexion</button>
-                </form>
-            </div>
-        {% else %}
-            <div class="right_header">
-                <a href="{{ path('app_default') }}">
-                    <button class="btn btn-secondary">Accueil</button>
-                </a>
-                <a href="{{ path('app_register', {'type':'botaniste'}) }}">
-                    <button class="btn btn-secondary">Professionnel ?</button>
-                </a>
-            </div>
+        {% else %} 
+                <div>
+                    <a href="{{ path('app_default') }}">
+                        <button class="btn btn-secondary">Accueil</button>
+                    </a>
+                    <a href="{{ path('app_register', {'type':'botaniste'}) }}">
+                        <button class="btn btn-secondary">Professionnel ?</button>
+                    </a>
+                </div>
         {% endif %}
     </div>
 </header>
