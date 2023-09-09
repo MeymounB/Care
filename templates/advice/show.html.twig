@@ -92,7 +92,7 @@
                                               action="{{ path('app_comment_delete', {'id': advice.id}) }}">
                                             <input type="hidden" name="_token"
                                                    value="{{ csrf_token('delete' ~ advice.id) }}">
-                                            <button id="delete-button" class="btn">Delete</button>
+                                            <button id="delete-button">Delete</button>
                                         </form>
                                     </div>
                                 {% endif %}
