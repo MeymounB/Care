@@ -3,65 +3,66 @@
 {% block title %}Nouveaux rendez-vous disponibles{% endblock %}
 
 {% block body %}
-    <div class="mx-auto px-4">
-        <h1 class="text-2xl font-bold mb-4">Nouveaux rendez-vous disponibles</h1>
+    <section class="appointments-section">
+        <h2>Rendez-vous disponibles</h2>
 
-        {% for appointments in groupedAppointments %}
-            <div class="rounded-lg shadow-lg bg-white my-3">
-                <table class="table-auto w-full mb-4">
-                    <thead class=" bg-indigo-100 border-indigo-500 border-b">
-                    <tr>
-                        <th class="text-start px-2 py-1 text-xs">Title</th>
-                        <th class="text-start px-2 py-1 text-xs">Description</th>
-                        <th class="text-start px-2 py-1 text-xs">PlannedAt</th>
-                        <th class="text-start px-2 py-1 text-xs">Has been taken by</th>
-                        <th class="text-start px-2 py-1 text-xs">IsPresential</th>
-                        <th class="text-start px-2 py-1 text-xs">actions</th>
+        {% for status, appointments in groupedAppointments %}
+            <table class="appointments-table">
+                {% if (status == 'En attente') %}
+                    <tr class="appointments-row en-attente">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell description">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell">Pris en charge par</th>
+                        <th class="appointments-cell">Présence</th>
+                        <th class="appointments-cell lieu">Adresse / Lien Zoom</th>
+                        <th class="appointments-cell boutons">
+                            Actions
+                        </th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    {% for appointment in appointments %}
-                        <tr class="text-center border-b text-sm text-gray-600">
-                            <td class="px-4 py-2">{{ appointment.title }}</td>
-                            <td class="px-4 py-2">{{ appointment.description }}</td>
-                            <td class="px-4 py-2">{{ appointment.plannedAt ? appointment.plannedAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td class="px-4 py-2">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
-                            <td class="px-4 py-2">
-                                {% if appointment.isPresential %}
-                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
-                                Yes
-                            {% if appointment.address %}
-                                - {{ appointment.address }}
+                {% endif %}
+
+                {% for appointment in appointments %}
+                    {% if (status == 'En attente') %}
+                        <tr class="appointments-row en-attente">
+                            <td class="appointments-cell">{{ appointment.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ appointment.title }}</td>
+                            <td class="appointments-cell description">{{ appointment.description }}</td>
+                            <td class="appointments-cell">{{ appointment.createdAt ? appointment.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ appointment.botanist ? appointment.botanist.FullName : 'No botanist assigned' }}</td>
+                            {% if appointment.isPresential %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                <td class="appointments-cell distanciel">À domicile</td>
+                                    {% if appointment.address and appointment.status == "En cours" %}
+                                        <td class="appointments-cell distanciel">{{ appointment.address }}</td>
+                                        {% else %}
+                                        <td class="appointments-cell distanciel">-</td>
+                                    {% endif %}
+                                    </span>
+                            {% else %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                <td class="appointments-cell distanciel">En ligne</td>
+                            {% if appointment.link and appointment.status == "En cours" %}
+                                <td class="appointments-cell distanciel"><a href="{{ appointment.link }}">Lien</a></td>
+                            {% else %}
+                                <td class="appointments-cell distanciel">-</td>
                             {% endif %}
                             </span>
-                                {% else %}
-                                    <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
-                                No
-                            {% if appointment.link %}
-                                - <a href="{{ appointment.link }}"
-                                     class="text-indigo-600 underline hover:text-indigo-900">Link</a>
                             {% endif %}
-                            </span>
-                                {% endif %}
-                            </td>
-                            <td class="px-4 py-2 flex justify-center">
+
+                            <td class="appointments-cell boutons">
                                 <button onclick="location.href='{{ path('app_appointment_show', {'id': appointment.id}) }}'"
-                                        type="button"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                                    show
-                                </button>
+                                        type="button">Détails</button>
                             </td>
                         </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    {% endif %}
+                {% endfor %}
+            </table>
         {% else %}
-            <p class="text-lg text-red-500">No appointments found</p>
+            <tr>
+                <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
+            </tr>
         {% endfor %}
-    </div>
+    </section>
 {% endblock %}

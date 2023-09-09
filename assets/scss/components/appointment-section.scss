@@ -1,0 +1,146 @@
+.appointments-section {
+	// max-width: 800px;
+	padding: 10vh 5vw;
+	margin: 0 auto;
+
+	h2 {
+		width: 100%;
+		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	h3 {
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+
+	h4 {
+		margin-top: 10px;
+		margin-bottom: 5px;
+	}
+
+	.appointments-table {
+		border-radius: 10px;
+		border-collapse: collapse;
+		width: 100%;
+		margin-bottom: 20px;
+
+		tbody {
+			@include vars.flexer(center, center, column);
+			gap: 10px;
+			width: 100%;
+		}
+
+		.appointments-row {
+			display: flex;
+			width: 100%;
+
+			.appointments-cell {
+				flex: 1;
+				padding: 10px;
+				text-align: center;
+				border-right: 1px solid #ccc;
+
+				text-overflow: ellipsis;
+				overflow: hidden;
+				display: -webkit-box;
+				-webkit-line-clamp: 4;
+				-webkit-box-orient: vertical;
+
+				&.description {
+					text-align: justify;
+				}
+
+				&:last-child {
+					border-right: none;
+				}
+
+				&.boutons {
+					@include vars.flexer(center, center, row);
+					gap: 10px;
+					flex-wrap: wrap;
+
+					button {
+						border: none;
+						border-radius: 10px;
+						padding: 10px 16px;
+						background: linear-gradient(60deg, #B9FF66, #66FFB9);
+						background-size: 300% 300%;
+						animation: gradientShift 8s infinite alternate;
+
+						a {
+							color: black;
+							text-decoration-color: black;
+						}
+
+					}
+
+					@keyframes gradientShift {
+						0% {
+							background-position: 0% 50%;
+						}
+
+						100% {
+							background-position: 100% 50%;
+						}
+					}
+				}
+			}
+
+			.presentiel {
+				color: vars.$green;
+				line-break: auto;
+
+				a {
+					color: vars.$green;
+					text-decoration-color: vars.$green;
+				}
+			}
+
+			.distanciel {
+				color: #007bff;
+				line-break: anywhere;
+
+				a {
+					color: #007bff;
+					text-decoration-color: #007bff;
+				}
+			}
+
+			&:first-child {
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+				border-bottom-left-radius: 0px;
+				border-bottom-right-radius: 0px;
+			}
+
+			&:last-child {
+				border-top-left-radius: 0px;
+				border-top-right-radius: 0px;
+				border-bottom-left-radius: 10px;
+				border-bottom-right-radius: 10px;
+			}
+
+			&.en-cours {
+				border: 2px solid vars.$green;
+			}
+
+			&.en-attente {
+				border: 2px solid vars.$yellow;
+			}
+
+			&.termine {
+				border: 2px solid vars.$black;
+			}
+
+			&.annule {
+				border: 2px solid vars.$red;
+			}
+		}
+
+		// Style pour les sous-tableaux (en cours/en attente, terminé/annulé)
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

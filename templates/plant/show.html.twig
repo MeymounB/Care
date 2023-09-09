@@ -3,7 +3,42 @@
 {% block title %}Plant{% endblock %}
 
 {% block body %}
-    <h1 class="text-4xl mb-5">Plant</h1>
+
+    <section class="plant-details" aria-labelledby="plant-heading">
+		<div class="return">
+			<a href="/">Retour à la liste</a>
+		</div>
+		<article class="plant-content">
+			<h2 id="plant-heading">Détails de la Plante</h2>
+			<div class="img-container">
+				<img src="/images/plante1.jpg" alt="image">
+			</div>
+			<ul class="plant-info">
+				<li id="name">
+					<p>Nom</p>
+					<p>Tupile</p>
+				</li>
+				<li id="espece">
+					<p>Espèce</p>
+					<p>Lime</p>
+				</li>
+				<li id="date">
+					<p>Date</p>
+					<p>20/08/2023</p>
+				</li>
+			</ul>
+			<div id="description">
+				<p>Description</p>
+				<p>Une description</p>
+			</div>
+			<div class="buttons">
+				<button>Modifier</button>
+				<button class="delete-button">Supprimer</button>
+			</div>
+		</article>
+	</section>
+
+    {# <h1 class="text-4xl mb-5">Plant</h1>
 
     <table class="table-auto bg-white rounded-lg overflow-hidden w-full shadow-lg">
         <tbody>
@@ -32,5 +67,6 @@
         <div class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md ">
             {{ include('plant/_delete_form.html.twig') }}
         </div>
-    </div>
+    </div> #}
+
 {% endblock %}

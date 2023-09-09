@@ -4,18 +4,20 @@ namespace App\Controller\Auth;
 
 use App\Entity\Botanist;
 use App\Entity\Particular;
-use App\Service\RegistrationService;
+use App\Form\Registration\BotanistFormType;
 use App\Form\Registration\ParticularFormType;
+use App\Service\RegistrationService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register/{type?}', name: 'app_register')]
-    public function register(?string $type, Request $request, RegistrationService $registrationService, UrlGeneratorInterface $router): Response
+    public function register(?string $type, Request $request, RegistrationService $registrationService, UrlGeneratorInterface $router, MessageBusInterface $bus): Response
     {
         if (isset($type)) {
             $user = new Botanist();
@@ -35,7 +37,8 @@ class RegistrationController extends AbstractController
                 $user,
                 $form->get('password')->getData(),
                 $form->has('certif') ? $form->get('certif')->getData() : null,
-                $router->generate('app_login')
+                $router->generate('app_login'),
+                $bus
             );
 
             return $this->redirectToRoute('app_login');

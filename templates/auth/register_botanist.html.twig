@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="main-container">
     {{ form_start(form, {'attr': {'class': 'form-auth'}}) }}
     <h2 class="title">Je suis un Botaniste</h2>
     <div class="form-half">
@@ -55,6 +56,7 @@
     {% endif %}
 
     {{ form_end(form) }}
+</div>
 {% endblock %}
 
 {% block footer %}{% endblock %}

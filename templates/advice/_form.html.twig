@@ -4,30 +4,28 @@
         {{ form_start(form) }}
         <div class="fieldset-container">
             <fieldset>
-                {{ form_row(form.title) }}
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
             </fieldset>
             <fieldset class="plantes-selector">
-{#                {{ form_label(form.plants, 'Sélectionnez vos plantes :') }}#}
-{#                {{ form_widget(form.plants) }}#}
-{#                <img src="{{ asset('images/fleche.png') }}" alt="">#}
-                <ul id="myDropdown">
-                    <li>
-                        <input type="checkbox" id="plantes1" value="plantes1">
-                        <label for="plantes1">Plantes 1</label>
-                    </li>
-                    <!-- Répétez pour chaque plante -->
-                </ul>
+                {{ form_label(form.plants) }}
+                {{ form_widget(form.plants) }}
             </fieldset>
             <fieldset>
-                {{ form_label(form.isPublic, 'Voulez-vous rendre votre demande publique ?') }}
+                {{ form_label(form.isPublic) }}
                 {{ form_widget(form.isPublic) }}
             </fieldset>
         </div>
         <fieldset class="description">
-            {{ form_label(form.description, 'Description du problème :') }}
+            {{ form_label(form.description) }}
             {{ form_widget(form.description) }}
         </fieldset>
-        <button id="button" value="submit" type="button" class="btn btn-secondary">Publier la demande</button>
+        <button id="button" type="submit" class="btn btn-secondary">Publier la demande</button>
+
+        {% if error %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(error.message) }}
+        {% endif %}
         {{ form_end(form) }}
     </div>
 </section>

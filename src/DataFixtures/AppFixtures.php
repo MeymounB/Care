@@ -36,8 +36,10 @@ class AppFixtures extends Fixture
         // Create 50 certificates for botanists
         $this->createCertificates($faker, $manager);
 
+        $addresses = $this->createAddresses($particulars, $faker, $manager);
+
         // Create 10 appointments
-        $appointments = $this->createAppts($faker, $manager, $status, $botanists, $particulars);
+        $appointments = $this->createAppts($faker, $manager, $status, $botanists, $particulars, $addresses);
 
         // Create 10 advices
         $advices = $this->createAdvices($faker, $manager, $status, $botanists, $particulars);
@@ -58,17 +60,6 @@ class AppFixtures extends Fixture
             $manager->persist($photo);
         }
 
-        foreach ($particulars as $particular) {
-            $address = new Address();
-            $address
-                ->setStreet($faker->streetAddress)
-                ->setZipCode($faker->randomNumber(5))
-                ->setCity($faker->city)
-                ->setParticular($particular);
-
-            $manager->persist($address);
-        }
-
         $manager->flush();
     }
 
@@ -83,6 +74,24 @@ class AppFixtures extends Fixture
         }
 
         return $status;
+    }
+
+    private function createAddresses(array $particulars, Generator $faker, ObjectManager $manager): array
+    {
+        $addresses = [];
+        foreach ($particulars as $particular) {
+            $address = new Address();
+            $address
+                ->setStreet($faker->streetAddress)
+                ->setZipCode($faker->randomNumber(5))
+                ->setCity($faker->city)
+                ->setParticular($particular);
+
+            $manager->persist($address);
+            $addresses[] = $address;
+        }
+
+        return $addresses;
     }
 
     private function createBotanists(Generator $faker, ObjectManager $manager): array
@@ -145,7 +154,7 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function createAppts(Generator $faker, ObjectManager $manager, array $status, array $botanists, array $particulars): array
+    private function createAppts(Generator $faker, ObjectManager $manager, array $status, array $botanists, array $particulars, array $addresses): array
     {
         $appointments = [];
         for ($i = 0; $i < 10; ++$i) {
@@ -156,7 +165,9 @@ class AppFixtures extends Fixture
                 ->setDescription($faker->paragraph)
                 ->setPlannedAt(new \DateTime('now + '."{$i} days"))
                 ->setIsPresential($faker->boolean)
-                ->setAddress($faker->address)
+                ->setAddress(
+                    $addresses[array_rand($addresses)]
+                )
                 ->setLink($faker->url)
                 ->setStatus($status[rand(0, count($status) - 1)])
                 ->setBotanist($botanists[$i % 10])

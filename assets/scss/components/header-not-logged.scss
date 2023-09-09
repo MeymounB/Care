@@ -1,0 +1,41 @@
+.header-not-logged {
+	@include vars.flexer(center, space-between, row);
+
+	flex-wrap: wrap; // à supprimer une fois burger fait
+
+	width: 100%;
+	min-height: vars.rem(125);
+	text-align: center;
+
+	box-shadow: 0 0 vars.rem(10) 0 vars.$gray;
+	padding: 0 vars.rem(20);
+
+	@include vars.media(tablet, max) {
+		// à supprimer une fois burger fait
+		padding: vars.rem(20); // à supprimer une fois burger fait
+		justify-content: center; // à supprimer une fois burger fait
+		gap: 20px; // à supprimer une fois burger fait
+	}
+
+	.left_header {
+		@include vars.flexer(center, center, row);
+		flex-wrap: wrap; // à supprimer une fois burger fait
+
+		width: 250px;
+
+		img {
+			width: 100%;
+		}
+	}
+
+	.right_header {
+		@include vars.flexer(center, center, row);
+		flex-wrap: wrap; // à supprimer une fois burger fait
+
+		gap: vars.rem(10);
+
+		#home {
+			background-color: vars.$green;
+		}
+	}
+}

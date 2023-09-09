@@ -27,20 +27,20 @@ class FileUploaderService
         $currentTime = time();
 
         if (null !== $key) {
-            $newFilename = $this->getPrefixName() . '_' . $key . '_' . $username . '_' . $currentTime;
+            $newFilename = $this->getPrefixName().'_'.$key.'_'.$username.'_'.$currentTime;
         } else {
-            $newFilename = $this->getPrefixName() . '_' . $username . '_' . $currentTime;
+            $newFilename = $this->getPrefixName().'_'.$username.'_'.$currentTime;
         }
 
         return [
             'title' => $newFilename,
-            'file' => $this->slugger->slug($newFilename) . '.' . $file->guessExtension(),
+            'file' => $this->slugger->slug($newFilename).'.'.$file->guessExtension(),
         ];
     }
 
     public function upload(string $filename, UploadedFile $file): void
     {
-        $directory = $this->params->get($this->type->value . '_dir');
+        $directory = $this->params->get($this->type->value.'_dir');
         try {
             $file->move($directory, $filename);
         } catch (FileException $e) {
