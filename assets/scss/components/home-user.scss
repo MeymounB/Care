@@ -1,11 +1,15 @@
 .dashboard-user {
-	min-height: 100vh;
+	min-height: 120vh;
 	padding: 5vh 10vw;
 	@include vars.flexer(flex-start, flex-start, column);
 	gap: 5vh;
 
 	@include vars.media(tablet, max) {
-		height: 180vh;
+		height: 200vh;
+	}
+
+	@media screen and (max-width:779px) {
+		height: 240vh;
 	}
 
 	@include vars.media(phablet, max) {
@@ -202,12 +206,22 @@
 				}
 
 				h3 {
-					margin-bottom: 20px
+					margin-bottom: 20px;
+
+					@include vars.media(tablet, max) {
+						text-align: center;
+					}
 				}
 
 				.box-container {
 					@include vars.flexer(center, flex-start, row);
 					gap: 40px;
+					padding: 10px;
+					height: 40vh;
+
+					@media screen and (max-width:779px) {
+						height: 80vh;
+					}
 
 					.box {
 						@include vars.flexer(center, flex-end, column);
@@ -378,16 +392,20 @@
 				padding-left: 2px;
 				padding-bottom: 3px;
 				overflow-y: auto;
-				width: 100%;
 				padding-top: 10px;
 				padding-bottom: 10px;
-				height: 100%;
+				height: 65vh;
 
 				@include vars.media(tablet, max) {
 					// width: 100%;
 					flex-direction: row;
 					justify-content: flex-start;
 					flex-wrap: wrap;
+				}
+
+				@media screen and (max-width:779px) {
+					height: 60vh;
+
 				}
 
 				.activity {
