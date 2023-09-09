@@ -42,8 +42,9 @@
                         <th class="appointments-cell boutons">Actions</th>
                     </tr>
                 {% endif %}
-
+{#                {{ dump(advices) }}#}
                 {% for advice in advices %}
+
                     {% if (status == 'En attente') %}
                         <tr class="appointments-row en-attente">
                             <td class="appointments-cell">{{ advice.particular.Fullname }}</td>

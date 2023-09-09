@@ -35,7 +35,13 @@ class AdviceController extends AbstractController
     #[Route('/', name: 'app_advice_index', methods: ['GET'])]
     public function index(): Response
     {
-        $groupedAdvices = $this->adviceService->getGroupedAdvices(true);
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $groupedAdvices = $this->adviceService->getAdvicesWaitingByUser($user->getId(), true);
 
         return $this->render('advice/index.html.twig', [
             'groupedAdvices' => $groupedAdvices,
