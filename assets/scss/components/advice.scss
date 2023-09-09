@@ -36,15 +36,7 @@
 				.posted-by {
 					color: vars.$green;
 				}
-
-				.when {}
-
-				.nb-comments {
-					span {}
-				}
 			}
-
-			.description {}
 		}
 
 		.write-answer {
@@ -126,6 +118,10 @@
 					button {
 						background: none;
 						border: none;
+					}
+
+					#delete-button {
+						color: vars.$red;
 					}
 				}
 			}
