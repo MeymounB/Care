@@ -352,7 +352,6 @@
 
 		.recent {
 			width: calc(100% - ((100% - 27vw) + 50px));
-			// background-color: antiquewhite;
 			padding: 20px;
 			align-self: flex-start;
 			border-radius: 10px;
@@ -397,7 +396,6 @@
 				height: 65vh;
 
 				@include vars.media(tablet, max) {
-					// width: 100%;
 					flex-direction: row;
 					justify-content: flex-start;
 					flex-wrap: wrap;
@@ -410,7 +408,6 @@
 
 				.activity {
 					color: black;
-					// border: 1px solid black;
 					box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.3);
 					border-radius: 10px;
 					@include vars.flexer(center, space-between, row);
@@ -425,14 +422,9 @@
 					}
 
 					p {
-						// max-width: calc(60% - 20px);
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-					}
-
-					p:nth-child(2) {
-						// max-width: 52px;
 					}
 				}
 			}

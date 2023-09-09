@@ -88,12 +88,14 @@
                                     <a href="#"
                                        class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
                                     <div class="bg-red-800 flex items-center">
-                                        <form id="delete-form" method="post"
+                                       {# <form id="delete-form" method="post"
                                               action="{{ path('app_comment_delete', {'id': advice.id}) }}">
                                             <input type="hidden" name="_token"
                                                    value="{{ csrf_token('delete' ~ advice.id) }}">
                                             <button id="delete-button" class="btn">Delete</button>
-                                        </form>
+                                        </form>#}
+                                        <a href="#"
+                                           class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Supprimer</a>
                                     </div>
                                 {% endif %}
                             </div>
