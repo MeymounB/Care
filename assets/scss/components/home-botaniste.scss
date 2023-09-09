@@ -430,8 +430,12 @@
 						white-space: nowrap;
 					}
 
-					p:nth-child(1) {
-						max-width: calc(258px - 20px);
+					p:first-child {
+						max-width: 170px;
+
+						@include vars.media(tablet, max) {
+							max-width: calc(258px - 20px);
+						}
 					}
 				}
 			}
