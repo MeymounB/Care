@@ -8,7 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
@@ -26,6 +28,8 @@ class ResetPasswordService
         private UrlGeneratorInterface $generator,
         private UrlGeneratorInterface $router,
         private ContainerInterface $container,
+        private TranslatorInterface $translator,
+        private FlashBagInterface $flash
     ) {
     }
 
@@ -50,13 +54,13 @@ class ResetPasswordService
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
+            // $this->flash->add('reset_password_error', sprintf(
             //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+            //     $this->translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+            //     $this->translator->trans($e->getReason(), [], 'ResetPasswordBundle')
             // ));
 
-            return new RedirectResponse($this->router->generate('app_check_email'));
+            // return new RedirectResponse($this->router->generate('app_check_email'));
         }
 
         // $message = $emailService->create($emailFormData);
