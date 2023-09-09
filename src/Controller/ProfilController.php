@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/mon-profil')]
@@ -64,11 +65,11 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_profil_delete', methods: ['POST'])]
-    public function delete(Request $request, #[CurrentUser] ?User $user, UserRepository $userRepository): Response
+    public function delete(Request $request, #[CurrentUser] ?User $user, UserRepository $userRepository, TokenStorageInterface $tokenStorage): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
-            $this->get('security.token_storage')->setToken(null);
+            $tokenStorage->setToken(null);
             $request->getSession()->invalidate();
 
             $this->addFlash('success', 'Votre compte a été supprimé avec succès');
