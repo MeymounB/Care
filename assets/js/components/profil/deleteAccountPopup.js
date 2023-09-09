@@ -5,7 +5,7 @@ export function initDeleteAccountPopup() {
   let deleteAccountLink = document.getElementById("delete-account-link");
 
   if (deleteAccountLink) {
-    deleteAccountLink.addEventListener("click", function (e) {
+    deleteAccountLink.addEventListener("click", (e) => {
       e.preventDefault();
       if (popup) {
         popup.style.display = "block";

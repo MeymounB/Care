@@ -2,23 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Botanist;
 use App\Entity\Particular;
-use App\Entity\Plant;
-use App\Entity\User;
-use App\Repository\PlantRepository;
+use App\Service\AdviceService;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\Mapping\MappingException;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\PlantRepository;
 use App\Repository\AdviceRepository;
 use App\Repository\AppointmentRepository;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/mon-profil')]
 class ProfilController extends AbstractController
@@ -27,7 +24,8 @@ class ProfilController extends AbstractController
     public function index(
         PlantRepository $plantRepository,
         AdviceRepository $adviceRepository,
-        AppointmentRepository $appointmentRepository
+        AppointmentRepository $appointmentRepository,
+        AdviceService $adviceService
     ): Response {
         $user = $this->getUser();
 
@@ -46,6 +44,12 @@ class ProfilController extends AbstractController
         $nombreDeRendezVous = $appointmentRepository->findAll();
         $nombreDeRendezVous = count($nombreDeRendezVous);
 
+        $nombreDeRendezVousEnCours = $appointmentRepository->countAppointmentsByStatus(2);
+        $nombreDeRendezVousAnnules = $appointmentRepository->countAppointmentsByStatus(4);
+
+        $nombreDeConseils = $adviceService->getRecentActivityByUser($user);
+        $nombreDeConseilsDonnes = count($nombreDeConseils);
+
         if ($user instanceof Particular) {
             return $this->render('user/profil.html.twig', [
                 'user' => $user,
@@ -57,9 +61,9 @@ class ProfilController extends AbstractController
         } elseif ($user instanceof Botanist) {
             return $this->render('botanist/profil.html.twig', [
                 'user' => $user,
-                'nombreDeRendezVous' => $nombreDeRendezVous,
-                'plantesPossedees' => $nombrePlantesPossedees,
-                'conseilsDemandes' => $nombreDeConseilsDemandes,
+                'nombreDeRendezVousEnCours' => $nombreDeRendezVousEnCours,
+                'nombreDeRendezVousAnnules' => $nombreDeRendezVousAnnules,
+                'nombreDeConseilsDonnes' => $nombreDeConseilsDonnes,
             ]);
         }
     }
