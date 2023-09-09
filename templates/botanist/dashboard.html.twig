@@ -46,20 +46,19 @@
 
         <div class="bottom-banner">
             <div class="left">
-                {# <div class="historique">
-					<h3>Gardiennage</h3>
+                 <div class="historique">
+                     <h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a>
+                     </h3>
 					<div class="box-container">
-						<a href="/" class="box">
-							<img src="/images/plante1.jpg" alt="">
-							<p>Vos rendez-vous</p>
-						</a>
-						<a href="/" class="box">
-							<img src="/images/plante1.jpg" alt="">
-							<p>Vos demandes de conseils</p>
-						</a>
+                        {% for advice in advices %}
+                            <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
+                                <p>{{ advice.title }}</p>
+                                ・
+                                <p>{{ advice.createdAt|date('d-m-Y') }}</p>
+                            </a>
+                        {% endfor %}
 					</div>
-				</div> #}
-
+				</div>
                 <div class="a-venir">
                     <div class="top">
                         <h3>Rendez-vous à venir</h3>
@@ -93,17 +92,17 @@
                 </div>
 
                 <div class="activities">
-                    {% for advice in advices %}
-                        <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="activity">
-                            <p>{{ advice.title }}</p>
+                    {% for recent_advice in recent_advices %}
+                        <a href="{{ path('app_advice_show', {'id': recent_advice.id}) }}" class="activity">
+                            <p>{{ recent_advice.title }}</p>
                             ・
-                            {% if advice.isPublic %}
+                            {% if recent_advice.isPublic %}
                                 <p>Public</p>
                             {% else %}
                                 <p>Privé</p>
                             {% endif %}
                             ・
-                            <p>{{ advice.createdAt|date('d-m-Y | H:i') }}</p>
+                            <p>{{ recent_advice.createdAt|date('d-m-Y | H:i') }}</p>
                         </a>
                     {% endfor %}
                 </div>
