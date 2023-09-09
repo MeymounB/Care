@@ -5,15 +5,16 @@ namespace App\Service;
 use App\Entity\User;
 use App\Message\MailMessage;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
-use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordToken;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
+use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 
 class ResetPasswordService
 {
@@ -24,6 +25,7 @@ class ResetPasswordService
         private EntityManagerInterface $entityManager,
         private UrlGeneratorInterface $generator,
         private UrlGeneratorInterface $router,
+        private ContainerInterface $container,
     ) {
     }
 
