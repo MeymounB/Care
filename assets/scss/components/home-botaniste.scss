@@ -425,14 +425,13 @@
 					}
 
 					p {
-						// max-width: calc(60% - 20px);
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
 					}
 
-					p:nth-child(2) {
-						// max-width: 52px;
+					p:nth-child(1) {
+						max-width: calc(258px - 20px);
 					}
 				}
 			}
