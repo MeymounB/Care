@@ -95,14 +95,11 @@
                     {% for recent_advice in recent_advices %}
                         <a href="{{ path('app_advice_show', {'id': recent_advice.id}) }}" class="activity">
                             <p>{{ recent_advice.title }}</p>
-                            ・
                             {% if recent_advice.isPublic %}
-                                <p>Public</p>
+                                <p><span>・</span>Public</p>
                             {% else %}
-                                <p>Privé</p>
+                                <p><span>・</span>Privé</p>
                             {% endif %}
-                            ・
-                            <p>{{ recent_advice.createdAt|date('d-m-Y | H:i') }}</p>
                         </a>
                     {% endfor %}
                 </div>
