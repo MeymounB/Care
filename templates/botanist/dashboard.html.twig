@@ -48,36 +48,38 @@
             <div class="left">
                 <div class="historique">
                     <h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a></h3>
-					<div class="box-container">
-						{% for advice in advices %}
+                    <div class="box-container">
+                        {% for advice in advices %}
                             <a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="activity">
                                 <p>{{ advice.title }}</p>
                                 <p><span>・</span>{{ advice.createdAt|date('d-m-Y') }}</p>
                             </a>
                         {% endfor %}
-					</div>
-
-                <div class="a-venir">
-                    <div class="top">
-                        <h3>Rendez-vous à venir</h3>
-                        <a href="{{ path('app_appointement_incoming_appointment') }}">Voir tous
-                            <img src={{ asset('images/right-arrow.png') }}>
-                        </a>
                     </div>
-                    <div class="rdvs">
-                        {% for incomming_appointment in incomming_appointments %}
-                            <a href="{{ path('app_appointment_show', {'id': incomming_appointment.id}) }}" class="box">
-                                <p>{{ incomming_appointment.title }}</p>
-                                ・
-                                {% if incomming_appointment.isPresential %}
-                                    <p>Présentiel</p>
-                                {% else %}
-                                    <p>En ligne</p>
-                                {% endif %}
-                                ・
-                                <p>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+
+                    <div class="a-venir">
+                        <div class="top">
+                            <h3>Rendez-vous à venir</h3>
+                            <a href="{{ path('app_appointement_incoming_appointment') }}">Voir tous
+                                <img src={{ asset('images/right-arrow.png') }}>
                             </a>
-                        {% endfor %}
+                        </div>
+                        <div class="rdvs">
+                            {% for incomming_appointment in incomming_appointments %}
+                                <a href="{{ path('app_appointment_show', {'id': incomming_appointment.id}) }}"
+                                   class="box">
+                                    <p>{{ incomming_appointment.title }}</p>
+                                    ・
+                                    {% if incomming_appointment.isPresential %}
+                                        <p>Présentiel</p>
+                                    {% else %}
+                                        <p>En ligne</p>
+                                    {% endif %}
+                                    ・
+                                    <p>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
