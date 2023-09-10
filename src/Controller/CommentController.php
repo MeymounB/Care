@@ -76,7 +76,7 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
         }
 
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 
