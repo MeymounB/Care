@@ -197,6 +197,6 @@ class Plant
 
     public function __toString()
     {
-        return $this->photos;
+        return $this->name;
     }
 }

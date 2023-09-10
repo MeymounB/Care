@@ -1,7 +1,7 @@
 <header>
     {% if is_granted('IS_AUTHENTICATED') %}
         {% if is_granted('ROLE_PARTICULAR') %}
-            {% set path = "/user_dashboard" %}
+            {% set path = "/homepage" %}
         {% else %}
             {% set path = "/dashboard" %}
         {% endif %}
