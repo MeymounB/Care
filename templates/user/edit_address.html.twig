@@ -2,7 +2,7 @@
 
 {% block title %}Éditer adresse{% endblock %}
 {% block body %}
-
+<div class="main-container">
 	{{ form_start(form) }}
 
         {{ form_row(form.street) }}
@@ -11,5 +11,5 @@
 
         <button type="submit" class="btn btn-primary">Créer</button>
 	{{ form_end(form) }}
-
+</div>
 {% endblock %}
