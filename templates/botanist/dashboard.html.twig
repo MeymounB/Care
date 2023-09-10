@@ -69,14 +69,14 @@
                                 <a href="{{ path('app_appointment_show', {'id': incomming_appointment.id}) }}"
                                    class="box">
                                     <p>{{ incomming_appointment.title }}</p>
-                                    ・
+                                    {# ・
                                     {% if incomming_appointment.isPresential %}
                                         <p>Présentiel</p>
                                     {% else %}
                                         <p>En ligne</p>
                                     {% endif %}
-                                    ・
-                                    <p>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+                                    ・ #}
+                                    <p><span>・</span>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
                                 </a>
                             {% endfor %}
                         </div>

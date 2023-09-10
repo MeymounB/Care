@@ -69,14 +69,13 @@
 						{% for incomming_appointment in incomming_appointments %}
 							<a href="{{ path('app_appointment_show', {'id': incomming_appointment.id}) }}" class="box">
 								<p>{{ incomming_appointment.title }}</p>
-								・
-								{% if incomming_appointment.isPresential %}
-									<p>Présentiel</p>
+								
+								{# {% if incomming_appointment.isPresential %}
+									<p><span>・</span>Présentiel</p>
 								{% else %}
-									<p>En ligne</p>
-								{% endif %}
-								・
-								<p>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+									<p><span>・</span>En ligne</p>
+								{% endif %} #}
+								<p><span>・</span>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
 							</a>
 						{% endfor %}
 					</div>
@@ -94,14 +93,13 @@
 					{% for recent in recent_activity %}
 						<a href="{{ path('app_advice_show', {'id': recent.id}) }}" class="activity">
 							<p>{{ recent.title }}</p>
-							・
+							
 							{% if recent.isPublic %}
-								<p>Public</p>
+								<p><span>・</span>Public</p>
 							{% else %}
-								<p>Privé</p>
+								<p><span>・</span>Privé</p>
 							{% endif %}
-							・
-							<p>{{ recent.createdAt|date('d-m-Y | H:i') }}</p>
+							{# <p>{{ recent.createdAt|date('d-m-Y | H:i') }}</p> #}
 						</a>
 					{% endfor %}
 				</div>
