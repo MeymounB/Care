@@ -54,6 +54,12 @@ class IndividualController extends abstractController
     #[Route('/user_dashboard/address', name: 'app.user.edit.address', methods: ['GET', 'POST'])]
     public function editAddress(Request $request, #[CurrentUser] ?Particular $user, EntityManagerInterface $manager): Response
     {
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+        
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
 
