@@ -38,20 +38,15 @@
             <h1>L'application n°1 pour prendre soin de vos plantes</h1>
             <p>GreenCare : au service de la santé de vos plantes</p>
         </div>
-        <div class="buttons">
-            <a href="{{ path('app_login') }}" class="btn btn-primary" id="login">Se connecter</a>
-            <a href="{{ path('app_register') }}" class="" id="register">S'inscrire</a>
+        {% if is_granted('IS_AUTHENTICATED') %}
 
-        </div>
-=======
-{#        <ul class="landing_feats">#}
-{#            {% for link in links %}#}
-{#                <li>#}
-{#                    <img src="{{ asset('images/' ~ link['img']) }}" alt="{{ baseAlt }} of a {{ link['alt'] }}">#}
-{#                    <p>{{ link['text'] }}</p>#}
-{#                </li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
+        {% else %}
+            <div class="buttons">
+                <a href="{{ path('app_login') }}" class="btn btn-primary" id="login">Se connecter</a>
+                <a href="{{ path('app_register') }}" class="" id="register">S'inscrire</a>
+
+            </div>
+        {% endif %}
     </section>
 
 {% endblock %}
