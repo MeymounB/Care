@@ -19,7 +19,7 @@ class RedirectLoginController implements AuthenticationSuccessHandlerInterface
         if ($user instanceof Botanist) {
             return new RedirectResponse('/dashboard');
         } elseif ($user instanceof Particular) {
-            return new RedirectResponse('/user_dashboard');
+            return new RedirectResponse('/homepage');
         } elseif ($user instanceof Admin) {
             return new RedirectResponse('/admin');
         }

@@ -3,10 +3,9 @@
 {% block title %}Accueil{% endblock %}
 {% block body %}
 
-	<section class="dashboard-user">
-		<h2>Bienvenue sur votre Dashboard, <a href="#"><span>{{ app.user }}</span></a>
-		</h2> {# TODO: mettre le lien vers le profil #}
-
+	<section class="dashboard-botaniste">
+		<h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_profil_index') }}"><span>{{ app.user }}</span></a>
+		</h2>
 		<div class="top-banner">
 			<div class="take-rdv">
 				<h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a>
@@ -34,7 +33,7 @@
 					</div>
 				</div>
 
-				<a href="/">Accéder à mon profil</a>
+				<a href="{{ path('app_profil_index') }}">Accéder à mon profil</a>
 			</div>
 		</div>
 
@@ -44,15 +43,15 @@
 					<h3>Besoin d'aide ?</h3>
 					<div class="box-container">
 						<a href="{{ path('app_advice_list_my_advice') }}" class="box">
-							<img src="{{ asset('images/Conseils.png') }}">
+							<img src={{ asset('images/plante1.jpg') }}>
 							<p>Vos demandes de conseils</p>
 						</a>
 						<a href="{{ path('app_advice_new') }}" class="box">
-							<img src="{{ asset('images/DemandeDeConseil.png') }}">
+							<img src={{ asset('images/plante1.jpg') }}>
 							<p>Conseil en ligne</p>
 						</a>
 						<a href="{{ path('app_appointment_new') }}" class="box">
-							<img src="{{ asset('images/DemandeDeRDV.png') }}">
+							<img src={{ asset('images/plante1.jpg') }}>
 							<p>Prendre rendez-vous</p>
 						</a>
 					</div>
