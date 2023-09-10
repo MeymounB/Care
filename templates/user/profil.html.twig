@@ -4,7 +4,7 @@
 <section class="user-profil">
 
 		<div class="infos">
-			<div class="img-container ">
+			<div class="img-container">
 				<img src="{{ app.user.avatar }}" alt="Photo de profil">
 			</div>
 			<div class="infos-container">
@@ -64,13 +64,29 @@
 			<ul class="liste-plantes">
             {% for plant in plants %}
 				<li class="plante">
-					{% for photo in plant.photos %}
-						{% if loop.index == 1 %}
-							<div class="img-container">
-								<img src="{{ photo.smallThumbnail }}" alt="Photo de {{ plant.name }}">
-							</div>
-						{% endif %}									
-					{% endfor %}
+					<div class="img-container">
+						{% if plant.photos is empty %}
+							<img
+								style ="max-width: 300px;"
+								src="{{ path('app_image_display', {imageName: "akaashi.jpg"}) }}"
+								alt="Photo de {{ plant.name }}"
+							>
+						{% else %}
+							{% if plant.photos[0].photo is not empty %}
+								<img
+									style ="max-width: 300px;"
+									src="{{ path('app_image_display', {imageName: plant.photos[0].photo}) }}"
+									alt="Photo de {{ plant.name }}"
+								>
+							{% else %}
+								<img
+									style ="max-width: 300px;"
+									src="{{ path('app_image_display', {imageName: "akaashi.jpg"}) }}"
+									alt="Photo de {{ plant.name }}"
+								>
+							{% endif %}
+						{% endif %}
+					</div>
 
 					<ul class="infos-plante">
 						<li id="name ">

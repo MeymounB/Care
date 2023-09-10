@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 abstract class UserFormType extends AbstractType
 {
@@ -31,11 +32,23 @@ abstract class UserFormType extends AbstractType
                 'label' => 'Prénom',
                 'required' => true,
                 'error_bubbling' => true,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z\s]+$/',
+                        'message' => 'Votre prénom ne doit contenir que des lettres',
+                    ]),
+                ],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
                 'required' => true,
                 'error_bubbling' => true,
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z\s]+$/',
+                        'message' => 'Votre nom ne doit contenir que des lettres',
+                    ]),
+                ],
             ])
             ->add('email', TextType::class, [
                 'label' => 'Adresse email',

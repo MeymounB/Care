@@ -96,11 +96,32 @@ class AdviceService
         return $groupedAdvices;
     }
 
-    public function getAdvicesWaitingByUser(int $currentUserId)
+    public function getMyAdvices(int $currentUserId)
     {
         $advices = $this->getGroupedAdvices(false);
 
         $groupedAdvices = [];
+        foreach ($advices as $advice) {
+            $statusName = $advice->getStatus()->getName();
+            $adviceUserId = $advice->getParticular()->getId();
+
+            // Ne pas afficher les conseils qui sont annulé ou qui appartiennent à l'utilisateur connecté
+            //            if ('Annulé' != $statusName && $currentUserId != $adviceUserId) {
+            if (!isset($groupedAdvices[$statusName])) {
+                $groupedAdvices[$statusName] = [];
+            }
+            $groupedAdvices[$statusName][] = $advice;
+            //            }
+        }
+
+        return $groupedAdvices;
+    }
+
+    public function getAdvicesWaitingByUser(int $currentUserId, $groupByStatus = false)
+    {
+        $advices = $this->getGroupedAdvices(false);
+        $groupedAdvices = [];
+
         foreach ($advices as $advice) {
             $adviceUserId = $advice->getParticular()->getId();
             $adviceStatus = $advice->getStatus();
@@ -110,7 +131,11 @@ class AdviceService
             }
         }
 
-        return $groupedAdvices;
+        if ($groupByStatus) {
+            return $this->groupAdvicesByStatus($groupedAdvices);
+        } else {
+            return $groupedAdvices;
+        }
     }
 
     private function groupAndSortAdvices(array $advices): array
@@ -156,5 +181,13 @@ class AdviceService
         }
 
         return $groupedAdvices;
+    }
+
+    public function getOwnAdviceByUser($userId): array
+    {
+        //        $userId = $user->getId();
+        $advices = $this->adviceRepository->findBy(['particular' => $userId]);
+
+        return $this->groupAndSortAdvices($advices);
     }
 }

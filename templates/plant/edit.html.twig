@@ -3,9 +3,11 @@
 {% block title %}Edit plant{% endblock %}
 
 {% block body %}
+<div class="main-container">
     <h1>Edit plant</h1>
 
     {{ include('plant/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
     {{ include('plant/_delete_form.html.twig') }}
+</div>
 {% endblock %}
