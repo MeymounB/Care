@@ -2,27 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Particular;
 use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Form\PlantType;
-
-use App\Entity\Particular;
-use App\Service\FileType;
-use App\Service\OwnershipChecker;
 use App\Repository\PlantRepository;
+use App\Service\FileType;
 use App\Service\FileUploaderService;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/plant')]
 class PlantController extends AbstractController
 {
-
     private FileUploaderService $fileUploaderService;
 
     public function __construct(FileUploaderService $fileUploaderService)
@@ -76,7 +72,6 @@ class PlantController extends AbstractController
         ]);
     }
 
-
     #[Route('/new', name: 'app_plant_new', methods: ['POST'])]
     public function new(Request $request, PlantRepository $plantRepository, #[CurrentUser] $user): Response
     {
@@ -89,7 +84,6 @@ class PlantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $photosData = $form->get('photos')->getData();
 
             if ($photosData) {
@@ -108,12 +102,14 @@ class PlantController extends AbstractController
 
             $plant->setParticular($this->getUser());
             $plantRepository->save($plant, true);
+
             return new JsonResponse(['message' => 'Success!'], 200);
         } else {
             $errors = [];
             foreach ($form->getErrors(true, false) as $error) {
                 $errors[] = $error->getMessage();
             }
+
             return new JsonResponse(['message' => 'Error!', 'errors' => $errors], 400);
         }
     }
@@ -127,7 +123,7 @@ class PlantController extends AbstractController
             throw $this->createNotFoundException('Plant not found');
         }
 
-        if ($this->isCsrfTokenValid('delete' . $plant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$plant->getId(), $request->request->get('_token'))) {
             $plantRepository->remove($plant, true);
         }
 
