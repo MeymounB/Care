@@ -1,4 +1,4 @@
-{% apply inline_css(source('@styles/components/delete_account_popup.css')) %}
+{% apply inline_css(source('@styles/components/delete-account-popup.css')) %}
 
 {% block delete_account_popup  %}
     <div id="delete-account-popup" class="popup">
@@ -10,9 +10,9 @@
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" 
                         value="{{ csrf_token('delete' ~ user.id) }}"/>
-                    <button class="btn">Delete</button>
+                    <button class="btn" style='color: black'>Supprimer</button>
                 </form>
-                <button id="cancel-button">Annuler</button>
+                <button id="cancel-button" class='btn' style='color: black'>Annuler</button>
             </div>
         </div>
     </div>
