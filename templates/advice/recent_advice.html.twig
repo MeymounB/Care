@@ -61,7 +61,7 @@
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
 
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
                             {% if advice.isPublic %}
                                 <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
@@ -84,7 +84,7 @@
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
 
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
                             {% if advice.isPublic %}
                                 <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
@@ -107,7 +107,7 @@
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
 
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
                             {% if advice.isPublic %}
                                 <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
@@ -130,7 +130,7 @@
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
 
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
                             {% if advice.isPublic %}
                                 <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">

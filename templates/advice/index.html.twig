@@ -50,7 +50,7 @@
                             <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell boutons">
                                 <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
                             </td>
@@ -60,7 +60,7 @@
                             <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell boutons">
                                 <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
                             </td>
@@ -70,7 +70,7 @@
                             <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell boutons">
                                 <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
                             </td>
@@ -80,7 +80,7 @@
                             <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
                             <td class="appointments-cell">{{ advice.title }}</td>
                             <td class="appointments-cell description">{{ advice.description }}</td>
-                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td class="appointments-cell boutons">
                                 <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
                             </td>

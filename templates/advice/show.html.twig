@@ -13,7 +13,7 @@
                     <div class="infos">
                         <div class="posted-by">{{ advice.particular.fullname }}</div>
                         ・
-                        <div class="when">{{ advice.createdAt ? advice.createdAt|date('Y-m-d') : '' }}</div>
+                        <div class="when">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</div>
                         ・
                         <div class="nb-comments"><span id="number-comments">{{ advice.comments|length }}</span>
                             Commentaires
@@ -98,8 +98,33 @@
                                            class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Supprimer</a>
                                     </div>
                                 {% endif %}
+
+                                </div>
+                                <p><small>{{ comment.createdAt|date('d-m-Y H:i') }}</small></p>
                             </div>
-                        </div>
+
+
+                            {% if app.user == comment.user %}
+                                <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
+                                     aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                    <!-- Modal here -->
+                                </div>
+                                <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">
+                                    Modifier
+                                </button>
+
+                                <div class="bg-red-800 flex items-center">
+                                    <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ comment.id) }}">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            {% endif %}
+
+                     </div>
+                    </div>
                         <p class="text">{{ comment.content }}</p>
                     </div>
                 {% endfor %}
