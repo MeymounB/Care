@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Advice{% endblock %}
-
 {% block body %}
-
     <section class="conseil">
         <div class="demande">
-            <div class="img-plante"><img src="/" alt="Image plante"></div>
-            <div class="details">
+        {# 
+            <div class="img-plante">
+                {% if photo and photo.photo %}
+                    <img src="{{ path('app_image_display', {imageName: photo.photo}) }}" alt="Photo de la plante">
+                {% else %}
+                    <img src="https://picsum.photos/200/300" alt="Image par défaut">
+                {% endif %}
+            </div>
+        #}
+            <div class="details" style="width: 100%;">
                 <h2>{{ advice.title }}</h2>
                 <div class="descritpion-container">
                     <div class="infos">
@@ -24,14 +29,14 @@
 
                 <div class="write-answer">
                     {{ form_start(form) }}
-                    <fieldset>
-                        <img src="/images/jardinnier.jpg" alt="Photo de profil">
-                        {{ form_widget(form.content, {'attr': {'class': 'form-textarea w-full focus:border-slate-300', 'rows': '4', 'placeholder': 'Write a comment…'}}) }}
-                    </fieldset>
-                    <button type="submit">
-                        <p>Répondre</p>
-                        <img src="/images/right-arrow-white.png" alt="flèche">
-                    </button>
+                        <fieldset>
+                            <img src="https://picsum.photos/200/300" alt="Photo de profil">
+                            {{ form_widget(form.content, {'attr': {'class': 'form-textarea w-full focus:border-slate-300', 'rows': '4', 'placeholder': 'Participez à la conversation...'}}) }}
+                        </fieldset>
+                        <button type="submit">
+                            <p>Répondre</p>
+                            <img src="/images/right-arrow-white.png" alt="flèche">
+                        </button>
                     {{ form_end(form) }}
                 </div>
 
@@ -45,11 +50,11 @@
                     <div class="reponse">
                         <div class="infos">
                             <img class="rounded w-10 h-10"
-                                 src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}"
-                                 alt="avatar">
+                                src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}"
+                                alt="avatar">
                             <div class="options">
                                 {% if comment.user %}
-                                    <!-- Vérifier si l'utilisateur est un botaniste -->
+                                    <!-- Verify is user is botanist -->
                                     {% set isBotanist = false %}
                                     {% for role in comment.user.roles %}
                                         {% if role == 'ROLE_BOTANIST' %}
@@ -57,7 +62,7 @@
                                         {% endif %}
                                     {% endfor %}
 
-                                    <!-- Vérifier si l'utilisateur est l'auteur de la demande de conseil -->
+                                    <!-- Verify if user is author of comment -->
                                     {% set isAuthor = advice.particular == comment.user.fullName %}
 
                                     {% if isBotanist %}
@@ -69,8 +74,8 @@
                                             {{ comment.user.fullName }}
                                         </a>
                                     {% else %}
-                                        <a class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                                           href="#0">
+                                        <a class=""
+                                        href="#0">
                                             {{ comment.user.fullName }}
                                         </a>
                                     {% endif %}
@@ -79,53 +84,27 @@
                                 {% endif %}
                                 ・
                                 <p>{{ comment.createdAt|date('d-m-Y ・ H:i') }}</p>
+
                                 {% if app.user == comment.user %}
-                                    <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
-                                         aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                    <div id="edit-comment-modal" class="hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                         <!-- Modal here -->
                                     </div>
-{#                                    {{ path('app_advice_edit', {'id': advice.id}) }}#}
-                                    <a href="#"
-                                       class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Éditer</a>
-                                    <div class="bg-red-800 flex items-center">
-                                       {# <form id="delete-form" method="post"
-                                              action="{{ path('app_comment_delete', {'id': advice.id}) }}">
-                                            <input type="hidden" name="_token"
-                                                   value="{{ csrf_token('delete' ~ advice.id) }}">
-                                            <button id="delete-button" class="btn">Delete</button>
-                                        </form>#}
-                                        <a href="#"
-                                           class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-700">Supprimer</a>
+
+                                    <button class="edit-comment" data-id="{{ comment.id }}">
+                                        Éditer
+                                    </button>
+
+                                    <div class="items-center">
+                                        <form id="delete-form" method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                            <button class="">Supprimer</button>
+                                        </form>
                                     </div>
                                 {% endif %}
-
-                                </div>
-                                <p><small>{{ comment.createdAt|date('d-m-Y H:i') }}</small></p>
                             </div>
-
-
-                            {% if app.user == comment.user %}
-                                <div id="edit-comment-modal" class="hidden fixed z-10 inset-0 overflow-y-auto "
-                                     aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                                    <!-- Modal here -->
-                                </div>
-                                <button class="edit-comment p-3 m-4 bg-blue-500" data-id="{{ comment.id }}">
-                                    Modifier
-                                </button>
-
-                                <div class="bg-red-800 flex items-center">
-                                    <form method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token"
-                                               value="{{ csrf_token('delete' ~ comment.id) }}">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </form>
-                                </div>
-                            {% endif %}
-
-                     </div>
-                    </div>
-                        <p class="text">{{ comment.content }}</p>
+                        </div>
+                        <p class="text" style="margin-left: 42px">{{ comment.content }}</p>
                     </div>
                 {% endfor %}
             {% else %}

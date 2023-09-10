@@ -1,72 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!-- Canonical -->
-    <link rel="canonical" href="https://greencare.fr/">
-    <!-- Robots -->
-    <meta name="robots" content="noindex, nofollow">
-    <!-- Device -->
-    <!-- <meta name="viwport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5"> -->
-    <meta name="format-detection" content="telephone=no">
-    <!-- Description -->
-    <meta name="description" content="L'application n°1 pour prendre soin de vos plantes">
-    <!-- Social -->
-    <!-- Twitter -->
-    <meta name="twitter:card" content="L'application n°1 pour prendre soin de vos plantes">
-    <meta name="twitter:title" content="GreenCare">
-    <meta name="twitter:description" content="GreenCare : au service de la santé de vos plantes">
-    <meta name="twitter:image" content="/images/logoG.png">
-    <!-- Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://greencare.fr/">
-    <meta property="og:title" content="GreenCare">
-    <meta property="og:description" content="GreenCare : au service de la santé de vos plantes">
-    <meta property="og:image" content="/images/logoG.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3fdc3d">
-    <meta name="apple-mobile-web-app-title" content="GreenCare">
-    <meta name="application-name" content="GreenCare">
-    <meta name="msapplication-TileColor" content="#00a300">
-    <meta name="theme-color" content="#ffffff">
+      <head>
+            <meta charset="UTF-8"/>
+            <meta http-equiv="x-ua-compatible" content="ie=edge">
+            <!-- Canonical -->
+            <link rel="canonical" href="https://greencare.fr/">
+            <!-- Robots -->
+            <meta name="robots" content="noindex, nofollow">
+            <!-- Device -->
+            <!-- <meta name="viwport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"> -->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <!-- <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5"> -->
+            <meta name="format-detection" content="telephone=no">
+            <!-- Description -->
+            <meta name="description" content="L'application n°1 pour prendre soin de vos plantes">
+            <!-- Social -->
+            <!-- Twitter -->
+            <meta name="twitter:card" content="L'application n°1 pour prendre soin de vos plantes">
+            <meta name="twitter:title" content="GreenCare">
+            <meta name="twitter:description" content="GreenCare : au service de la santé de vos plantes">
+            <meta name="twitter:image" content="/images/logoG.png">
+            <!-- Facebook -->
+            <meta property="og:type" content="website">
+            <meta property="og:url" content="https://greencare.fr/">
+            <meta property="og:title" content="GreenCare">
+            <meta property="og:description" content="GreenCare : au service de la santé de vos plantes">
+            <meta property="og:image" content="/images/logoG.png">
+            <meta property="og:image:width" content="1200">
+            <meta property="og:image:height" content="630">
+            <!-- Favicon -->
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+            <link rel="manifest" href="/site.webmanifest">
+            <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3fdc3d">
+            <meta name="apple-mobile-web-app-title" content="GreenCare">
+            <meta name="application-name" content="GreenCare">
+            <meta name="msapplication-TileColor" content="#00a300">
+            <meta name="theme-color" content="#ffffff">
 
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-          content="GreenCare : Conseils personnalisés en botanique pour l'entretien de vos plantes d'intérieur et d'extérieur.">
-    <meta property="og:title" content="GreenCare - Votre expert botanique">
-    <meta property="og:description"
-          content="Découvrez GreenCare, l'application qui facilite les échanges entre botanistes et amateurs de jardinage. Recevez des conseils personnalisés pour l'entretien de vos plantes.">
-    <meta property="og:image" content="public\images\logo.png">
-    <meta property="og:url" content="URL de PROD de la page d'accueil.">
-    <meta property="og:type" content="website">
-    <title>{% block title %}GreenCare - Votre expert botanique{% endblock %}</title>
-    <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-    {% block stylesheets %}{% endblock %}
-    {{ encore_entry_link_tags('app') }}
-    {% block javascripts %}{% endblock %}
-    {{ encore_entry_script_tags('app') }}
-    {{ encore_entry_script_tags('script') }}
-</head>
-<body>
-{% include 'parts/header.html.twig' %}
-<main>
-    {% block body %}{% endblock %}
-</main>
+            {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description"
+                  content="GreenCare : Conseils personnalisés en botanique pour l'entretien de vos plantes d'intérieur et d'extérieur.">
+            <meta property="og:title" content="GreenCare - Votre expert botanique">
+            <meta property="og:description"
+                  content="Découvrez GreenCare, l'application qui facilite les échanges entre botanistes et amateurs de jardinage. Recevez des conseils personnalisés pour l'entretien de vos plantes.">
+            <meta property="og:image" content="public\images\logo.png">
+            <meta property="og:url" content="URL de PROD de la page d'accueil.">
+            <meta property="og:type" content="website">
+            <title>{% block title %}GreenCare - Votre expert botanique{% endblock %}</title>
+            <link rel="icon"
+                  href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+            {% block stylesheets %}{% endblock %}
+            {{ encore_entry_link_tags('app') }}
+            {% block javascripts %}{% endblock %}
+            {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('script') }}
+      </head>
 
-{% include './parts/footer.html.twig' %}
+      <body>
+            {% include 'parts/header.html.twig' %}
+            <main>
+                  {% block body %}{% endblock %}
+            </main>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</body>
+            {% include './parts/footer.html.twig' %}
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      </body>
 </html>

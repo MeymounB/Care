@@ -3,7 +3,7 @@
 .conseil {
 	min-height: 100vh;
 	position: relative;
-	padding: 15vh 5vw;
+	padding: 6vh 4vw;
 
 	@include vars.flexer(flex-start, flex-start, column);
 	gap: 20px;
