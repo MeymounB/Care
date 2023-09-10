@@ -3,10 +3,10 @@ import flatpickr from "flatpickr";
 export function initIsPresential() {
   document.addEventListener("DOMContentLoaded", function () {
     let isPresentialInputs = document.querySelector(
-        '#appointment_isPresential'
+      '#appointment_isPresential'
     );
     let addressInput = document.querySelector(
-        '#appointment_address'
+      '#appointment_address'
     );
     let addressParent = addressInput.parentElement;
     let linkInput = document.querySelector('input[name="appointment[link]"]');
@@ -31,11 +31,11 @@ export function initIsPresential() {
     });
 
     if (
-        !isPresentialInputs.length ||
-        !addressInput ||
-        !linkInput ||
-        !addressDiv ||
-        !linkDiv
+      !isPresentialInputs.length ||
+      !addressInput ||
+      !linkInput ||
+      !addressDiv ||
+      !linkDiv
     ) {
       return;
     }
@@ -54,19 +54,19 @@ export function initIsPresential() {
     }
 
     isPresentialInputs.forEach((input) =>
-        input.addEventListener("change", function () {
-          if (this.value === "1") {
-            addressDiv.classList.remove("hidden");
-            linkDiv.classList.add("hidden");
-            addressInput.required = true;
-            linkInput.required = false;
-          } else {
-            linkDiv.classList.remove("hidden");
-            addressDiv.classList.add("hidden");
-            linkInput.required = true;
-            addressInput.required = false;
-          }
-        })
+      input.addEventListener("change", function () {
+        if (this.value === "1") {
+          addressDiv.classList.remove("hidden");
+          linkDiv.classList.add("hidden");
+          addressInput.required = true;
+          linkInput.required = false;
+        } else {
+          linkDiv.classList.remove("hidden");
+          addressDiv.classList.add("hidden");
+          linkInput.required = true;
+          addressInput.required = false;
+        }
+      })
     );
   });
 }
@@ -141,5 +141,3 @@ export function initDatetimeValidation() {
     }
   });
 }
-
-console.log("Hello from appointmentForm.js");
