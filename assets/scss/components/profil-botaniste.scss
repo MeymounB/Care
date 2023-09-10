@@ -25,9 +25,14 @@
 			max-width: 250px;
 			min-width: 150px;
 
+			@include vars.flexer(center, center, column);
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			border-radius: 50px;
+
 			img {
 				width: 100%;
-				border-radius: 50%;
 			}
 		}
 
@@ -134,6 +139,23 @@
 
 			.certification {
 				color: vars.$green;
+			}
+		}
+
+		.personnal-action {
+			cursor: pointer;
+			@include vars.flexer(flex-start, flex-start, row);
+			gap: 20px;
+			flex-wrap: wrap;
+			width: 100%;
+
+			background: none;
+			border-top: 2px solid black;
+			padding-top: 5px;
+
+			img {
+				width: 100%;
+				aspect-ratio: 1/1
 			}
 		}
 	}
