@@ -13,6 +13,8 @@ class ImageDisplayController extends AbstractController
     #[Route('/image/{imageName}', name: 'app_image_display', methods: ['GET'])]
     public function showImageAction(#[CurrentUser] ?User $user, string $imageName): BinaryFileResponse
     {
+        $user = $this->getUser();
+
         if (!$user instanceof User) {
             throw $this->createAccessDeniedException('Access denied');
         }
