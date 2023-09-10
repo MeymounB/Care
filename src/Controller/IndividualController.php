@@ -59,7 +59,7 @@ class IndividualController extends abstractController
         if (!$user instanceof Particular) {
             throw $this->createAccessDeniedException('Access denied');
         }
-
+        
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
 
