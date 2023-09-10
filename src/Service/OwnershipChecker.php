@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Security;
 
 class OwnershipChecker
 {
@@ -14,7 +14,7 @@ class OwnershipChecker
         $this->security = $security;
     }
 
-    public function checkOwnership($entity): JsonResponse
+    public function checkOwnership($entity): ?JsonResponse
     {
         $user = $this->security->getUser();
 

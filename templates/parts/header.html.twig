@@ -1,24 +1,24 @@
 <header>
     {% if is_granted('IS_AUTHENTICATED') %}
         {% if is_granted('ROLE_PARTICULAR') %}
-            <a href="{{ path('app_individual_index') }}">
-                <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
-            </a>
-        {% elseif is_granted('ROLE_BOTANIST') %}
-            <a href="{{ path('app_botanist_index') }}">
-                <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
-            </a>
+            {% set path = "/homepage" %}
+        {% else %}
+            {% set path = "/dashboard" %}
         {% endif %}
     {% else %}
-        <a href="{{ path('app_default') }}">
-            <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
-        </a>
+        {% set path = "/" %}
     {% endif %}
+
+    <a href="{{ path }}" class="left_header">
+        <img class="greencare_logo" id="logo" src="/images/logoG.png" alt="greencare">
+    </a>
 
     <div class="right_header">
         {% if is_granted('IS_AUTHENTICATED') %}
             <div>
-                <button class="btn btn-secondary" id="profil">Profil</button>
+                <a href="{{ path('app_profil_index') }}">
+                    <button class="btn btn-secondary" id="profil">Profil</button>
+                </a>
                 <form action="{{ logout_path('main') }}" method="post">
                     <button id="disconnect" class="btn btn-secondary" type="submit">Déconnexion</button>
                 </form>
@@ -33,15 +33,15 @@
                     </a>
                 </div>
             {% endif %}
-        {% else %} 
-                <div>
-                    <a href="{{ path('app_default') }}">
-                        <button class="btn btn-secondary">Accueil</button>
-                    </a>
-                    <a href="{{ path('app_register', {'type':'botaniste'}) }}">
-                        <button class="btn btn-secondary">Professionnel ?</button>
-                    </a>
-                </div>
+        {% else %}
+            <div>
+                <a href="{{ path('app_default') }}">
+                    <button class="btn btn-secondary">Accueil</button>
+                </a>
+                <a href="{{ path('app_register', {'type':'botaniste'}) }}">
+                    <button class="btn btn-secondary">Professionnel ?</button>
+                </a>
+            </div>
         {% endif %}
     </div>
 </header>

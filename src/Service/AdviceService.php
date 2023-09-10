@@ -133,7 +133,6 @@ class AdviceService
             if ($limitResults > 0 && sizeof($groupedAdvices) == $limitResults) {
                 break;
             }
-
         }
 
         if ($groupByStatus) {

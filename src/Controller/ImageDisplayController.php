@@ -10,17 +10,17 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class ImageDisplayController extends AbstractController
 {
-	#[Route('/image/{imageName}', name: 'app_image_display', methods: ['GET'])]
-	public function showImageAction(#[CurrentUser] ?User $user, string $imageName): BinaryFileResponse
-	{
-		if (!$user instanceof User) {
-			throw $this->createAccessDeniedException('Access denied');
-		}
+    #[Route('/image/{imageName}', name: 'app_image_display', methods: ['GET'])]
+    public function showImageAction(#[CurrentUser] ?User $user, string $imageName): BinaryFileResponse
+    {
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
 
-		return new BinaryFileResponse(
-			$this->getParameter('photos_dir')
-			. '/'
-			. $imageName
-		);
-	}
+        return new BinaryFileResponse(
+            $this->getParameter('photos_dir')
+            .'/'
+            .$imageName
+        );
+    }
 }
