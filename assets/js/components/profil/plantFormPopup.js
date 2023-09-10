@@ -1,3 +1,5 @@
+import {initHandleFileSelect} from "../../tools/handleFileSelected";
+
 export function initPlantEditFormPopup() {
   let plantFormPopup = document.getElementById("plant-form-popup");
   let openPlantDetailsLink = document.getElementById("open-plant-details");
@@ -8,7 +10,7 @@ export function initPlantEditFormPopup() {
       e.preventDefault();
       if (plantFormPopup) {
         plantFormPopup.style.display = "block";
-        setTimeout(function () {
+        setTimeout(() => {
           plantFormPopup.style.opacity = "1";
         }, 10);
       }
@@ -20,7 +22,7 @@ export function initPlantEditFormPopup() {
       e.preventDefault();
       if (plantFormPopup) {
         plantFormPopup.style.opacity = "0";
-        setTimeout(function () {
+        setTimeout(() => {
           plantFormPopup.style.display = "none";
         }, 250);
       }
@@ -32,7 +34,7 @@ export function initPlantAddFormPopup() {
   document.addEventListener("DOMContentLoaded", () => {
     let openPlantFormLink = document.getElementById("open-plant-form");
 
-    openPlantFormLink.addEventListener("click", function (e) {
+    openPlantFormLink.addEventListener("click", (e) => {
       e.preventDefault();
 
       fetch("/plant/new-form", {
@@ -66,11 +68,10 @@ export function initPlantAddFormPopup() {
 
           let fileInput = document.querySelector("#plant_photos");
           if (fileInput) {
-            fileInput.addEventListener("change", handleFileSelect);
+            fileInput.addEventListener("change", initHandleFileSelect);
           }
 
           let form = plantModal.querySelector("form");
-          let button = document.getElementById("send-plant-modal");
 
           form.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -106,16 +107,4 @@ export function initPlantAddFormPopup() {
         });
     });
   });
-}
-
-export function handleFileSelect(evt) {
-  const files = evt.target.files;
-  const file = files[0];
-  if (file && file.type.match("image.*")) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      document.getElementById("previewImage").src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
 }
