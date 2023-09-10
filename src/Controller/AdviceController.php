@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/advice')]
 class AdviceController extends AbstractController
@@ -51,7 +50,6 @@ class AdviceController extends AbstractController
     #[Route('/new', name: 'app_advice_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AdviceRepository $adviceRepository, StatusRepository $statusRepository): Response
     {
-
         $user = $this->getUser();
 
         if (!$user instanceof Particular) {
@@ -87,7 +85,6 @@ class AdviceController extends AbstractController
             'error' => $form->getErrors()->current(),
         ]);
     }
-
 
     #[Route('/show/{id}', name: 'app_advice_show', methods: ['GET', 'POST'])]
     public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, Security $security, int $id): Response
@@ -148,7 +145,7 @@ class AdviceController extends AbstractController
     #[Route('/{id}', name: 'app_advice_delete', methods: ['DELETE'])]
     public function delete(Request $request, Advice $advice, AdviceRepository $adviceRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $advice->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$advice->getId(), $request->request->get('_token'))) {
             $adviceRepository->remove($advice, true);
         }
 

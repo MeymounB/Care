@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Address;
 use App\Entity\Particular;
-use Symfony\Component\HttpFoundation\Request;
 use App\Form\AddressType;
 use App\Service\AdviceService;
 use App\Service\AppointmentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
@@ -71,7 +71,7 @@ class IndividualController extends abstractController
         }
 
         return $this->render('user/edit_address.html.twig', [
-            "form" => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }
