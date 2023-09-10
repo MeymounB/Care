@@ -45,7 +45,7 @@
 
 				<article class="addresses">
 					<div>
-						<h3>Mes adresses</h3>
+						<h3>Mes adresses ({{ app.user.address|length }})</h3>
 						{% if app.user.address is empty %}
 							<p>Vous n'avez pas encore d'adresses</p>
 						{% else %}
@@ -54,10 +54,6 @@
 									<li>{{ address.street }}, {{ address.zipcode }} {{ address.city }}</li>
 								{% endfor %}
 							</ul>
-							<p>
-								<span>Nombre d'adresses : </span>
-								<span>{{ app.user.address|length }}</span>
-							</p>
 						{% endif %}
 					</div>
 
