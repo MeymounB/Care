@@ -20,10 +20,10 @@ final class Version20230831082057 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-//        $this->addSql('ALTER TABLE request ADD address_id INT DEFAULT NULL');
-//        $this->addSql('ALTER TABLE request DROP address');
-//        $this->addSql('ALTER TABLE request ADD CONSTRAINT FK_3B978F9FF5B7AF75 FOREIGN KEY (address_id) REFERENCES address (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-//        $this->addSql('CREATE INDEX IDX_3B978F9FF5B7AF75 ON request (address_id)');
+        $this->addSql('ALTER TABLE request ADD address_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE request DROP address');
+        $this->addSql('ALTER TABLE request ADD CONSTRAINT FK_3B978F9FF5B7AF75 FOREIGN KEY (address_id) REFERENCES address (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->addSql('CREATE INDEX IDX_3B978F9FF5B7AF75 ON request (address_id)');
     }
 
     public function down(Schema $schema): void
