@@ -13,7 +13,7 @@
                     <div class="infos">
                         <div class="posted-by">{{ advice.particular.fullname }}</div>
                         ・
-                        <div class="when">{{ advice.createdAt ? advice.createdAt|date('Y-m-d') : '' }}</div>
+                        <div class="when">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</div>
                         ・
                         <div class="nb-comments"><span id="number-comments">{{ advice.comments|length }}</span>
                             Commentaires
@@ -100,7 +100,7 @@
                                 {% endif %}
 
                                 </div>
-                                <p><small>{{ comment.createdAt|date('Y-m-d H:i') }}</small></p>
+                                <p><small>{{ comment.createdAt|date('d-m-Y H:i') }}</small></p>
                             </div>
 
 
