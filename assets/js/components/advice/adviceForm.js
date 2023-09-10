@@ -4,11 +4,12 @@ export function initShowModal() {
     let modalContainer = document.getElementById("edit-comment-modal");
 
     // Listen for the click event on each "Edit" button
-    document.querySelectorAll(".edit-comment").forEach(function (element) {
-      element.addEventListener("click", function (e) {
+    document.querySelectorAll(".edit-comment").forEach((el) => {
+      el.addEventListener("click", (e) => {
         e.preventDefault();
 
-        let commentId = this.getAttribute("data-id");
+        // let commentId = this.getAttribute("data-id");
+        let commentId = e.currentTarget.getAttribute("data-id");
 
         fetch("/comment/" + commentId + "/edit-form", {
           method: "GET",
@@ -69,7 +70,8 @@ export function initShowModal() {
               return;
             }
 
-            modalClose.addEventListener("click", function () {
+            // Doesnt work : Strange behavior
+            modalClose.addEventListener("click", () => {
               modalContainer.classList.add("hidden");
             });
           });
