@@ -64,13 +64,29 @@
 			<ul class="liste-plantes">
             {% for plant in plants %}
 				<li class="plante">
-					{% for photo in plant.photos %}
-						{% if loop.index == 1 %}
-							<div class="img-container">
-								<img style ="max-width: 300px;" src="{{ asset('uploads/photos/' ~ photo.plant.photos[0].photo) }}" alt="Photo de {{ plant.name }}">
-							</div>
+					<div class="img-container">
+						{% if plant.photos is empty %}
+							<img
+								style ="max-width: 300px;"
+								src="{{ path('app_image_display', {imageName: "akaashi.jpg"}) }}"
+								alt="Photo de {{ plant.name }}"
+							>
+						{% else %}
+							{% if plant.photos[0].photo is not empty %}
+								<img
+									style ="max-width: 300px;"
+									src="{{ path('app_image_display', {imageName: plant.photos[0].photo}) }}"
+									alt="Photo de {{ plant.name }}"
+								>
+							{% else %}
+								<img
+									style ="max-width: 300px;"
+									src="{{ path('app_image_display', {imageName: "akaashi.jpg"}) }}"
+									alt="Photo de {{ plant.name }}"
+								>
+							{% endif %}
 						{% endif %}
-					{% endfor %}
+					</div>
 
 					<ul class="infos-plante">
 						<li id="name ">
