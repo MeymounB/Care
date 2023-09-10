@@ -39,6 +39,18 @@ class AppointmentRepository extends ServiceEntityRepository
         }
     }
 
+    public function countAppointmentsByStatus(int $statusId): int
+    {
+        $result = $this->createQueryBuilder('a')
+            ->join('a.status', 's')
+            ->where('s.id = :statusId')
+            ->setParameter('statusId', $statusId)
+            ->getQuery()
+            ->getResult();
+
+        return count($result);
+    }
+
     //    /**
     //     * @return Appointment[] Returns an array of Appointment objects
     //     */

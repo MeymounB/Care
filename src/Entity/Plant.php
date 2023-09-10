@@ -33,7 +33,7 @@ class Plant
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     private Collection $photos;
 
     #[ORM\ManyToOne(inversedBy: 'plants')]

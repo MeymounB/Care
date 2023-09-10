@@ -1,7 +1,7 @@
 <header>
     {% if is_granted('IS_AUTHENTICATED') %}
         {% if is_granted('ROLE_PARTICULAR') %}
-            {% set path = "/user_dashboard" %}
+            {% set path = "/homepage" %}
         {% else %}
             {% set path = "/dashboard" %}
         {% endif %}
@@ -16,7 +16,9 @@
     <div class="right_header">
         {% if is_granted('IS_AUTHENTICATED') %}
             <div>
-                <button class="btn btn-secondary" id="profil">Profil</button>
+                <a href="{{ path('app_profil_index') }}">
+                    <button class="btn btn-secondary" id="profil">Profil</button>
+                </a>
                 <form action="{{ logout_path('main') }}" method="post">
                     <button id="disconnect" class="btn btn-secondary" type="submit">Déconnexion</button>
                 </form>
@@ -31,15 +33,15 @@
                     </a>
                 </div>
             {% endif %}
-        {% else %} 
-                <div>
-                    <a href="{{ path('app_default') }}">
-                        <button class="btn btn-secondary">Accueil</button>
-                    </a>
-                    <a href="{{ path('app_register', {'type':'botaniste'}) }}">
-                        <button class="btn btn-secondary">Professionnel ?</button>
-                    </a>
-                </div>
+        {% else %}
+            <div>
+                <a href="{{ path('app_default') }}">
+                    <button class="btn btn-secondary">Accueil</button>
+                </a>
+                <a href="{{ path('app_register', {'type':'botaniste'}) }}">
+                    <button class="btn btn-secondary">Professionnel ?</button>
+                </a>
+            </div>
         {% endif %}
     </div>
 </header>

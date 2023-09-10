@@ -4,8 +4,8 @@
 {% block body %}
 
 	<section class="dashboard-user">
-		<h2>Bienvenue sur votre Dashboard, <a href="#"><span>{{ app.user }}</span></a>
-		</h2> {# TODO: mettre le lien vers le profil #}
+		<h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_profil_index') }}"><span>{{ app.user }}</span></a>
+		</h2>
 
 		<div class="top-banner">
 			<div class="take-rdv">
@@ -34,7 +34,7 @@
 					</div>
 				</div>
 
-				<a href="/">Accéder à mon profil</a>
+				<a href="{{ path('app_profil_index') }}">Accéder à mon profil</a>
 			</div>
 		</div>
 
