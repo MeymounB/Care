@@ -21,7 +21,7 @@ class LoginControllerTest extends WebTestCase
         $client->submit($form);
 
         // Verify that the response is a redirect to the homepage
-        $this->assertResponseRedirects('/homepage', 302, 'User should be redirected after a successful login.');
+        $this->assertResponseRedirects('/user_dashboard', 302, 'User should be redirected after a successful login.');
 
         // Follow the redirect
         $crawler = $client->followRedirect();
@@ -40,7 +40,7 @@ class LoginControllerTest extends WebTestCase
         $client->loginUser($testUser);
 
         $client->request('GET', '/login');
-        // @TODO: The user should be redirected to the homepage, for now just testing via logout action
+		// @TODO: The user should be redirected to the homepage, for now just testing via logout action
         $this->assertResponseRedirects('/logout', 302, 'User should be redirected to the logout page when trying to access the login page while already logged in.');
     }
 }

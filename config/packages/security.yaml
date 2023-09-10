@@ -49,7 +49,7 @@ security:
         - { path: '^/logout', roles: ROLE_USER }
         - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: '^/dashboard', roles: ROLE_BOTANIST }
-        - { path: '^/homepage', roles: ROLE_PARTICULAR }
+        - { path: '^/user_dashboard', roles: ROLE_PARTICULAR }
         - { path: '^/appointment', roles: [ ROLE_BOTANIST, ROLE_PARTICULAR ] }
         - { path: '^/advice', roles: [ ROLE_BOTANIST, ROLE_PARTICULAR ] }
         # - { path: '^/', roles: ROLE_ADMIN }

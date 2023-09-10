@@ -1,7 +1,7 @@
 @use "../utils" as vars;
 
 .user-profil {
-	padding: 3vh 0;
+	padding: 10vh 0;
 	@include vars.flexer(flex-start, center, column);
 	gap: 10vh;
 	width: 100%;
@@ -25,14 +25,9 @@
 			max-width: 250px;
 			min-width: 150px;
 
-			@include vars.flexer(center, center, column);
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-			border-radius: 50px;
-
 			img {
 				width: 100%;
+				border-radius: 50%;
 			}
 		}
 
@@ -73,6 +68,35 @@
 						}
 					}
 				}
+
+				.personnal-action {
+					width: 30px;
+					height: 30px;
+					cursor: pointer;
+
+					background: none;
+					border: none;
+					position: relative;
+
+					img {
+						width: 100%;
+						aspect-ratio: 1/1
+					}
+
+					.elementCache {
+						// display: none;
+					}
+
+					#monElementCache {
+						position: absolute;
+						width: 200px;
+						top: 35px;
+						right: 0px;
+						background-color: white;
+						border: 1px solid black;
+						padding: 5px;
+					}
+				}
 			}
 
 			.stats {
@@ -109,23 +133,6 @@
 				}
 			}
 		}
-
-		.personnal-action {
-			cursor: pointer;
-			@include vars.flexer(flex-start, flex-start, row);
-			gap: 20px;
-			flex-wrap: wrap;
-			width: 100%;
-
-			background: none;
-			border-top: 2px solid black;
-			padding-top: 5px;
-
-			img {
-				width: 100%;
-				aspect-ratio: 1/1
-			}
-		}
 	}
 
 	.my-garden {
@@ -152,15 +159,10 @@
 					min-width: 70px;
 					width: 250px;
 
-					@include vars.flexer(center, center, column);
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					border-radius: 20px;
-
 					img {
 						width: 100%;
 						aspect-ratio: 1/1;
+						border-radius: 20px;
 					}
 				}
 
@@ -187,10 +189,15 @@
 						p:nth-child(1) {
 							border-bottom: 1px solid vars.$black;
 						}
+
+						p:nth-child(2) {}
+
 					}
+
 				}
 
 				.buttons {
+					// margin-left: auto;
 					@include vars.flexer(center, flex-start, row);
 					gap: 10px;
 
@@ -198,7 +205,10 @@
 						width: 100%;
 						padding: 5px;
 						border-radius: 5px;
-						border: 2px solid black;
+					}
+
+					button:nth-child(2) {
+						border: 2px solid red;
 					}
 				}
 			}

@@ -33,7 +33,7 @@ class Plant
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'plant', targetEntity: Photo::class, orphanRemoval: true)]
     private Collection $photos;
 
     #[ORM\ManyToOne(inversedBy: 'plants')]
@@ -151,7 +151,7 @@ class Plant
 
     public function getParticularName(): string
     {
-        return $this->particular ? $this->particular->getFirstName() . ' ' . $this->particular->getLastName() : '';
+        return $this->particular ? $this->particular->getFirstName().' '.$this->particular->getLastName() : '';
     }
 
     public function getParticular(): ?Particular
@@ -197,6 +197,6 @@ class Plant
 
     public function __toString()
     {
-        return $this->photos;
+        return $this->name;
     }
 }

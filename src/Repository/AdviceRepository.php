@@ -39,17 +39,6 @@ class AdviceRepository extends ServiceEntityRepository
         }
     }
 
-    // public function countRequestedAdviceForUser($userId)
-    // {
-    //     return $this->createQueryBuilder('advice')
-    //         ->select('COUNT(advice.id) as adviceCount')
-    //         ->leftJoin('advice.particular', 'p')
-    //         ->where('p.id = :userId')
-    //         ->setParameter('userId', $userId)
-    //         ->getQuery()
-    //         ->getSingleScalarResult();
-    // }
-
     //    /**
     //     * @return Advice[] Returns an array of Advice objects
     //     */

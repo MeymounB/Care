@@ -2,38 +2,31 @@
 
 namespace App\Controller;
 
+use App\Entity\Particular;
 use App\Entity\Photo;
 use App\Entity\Plant;
 use App\Form\PlantType;
-
-use App\Entity\Particular;
-use App\Service\FileType;
-use App\Service\OwnershipChecker;
 use App\Repository\PlantRepository;
+use App\Service\FileType;
 use App\Service\FileUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/plant')]
 class PlantController extends AbstractController
 {
-
-    private FileUploaderService $fileUploaderService;
-
-    public function __construct(FileUploaderService $fileUploaderService)
+    public function __construct(private FileUploaderService $fileUploaderService)
     {
-        $this->fileUploaderService = $fileUploaderService;
     }
 
     #[Route('/', name: 'app_plant_index', methods: ['GET'])]
     public function index(PlantRepository $plantRepository): Response
     {
-        // Display plants from the most recent to the oldest
+        //        Affichage des plantes de la plus récente à la plus ancienne
         $plants = $plantRepository->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('plant/index.html.twig', [
@@ -41,96 +34,84 @@ class PlantController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}/edit-form', name: 'app_plant_edit_form', methods: ['GET'])]
-    // public function editForm(PlantRepository $PlantRepository, int $id, plant $plant): Response
-    // {
-    //     $plant = $PlantRepository->find($id);
-
-    //     if (!$plant) {
-    //         return new JsonResponse(['message' => 'The plant does not exist.'], 404);
-    //     }
-
-    //     $form = $this->createForm(plantType::class, $plant);
-
-    //     $formView = $this->renderView('plant/_form.html.html.twig', [
-    //         'plant' => $plant,
-    //         'form' => $form->createView(),
-    //     ]);
-
-    //     return new JsonResponse(['form' => $formView], 200);
-    // }
-
-    #[Route('/new-form', name: 'app_plant_new_form', methods: ['GET'])]
-    public function newForm(#[CurrentUser] $user): Response
+    #[Route('/new', name: 'app_plant_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] ?Particular $user): Response
     {
-        if (!$user instanceof Particular) {
-            return new JsonResponse(['message' => 'Only a particular user can add a plant.'], 403);
-        }
-
         $plant = new Plant();
-        $form = $this->createForm(PlantType::class, $plant);
 
-        return $this->render('plant/_form.html.twig', [
-            'plant' => $plant,
-            'form' => $form->createView(),
-        ]);
-    }
-
-
-    #[Route('/new', name: 'app_plant_new', methods: ['POST'])]
-    public function new(Request $request, PlantRepository $plantRepository, #[CurrentUser] $user): Response
-    {
-        if (!$user instanceof Particular) {
-            return new JsonResponse(['message' => 'Only a particular user can add a plant.'], 403);
-        }
-
-        $plant = new Plant();
         $form = $this->createForm(PlantType::class, $plant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $certifData = $form->get('photos')->getData();
 
-            $photosData = $form->get('photos')->getData();
-
-            if ($photosData) {
-                foreach ($photosData as $key => $photo) {
+            if ($certifData) {
+                foreach ($certifData as $key => $certif) {
                     $this->fileUploaderService->setType(FileType::PHOTO);
 
-                    $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $photo)['file'];
-                    $this->fileUploaderService->upload($safeFilename, $photo);
+                    $safeFilename = $this->fileUploaderService->getFilename($key, $user->getFullName(), $certif)['file'];
 
-                    $photoEntity = new Photo();
-                    $photoEntity->setPhoto($safeFilename);
-                    $plant->addPhoto($photoEntity);
-                    // $plantRepository->save($plant, true);
+                    $this->fileUploaderService->upload($safeFilename, $certif);
+
+                    $photo = new Photo();
+
+                    $photo->setPhoto($safeFilename);
+
+                    $plant->addPhoto($photo);
+
+                    $entityManager->persist($photo);
                 }
             }
-
             $plant->setParticular($this->getUser());
-            $plantRepository->save($plant, true);
-            return new JsonResponse(['message' => 'Success!'], 200);
-        } else {
-            $errors = [];
-            foreach ($form->getErrors(true, false) as $error) {
-                $errors[] = $error->getMessage();
-            }
-            return new JsonResponse(['message' => 'Error!', 'errors' => $errors], 400);
+
+            $entityManager->persist($plant);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_plant_index');
         }
+
+        return $this->renderForm('plant/new.html.twig', [
+            'plant' => $plant,
+            'form' => $form,
+            'error' => $form->getErrors()->current(),
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_plant_show', methods: ['GET'])]
+    public function show(Plant $plant): Response
+    {
+        return $this->render('plant/show.html.twig', [
+            'plant' => $plant,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_plant_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Plant $plant, PlantRepository $plantRepository): Response
+    {
+        $form = $this->createForm(PlantType::class, $plant);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plantRepository->save($plant, true);
+
+            return $this->redirectToRoute('app_plant_show', ['id' => $plant->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('plant/edit.html.twig', [
+            'plant' => $plant,
+            'form' => $form,
+            'error' => $form->getErrors()->current(),
+        ]);
     }
 
     #[Route('/{id}', name: 'app_plant_delete', methods: ['POST'])]
-    public function delete(Request $request, $id, PlantRepository $plantRepository): Response
+    public function delete(Request $request, Plant $plant, PlantRepository $plantRepository): Response
     {
-        $plant = $plantRepository->find($id);
-
-        if (!$plant) {
-            throw $this->createNotFoundException('Plant not found');
-        }
-
-        if ($this->isCsrfTokenValid('delete' . $plant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$plant->getId(), $request->request->get('_token'))) {
             $plantRepository->remove($plant, true);
         }
 
-        return $this->redirectToRoute('app_profil_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
     }
 }

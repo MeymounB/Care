@@ -10,18 +10,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\OwnershipChecker;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
 {
-    private OwnershipChecker $ownershipChecker;
-
-    public function __construct(OwnershipChecker $ownershipChecker)
-    {
-        $this->ownershipChecker = $ownershipChecker;
-    }
-
     #[Route('/{id}/edit', name: 'app_comment_edit', methods: ['POST'])]
     public function edit(Request $request, CommentRepository $commentRepository, int $id, Comment $comment): Response
     {
@@ -31,7 +23,14 @@ class CommentController extends AbstractController
             return new JsonResponse(['message' => 'The comment does not exist.'], 404);
         }
 
+        $user = $this->getUser();
+
+        if (!$user || $user !== $comment->getUser()) {
+            return new JsonResponse(['message' => 'You can only edit your own comments.'], 403);
+        }
+
         $form = $this->createForm(CommentType::class, $comment);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,6 +56,12 @@ class CommentController extends AbstractController
             return new JsonResponse(['message' => 'The comment does not exist.'], 404);
         }
 
+        $user = $this->getUser();
+
+        if (!$user || $user !== $comment->getUser()) {
+            return new JsonResponse(['message' => 'You can only edit your own comments.'], 403);
+        }
+
         $form = $this->createForm(CommentType::class, $comment);
 
         $formView = $this->renderView('comment/_edit_form.html.twig', [
@@ -70,33 +75,21 @@ class CommentController extends AbstractController
     #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository, int $id): Response
     {
-        $ownershipCheck = $this->ownershipChecker->checkOwnership($comment);
+        $user = $this->getUser();
 
-        if ($ownershipCheck) {
-            return $ownershipCheck;
-        }
-
-        if ($ownershipCheck) {
-            return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
+        if (!$user || $user !== $comment->getUser()) {
+            $this->addFlash(
+                'notice',
+                'You can only delete your own comments.'
+            );
         }
 
         $comment = $commentRepository->find($id);
 
-        if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
         }
 
         return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
     }
-
-    // private function checkCommentOwnership(Comment $comment): JsonResponse
-    // {
-    //     $user = $this->getUser();
-
-    //     if (!$user || $user !== $comment->getUser()) {
-    //         return new JsonResponse(['message' => 'An error has occured'], 403);
-    //     }
-
-    //     return null;
-    // }
 }

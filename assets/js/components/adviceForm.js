@@ -30,13 +30,15 @@ export function initShowModal() {
             modalContainer.classList.remove("hidden");
 
             let form = modalContainer.querySelector("form");
+            console.log(form);
             let button = form.querySelector('button[type="submit"]');
             console.log(button);
 
-            button.addEventListener("click", (e) => {
+            button.addEventListener("click", function (e) {
               e.preventDefault();
 
               let formData = new FormData(form);
+
               fetch("/comment/" + commentId + "/edit", {
                 method: "POST",
                 body: formData,
@@ -87,28 +89,28 @@ export function initDeleteForm() {
 
         let deleteForm = document.getElementById("delete-form");
         fetch(deleteForm.action, {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           },
           body: new URLSearchParams(new FormData(deleteForm)).toString(),
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw response;
-            }
-            // Redirect to the index page
-            window.location.href = "/advice";
-          })
-          .catch((error) => {
-            error.text().then((errorMessage) => {
-              console.log(
-                "Une erreur est survenue lors de la suppression de l'élément",
-                errorMessage
-              );
+            .then(response => {
+              if (!response.ok) { throw response }
+              // Redirect to the index page
+              window.location.href = "/advice";
+            })
+            .catch(error => {
+              error.text().then(errorMessage => {
+                console.log(
+                    "Une erreur est survenue lors de la suppression de l'élément",
+                    errorMessage
+                );
+              });
             });
-          });
       });
     }
   });
 }
+
+console.log("adviceForm.js loaded");

@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\NoResultException;
 
 /**
  * @extends ServiceEntityRepository<Appointment>
@@ -38,18 +37,6 @@ class AppointmentRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
-    }
-
-    public function countAppointmentsByStatus(int $statusId): int
-    {
-        $result = $this->createQueryBuilder('a')
-            ->join('a.status', 's')
-            ->where('s.id = :statusId')
-            ->setParameter('statusId', $statusId)
-            ->getQuery()
-            ->getResult();
-
-        return count($result);
     }
 
     //    /**

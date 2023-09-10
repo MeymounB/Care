@@ -1,5 +1,10 @@
-import * as Components from "./components";
-import * as Modules from "./modules";
+import {initIsPresential} from "./components/appointmentForm";
+import {initDatetimeValidation} from "./components/appointmentForm";
+import {initShowModal} from "./components/adviceForm";
+import {initDeleteForm} from "./components/adviceForm";
 
-Components.init();
-// Modules.init();
+initIsPresential();
+initDatetimeValidation();
+
+initShowModal();
+initDeleteForm();
