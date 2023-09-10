@@ -1,36 +1,41 @@
-<section class="ajout-plante">
-    <div class="form-ajout">
-        {{ form_start(form, { 'attr': { 'class': 'w-full max-w-sm mx-auto mt-20 space-y-3' } }) }}
+{% apply inline_css(source('@styles/components/add_plant_form.css')) %}
 
-        <fieldset class="file-box">
-            <label for="plant_photos" id="imageLabel">
-                <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
-            </label>
-            <span>Ajouter une image</span>
-{#            {{ form_widget(form.image, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'onchange': 'handleFileSelect(event)' } }) }}#}
-        </fieldset>
+{% block form_plant_popup %}
+    <section id="plant-modal" class="ajout-plante">
+        <div class="form-ajout">
+            {{ form_start(form) }}
 
-        <div class="fieldset-container">
-            <fieldset>
-                {{ form_row(form.name) }}
+            <fieldset class="file-box">
+                <label for="plant_photos" id="imageLabel">
+                    <img src="{{ asset('images/telecharger.png') }}" alt="" id="previewImage">
+                </label>
+                <span>Ajouter une image</span>
+                    {{ form_widget(form.photos, { 'attr': { 'title': 'image', 'accept': '.png,.jpeg,.jpg', 'multiple': 'multiple', 'class': 'invisible-input' } }) }}
             </fieldset>
 
-            <fieldset>
-                {{ form_row(form.species) }}
+            <div class="fieldset-container">
+                <fieldset>
+                    {{ form_row(form.name) }}
+                </fieldset>
+
+                <fieldset>
+                    {{ form_row(form.species) }}
+                </fieldset>
+            </div>
+
+            <fieldset class="description">
+                {{ form_widget(form.description) }}
             </fieldset>
+
+            <button id="send-plant-modal" type="submit" class="button">{{ button_label|default('Ajouter la plante') }}</button>
+            <button id="close-plant-modal" type="button" class="button">Annuler</button>
+            {# {% if error %}
+                {% from "parts/error.html.twig" import form_error %}
+                {{ form_error(error.message) }}
+            {% endif %} #}
+
+            {{ form_end(form) }}
         </div>
-
-        <fieldset class="description">
-            {{ form_widget(form.description) }}
-        </fieldset>
-
-        <button id="button" type="submit" class="btn btn-secondary">{{ button_label|default('Ajouter la plante') }}</button>
-
-        {% if error %}
-            {% from "parts/error.html.twig" import form_error %}
-            {{ form_error(error.message) }}
-        {% endif %}
-
-        {{ form_end(form) }}
-    </div>
-</section>
+    </section>
+{% endblock %}
+{% endapply %}
