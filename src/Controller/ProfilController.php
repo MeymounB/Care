@@ -33,10 +33,8 @@ class ProfilController extends AbstractController
             throw $this->createAccessDeniedException('Access denied');
         }
 
-        $plants = $plantRepository->findBy([], ['createdAt' => 'DESC']);
-
-        $plantesPossedees = $plantRepository->findAll();
-        $nombrePlantesPossedees = count($plantesPossedees);
+        $plants = $plantRepository->findBy(['particular' => $user->getId()]);
+        $nombrePlantesPossedees = count($plants);
 
         $conseilsDemandes = $adviceRepository->findAll();
         $nombreDeConseilsDemandes = count($conseilsDemandes);

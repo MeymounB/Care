@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/advice')]
 class AdviceController extends AbstractController
@@ -49,8 +48,14 @@ class AdviceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_advice_new', methods: ['GET', 'POST'])]
-    public function new(#[CurrentUser] ?Particular $user, Request $request, AdviceRepository $adviceRepository, StatusRepository $statusRepository): Response
+    public function new(Request $request, AdviceRepository $adviceRepository, StatusRepository $statusRepository): Response
     {
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
         $advice = new Advice();
 
         $defaultStatus = $statusRepository->findOneBy(['name' => 'En attente']);
@@ -61,20 +66,14 @@ class AdviceController extends AbstractController
         $form = $this->createForm(AdviceType::class, $advice, [
             'plants' => $this->plantRepository->findBy(['particular' => $user->getId()]),
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $advice->setParticular($user);
-            // dd($form->getData());
             $adviceRepository->save($advice, true);
 
             return $this->redirectToRoute('app_advice_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        $user = $this->getUser();
-
-        if (!$user instanceof User) {
-            throw $this->createAccessDeniedException('Access denied');
         }
 
         $plants = $this->plantRepository->findBy(['particular' => $user->getId()], ['createdAt' => 'DESC']);
@@ -91,6 +90,17 @@ class AdviceController extends AbstractController
     public function show(Request $request, AdviceRepository $adviceRepository, CommentService $commentService, Security $security, int $id): Response
     {
         $advice = $adviceRepository->find($id);
+        // $advice = $adviceRepository->findWithSortedComments($id);
+
+        $plants = $advice->getPlants();
+        $firstPlant = $plants->first();
+
+        $photo = null;
+        if ($firstPlant) {
+            $photos = $firstPlant->getPhotos();
+            // dd($photos);
+            $photo = $photos->first();
+        }
 
         // Create form for adding a new comment
         $newComment = new Comment();
@@ -108,6 +118,7 @@ class AdviceController extends AbstractController
         return $this->render('advice/show.html.twig', [
             'advice' => $advice,
             'form' => $form->createView(),
+            'photo' => $photo,
         ]);
     }
 

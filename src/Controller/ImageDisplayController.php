@@ -19,8 +19,8 @@ class ImageDisplayController extends AbstractController
 
         return new BinaryFileResponse(
             $this->getParameter('photos_dir')
-            .'/'
-            .$imageName
+                .'/'
+                .$imageName
         );
     }
 }

@@ -9,7 +9,7 @@ export function initDeleteAccountPopup() {
       e.preventDefault();
       if (popup) {
         popup.style.display = "block";
-        setTimeout(function () {
+        setTimeout(() => {
           popup.style.opacity = "1";
         }, 10);
       }
@@ -19,7 +19,7 @@ export function initDeleteAccountPopup() {
   function hidePopup() {
     if (popup) {
       popup.style.opacity = "0";
-      setTimeout(function () {
+      setTimeout(() => {
         popup.style.display = "none";
       }, 300);
     }

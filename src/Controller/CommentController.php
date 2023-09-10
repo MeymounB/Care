@@ -68,19 +68,13 @@ class CommentController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
-    public function delete(Request $request, Comment $comment, CommentRepository $commentRepository, int $id): Response
+    public function delete(Comment $comment, Request $request, CommentRepository $commentRepository): Response
     {
         $ownershipCheck = $this->ownershipChecker->checkOwnership($comment);
 
         if ($ownershipCheck) {
-            return $ownershipCheck;
-        }
-
-        if ($ownershipCheck) {
             return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
         }
-
-        $comment = $commentRepository->find($id);
 
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment, true);
@@ -88,15 +82,4 @@ class CommentController extends AbstractController
 
         return $this->redirectToRoute('app_advice_show', ['id' => $comment->getCommentAdvice()->getId()]);
     }
-
-    // private function checkCommentOwnership(Comment $comment): JsonResponse
-    // {
-    //     $user = $this->getUser();
-
-    //     if (!$user || $user !== $comment->getUser()) {
-    //         return new JsonResponse(['message' => 'An error has occured'], 403);
-    //     }
-
-    //     return null;
-    // }
 }

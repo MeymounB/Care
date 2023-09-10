@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use AllowDynamicProperties;
 use App\Entity\Appointment;
 use App\Entity\Botanist;
 use App\Entity\Particular;
 use App\Entity\User;
 use App\Form\AppointmentType;
 use App\Repository\AppointmentRepository;
+use App\Repository\PlantRepository;
 use App\Repository\StatusRepository;
 use App\Service\AppointmentService;
 use App\Service\LinkManagerService;
@@ -18,14 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
-#[Route('/appointment')]
+#[AllowDynamicProperties] #[Route('/appointment')]
 class AppointmentController extends AbstractController
 {
     private AppointmentService $appointmentService;
 
-    public function __construct(AppointmentService $appointmentService)
+    public function __construct(AppointmentService $appointmentService, PlantRepository $plantRepository)
     {
         $this->appointmentService = $appointmentService;
+        $this->plantRepository = $plantRepository;
     }
 
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
@@ -54,8 +57,14 @@ class AppointmentController extends AbstractController
             $appointment->setStatus($defaultStatus);
         }
 
+        $user = $this->getUser();
+
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
         $form = $this->createForm(AppointmentType::class, $appointment, [
-            'plants' => [...$user->getPlants()],
+            'plants' => $this->plantRepository->findBy(['particular' => $user->getId()]),
             'address' => [...$user->getAddress()],
         ]);
         $form->handleRequest($request);
