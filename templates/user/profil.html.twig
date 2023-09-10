@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<section class="user-profil">
+
+		<div class="infos">
+			<div class="img-container">
+				<img src="{{ app.user.avatar }}" alt="Photo de profil">
+			</div>
+			<div class="infos-container">
+				<div class="personnal">
+					<div class="personnal-info">
+						<div class="text-box">
+							<p>Nom :</p>
+							<p>{{ app.user.lastName }}</p>
+						</div>
+						<div class="text-box">
+							<p>Prénom :</p>
+							<p>{{ app.user.firstName }}</p>
+						</div>
+						<div class="text-box mail">
+							<p>Adresse email :</p>
+							<p>{{ app.user.email }}</p>
+						</div>
+					</div>
+						{# {% include "plant/_edit_form.html.twig" %} #}
+				</div>
+
+				<div class="stats">
+					<div class="stats-box">
+						<p>Conseils demandés :</p>
+						<p>{{ conseilsDemandes }}</p>
+					</div>
+
+					<div class="stats-box">
+						<p>Plantes possédées :</p>
+						<p>{{ plantesPossedees }}</p>
+					</div>
+
+					<div class="stats-box">
+						<p>Nombre de rendez-vous: </p>
+						<p>{{ nombreDeRendezVous }}</p>
+					</div>
+				</div>
+
+				<div class="personnal-action">
+					<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true" style="color: black; text-decoration-color: black;">
+					Modifier mes informations</a>
+
+					<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true" style="color: red; text-decoration-color: red;">
+					Supprimer mon compte</a>
+						{% include "profil/_delete_account_popup.html.twig" %}
+
+					<a id="open-plant-form" aria-labelledby="modal-title" role="dialog" 
+					aria-modal="true"> Faire pousser une nouvelle plante</a>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="my-garden">
+			<ul class="liste-plantes">
+            {% for plant in plants %}
+				<li class="plante">
+					<div class="img-container">
+						{% if plant.photos is empty %}
+							<img
+								style ="max-width: 300px;"
+								src="{{ path('app_image_display', {imageName: "akaashi.jpg"}) }}"
+								alt="Photo de {{ plant.name }}"
+							>
+						{% else %}
+							{% if plant.photos[0].photo is not empty %}
+								<img
+									style ="max-width: 300px;"
+									src="{{ path('app_image_display', {imageName: plant.photos[0].photo}) }}"
+									alt="Photo de {{ plant.name }}"
+								>
+							{% else %}
+								<img
+									style ="max-width: 300px;"
+									src="{{ path('app_image_display', {imageName: "akaashi.jpg"}) }}"
+									alt="Photo de {{ plant.name }}"
+								>
+							{% endif %}
+						{% endif %}
+					</div>
+
+					<ul class="infos-plante">
+						<li id="name ">
+							<p>Nom</p>
+							<p>{{ plant.name }}</p>
+						</li>
+						<li id="famille">
+							<p>Famille</p>
+							<p>{{ plant.species }}</p>
+						</li>
+						<li id="couleur">
+							<p>Date</p>
+							<p>{{ plant.createdAt|date('d-m-Y') }}</p>
+						</li>
+					</ul>
+
+					<div class="buttons">
+						<a id="open-plant-details" aria-labelledby="modal-title" role="dialog" aria-modal="true">Plus de détails</a>
+						<div> {% include 'plant/_plant_form_popup.html.twig' %}</div>
+						<div> {{ include('plant/_delete_form.html.twig') }}</div> 
+					</div>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		
+</section>
+{% endblock %}

@@ -15,6 +15,7 @@
 /uploads/certifications/
 .idea/
 .vscode/
+./uploads
 ###< symfony/framework-bundle ###
 
 .composer.lock

@@ -1,3 +1,12 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# A tester
+# homepage:
+#     path: /homepage
+#     controller: App\Controller\HomeController::index
+
+# profil:
+#     path: /homepage/profil
+#     controller: App\Controller\ProfilController::index

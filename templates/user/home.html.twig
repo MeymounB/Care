@@ -3,10 +3,9 @@
 {% block title %}Accueil{% endblock %}
 {% block body %}
 
-	<section class="dashboard-user">
-		<h2>Bienvenue sur votre Dashboard, <a href="#"><span>{{ app.user }}</span></a>
-		</h2> {# TODO: mettre le lien vers le profil #}
-
+	<section class="dashboard-botaniste">
+		<h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_profil_index') }}"><span>{{ app.user }}</span></a>
+		</h2> 
 		<div class="top-banner">
 			<div class="take-rdv">
 				<h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a>
@@ -14,9 +13,9 @@
 				<div class="rdvs">
 					{% for advice in advices %}
 						<a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
-							<p>{{ advice.title }}</p>
+							<p>advice.title</p>
 							・
-							<p>{{ advice.createdAt|date('d-m-Y') }}</p>
+							<p>{{ advice.createdAt|date('d-m-Y | H:i') }}</p>
 						</a>
 					{% endfor %}
 				</div>
@@ -34,14 +33,14 @@
 					</div>
 				</div>
 
-				<a href="/">Accéder à mon profil</a>
+				<a href="{{ path('app_profil_index') }}">Personnaliser votre jardin</a>
 			</div>
 		</div>
 
 		<div class="bottom-banner">
 			<div class="left">
 				 <div class="historique">
-					<h3>Besoin d'aide ?</h3>
+					<h3>Gardiennage</h3>
 					<div class="box-container">
 						<a href="{{ path('app_advice_list_my_advice') }}" class="box">
 							<img src="{{ asset('images/Conseils.png') }}">
@@ -61,7 +60,7 @@
 				<div class="a-venir">
 					<div class="top">
 						<h3>Rendez-vous à venir</h3>
-						<a href="{{ path('app_appointement_incoming_appointment') }}">Voir tous
+						<a href="{{ path('app_botanist_incoming_appointment') }}">Voir tous
 							<img src={{ asset('images/right-arrow.png') }}>
 						</a>
 					</div>
@@ -93,7 +92,7 @@
 				<div class="activities">
 					{% for recent in recent_activity %}
 						<a href="{{ path('app_advice_show', {'id': recent.id}) }}" class="activity">
-							<p>{{ recent.title }}</p>
+							<p>recent.title</p>
 							・
 							{% if recent.isPublic %}
 								<p>Public</p>

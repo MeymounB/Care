@@ -3,7 +3,8 @@
 {% block title %}Greencare - Votre expert botanique{% endblock %}
 
 {% block body %}
-    {# <section class="section landing">
+    {% set baseAlt = 'Hero section - icon' %}
+    <section class="section landing">
         <div>
             <h1 class="main-title">L’application N°1 pour garder tes plantes </h1>
             <p class="reg-bold">GreenCare : au service de la santé de vos plantes</p>
@@ -15,11 +16,11 @@
                     Se connecter
                 </button>
             </a>
-            <a href="{{ path('app_register') }}">
+            {# <a href="{{ path('register_particular') }}">
                 <button class="btn btn-secondary">
                     S'inscrire
                 </button>
-            </a>
+            </a> #}
         </div>
 
         <ul class="landing_feats">
@@ -30,20 +31,7 @@
                 </li>
             {% endfor %}
         </ul>
-    </section> #}
-
-    <section class="landing">
-		<div class="title">
-			<h1>L'application n°1 pour prendre soin de vos plantes</h1>
-			<p>GreenCare : au service de la santé de vos plantes</p>
-		</div>
-		<div class="buttons">
-			<a href="{{ path('app_login') }}" class="btn btn-primary" id="login">Se connecter</a>
-			<a href="{{ path('app_register') }}" class="" id="register">S'inscrire</a>
-
-		</div>
-	</section>
-
+    </section>
 {% endblock %}
 
 {% block footer %}{% endblock %}

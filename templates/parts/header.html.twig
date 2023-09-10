@@ -1,17 +1,19 @@
 <header>
     {% if is_granted('IS_AUTHENTICATED') %}
         {% if is_granted('ROLE_PARTICULAR') %}
-            {% set path = "/user_dashboard" %}
-        {% else %}
-            {% set path = "/dashboard" %}
+            <a href="{{ path('app_individual_index') }}">
+                <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+            </a>
+        {% elseif is_granted('ROLE_BOTANIST') %}
+            <a href="{{ path('app_botanist_index') }}">
+                <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+            </a>
         {% endif %}
     {% else %}
-        {% set path = "/" %}
+        <a href="{{ path('app_default') }}">
+            <img class="greencare_logo" id="logo" src="{{ asset('images/logo.svg') }}" alt="greencare">
+        </a>
     {% endif %}
-
-    <a href="{{ path }}" class="left_header">
-        <img class="greencare_logo" id="logo" src="/images/logoG.png" alt="greencare">
-    </a>
 
     <div class="right_header">
         {% if is_granted('IS_AUTHENTICATED') %}
