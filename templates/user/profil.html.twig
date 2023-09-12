@@ -57,7 +57,7 @@
 						{% endif %}
 					</div>
 
-					<a href="{{ path('app.user.edit.address') }}">Ajouter une adresse</a>
+					<a id='open-address-form'>Ajouter une adresse</a>
 				</article>
 
 				<div class="personnal-action">
@@ -79,54 +79,58 @@
 		
 		<div class="my-garden">
 			<ul class="liste-plantes">
-            {% for plant in plants %}
-				<li class="plante">
-					<div class="img-container">
-						{% if plant.photos is empty %}
-							<img
-								style ="max-width: 300px;"
-								src="{{ path('app_image_display', {imageName: "default_plant_image.png"}) }}"
-								alt="Photo de {{ plant.name }}"
-							>
-						{% else %}
-							{% if plant.photos[0].photo is not empty %}
-								<img
-									style ="max-width: 300px;"
-									src="{{ path('app_image_display', {imageName: plant.photos[0].photo}) }}"
-									alt="Photo de {{ plant.name }}"
-								>
-							{% else %}
+			{% if plants is empty %}
+				<p>Vous n'avez pas encore de plantes.</p>
+			{% else %}
+				{% for plant in plants %}
+					<li class="plante">
+						<div class="img-container">
+							{% if plant.photos is empty %}
 								<img
 									style ="max-width: 300px;"
 									src="{{ path('app_image_display', {imageName: "default_plant_image.png"}) }}"
 									alt="Photo de {{ plant.name }}"
 								>
+							{% else %}
+								{% if plant.photos[0].photo is not empty %}
+									<img
+										style ="max-width: 300px;"
+										src="{{ path('app_image_display', {imageName: plant.photos[0].photo}) }}"
+										alt="Photo de {{ plant.name }}"
+									>
+								{% else %}
+									<img
+										style ="max-width: 300px;"
+										src="{{ path('app_image_display', {imageName: "default_plant_image.png"}) }}"
+										alt="Photo de {{ plant.name }}"
+									>
+								{% endif %}
 							{% endif %}
-						{% endif %}
-					</div>
+						</div>
 
-					<ul class="infos-plante">
-						<li id="name ">
-							<p>Nom</p>
-							<p>{{ plant.name }}</p>
-						</li>
-						<li id="famille">
-							<p>Famille</p>
-							<p>{{ plant.species }}</p>
-						</li>
-						<li id="couleur">
-							<p>Date</p>
-							<p>{{ plant.createdAt|date('d-m-Y') }}</p>
-						</li>
-					</ul>
+						<ul class="infos-plante">
+							<li id="name ">
+								<p>Nom</p>
+								<p>{{ plant.name }}</p>
+							</li>
+							<li id="famille">
+								<p>Famille</p>
+								<p>{{ plant.species }}</p>
+							</li>
+							<li id="couleur">
+								<p>Date</p>
+								<p>{{ plant.createdAt|date('d-m-Y') }}</p>
+							</li>
+						</ul>
 
-					<div class="buttons">
-						<a id="open-plant-details" aria-labelledby="modal-title" role="dialog" aria-modal="true">Plus de détails</a>
-						<div> {% include 'plant/_plant_form_popup.html.twig' %}</div>
-						<div> {{ include('plant/_delete_form.html.twig') }}</div> 
-					</div>
-				</li>
-			{% endfor %}
+						<div class="buttons">
+							<a id="open-plant-details" aria-labelledby="modal-title" role="dialog" aria-modal="true">Plus de détails</a>
+							<div> {% include 'plant/_plant_form_popup.html.twig' %}</div>
+							<div> {{ include('plant/_delete_form.html.twig') }}</div> 
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
 			</ul>
 		</div>
 		

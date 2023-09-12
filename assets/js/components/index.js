@@ -5,6 +5,7 @@ import {
   initPlantAddFormPopup,
   initPlantEditFormPopup,
 } from "./profil/plantFormPopup";
+import {initAddressFormPopup} from "./profil/addressFormPopup";
 
 export function init() {
   initDatetimeValidation();
@@ -14,4 +15,5 @@ export function init() {
   initPlantAddFormPopup();
   initPlantEditFormPopup();
   initShowModal();
+  initAddressFormPopup();
 }
