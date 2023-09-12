@@ -1,0 +1,23 @@
+{% apply inline_css(source('@styles/components/add-address-popup.css')) %}
+
+{% block body %}
+<div class="modal-overlay" id="accountModal">
+    <div class='modal'>
+        <div class="modal-header">
+            <h2>Modifier votre profile</h2>
+            <button class="close-modal" id="closeModalButton">✖</button>
+        </div>
+
+        <div class='modal-body'>
+            {{ form_start(form, {'attr': {'id': 'account-form'}}) }}
+                {{ form_row(form.firstName) }}
+                {{ form_row(form.lastName) }}
+                {{ form_row(form.cellphone) }}
+                {# For reset the password, please click <a href="{{ path('app_forgot_password') }}">here</a> #}
+                <button type="submit" id='confirmButton'>Mettre a jour</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% endapply %}

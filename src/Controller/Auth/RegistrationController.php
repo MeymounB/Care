@@ -4,15 +4,15 @@ namespace App\Controller\Auth;
 
 use App\Entity\Botanist;
 use App\Entity\Particular;
+use App\Service\RegistrationService;
 use App\Form\Registration\BotanistFormType;
 use App\Form\Registration\ParticularFormType;
-use App\Service\RegistrationService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RegistrationController extends AbstractController
 {

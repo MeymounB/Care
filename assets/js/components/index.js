@@ -12,6 +12,8 @@ import {
   initAddressDelete,
 } from "./profil/addressFormPopup";
 
+import {initUpdateAccountPopup} from "./profil/updateAccountPopup";
+
 export function init() {
   initDatetimeValidation();
   initDeleteAccountPopup();
@@ -22,4 +24,5 @@ export function init() {
   initShowModal();
   initAddressFormPopup();
   initAddressDelete();
+  initUpdateAccountPopup();
 }
