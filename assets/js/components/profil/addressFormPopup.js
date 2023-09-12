@@ -72,3 +72,41 @@ export function initAddressFormPopup() {
     });
   });
 }
+
+export function initAddressDelete() {
+  document.addEventListener("DOMContentLoaded", () => {
+    const deleteButtons = document.querySelectorAll(".delete-address");
+
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const addressId = e.target.getAttribute("data-address-id");
+
+        fetch(`/address/${addressId}/delete`, {
+          method: "POST",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        })
+          .then((response) => {
+            if (response.status === 204) {
+              return {message: "Address deleted successfully"};
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.message === "Address deleted successfully") {
+              e.target.closest("li").remove();
+              location.reload();
+            } else {
+              console.error("Error deleting address:", data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+    });
+  });
+}

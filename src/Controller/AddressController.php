@@ -6,7 +6,6 @@ use App\Entity\Address;
 use App\Entity\Particular;
 use App\Form\AddressType;
 use App\Repository\AddressRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,5 +57,19 @@ class AddressController extends AbstractController
                 'form' => $form->createView(),
             ]),
         ], 400);
+    }
+
+    #[Route('/{id}/delete', name: 'app_address_delete', methods: ['POST'])]
+    public function delete(Address $address, AddressRepository $addressRepository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof Particular) {
+            throw $this->createAccessDeniedException('Access denied');
+        }
+
+        $addressRepository->remove($address, true);
+
+        return new JsonResponse(['message' => 'The address has been deleted.'], 204);
     }
 }

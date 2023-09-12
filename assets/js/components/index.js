@@ -1,11 +1,16 @@
 import {initDeleteForm, initShowModal} from "./advice/adviceForm";
 import {initDatetimeValidation, initIsPresential} from "./appt/appointmentForm";
 import {initDeleteAccountPopup} from "./profil/deleteAccountPopup";
+
 import {
   initPlantAddFormPopup,
   initPlantEditFormPopup,
 } from "./profil/plantFormPopup";
-import {initAddressFormPopup} from "./profil/addressFormPopup";
+
+import {
+  initAddressFormPopup,
+  initAddressDelete,
+} from "./profil/addressFormPopup";
 
 export function init() {
   initDatetimeValidation();
@@ -16,4 +21,5 @@ export function init() {
   initPlantEditFormPopup();
   initShowModal();
   initAddressFormPopup();
+  initAddressDelete();
 }

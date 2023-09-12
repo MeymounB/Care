@@ -43,22 +43,7 @@
 					</div>
 				</div>
 
-				<article class="addresses">
-					<div>
-						<h3>Mes adresses ({{ app.user.address|length }})</h3>
-						{% if app.user.address is empty %}
-							<p>Vous n'avez pas encore d'adresses</p>
-						{% else %}
-							<ul>
-								{% for address in app.user.address %}
-									<li>{{ address.street }}, {{ address.zipcode }} {{ address.city }}</li>
-								{% endfor %}
-							</ul>
-						{% endif %}
-					</div>
-
-					<a id='open-address-form'>Ajouter une adresse</a>
-				</article>
+			
 
 				<div class="personnal-action">
 					<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
@@ -75,6 +60,25 @@
 
 				</div>
 			</div>
+
+			<article class="addresses">
+				<div>
+					<h3>Mes adresses ({{ app.user.address|length }})</h3>
+					{% if app.user.address is empty %}
+						<p>Vous n'avez pas encore d'adresses</p>
+					{% else %}
+						<ul>
+							{% for address in app.user.address %}
+								<li>{{ address.street }}, {{ address.zipcode }} {{ address.city }}
+									<button class="delete-address" data-address-id="{{ address.id }}">✖</button>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+
+				<a id='open-address-form'>Ajouter une adresse</a>
+			</article>
 		</div>
 		
 		<div class="my-garden">
