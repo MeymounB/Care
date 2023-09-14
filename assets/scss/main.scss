@@ -3,7 +3,7 @@
 @import './pages/index';
 
 .main-container {
-    padding: 10vh 10vw;
+    padding: 6vh 5vw;
     min-height: 100vh;
 
     @include vars.media(tablet-small, max) {

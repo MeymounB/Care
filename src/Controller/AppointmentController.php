@@ -67,6 +67,7 @@ class AppointmentController extends AbstractController
             'plants' => $this->plantRepository->findBy(['particular' => $user->getId()]),
             'address' => [...$user->getAddress()],
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

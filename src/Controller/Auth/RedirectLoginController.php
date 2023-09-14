@@ -5,8 +5,8 @@ namespace App\Controller\Auth;
 use App\Entity\Admin;
 use App\Entity\Botanist;
 use App\Entity\Particular;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
