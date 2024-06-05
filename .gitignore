@@ -2,8 +2,6 @@
 ###> symfony/framework-bundle ###
 
 .history
-.env
-/.env
 /.env.local
 /.env.local.php
 /.env.test
