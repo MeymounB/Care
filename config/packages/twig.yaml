@@ -1,6 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    paths:
+        '%kernel.project_dir%/assets/scss': styles
+        '%kernel.project_dir%/public/images': images
 
 when@test:
     twig:
         strict_variables: true
+        debug: true

@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique de vos conseils{% endblock %}
+
+{% block body %}
+    <section class="appointments-section">
+        <h2>Demandes de conseil</h2>
+
+        {% for status, advices in groupedAdvices %}
+            <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
+            <table class="appointments-table">
+                {% if (status == 'En attente') %}
+                    <tr class="appointments-row en-attente">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% elseif (status == 'En cours') %}
+                    <tr class="appointments-row en-cours">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% elseif (status == 'Terminé') %}
+                    <tr class="appointments-row termine">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% elseif (status == 'Annulé') %}
+                    <tr class="appointments-row annule">
+                        <th class="appointments-cell">Auteur</th>
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell boutons">Actions</th>
+                    </tr>
+                {% endif %}
+{#                {{ dump(advices) }}#}
+                {% for advice in advices %}
+
+                    {% if (status == 'En attente') %}
+                        <tr class="appointments-row en-attente">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'En cours') %}
+                        <tr class="appointments-row en-cours">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'Terminé') %}
+                        <tr class="appointments-row termine">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'Annulé') %}
+                        <tr class="appointments-row annule">
+                            <td class="appointments-cell">{{ advice.particular.Fullname }}</td>
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell boutons">
+                                <a href='{{ path('app_advice_show', {'id': advice.id}) }}'><button type="button">Détails</button></a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            <tr>
+                <td colspan="5" class="px-4 py-2 text-red-500">Vous n'avez aucune demande de conseil en attentes</td>
+            </tr>
+        {% endfor %}
+    </section>
+{% endblock %}

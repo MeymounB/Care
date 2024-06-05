@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="conseil">
+        <div class="demande">
+        {# 
+            <div class="img-plante">
+                {% if photo and photo.photo %}
+                    <img src="{{ path('app_image_display', {imageName: photo.photo}) }}" alt="Photo de la plante">
+                {% else %}
+                    <img src="https://picsum.photos/200/300" alt="Image par défaut">
+                {% endif %}
+            </div>
+        #}
+            <div class="details" style="width: 100%;">
+                <h2>{{ advice.title }}</h2>
+                <div class="descritpion-container">
+                    <div class="infos">
+                        <div class="posted-by">{{ advice.particular.fullname }}</div>
+                        ・
+                        <div class="when">{{ advice.createdAt ? advice.createdAt|date('d-m-Y') : '' }}</div>
+                        ・
+                        <div class="nb-comments"><span id="number-comments">{{ advice.comments|length }}</span>
+                            Commentaires
+                        </div>
+                    </div>
+                    <div class="description">{{ advice.description ? advice.description|nl2br : '' }}</div>
+                </div>
+
+                <div class="write-answer">
+                    {{ form_start(form) }}
+                        <fieldset>
+                            <img src="https://picsum.photos/200/300" alt="Photo de profil">
+                            {{ form_widget(form.content, {'attr': {'class': 'form-textarea w-full focus:border-slate-300', 'rows': '4', 'placeholder': 'Participez à la conversation...'}}) }}
+                        </fieldset>
+                        <button type="submit">
+                            <p>Répondre</p>
+                            <img src="/images/right-arrow-white.png" alt="flèche">
+                        </button>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="commentaires">
+            <h3>Commentaires</h3>
+            {% if advice.comments|length > 0 %}
+                {% for comment in advice.comments %}
+                    <div class="reponse">
+                        <div class="infos">
+                            <img class="rounded w-10 h-10"
+                                src="{{ comment.user.avatar|default('https://picsum.photos/200/300') }}"
+                                alt="avatar">
+                            <div class="options">
+                                {% if comment.user %}
+                                    <!-- Verify is user is botanist -->
+                                    {% set isBotanist = false %}
+                                    {% for role in comment.user.roles %}
+                                        {% if role == 'ROLE_BOTANIST' %}
+                                            {% set isBotanist = true %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <!-- Verify if user is author of comment -->
+                                    {% set isAuthor = advice.particular == comment.user.fullName %}
+
+                                    {% if isBotanist %}
+                                        <a style="color: #5ac55a">
+                                            {{ comment.user.fullName }}
+                                        </a>
+                                    {% elseif isAuthor %}
+                                        <a style="color: #ce1313">
+                                            {{ comment.user.fullName }}
+                                        </a>
+                                    {% else %}
+                                        <a class=""
+                                        href="#0">
+                                            {{ comment.user.fullName }}
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                    <h3 class="">Anonymous says:</h3>
+                                {% endif %}
+                                ・
+                                <p>{{ comment.createdAt|date('d-m-Y ・ H:i') }}</p>
+
+                                {% if app.user == comment.user %}
+                                    <div id="edit-comment-modal" class="hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                                        <!-- Modal here -->
+                                    </div>
+
+                                    <button class="edit-comment" data-id="{{ comment.id }}">
+                                        Éditer
+                                    </button>
+
+                                    <div class="items-center">
+                                        <form id="delete-form" method="post" action="{{ path('app_comment_delete', {'id': comment.id}) }}">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                                            <button class="">Supprimer</button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="text" style="margin-left: 42px">{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Aucun commentaire</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<section class="profil-botaniste">
+		<div class="infos">
+			<div class="img-container">
+				<img src="{{ app.user.avatar }}" alt="Photo de profil">
+			</div>
+			<div class="infos-container">
+			
+				<div class="personnal">
+					<div class="personnal-info">
+						<div class="text-box">
+							<p>Nom :</p>
+							<p>{{ app.user.lastName }}</p>
+						</div>
+						<div class="text-box">
+							<p>Prénom :</p>
+							<p>{{ app.user.firstName }}</p>
+						</div>
+						<div class="text-box mail">
+							<p>Adresse email :</p>
+							<p>{{ app.user.email }}</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="stats">
+					<div class="stats-box">
+						<p>Conseils donnés :</p>
+						<p>{{ nombreDeConseilsDonnes }}</p>
+					</div>
+
+					<div class="stats-box">
+						<p>Rendez-vous acceptés :</p>
+						<p>{{ nombreDeRendezVousEnCours }}</p>
+					</div>
+
+					<div class="stats-box">
+						<p>Rendez-vous réfusés :</p>
+						<p>{{ nombreDeRendezVousAnnules }}</p>
+					</div>
+				</div>
+
+				{% if user.isVerified %}
+					<div class="certification">Botaniste certifié</div>
+				{% else %}
+					<div class="certification">Botaniste non certifié</div>
+				{% endif %}
+
+				<div class="personnal-action">
+					<a id="edit-account-form" aria-labelledby="modal-title" role="dialog" 
+						aria-modal="true" style="color: black; text-decoration-color: black;">
+						Modifier mes informations
+					</a>
+
+					<a id="delete-account-link" aria-labelledby="modal-title" role="dialog" 
+						aria-modal="true" style="color: red; text-decoration-color: red;">
+						Supprimer mon compte
+					</a>
+					{% include "profil/_delete_account_popup.html.twig" %}
+				</div>
+			</div>
+		</div>
+</section>
+
+{% endblock %}

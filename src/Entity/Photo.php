@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PhotoRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Photo
 {
     #[ORM\Id]
@@ -14,7 +15,7 @@ class Photo
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $photo;
     // Temporaire, le temps d'ajouter le service de gestion des images
     #[ORM\Column(length: 255, nullable: true)]
@@ -75,11 +76,10 @@ class Photo
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    #[ORM\PrePersist]
+    public function setCreatedAt(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getPlant(): ?Plant

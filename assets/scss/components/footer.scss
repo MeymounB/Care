@@ -1,0 +1,84 @@
+@use "../utils" as vars;
+
+footer {
+	@include vars.flexer(flex-start, space-between, row);
+	// height: 40vh;
+	padding: 6vh 5vw;
+	font-size: vars.rem(14);
+
+	@media screen and (max-width:1290px) {
+		flex-direction: column;
+		// height: 60vh;
+		gap: 20px;
+	}
+
+	ul {
+		width: 100%;
+		height: 100%;
+		padding: 0 40px 0 0;
+		@include vars.flexer(flex-start, space-around, row);
+
+		@media screen and (max-width:1290px) {
+			padding: 0;
+		}
+
+		@media screen and (max-width:510px) {
+			flex-direction: column;
+		}
+
+		li {
+			min-width: 211px;
+			padding-left: 10px;
+
+			h3 {}
+		}
+
+		@include vars.media(tablet, max) {
+			padding: 0;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+	}
+
+	.mentions {
+		height: 100%;
+		@include vars.flexer(flex-start, space-between, column);
+		padding: 0 0 0 40px;
+		border-left: 1px solid vars.$darkgray;
+
+		@media screen and (max-width:1290px) {
+			padding: 20px 0 0 40px;
+			border-left: transparent;
+			border-top: 1px solid vars.$darkgray;
+			width: 100%;
+		}
+
+		@media screen and (max-width:510px) {
+			padding: 20px 0 0 10px;
+
+		}
+
+		h1 {
+			font-size: 40px;
+		}
+	}
+
+	.container-footer {
+		@include vars.flexer(flex-start, flex-start, column);
+		gap: 10px;
+
+		img {
+			width: 25px;
+		}
+
+		a {
+			color: vars.$black !important;
+		}
+
+		.socials {
+			@include vars.flexer(center, space-between, row);
+			gap: 10px;
+			flex-wrap: nowrap;
+		}
+	}
+}

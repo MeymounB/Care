@@ -27,8 +27,9 @@ class AppointmentCrudController extends AbstractCrudController
             BooleanField::new('isPresential'),
             DateTimeField::new('plannedAt'),
             TextField::new('link'),
-            TextField::new('adress'),
+            TextField::new('address'),
             AssociationField::new('particular'),
+            AssociationField::new('botanist'),
             TextField::new('status')
                 ->setFormTypeOptions([
                     'disabled' => true,

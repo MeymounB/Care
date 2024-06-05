@@ -1,5 +1,35 @@
 // IMPORT ALL COMPONENTS HERE
-@import "logo";
 @import "button";
+
+// composants
+// @import "header-landing";
+// @import "header-home";
 @import "header";
+@import "footer";
+
 @import "form";
+@import "date-picker";
+
+// appointment 
+@import "ask-rdv";
+@import "appointment-details";
+
+// advice
+@import "advice";
+@import "ask-advice";
+@import "forum-advice";
+
+// botanist
+@import "appointment-section";
+
+// plant
+@import "add-plante";
+@import "plant-details";
+
+// accueil : user / botanist
+@import "home-botaniste";
+@import "home-user";
+
+// profil : user / botanist
+@import "profil-botaniste";
+@import "profil-user";

@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Comment
 {
     #[ORM\Id]
@@ -25,6 +26,9 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Advice $commentAdvice = null;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $isPublished = null;
 
     public function getId(): ?int
     {
@@ -48,11 +52,10 @@ class Comment
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    #[ORM\PrePersist]
+    public function setCreatedAt(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUser(): ?User
@@ -87,5 +90,17 @@ class Comment
     public function getAdviceTitle(): ?string
     {
         return $this->commentAdvice ? $this->commentAdvice->getTitle() : null;
+    }
+
+    public function isIsPublished(): ?bool
+    {
+        return $this->isPublished;
+    }
+
+    public function setIsPublished(bool $isPublished): static
+    {
+        $this->isPublished = $isPublished;
+
+        return $this;
     }
 }

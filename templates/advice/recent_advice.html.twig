@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Activités récentes{% endblock %}
+
+{% block body %}
+    <section class="appointments-section">
+        <h2>Activités récentes</h2>
+
+        {% for status, advices in groupedAdvices %}
+            <h2 class="text-xl mb-4 font-bold text-indigo-600">{{ status }} :</h2>
+            <table class="appointments-table">
+                {% if (status == 'En attente') %}
+                    <tr class="appointments-row en-attente">
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell description">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell">Pris en charge par</th>
+                        <th class="appointments-cell">Visibilité</th>
+                        <th class="appointments-cell boutons">
+                            Actions
+                        </th>
+                    </tr>
+                {% elseif (status == 'En cours') %}
+                    <tr class="appointments-row en-cours">
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell description">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell">Pris en charge par</th>
+                        <th class="appointments-cell">Visibilité</th>
+                        <th class="appointments-cell boutons">
+                            Actions
+                        </th>
+                    </tr>
+                {% elseif (status == 'Terminé') %}
+                    <tr class="appointments-row termine">
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell description">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell">Pris en charge par</th>
+                        <th class="appointments-cell">Visibilité</th>
+                        <th class="appointments-cell boutons">
+                            Actions
+                        </th>
+                    </tr>
+                {% elseif (status == 'Annulé') %}
+                    <tr class="appointments-row annule">
+                        <th class="appointments-cell">Titre</th>
+                        <th class="appointments-cell description">Description</th>
+                        <th class="appointments-cell">Date et Heure</th>
+                        <th class="appointments-cell">Pris en charge par</th>
+                        <th class="appointments-cell">Visibilité</th>
+                        <th class="appointments-cell boutons">
+                            Actions
+                        </th>
+                    </tr>
+                {% endif %}
+
+                {% for advice in advices %}
+                    {% if (status == 'En attente') %}
+                        <tr class="appointments-row en-attente">
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
+                            {% if advice.isPublic %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                <td class="appointments-cell">Publique</td>
+                            </span>
+                            {% else %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                <td class="appointments-cell">Privée</td>
+                            </span>
+                            {% endif %}
+
+                            <td class="appointments-cell boutons">
+                                <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
+                                        type="button">Détails
+                                </button>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'En cours') %}
+                        <tr class="appointments-row en-cours">
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
+                            {% if advice.isPublic %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                <td class="appointments-cell">Publique</td>
+                            </span>
+                            {% else %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                <td class="appointments-cell">Privée</td>
+                            </span>
+                            {% endif %}
+
+                            <td class="appointments-cell boutons">
+                                <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
+                                        type="button">Détails
+                                </button>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'Terminé') %}
+                        <tr class="appointments-row termine">
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
+                            {% if advice.isPublic %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                <td class="appointments-cell">Publique</td>
+                            </span>
+                            {% else %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                <td class="appointments-cell">Privée</td>
+                            </span>
+                            {% endif %}
+
+                            <td class="appointments-cell boutons">
+                                <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
+                                        type="button">Détails
+                                </button>
+                            </td>
+                        </tr>
+                    {% elseif (status == 'Annulé') %}
+                        <tr class="appointments-row annule">
+                            <td class="appointments-cell">{{ advice.title }}</td>
+                            <td class="appointments-cell description">{{ advice.description }}</td>
+
+                            <td class="appointments-cell">{{ advice.createdAt ? advice.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td class="appointments-cell">{{ advice.botanist ? advice.botanist.FullName : 'No botanist assigned' }}</td>
+                            {% if advice.isPublic %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-green-700 bg-green-200">
+                                <td class="appointments-cell">Publique</td>
+                            </span>
+                            {% else %}
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-red-700 bg-red-200">
+                                <td class="appointments-cell">Privée</td>
+                            </span>
+                            {% endif %}
+
+                            <td class="appointments-cell boutons">
+                                <button onclick="location.href='{{ path('app_advice_show', {'id': advice.id}) }}'"
+                                        type="button">Détails
+                                </button>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            <tr>
+                <td colspan="5" class="px-4 py-2 text-red-500">No records found</td>
+            </tr>
+        {% endfor %}
+    </section>
+
+{% endblock %}

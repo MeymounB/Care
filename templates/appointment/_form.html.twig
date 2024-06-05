@@ -1,0 +1,43 @@
+{{ form_start(form, { 'attr': { 'class': 'form-auth' } }) }}
+    <div class="form-field">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+    </div>
+
+    <div class="form-field">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+    </div>
+
+    <div class="form-field">
+        {{ form_label(form.plannedAt) }}
+        {{ form_widget(form.plannedAt) }}
+    </div>
+    
+    <div class="form-field">
+        {{ form_label(form.plants) }}
+        {{ form_widget(form.plants) }}
+    </div>
+
+    <div class="form-field">
+        {{ form_label(form.isPresential) }}
+        {{ form_widget(form.isPresential) }}
+    </div>
+
+     <div class="form-field">
+        {{ form_label(form.address) }}
+        {{ form_widget(form.address) }}
+    </div>
+
+    <button 
+        type="submit"
+        class="btn btn-primary"
+    >
+        {{ button_label|default('Valider') }}
+    </button>
+
+    {% if error %}
+        {% from "parts/error.html.twig" import form_error %}
+        {{ form_error(error.message) }}
+    {% endif %}
+{{ form_end(form) }}

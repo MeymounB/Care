@@ -1,0 +1,88 @@
+<section class="demande-conseil">
+    <div class="form-conseil">
+        <h1>Demande de conseil en ligne</h1>
+        {{ form_start(form) }}
+        <div class="fieldset-container">
+            <fieldset>
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title) }}
+            </fieldset>
+            <fieldset class="plantes-selector">
+                {{ form_label(form.plants) }}
+                {{ form_widget(form.plants) }}
+            </fieldset>
+            <fieldset>
+                {{ form_label(form.isPublic) }}
+                {{ form_widget(form.isPublic) }}
+            </fieldset>
+        </div>
+        <fieldset class="description">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+        </fieldset>
+        <button id="button" type="submit" class="btn btn-secondary">Publier la demande</button>
+
+        {% if error %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(error.message) }}
+        {% endif %}
+        {{ form_end(form) }}
+    </div>
+</section>
+
+    {# <div class="historique">
+        <h2>Historique de vos demandes en ligne</h2>
+        <div class="status" id="status-1">
+            <p class="title">En cours</p>
+            <ul>
+                <li>
+                    <div class="box">
+                        <p>Date de création</p>
+                        <p>{{ Date }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Nom</p>
+                        <p>{{ Nom }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Plantes</p>
+                        <p>{{ plante }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Description</p>
+                        <p>{{ Description }}</p>
+                    </div>
+                    <div class="operations">
+                        <img src="/images/points.png" alt="operations">
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="status" id="status-2">
+            <p class="title">Terminé</p>
+            <ul>
+                <li>
+                    <div class="box">
+                        <p>Date de création</p>
+                        <p>{{ Date }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Nom</p>
+                        <p>{{ Nom }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Plantes</p>
+                        <p>{{ plante }}</p>
+                    </div>
+                    <div class="box">
+                        <p>Description</p>
+                        <p>{{ Description }}</p>
+                    </div>
+                    <div class="operations">
+                        <img src="/images/points.png" alt="operations">
+                    </div>
+                </li>
+                <!-- Répétez le bloc pour chaque élément de l'historique terminé -->
+            </ul>
+        </div>
+    </div> #}

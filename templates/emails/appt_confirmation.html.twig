@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de rendez-vous{% endblock %}
+
+{% block body %}
+<p>Bonjour {{ advice.user.name }},</p>
+
+<p>Nous avons bien reçu votre demande de rendez-vous pour le {{ advice.date|date('d/m/Y à H:i') }}.</p>
+
+<p>Nous reviendrons vers vous rapidement pour confirmer le rendez-vous.</p>
+
+<p>Merci,</p>
+<p>L'équipe</p>
+{% endblock %}

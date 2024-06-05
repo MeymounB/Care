@@ -1,0 +1,26 @@
+{% apply inline_css(source('@styles/components/edit-comment-form.css')) %}
+
+<div id="modal-container">
+    <div class="modal-wrapper">
+        <div class="modal-background"></div>
+        <span class="modal-spacer"></span>
+        <div class="modal-content">
+            <div class="modal-header-wrapper">
+                <div class="modal-header">
+                    <h3 id="modal-title">Éditer votre commentaire</h3>
+                    <div class="modal-form">
+                        {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <div class="modal-buttons">
+                                <button type="submit" class="modal-save-button">Sauvegarder</button>
+                                <button type="button" id="modal-close" class="modal-cancel-button">Annuler</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endapply %}

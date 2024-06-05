@@ -39,6 +39,29 @@ class AdviceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findWithSortedComments($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.comments', 'c')
+            ->addSelect('c')
+            ->where('a.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    // public function countRequestedAdviceForUser($userId)
+    // {
+    //     return $this->createQueryBuilder('advice')
+    //         ->select('COUNT(advice.id) as adviceCount')
+    //         ->leftJoin('advice.particular', 'p')
+    //         ->where('p.id = :userId')
+    //         ->setParameter('userId', $userId)
+    //         ->getQuery()
+    //         ->getSingleScalarResult();
+    // }
+
     //    /**
     //     * @return Advice[] Returns an array of Advice objects
     //     */

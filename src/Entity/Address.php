@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Address
 {
     #[ORM\Id]
@@ -17,8 +18,8 @@ class Address
     #[ORM\Column(length: 255)]
     private ?string $street = null;
 
-    #[ORM\Column(type: Types::BIGINT)]
-    private ?string $zipCode = null;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $zipCode = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
@@ -26,7 +27,7 @@ class Address
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'address')]
@@ -50,12 +51,12 @@ class Address
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getZipCode(): ?int
     {
         return $this->zipCode;
     }
 
-    public function setZipCode(string $zipCode): static
+    public function setZipCode(int $zipCode): static
     {
         $this->zipCode = $zipCode;
 
@@ -79,11 +80,10 @@ class Address
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    #[ORM\PrePersist]
+    public function setCreatedAt(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
@@ -91,11 +91,10 @@ class Address
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): void
     {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
+        $this->updatedAt = new \DateTime();
     }
 
     public function getParticular(): ?Particular

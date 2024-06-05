@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+       
+    {{ form_start(requestForm, {'attr': {'class': 'form-auth'}}) }}
+        <h2 class="title">Reset your password</h2>
+
+        <div class="form-field">
+            {{ form_label(requestForm.email) }}
+            {{ form_widget(requestForm.email) }}
+        </div>
+
+        <div class="form-field">
+            <small>
+                We will send you a
+                link to reset your password if this email is registered in our system.
+            </small>
+        </div>
+
+        <button class="btn btn-primary">Send password reset email</button>
+
+        {% if app.flashes('reset_password_error') is not empty %}
+            {% from "parts/error.html.twig" import form_error %}
+            {{ form_error(flash_error|first) }}
+        {% endif %}
+    {{ form_end(requestForm) }}
+{% endblock %}

@@ -1,9 +1,12 @@
 @use "./utils" as vars;
-@import "./utils/boilerplates";
 @import './components/index';
+@import './pages/index';
 
-.container {
-    width: 100%;
-    height: 100%;
-    margin: vars.rem(20) 0;
+.main-container {
+    padding: 6vh 5vw;
+    min-height: 100vh;
+
+    @include vars.media(tablet-small, max) {
+        padding: 5vh 5vw;
+    }
 }

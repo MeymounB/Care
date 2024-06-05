@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Appointment{% endblock %}
+
+{% block body %}
+
+    <section class="appointment-details" aria-labelledby="rdv-heading">
+        <article class="appointment-content">
+            <h2 id="rdv-heading">Détails du Rendez-vous</h2>
+            <ul class="appointment-info">
+                <li><strong>Auteur : </strong>{{ appointment.particular.Fullname }}</li>
+                <li><strong>Titre : </strong>{{ appointment.title }}</li>
+                <li class="description"><strong>Description : </strong>{{ appointment.description }}</li>
+                <li><strong>Date et Heure
+                        : </strong>{{ appointment.plannedAt ? appointment.plannedAt|date('d-m-Y H:i:s') : '' }}</li>
+                <li><strong>Pris en charge par
+                        : </strong>{{ appointment.botanist ? appointment.botanist.FullName : 'Aucun botaniste assigné' }}
+                </li>
+                <li><strong>Présence : </strong>{{ appointment.isPresential ? 'À domicile' : 'En ligne' }}</li>
+                {% if appointment.isPresential and appointment.status == "En cours" %}
+                {% if appointment.address %}
+                    <p><strong>Lieu : </strong>{{ appointment.address }}</p>
+                {% endif %}
+                {% elseif appointment.isPresential == false and appointment.status == "En cours" %}
+                {% if appointment.link %}
+                <li><strong>Lieu : </strong><a
+                            href="{{ appointment.link }}"
+                            aria-describedby="location-desc" rel=”noopener noreferrer” target="_blank">Lien vers la réunion</a></li>
+            </ul>
+            {% endif %}
+            {% endif %}
+
+            <div class="buttons">
+                {% if is_granted('ROLE_PARTICULAR') %}
+                    {% if (app.user.email == appointment.particular.email) %}
+                        <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}"><button type="submit">Éditer</button></a>
+                        <a href="{{ path('app_appointment_delete', {'id': appointment.id}) }}"><button class="delete-button" type="submit">Supprimer</button></a>
+                    {% endif %}
+                {% endif %}
+                {% if is_granted('ROLE_BOTANIST') %}
+                    {% if appointment.status == "En attente" %}
+                        <form method="POST" action="{{ path('app_botanist_accept_appointment', {'id': appointment.id}) }}">
+                            <button type="submit">Prendre en charge le rendez-vous</button>
+                        </form>
+                    {% elseif appointment.status == "En cours" %}
+                        <a href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'En attente'}) }}"><button type="submit">Annuler</button></a>
+                        <a href="{{ path('app_botanist_change_appointment_status', {'id': appointment.id, 'status_name' : 'Terminé'}) }}"><button type="submit">Terminer</button></a>
+                    {% endif %}
+                {% endif %}
+                </div>
+        </article>
+    </section>
+{% endblock %}

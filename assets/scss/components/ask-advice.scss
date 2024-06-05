@@ -1,0 +1,156 @@
+@use "../utils" as vars;
+
+.demande-conseil {
+	padding: 5vh 0vw;
+	min-height: 80vh;
+	@include vars.flexer(center, center, column);
+	gap: 40px;
+
+	h1 {}
+
+	.form-conseil {
+		@include vars.flexer(flex-start, center, column);
+
+		h1 {}
+
+		gap: 20px;
+
+		width: calc(100% - 10vw);
+		min-height: 60vh;
+
+		form {
+			border: 2px solid vars.$black;
+			border-radius: 25px;
+			@include vars.flexer(flex-start, center, column);
+			gap: vars.rem(30);
+			width: 100%;
+			padding: 5vh 5vw;
+
+			.fieldset-container {
+				@include vars.flexer(flex-start, flex-start, row);
+				flex-wrap: wrap;
+				gap: vars.rem(30);
+
+				width: 100%;
+			}
+
+			fieldset {
+				outline: none;
+				border: none;
+
+				@include vars.flexer(flex-start, center, column);
+
+				ul {
+					display: none;
+				}
+
+				label {}
+
+				input {}
+
+				input[type=checkbox] {}
+
+				textarea {}
+
+				&.description {
+					width: 100%;
+				}
+			}
+
+			.plantes-selector {
+				input {
+					cursor: pointer;
+				}
+
+				#plantes {
+					min-width: 280px;
+				}
+
+				position: relative;
+
+				img {
+					width: 25px;
+					position: absolute;
+					top: 32px;
+					left: 243px;
+				}
+			}
+
+			.plantes-selector:active {}
+
+			button {
+				align-self: end;
+			}
+		}
+	}
+
+	.historique {
+		@include vars.flexer(flex-start, center, column);
+		gap: 20px;
+		width: 100%;
+
+		h2 {
+			width: 100%;
+			text-align: center;
+		}
+
+		.status {
+			@include vars.flexer(flex-start, center, column);
+			width: 100%;
+
+			.title {
+				font-size: 24px;
+				border-top: 2px solid black;
+				border-left: 2px solid black;
+				border-right: 2px solid black;
+				border-top-right-radius: 10px;
+				border-top-left-radius: 10px;
+				padding: 5px;
+			}
+
+			ul {
+				@include vars.flexer(center, center, column);
+				gap: 20px;
+				width: 100%;
+				border: 2px solid black;
+				border-radius: 10px;
+				border-top-left-radius: 0px;
+				padding: 16px;
+
+				li {
+					width: 100%;
+					@include vars.flexer(center, space-between, row);
+					flex-wrap: wrap;
+					border-radius: 10px;
+					padding: 16px;
+
+					background: rgb(250, 215, 105);
+					background: -moz-linear-gradient(45deg, rgba(250, 215, 105, 1) 25%, rgba(150, 220, 115, 1) 75%);
+					background: -webkit-linear-gradient(45deg, rgba(250, 215, 105, 1) 25%, rgba(150, 220, 115, 1) 75%);
+					background: linear-gradient(45deg, rgba(250, 215, 105, 1) 25%, rgba(150, 220, 115, 1) 75%);
+					filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fad769", endColorstr="#96dc73", GradientType=1);
+
+					.box {
+						@include vars.flexer(center, center, row);
+						gap: 16px;
+
+						p {
+							font-size: 18px;
+						}
+					}
+
+					.operations {
+						width: 20px;
+						cursor: pointer;
+
+						@include vars.flexer(center, center, column);
+
+						img {
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+}

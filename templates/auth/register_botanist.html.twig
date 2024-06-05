@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
+<div class="main-container">
+    {{ form_start(form, {'attr': {'class': 'form-auth'}}) }}
     <h2 class="title">Je suis un Botaniste</h2>
     <div class="form-half">
         <div class="form-field">
@@ -35,6 +36,10 @@
         {{ form_label(form.cellphone) }}
         {{ form_widget(form.cellphone) }}
     </div>
+    <div class="form-field">
+        {{ form_label(form.certif) }}
+        {{ form_widget(form.certif) }}
+    </div>
     <div class="form-field form-cgu">
         {{ form_widget(form.agreeTerms) }}
         {{ form_label(form.agreeTerms) }}
@@ -51,6 +56,7 @@
     {% endif %}
 
     {{ form_end(form) }}
+</div>
 {% endblock %}
 
 {% block footer %}{% endblock %}

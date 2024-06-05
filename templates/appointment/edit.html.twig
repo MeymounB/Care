@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Appointment{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block body %}
+<div class="main-container">
+    <h1>Edit Appointment</h1>
+
+    {{ include('appointment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {{ include('appointment/_delete_form.html.twig') }}
+</div>
+{% endblock %}

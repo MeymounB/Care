@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Appointment{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block body %}
+    {# <h1>Create new Appointment</h1> #}
+
+    {{ include('appointment/_form.html.twig') }}
+
+    {# <a href="{{ path('app_appointment_index') }}">back to list</a> #}
+
+       {# 	<section class="demande-rdv">
+			<div class="form-ajout">
+				<h1>Demander rendez-vous</h1>
+
+				<form action="/">
+					<fieldset class="file-box">
+						<select id="services" name="selectedService" required>
+							<option value="" disabled selected>Choisissez un motif de consultation
+							</option>
+							<option value="diagnostic">Diagnostic des plantes</option>
+							<option value="entretien">Conseils d’entretien</option>
+							<option value="choix">Choix de nouvelles plantes</option>
+							<option value="amenagement">Aménagement paysager</option>
+							<option value="traitement">Traitement des ravageurs et des maladies
+							</option>
+							<option value="consultation">Consultation sur la gestion de jardin
+							</option>
+							<option value="identification">Identification de plantes</option>
+							<option value="preparation">Préparation pour une exposition ou une
+								compétition</option>
+							<option value="evaluation">Évaluation de la santé globale du jardin
+							</option>
+							<option value="plan">Création d'un plan de jardinage</option>
+						</select>
+					</fieldset>
+
+					<div class="fieldset-container">
+						<!-- // date -->
+						<div class="datetime-picker">
+							<label for="datepicker">Jour</label>
+							<input type="date" id="datepicker" min="" max="" required>
+							<label for="hour">Heure</label>
+							<select id="hour" required></select>
+							<label for="minute">Minute</label>
+							<select id="minute" required></select>
+						</div>
+					</div>
+
+					<fieldset class="description">
+						<label for="description">Description du problème :</label>
+						<textarea title="description" id="description" type="text"
+							placeholder="ex : Bonjour, j'ai besoin de vérifier l'état de santé de ma tulipe..."></textarea>
+					</fieldset>
+
+					<fieldset class="place">
+						<div class="filter-container">
+							<label>
+								<input type="radio" name="filter" value="presentiel">
+								<span>Présentiel</span>
+							</label>
+							<label>
+								<input type="radio" name="filter" value="distanciel">
+								<span>Distanciel</span>
+							</label>
+						</div>
+					</fieldset>
+
+					<button id="button" value="submit" type="button"
+						class="btn btn-secondary">Valider</button>
+				</form>
+			</div>
+		</section> #}
+{% endblock %}

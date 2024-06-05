@@ -2,17 +2,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\Admin\Trait\ReadDeleteTrait;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserCrudController extends AbstractCrudController
 {
-    use ReadDeleteTrait;
-
     public static function getEntityFqcn(): string
     {
         return User::class;
@@ -24,6 +22,7 @@ class UserCrudController extends AbstractCrudController
             IdField::new('id')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
+            BooleanField::new('is_verified'),
             TextField::new('email'),
             ArrayField::new('roles'),
             TextField::new('firstName'),

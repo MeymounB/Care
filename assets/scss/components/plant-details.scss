@@ -1,0 +1,76 @@
+.plant-details {
+	min-height: 100vh;
+	padding: 10vh 10vw;
+
+	.return {
+		width: 100%;
+		text-align: end;
+	}
+
+	.plant-content {
+		border: 1px solid #ccc;
+		padding: 20px;
+		width: 100%;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+
+		gap: 10px;
+
+		.img-container {
+			text-align: center;
+
+			img {
+				max-width: 30%;
+				height: auto;
+			}
+		}
+
+		.plant-info {
+			@include vars.flexer(center, center, row);
+			gap: 20px;
+			padding: 0;
+			text-align: center;
+
+			li {
+				margin-bottom: 5px;
+
+				strong {
+					font-weight: bold;
+				}
+
+				p {
+					margin: 0;
+				}
+			}
+		}
+
+		#description {
+			@include vars.flexer(center, center, column);
+			width: 100%;
+			text-align: center;
+		}
+
+		.buttons {
+			margin-top: 10px;
+			display: flex;
+			justify-content: flex-start;
+			gap: 10px;
+			width: 200px;
+
+			button {
+				width: 100%;
+				padding: 5px;
+				border-radius: 5px;
+
+				&.delete-button {
+					border: 2px solid red;
+				}
+			}
+		}
+
+		h2 {
+			margin-top: 0;
+		}
+	}
+}

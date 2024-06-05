@@ -7,14 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+// use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: AdviceRepository::class)]
 class Advice extends Request
 {
     #[ORM\Column]
     private ?bool $isPublic = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $slug = null;
+    // #[Gedmo\Slug(fields: ['title'])]
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?string $slug = null;
 
     #[ORM\OneToMany(mappedBy: 'commentAdvice', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -47,20 +50,31 @@ class Advice extends Request
         return $this->isPublic ? 'Oui' : 'Non';
     }
 
-    public function getSlug(): ?string
+    public function getComments(): Collection
     {
-        return $this->slug;
+        return $this->comments;
     }
 
-    public function setSlug(string $slug): static
+    public function addComment(Comment $comment): static
     {
-        $this->slug = $slug;
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCommentAdvice($this);
+        }
 
         return $this;
     }
 
-    public function getComments(): Collection
+    public function removeComment(Comment $comment): self
     {
-        return $this->comments;
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getCommentAdvice() === $this) {
+                $comment->setCommentAdvice(null);
+            }
+        }
+
+        return $this;
     }
 }

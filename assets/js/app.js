@@ -1,7 +1,7 @@
-import "./styles/app.scss";
+import * as Components from "./components";
+import * as Modules from "./modules";
+// import {initHandleFileSelect} from "./tools/handleFileSelected";
 
-import {foo} from "./exemple/module1";
-import {bar} from "./exemple/module2";
-
-foo();
-bar();
+Components.init();
+// Modules.init();
+// initHandleFileSelect();

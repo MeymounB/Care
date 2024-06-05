@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+{% block body %}
+
+	<section class="dashboard-user">
+	<section class="dashboard-user">
+		<h2>Bienvenue sur votre Dashboard, <a href="{{ path('app_profil_index') }}"><span>{{ app.user }}</span></a>
+		</h2>
+
+		</h2>
+
+		<div class="top-banner">
+			<div class="take-rdv">
+				<h3><a href="{{ path('app_advice_index') }}">Voir les demandes de conseils</a>
+				</h3>
+				<div class="rdvs">
+					{% for advice in advices %}
+						<a href="{{ path('app_advice_show', {'id': advice.id}) }}" class="box">
+							<p>{{ advice.title }}</p>
+							<p>{{ advice.title }}</p>
+							・
+							<p>{{ advice.createdAt|date('d-m-Y') }}</p>
+							<p>{{ advice.createdAt|date('d-m-Y') }}</p>
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="statisique">
+				<div>
+					<h3>Mes statistiques</h3>
+					<div>
+						<p>Rendez-vous pris</p>
+						<p>{{ appointment_count }}</p>
+					</div>
+					<div>
+						<p>Conseils donnés</p>
+						<p>{{ advice_count }}</p>
+					</div>
+				</div>
+
+				<a href="{{ path('app_profil_index') }}">Accéder à mon profil</a>
+				<a href="{{ path('app_profil_index') }}">Accéder à mon profil</a>
+			</div>
+		</div>
+
+		<div class="bottom-banner">
+			<div class="left">
+				 <div class="historique">
+					<h3>Besoin d'aide ?</h3>
+					<h3>Besoin d'aide ?</h3>
+					<div class="box-container">
+						<a href="{{ path('app_advice_list_my_advice') }}" class="box">
+							<img src="{{ asset('images/Conseils.png') }}">
+							<p>Vos demandes de conseils</p>
+						</a>
+						<a href="{{ path('app_advice_new') }}" class="box">
+							<img src="{{ asset('images/DemandeDeConseil.png') }}">
+							<p>Conseil en ligne</p>
+						</a>
+						<a href="{{ path('app_appointment_new') }}" class="box">
+							<img src="{{ asset('images/DemandeDeRDV.png') }}">
+							<p>Prendre rendez-vous</p>
+						</a>
+					</div>
+				</div>
+
+				<div class="a-venir">
+					<div class="top">
+						<h3>Rendez-vous à venir</h3>
+						<a href="{{ path('app_appointement_incoming_appointment') }}">Voir tous
+						<a href="{{ path('app_appointement_incoming_appointment') }}">Voir tous
+							<img src={{ asset('images/right-arrow.png') }}>
+						</a>
+					</div>
+					<div class="rdvs">
+						{% for incomming_appointment in incomming_appointments %}
+							<a href="{{ path('app_appointment_show', {'id': incomming_appointment.id}) }}" class="box">
+								<p>{{ incomming_appointment.title }}</p>
+								
+								{# {% if incomming_appointment.isPresential %}
+									<p><span>・</span>Présentiel</p>
+								{% else %}
+									<p><span>・</span>En ligne</p>
+								{% endif %} #}
+								<p><span>・</span>{{ incomming_appointment.plannedAt|date('d-m-Y | H:i') }}</p>
+							</a>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="recent">
+				<div class="top">
+					<h3>Activités récentes</h3>
+					<a href="{{ path('app_advice_list_recent_advice') }}">Voir toutes
+						<img src={{ asset('images/right-arrow.png') }}>
+					</a>
+				</div>
+
+				<div class="activities">
+					{% for recent in recent_activity %}
+						<a href="{{ path('app_advice_show', {'id': recent.id}) }}" class="activity">
+							<p>{{ recent.title }}</p>
+							
+							{% if recent.isPublic %}
+								<p><span>・</span>Public</p>
+							{% else %}
+								<p><span>・</span>Privé</p>
+							{% endif %}
+							{# <p>{{ recent.createdAt|date('d-m-Y | H:i') }}</p> #}
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}
